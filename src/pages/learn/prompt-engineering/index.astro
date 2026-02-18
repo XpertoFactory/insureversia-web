@@ -1,0 +1,254 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Icon from '../../../components/Icon.astro';
+import { t, getLocalePath } from '../../../i18n';
+const locale = 'en';
+const p = (path: string) => getLocalePath(locale, path);
+
+const techniques = [
+  {
+    name: 'Be Specific About Insurance Context',
+    weak: 'Help me with this claim.',
+    effective: 'You are an experienced property claims adjuster. Analyze this commercial property claim for a warehouse fire. The policy is a BOP with $2M building coverage, $500K contents, and 12-month business interruption. Identify: (1) covered vs. potentially excluded damages, (2) subrogation potential, and (3) reserve recommendations.',
+  },
+  {
+    name: 'Request Structured Output',
+    weak: 'What are the risks of insuring this business?',
+    effective: 'Analyze the risk profile of a mid-size food manufacturing company seeking commercial general liability coverage. Structure your response as: 1) Primary risk factors (ranked by severity), 2) Loss history considerations, 3) Industry-specific exposures, 4) Recommended coverage enhancements, 5) Underwriting questions to ask the applicant.',
+  },
+  {
+    name: 'Specify Jurisdiction and Regulation',
+    weak: 'Is this claim covered?',
+    effective: 'Under California insurance law and the California Insurance Code, analyze whether water damage from a gradual pipe leak over 6 months is covered under a standard HO-3 homeowner\'s policy with no specific exclusion for "continuous or repeated seepage." Consider the efficient proximate cause doctrine as applied in California.',
+  },
+  {
+    name: 'Include Verification Requirements',
+    weak: 'Tell me about AI regulations in insurance.',
+    effective: 'Summarize the NAIC Model Bulletin on AI (December 2023) and Colorado SB 21-169 requirements for algorithmic fairness testing in insurance. For each regulation, provide: the specific requirement, effective date, and enforcement mechanism. Flag any information you are uncertain about so I can verify against the original sources.',
+  },
+  {
+    name: 'Use Role-Based Framing',
+    weak: 'Write a denial letter.',
+    effective: 'You are a claims manager at a mid-size P&C carrier, writing a coverage denial letter to a commercial policyholder. The claim is for business interruption losses due to a cyberattack. The policy excludes losses arising from "malicious cyber events." Write a professional, empathetic denial letter that: clearly states the denial reason, cites the specific policy provision, explains the policyholder\'s right to appeal, and maintains the client relationship.',
+  },
+  {
+    name: 'Iterate and Refine',
+    weak: 'That\'s not quite right. Try again.',
+    effective: 'Your analysis is good but needs two adjustments: (1) The deductible calculation should account for the coinsurance clause — recalculate the recoverable amount with 80% coinsurance where the insured-to-value ratio is 75%. (2) Add a section on potential bad faith exposure if we delay the coverage determination beyond 30 days, citing the applicable state prompt payment statute.',
+  },
+];
+
+const patterns = [
+  {
+    name: 'Jurisdiction Lock',
+    description: 'Anchor the AI to a specific regulatory environment.',
+    example: '"Apply California Department of Insurance regulations and California Insurance Code provisions only. If a question requires knowledge of another jurisdiction, state that explicitly rather than assuming California law applies."',
+  },
+  {
+    name: 'Verification Demand',
+    description: 'Force the AI to flag uncertainty.',
+    example: '"For each factual claim in your analysis, rate your confidence level as HIGH (well-established industry standard), MEDIUM (generally accepted but may vary), or LOW (uncertain, requires verification). If you are unsure whether a regulation or standard exists, say so explicitly."',
+  },
+  {
+    name: 'Structured Output',
+    description: 'Define the exact format you need.',
+    example: '"Structure your response as a claims memo with these sections: (1) Claim Summary, (2) Policy Coverage Analysis, (3) Liability Assessment, (4) Damages Evaluation, (5) Reserve Recommendation, (6) Action Items. Use bullet points within each section."',
+  },
+  {
+    name: 'Devil\'s Advocate',
+    description: 'Ask the AI to argue against its own analysis.',
+    example: '"Now argue the opposite position. What is the strongest case for coverage under this policy? What are the weaknesses in the denial position? What would a policyholder\'s attorney argue?"',
+  },
+  {
+    name: 'Iterative Refinement',
+    description: 'Build complexity through successive prompts.',
+    example: '"Step 1: Summarize the key facts of this claim. Step 2: Based on those facts, identify the applicable policy provisions. Step 3: Analyze coverage under each provision. Step 4: Recommend a coverage determination with supporting reasoning."',
+  },
+];
+---
+
+<BaseLayout
+  title="Prompt Engineering for Insurance Professionals"
+  description="Master the art of communicating with AI. The CRAFT framework, proven techniques, and insurance-specific prompt patterns."
+  locale={locale}
+  keywords="prompt engineering insurance, AI prompts insurance, CRAFT framework, insurance AI techniques"
+>
+  <!-- Hero -->
+  <section class="hero" style="background: linear-gradient(135deg, rgba(15,43,70,0.88) 0%, rgba(45,55,72,0.78) 100%), url('/assets/images/hero-images/hero-image-learn.png') top/cover no-repeat;">
+    <div class="container" style="position: relative; z-index: 1;">
+      <div class="slide-up" style="max-width: 800px;">
+        <p class="text-sm font-semibold mb-4" style="color: var(--color-secondary); text-transform: uppercase; letter-spacing: 0.1em;">Learn</p>
+        <h1 style="font-size: var(--text-5xl); margin-bottom: var(--space-6);">Prompt Engineering for Insurers</h1>
+        <p class="lead" style="margin-bottom: var(--space-6);">
+          The difference between a useless AI response and a genuinely helpful one is almost always in how you ask. This guide teaches you the techniques that consistently produce better results for insurance tasks.
+        </p>
+      </div>
+    </div>
+    <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 120px; background: linear-gradient(to top, var(--surface-page), transparent);"></div>
+  </section>
+
+  <!-- The CRAFT Framework -->
+  <section class="section">
+    <div class="container">
+      <div style="max-width: 800px; margin: 0 auto;" class="reveal">
+        <h2 style="text-align: center; margin-bottom: var(--space-3);">The CRAFT Framework</h2>
+        <p style="text-align: center; color: var(--text-secondary); font-size: var(--text-lg); margin-bottom: var(--space-8);">
+          Five elements that transform vague requests into precise, effective prompts.
+        </p>
+
+        <div style="display: flex; flex-direction: column; gap: var(--space-4);">
+          <div class="card card--flat" style="padding: var(--space-6);">
+            <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-3);">
+              <span style="font-size: var(--text-2xl); font-weight: var(--font-extrabold); color: var(--color-secondary);">C</span>
+              <h3 style="margin-bottom: 0;">Context</h3>
+            </div>
+            <p style="color: var(--text-secondary); margin-bottom: var(--space-2);">What is the situation? Provide the background the AI needs to produce relevant output.</p>
+            <p style="font-size: var(--text-sm); color: var(--text-muted); margin-bottom: 0;"><em>"I am reviewing a commercial auto fleet policy for a trucking company with 50 vehicles operating across 12 states..."</em></p>
+          </div>
+
+          <div class="card card--flat" style="padding: var(--space-6);">
+            <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-3);">
+              <span style="font-size: var(--text-2xl); font-weight: var(--font-extrabold); color: var(--color-secondary);">R</span>
+              <h3 style="margin-bottom: 0;">Role</h3>
+            </div>
+            <p style="color: var(--text-secondary); margin-bottom: var(--space-2);">What role should the AI assume? This frames the perspective and expertise level.</p>
+            <p style="font-size: var(--text-sm); color: var(--text-muted); margin-bottom: 0;"><em>"Act as an experienced commercial lines underwriter specializing in transportation risks..."</em></p>
+          </div>
+
+          <div class="card card--flat" style="padding: var(--space-6);">
+            <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-3);">
+              <span style="font-size: var(--text-2xl); font-weight: var(--font-extrabold); color: var(--color-secondary);">A</span>
+              <h3 style="margin-bottom: 0;">Action</h3>
+            </div>
+            <p style="color: var(--text-secondary); margin-bottom: var(--space-2);">What specifically do you want the AI to do? Be precise about the task.</p>
+            <p style="font-size: var(--text-sm); color: var(--text-muted); margin-bottom: 0;"><em>"Identify the top 5 risk factors I should evaluate and suggest specific underwriting questions for each..."</em></p>
+          </div>
+
+          <div class="card card--flat" style="padding: var(--space-6);">
+            <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-3);">
+              <span style="font-size: var(--text-2xl); font-weight: var(--font-extrabold); color: var(--color-secondary);">F</span>
+              <h3 style="margin-bottom: 0;">Format</h3>
+            </div>
+            <p style="color: var(--text-secondary); margin-bottom: var(--space-2);">How should the output be structured? Tables, bullet points, memos, summaries?</p>
+            <p style="font-size: var(--text-sm); color: var(--text-muted); margin-bottom: 0;"><em>"Present your analysis as a risk assessment table with columns: Risk Factor | Severity (1-5) | Questions to Ask | Mitigation Options..."</em></p>
+          </div>
+
+          <div class="card card--flat" style="padding: var(--space-6);">
+            <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-3);">
+              <span style="font-size: var(--text-2xl); font-weight: var(--font-extrabold); color: var(--color-secondary);">T</span>
+              <h3 style="margin-bottom: 0;">Tone</h3>
+            </div>
+            <p style="color: var(--text-secondary); margin-bottom: var(--space-2);">What communication style is appropriate? Client-facing? Internal memo? Technical?</p>
+            <p style="font-size: var(--text-sm); color: var(--text-muted); margin-bottom: 0;"><em>"Write in concise, professional language suitable for an underwriting memo reviewed by senior management..."</em></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CRAFT in Action -->
+  <section class="section section--parchment">
+    <div class="container">
+      <div style="max-width: 800px; margin: 0 auto;" class="reveal">
+        <h2 style="text-align: center; margin-bottom: var(--space-6);">CRAFT in Action</h2>
+        <div class="card card--accent" style="padding: var(--space-8);">
+          <p style="font-size: var(--text-sm); text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); margin-bottom: var(--space-4);">Complete Insurance Prompt Example</p>
+          <p style="font-family: var(--font-mono); font-size: var(--text-base); line-height: var(--leading-relaxed); color: var(--text-primary); margin-bottom: 0;">
+            <span style="color: var(--color-secondary); font-weight: var(--font-bold);">[Context]</span> I am a claims supervisor reviewing a complex liability claim. A delivery driver for our insured (a logistics company) caused a multi-vehicle accident resulting in bodily injury to three claimants. Our insured has a commercial general liability policy with $1M per occurrence and $2M aggregate limits. One claimant is alleging permanent disability.<br><br>
+            <span style="color: var(--color-secondary); font-weight: var(--font-bold);">[Role]</span> Act as an experienced liability claims analyst with expertise in bodily injury claims and coverage analysis.<br><br>
+            <span style="color: var(--color-secondary); font-weight: var(--font-bold);">[Action]</span> Analyze this claim and provide: (1) preliminary coverage analysis, (2) liability assessment considerations, (3) reserve recommendations for each claimant, (4) potential excess exposure analysis, and (5) recommended next steps for investigation.<br><br>
+            <span style="color: var(--color-secondary); font-weight: var(--font-bold);">[Format]</span> Structure your response as a formal claims memo with clearly labeled sections. Use bullet points for action items.<br><br>
+            <span style="color: var(--color-secondary); font-weight: var(--font-bold);">[Tone]</span> Professional and analytical. This memo will be shared with our claims committee and defense counsel.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Techniques in Practice -->
+  <section class="section">
+    <div class="container">
+      <div style="max-width: 900px; margin: 0 auto;">
+        <h2 class="text-center reveal" style="margin-bottom: var(--space-3);">Techniques in Practice</h2>
+        <p class="text-center reveal" style="color: var(--text-secondary); font-size: var(--text-lg); margin-bottom: var(--space-8);">
+          Side-by-side comparisons showing weak prompts vs. effective prompts for insurance tasks.
+        </p>
+
+        <div class="reveal-stagger" style="display: flex; flex-direction: column; gap: var(--space-8);">
+          {techniques.map((tech, idx) => (
+            <div class="card" style="padding: var(--space-6); overflow: hidden;">
+              <h3 style="margin-bottom: var(--space-4);">
+                <span style="color: var(--color-secondary); font-weight: var(--font-bold);">{idx + 1}.</span> {tech.name}
+              </h3>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4);">
+                <div style="padding: var(--space-4); background: rgba(220,38,38,0.06); border-radius: var(--radius-md); border: 1px solid rgba(220,38,38,0.15);">
+                  <p style="font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-error); font-weight: var(--font-bold); margin-bottom: var(--space-2);">Weak</p>
+                  <p style="font-size: var(--text-sm); color: var(--text-secondary); margin-bottom: 0; font-style: italic;">"{tech.weak}"</p>
+                </div>
+                <div style="padding: var(--space-4); background: rgba(22,163,74,0.06); border-radius: var(--radius-md); border: 1px solid rgba(22,163,74,0.15);">
+                  <p style="font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-success); font-weight: var(--font-bold); margin-bottom: var(--space-2);">Effective</p>
+                  <p style="font-size: var(--text-sm); color: var(--text-secondary); margin-bottom: 0; font-style: italic;">"{tech.effective}"</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Prompt Patterns -->
+  <section class="section section--parchment">
+    <div class="container">
+      <div style="max-width: 800px; margin: 0 auto;">
+        <h2 class="text-center reveal" style="margin-bottom: var(--space-3);">Prompt Patterns for Insurance Work</h2>
+        <p class="text-center reveal" style="color: var(--text-secondary); font-size: var(--text-lg); margin-bottom: var(--space-8);">
+          Reusable patterns you can adapt to any insurance task.
+        </p>
+
+        <div class="reveal-stagger" style="display: flex; flex-direction: column; gap: var(--space-6);">
+          {patterns.map((pattern) => (
+            <div class="card" style="padding: var(--space-6);">
+              <h3 style="color: var(--color-primary); margin-bottom: var(--space-2);">{pattern.name}</h3>
+              <p style="color: var(--text-secondary); margin-bottom: var(--space-3);">{pattern.description}</p>
+              <div style="padding: var(--space-4); background: var(--surface-code, #f8f9fa); border-radius: var(--radius-md); border: 1px solid var(--border-light);">
+                <p style="font-family: var(--font-mono); font-size: var(--text-sm); color: var(--text-secondary); margin-bottom: 0; line-height: var(--leading-relaxed);">{pattern.example}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Practice CTA -->
+  <section class="section">
+    <div class="container text-center">
+      <div class="reveal" style="max-width: 600px; margin: 0 auto;">
+        <h2 style="margin-bottom: var(--space-4);">Put Your Skills to Work</h2>
+        <p style="font-size: var(--text-lg); color: var(--text-secondary); margin-bottom: var(--space-6);">
+          The best way to improve your prompt engineering is through practice. Our Quick Wins give you pre-built exercises, and the Prompt Builder helps you construct custom prompts for any insurance task.
+        </p>
+        <div class="flex gap-4 flex--wrap" style="justify-content: center;">
+          <a href={p('/practice/quick-wins/')} class="btn btn--primary">Try a Quick Win</a>
+          <a href={p('/practice/prompt-builder/')} class="btn btn--secondary">Open Prompt Builder</a>
+          <a href={p('/practice/prompt-library/')} class="btn btn--ghost">Browse Prompt Library</a>
+        </div>
+        <p style="margin-top: var(--space-4); font-size: var(--text-sm); color: var(--text-muted);">
+          {t(locale, 'learningProgram.programCta')}
+          <a href={p('/learn/program/')} style="font-weight: var(--font-semibold);">
+            {t(locale, 'learningProgram.programCtaLink')} &rarr;
+          </a>
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  @media (max-width: 640px) {
+    div[style*="grid-template-columns: 1fr 1fr"] {
+      grid-template-columns: 1fr !important;
+    }
+  }
+</style>

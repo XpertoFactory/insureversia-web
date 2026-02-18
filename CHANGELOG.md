@@ -2,6 +2,25 @@
 
 All notable changes to the Insureversia website will be documented in this file.
 
+## [0.3.0] - 2026-02-18
+
+### Added
+
+**Phase 3: Learn Section**
+
+- **Learn section** (6 pages):
+  - `learn/ai-101/` — 7-module learning path for insurance professionals (AI fundamentals, LLMs, insurance AI tools, ethics & regulation, prompt engineering, AI workflows, future of AI in insurance)
+  - `learn/what-to-do/` — 10 best practices for AI in insurance (collection-based, rendered from content files)
+  - `learn/what-not-to-do/` — 10 critical mistakes to avoid (collection-based, rendered from content files with danger styling)
+  - `learn/prompt-engineering/` — CRAFT framework with 6 technique comparisons (weak vs. effective), 5 reusable prompt patterns for insurance tasks
+  - `learn/program/` — Learning Program page with pillars, 5 format categories (accordion), 3 learning modes, 4-step methodology, Smoother framework
+  - `learn/program/case-studies/` — 3 case study cards (Lemonade AI Claims, Sterling Data Breach, Sentient Weather Tribunal)
+- **Content collections** (20 markdown files):
+  - `what-to-do/en/` — 10 best practices: verify output, accelerate research, establish AI policy, disclose AI use, first-draft generation, document review, prompt library, stay current, train your team, experiment low-risk
+  - `what-not-to-do/en/` — 10 dangers: don't submit unread, don't paste confidential data, don't assume jurisdiction, don't replace judgment, don't hide AI use, don't treat as verified data, don't use for emotional intelligence, don't ignore regulations, don't let AI write everything, don't assume limitations permanent
+
+---
+
 ## [0.2.0] - 2026-02-18
 
 ### Added

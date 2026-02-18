@@ -1,0 +1,116 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import { t, getLocalePath } from '../../../../i18n';
+
+const locale = 'en';
+const p = (path: string) => getLocalePath(locale, path);
+
+const cases = [
+  {
+    slug: 'lemonade-ai-claims',
+    type: t(locale, 'caseStudies.realLabel'),
+    typeColor: 'var(--color-success)',
+    title: t(locale, 'caseStudies.lemonade.title'),
+    subtitle: t(locale, 'caseStudies.lemonade.subtitle'),
+    duration: t(locale, 'caseStudies.lemonade.duration'),
+    participants: t(locale, 'caseStudies.lemonade.participants'),
+    difficulty: t(locale, 'caseStudies.difficultyIntermediate'),
+  },
+  {
+    slug: 'sterling-data-breach',
+    type: t(locale, 'caseStudies.fictionalLabel'),
+    typeColor: 'var(--color-accent)',
+    title: t(locale, 'caseStudies.breach.title'),
+    subtitle: t(locale, 'caseStudies.breach.subtitle'),
+    duration: t(locale, 'caseStudies.breach.duration'),
+    participants: t(locale, 'caseStudies.breach.participants'),
+    difficulty: t(locale, 'caseStudies.difficultyAdvanced'),
+  },
+  {
+    slug: 'sentient-weather-tribunal',
+    type: t(locale, 'caseStudies.absurdLabel'),
+    typeColor: 'var(--color-error)',
+    title: t(locale, 'caseStudies.weather.title'),
+    subtitle: t(locale, 'caseStudies.weather.subtitle'),
+    duration: t(locale, 'caseStudies.weather.duration'),
+    participants: t(locale, 'caseStudies.weather.participants'),
+    difficulty: t(locale, 'caseStudies.difficultyAdvanced'),
+  },
+];
+---
+
+<BaseLayout
+  title={t(locale, 'caseStudies.title')}
+  description={t(locale, 'caseStudies.description')}
+  locale={locale}
+>
+  <!-- Hero -->
+  <section class="hero" style="background: linear-gradient(135deg, rgba(15,43,70,0.88) 0%, rgba(45,55,72,0.78) 100%), url('/assets/images/hero-images/hero-image-learn.png') top/cover no-repeat;">
+    <div class="container" style="position: relative; z-index: 1;">
+      <div class="slide-up" style="max-width: 800px;">
+        <p class="text-sm font-semibold mb-4" style="color: var(--color-secondary); text-transform: uppercase; letter-spacing: 0.1em;">{t(locale, 'caseStudies.heroLabel')}</p>
+        <h1 style="font-size: var(--text-5xl); margin-bottom: var(--space-6);">{t(locale, 'caseStudies.title')}</h1>
+        <p class="lead" style="margin-bottom: var(--space-6);">
+          {t(locale, 'caseStudies.heroLead')}
+        </p>
+        <a href={p('/learn/program/')} class="btn btn--secondary" style="border-color: rgba(255,255,255,0.4); color: var(--text-inverse);">
+          &larr; {t(locale, 'caseStudies.backToProgram')}
+        </a>
+      </div>
+    </div>
+    <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 120px; background: linear-gradient(to top, var(--surface-page), transparent);"></div>
+  </section>
+
+  <!-- Case Study Cards -->
+  <section class="section">
+    <div class="container">
+      <div style="max-width: 960px; margin: 0 auto; display: flex; flex-direction: column; gap: var(--space-10);">
+        {cases.map((c) => (
+          <article class="card reveal" style="padding: 0; overflow: hidden;">
+            <div style="padding: var(--space-8);">
+              <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-4);">
+                <span style={`display: inline-block; padding: 4px 12px; border-radius: var(--radius-sm); font-size: var(--text-xs); font-weight: var(--font-bold); text-transform: uppercase; letter-spacing: 0.05em; background: ${c.typeColor}; color: white;`}>
+                  {c.type}
+                </span>
+                <span class="badge badge--intermediate">{c.difficulty}</span>
+              </div>
+              <h2 style="font-size: var(--text-2xl); margin-bottom: var(--space-3);">{c.title}</h2>
+              <p style="color: var(--text-secondary); line-height: var(--leading-relaxed); margin-bottom: var(--space-6);">
+                {c.subtitle}
+              </p>
+              <div style="display: flex; gap: var(--space-6); margin-bottom: var(--space-6); flex-wrap: wrap;">
+                <div>
+                  <span style="font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted);">{t(locale, 'caseStudies.duration')}</span>
+                  <p style="font-weight: var(--font-semibold); margin: 0;">{c.duration}</p>
+                </div>
+                <div>
+                  <span style="font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted);">{t(locale, 'caseStudies.participants')}</span>
+                  <p style="font-weight: var(--font-semibold); margin: 0;">{c.participants}</p>
+                </div>
+              </div>
+              <span class="btn btn--primary" style="opacity: 0.6; cursor: default;">
+                Coming Soon
+              </span>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section section--primary" style="background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark, #0a1d33) 100%); color: var(--text-inverse);">
+    <div class="container text-center">
+      <div class="reveal" style="max-width: 600px; margin: 0 auto;">
+        <h2 style="color: var(--text-inverse); margin-bottom: var(--space-4);">{t(locale, 'caseStudies.ctaTitle')}</h2>
+        <p style="font-size: var(--text-lg); opacity: 0.9; margin-bottom: var(--space-8);">
+          {t(locale, 'caseStudies.ctaDesc')}
+        </p>
+        <div class="flex gap-4 flex--wrap" style="justify-content: center;">
+          <button class="btn btn--primary contact-trigger" style="background: var(--color-secondary); color: var(--color-primary);">{t(locale, 'caseStudies.ctaRequest')}</button>
+          <a href={p('/learn/ai-101/')} class="btn btn--secondary" style="border-color: rgba(255,255,255,0.4); color: var(--text-inverse);">{t(locale, 'caseStudies.ctaExplore')}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

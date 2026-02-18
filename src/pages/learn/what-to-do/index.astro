@@ -1,0 +1,115 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { t, getLocalePath } from '../../../i18n';
+const locale = 'en';
+const p = (path: string) => getLocalePath(locale, path);
+
+const entries = (await getCollection('what-to-do'))
+  .filter(entry => entry.id.startsWith('en/'))
+  .sort((a, b) => a.data.number - b.data.number);
+---
+
+<BaseLayout
+  title="What to Do with AI in Insurance"
+  description="The Playbook: best practices for using AI effectively, ethically, and confidently in insurance practice."
+  locale={locale}
+  keywords="AI best practices insurance, using AI in insurance, AI for underwriters, AI for claims, insurance AI playbook"
+>
+  <!-- Hero -->
+  <section class="hero" style="background: linear-gradient(135deg, rgba(15,43,70,0.88) 0%, rgba(45,55,72,0.78) 100%), url('/assets/images/hero-images/hero-image-learn.png') top/cover no-repeat;">
+    <div class="container" style="position: relative; z-index: 1;">
+      <div class="slide-up" style="max-width: 800px;">
+        <p class="text-sm font-semibold mb-4" style="color: var(--color-secondary); text-transform: uppercase; letter-spacing: 0.1em;">Learn</p>
+        <h1 style="font-size: var(--text-5xl); margin-bottom: var(--space-6);">The Playbook: What to Do</h1>
+        <p class="lead" style="margin-bottom: var(--space-6);">
+          Now that you understand the fundamentals, here is the positive playbook. These are the best practices that will help you harness AI's full potential while maintaining the professional standards your clients, regulators, and industry expect.
+        </p>
+      </div>
+    </div>
+    <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 120px; background: linear-gradient(to top, var(--surface-page), transparent);"></div>
+  </section>
+
+  <!-- Intro -->
+  <section class="section--sm">
+    <div class="container">
+      <div class="callout callout--success reveal" style="max-width: 800px; margin: 0 auto;">
+        <p style="font-size: var(--text-lg); margin-bottom: 0; line-height: var(--leading-relaxed);">
+          <strong>The principle is simple:</strong> Use AI as a powerful assistant, not an autopilot. Every best practice below reinforces the same core idea — AI amplifies your expertise when you stay in control of the process, verify the output, and apply your professional judgment at every step.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Best Practice Cards -->
+  <section class="section">
+    <div class="container">
+      <div style="display: flex; flex-direction: column; gap: var(--space-8); max-width: 900px; margin: 0 auto;" class="reveal-stagger">
+        {entries.map((entry) => (
+          <article class="card card--success" style="padding: var(--space-8);">
+            <div style="display: flex; align-items: flex-start; gap: var(--space-4);">
+              <div class="number-badge number-badge--success" style="margin-top: var(--space-1);">
+                {entry.data.number}
+              </div>
+              <div style="flex: 1;">
+                <h2 style="font-size: var(--text-2xl); margin-bottom: var(--space-3); color: var(--color-success-dark);">
+                  {entry.data.title}
+                </h2>
+                <p style="font-size: var(--text-lg); color: var(--text-secondary); margin-bottom: var(--space-4); line-height: var(--leading-relaxed);">
+                  {entry.data.description}
+                </p>
+
+                <div style="margin-bottom: var(--space-4);">
+                  <h4 style="font-size: var(--text-base); font-weight: var(--font-semibold); margin-bottom: var(--space-2); color: var(--color-primary);">How to Do It</h4>
+                  <p style="color: var(--text-secondary); line-height: var(--leading-relaxed);">{entry.data.howTo}</p>
+                </div>
+
+                <div style="margin-bottom: var(--space-4);">
+                  <h4 style="font-size: var(--text-base); font-weight: var(--font-semibold); margin-bottom: var(--space-3); color: var(--color-primary);">Step-by-Step</h4>
+                  <ol style="padding-left: var(--space-5);">
+                    {entry.data.steps.map((step) => (
+                      <li style="color: var(--text-secondary); margin-bottom: var(--space-2); line-height: var(--leading-relaxed);">{step}</li>
+                    ))}
+                  </ol>
+                </div>
+
+                {entry.data.tools && entry.data.tools.length > 0 && (
+                  <div>
+                    <h4 style="font-size: var(--text-base); font-weight: var(--font-semibold); margin-bottom: var(--space-2); color: var(--color-primary);">Recommended Tools</h4>
+                    <div class="flex gap-2 flex--wrap">
+                      {entry.data.tools.map((tool) => (
+                        <span class="tag">{tool}</span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section section--parchment">
+    <div class="container text-center">
+      <div class="reveal" style="max-width: 600px; margin: 0 auto;">
+        <h2 style="margin-bottom: var(--space-4);">Ready to Put This Into Practice?</h2>
+        <p style="font-size: var(--text-lg); color: var(--text-secondary); margin-bottom: var(--space-6);">
+          The best way to learn is by doing. Our Quick Wins give you step-by-step AI exercises you can complete in minutes, each one applying the best practices you just learned.
+        </p>
+        <div class="flex gap-4 flex--wrap" style="justify-content: center;">
+          <a href={p('/practice/quick-wins/')} class="btn btn--primary">Try a Quick Win</a>
+          <a href={p('/learn/what-not-to-do/')} class="btn btn--secondary">Review What Not to Do</a>
+        </div>
+        <p style="margin-top: var(--space-4); font-size: var(--text-sm); color: var(--text-muted);">
+          {t(locale, 'learningProgram.programCta')}
+          <a href={p('/learn/program/')} style="font-weight: var(--font-semibold);">
+            {t(locale, 'learningProgram.programCtaLink')} &rarr;
+          </a>
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
