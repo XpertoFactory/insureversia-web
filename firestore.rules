@@ -1,0 +1,27 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Likes: anyone can read, authenticated users can write their own
+    match /likes/{docId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+
+      match /users/{userId} {
+        allow read: if true;
+        allow write: if request.auth != null && request.auth.uid == userId;
+      }
+    }
+
+    // Submissions: anyone authenticated can create, no one can read/update/delete
+    match /submissions/{docId} {
+      allow create: if request.auth != null;
+      allow read, update, delete: if false;
+    }
+
+    // Deny everything else
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
