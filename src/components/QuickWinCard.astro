@@ -1,6 +1,7 @@
 ---
 import DifficultyBadge from './DifficultyBadge.astro';
 import InsuranceSectorTag from './InsuranceSectorTag.astro';
+import LikeButton from './LikeButton.svelte';
 import type { Locale } from '../i18n';
 
 interface Props {
@@ -14,10 +15,11 @@ interface Props {
   tips?: string[];
   cautions?: string[];
   slug?: string;
+  contentId?: string;
   locale: Locale;
 }
 
-const { title, description, time, difficulty, insuranceSector, aiTool, prompt, tips, cautions, slug, locale } = Astro.props;
+const { title, description, time, difficulty, insuranceSector, aiTool, prompt, tips, cautions, slug, contentId, locale } = Astro.props;
 const minuteLabel = locale === 'es' ? 'min' : 'min';
 const learnMoreLabel = locale === 'es' ? 'Ver más' : 'Learn more';
 const collapseLabel = locale === 'es' ? 'Ver menos' : 'Show less';
@@ -39,7 +41,18 @@ const cautionsLabel = locale === 'es' ? 'Precauciones' : 'Cautions';
   <h3 class="card__title">{title}</h3>
   <p class="card__body line-clamp-3 qw-desc">{description}</p>
   <div class="card__footer" style="display: flex; align-items: center; justify-content: space-between;">
-    <span class="text-xs text-muted">{aiTool}</span>
+    <div style="display: flex; align-items: center; gap: var(--space-3);">
+      <span class="text-xs text-muted">{aiTool}</span>
+      {contentId && (
+        <LikeButton
+          client:visible
+          contentType="quick-win"
+          contentId={contentId}
+          likeLabel={locale === 'es' ? 'Me gusta' : 'Like'}
+          likedLabel={locale === 'es' ? 'Te gustó' : 'Liked'}
+        />
+      )}
+    </div>
     {prompt ? (
       <button class="btn btn--primary btn--sm qw-toggle" data-label-more={`${learnMoreLabel} →`} data-label-less={`← ${collapseLabel}`}>{learnMoreLabel} →</button>
     ) : slug ? (

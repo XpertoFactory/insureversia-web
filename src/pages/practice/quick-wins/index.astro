@@ -100,6 +100,7 @@ const insuranceSectors = ['All Sectors', ...new Set(allQuickWins.map(qw => qw.da
                 prompt={qw.data.prompt}
                 tips={qw.data.tips}
                 cautions={qw.data.cautions}
+                contentId={qw.id}
                 locale={locale}
               ><qw.Content /></QuickWinCard>
             </div>
