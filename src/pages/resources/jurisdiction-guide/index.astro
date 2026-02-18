@@ -1,0 +1,649 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { t, getLocalePath } from '../../../i18n';
+const locale = 'en';
+const p = (path: string) => getLocalePath(locale, path);
+
+const regions = [
+  { key: 'all', label: t(locale, 'jurisdictionGuide.regionAll') },
+  { key: 'north-america', label: t(locale, 'jurisdictionGuide.regionNorthAmerica') },
+  { key: 'europe', label: t(locale, 'jurisdictionGuide.regionEurope') },
+  { key: 'latin-america', label: t(locale, 'jurisdictionGuide.regionLatinAmerica') },
+  { key: 'asia-pacific', label: t(locale, 'jurisdictionGuide.regionAsiaPacific') },
+];
+
+const statuses = [
+  { key: 'all', label: t(locale, 'jurisdictionGuide.statusAll') },
+  { key: 'enacted', label: t(locale, 'jurisdictionGuide.statusEnacted') },
+  { key: 'pending', label: t(locale, 'jurisdictionGuide.statusPending') },
+  { key: 'proposed', label: t(locale, 'jurisdictionGuide.statusProposed') },
+  { key: 'none', label: t(locale, 'jurisdictionGuide.statusNone') },
+];
+
+const regionLabels: Record<string, string> = {
+  'north-america': 'North America',
+  'europe': 'Europe',
+  'latin-america': 'Latin America',
+  'asia-pacific': 'Asia-Pacific',
+};
+
+const statusLabels: Record<string, string> = {
+  'enacted': 'Enacted',
+  'pending': 'Pending',
+  'proposed': 'Proposed',
+  'none': 'No Specific Regulation',
+};
+
+interface Jurisdiction {
+  name: string;
+  region: string;
+  regulationStatus: 'enacted' | 'pending' | 'proposed' | 'none';
+  legislation: string[];
+  regulatoryGuidance: string[];
+  industryStandards: string[];
+  notableCases: string[];
+  lastUpdated: string;
+}
+
+const jurisdictions: Jurisdiction[] = [
+  {
+    name: 'United States (Federal)',
+    region: 'north-america',
+    regulationStatus: 'pending',
+    legislation: [
+      'No comprehensive federal AI legislation yet',
+      'Executive Order 14110 on Safe AI (October 2023)',
+      'FTC enforcement actions on AI deception and discrimination',
+    ],
+    regulatoryGuidance: [
+      'NAIC Model Bulletin on AI (December 2023) — most significant insurance-specific guidance',
+      'NAIC Big Data & AI Working Group — ongoing model law development',
+      'Federal Insurance Office monitoring AI in insurance',
+    ],
+    industryStandards: [
+      'NIST AI Risk Management Framework (AI RMF 1.0)',
+      'ACORD data standards for AI interoperability',
+      'III guidelines on AI adoption for insurers',
+    ],
+    notableCases: [
+      'State DOI enforcement actions on algorithmic discrimination',
+      'FTC settlements over AI-powered insurance marketing claims',
+    ],
+    lastUpdated: 'February 2026',
+  },
+  {
+    name: 'Colorado',
+    region: 'north-america',
+    regulationStatus: 'enacted',
+    legislation: [
+      'SB 21-169: Protecting Consumers from Unfair Discrimination in Insurance Practices (2021)',
+      'First comprehensive U.S. state law addressing algorithmic bias in insurance',
+      'Requires testing for unfair discrimination in AI-based insurance decisions',
+    ],
+    regulatoryGuidance: [
+      'Colorado Division of Insurance AI governance framework requirements',
+      'Mandatory impact assessments for AI/ML models in underwriting and pricing',
+      'Annual reporting on algorithmic testing results',
+    ],
+    industryStandards: [
+      'Colorado-specific compliance frameworks emerging',
+      'Industry working groups on SB 21-169 implementation',
+    ],
+    notableCases: [
+      'First state enforcement actions under SB 21-169 expected 2026',
+      'Industry pushback on testing methodology requirements',
+    ],
+    lastUpdated: 'February 2026',
+  },
+  {
+    name: 'New York',
+    region: 'north-america',
+    regulationStatus: 'enacted',
+    legislation: [
+      'Circular Letter 2019-1: Use of External Consumer Data in Underwriting',
+      'NYC Local Law 144: Automated Employment Decision Tools (indirect insurance impact)',
+      'Proposed AI Bill of Rights implications for insurance',
+    ],
+    regulatoryGuidance: [
+      'NYDFS guidance on AI in insurance underwriting and pricing',
+      'Cybersecurity regulation (23 NYCRR 500) applies to AI systems',
+      'Market conduct examination focus on algorithmic fairness',
+    ],
+    industryStandards: [
+      'NY-specific fair lending and pricing standards',
+      'Insurance industry compliance frameworks for NYDFS expectations',
+    ],
+    notableCases: [
+      'NYDFS enforcement actions on discriminatory pricing algorithms',
+      'Market conduct findings related to AI-driven underwriting',
+    ],
+    lastUpdated: 'February 2026',
+  },
+  {
+    name: 'California',
+    region: 'north-america',
+    regulationStatus: 'pending',
+    legislation: [
+      'CCPA/CPRA applies to AI data processing in insurance',
+      'Multiple AI bills proposed in state legislature',
+      'Insurance Code provisions on unfair practices extend to AI',
+    ],
+    regulatoryGuidance: [
+      'CDI attention to algorithmic bias in insurance pricing',
+      'California Privacy Protection Agency considering AI-specific rules',
+      'Proposition 103 rate-making constraints apply to AI models',
+    ],
+    industryStandards: [
+      'California-specific privacy compliance for AI tools',
+      'Industry advocacy groups developing best practices',
+    ],
+    notableCases: [
+      'Rate filing challenges involving AI-based pricing models',
+      'Privacy enforcement actions relevant to insurance AI',
+    ],
+    lastUpdated: 'February 2026',
+  },
+  {
+    name: 'Canada',
+    region: 'north-america',
+    regulationStatus: 'pending',
+    legislation: [
+      'Artificial Intelligence and Data Act (AIDA) — proposed as part of Bill C-27',
+      'PIPEDA and provincial privacy laws apply to AI in insurance',
+      'Quebec\'s Law 25 strengthens data privacy for AI systems',
+    ],
+    regulatoryGuidance: [
+      'OSFI guidance on model risk management for insurers',
+      'Provincial insurance regulators monitoring AI adoption',
+      'Canadian Centre for Cyber Security AI guidelines',
+    ],
+    industryStandards: [
+      'Insurance Bureau of Canada AI adoption guidance',
+      'CPA Canada guidelines on AI governance',
+    ],
+    notableCases: [
+      'Privacy Commissioner investigations into AI-based insurance decisions',
+      'Growing regulatory scrutiny of telematics data usage',
+    ],
+    lastUpdated: 'February 2026',
+  },
+  {
+    name: 'European Union',
+    region: 'europe',
+    regulationStatus: 'enacted',
+    legislation: [
+      'EU AI Act (Regulation 2024/1689) — comprehensive risk-based AI regulation',
+      'Insurance AI classified as high-risk in multiple categories',
+      'GDPR continues to apply to AI data processing in insurance',
+    ],
+    regulatoryGuidance: [
+      'EIOPA guidelines on AI governance for insurers',
+      'European Insurance and Occupational Pensions Authority oversight',
+      'National competent authorities implementing EU AI Act',
+    ],
+    industryStandards: [
+      'Insurance Europe AI principles',
+      'CRO Forum on AI risk management',
+      'AMICE guidance for mutual insurers',
+    ],
+    notableCases: [
+      'First EU AI Act enforcement proceedings expected 2026-2027',
+      'GDPR enforcement actions on automated insurance decisions',
+    ],
+    lastUpdated: 'February 2026',
+  },
+  {
+    name: 'United Kingdom',
+    region: 'europe',
+    regulationStatus: 'pending',
+    legislation: [
+      'No dedicated AI legislation — pro-innovation approach',
+      'Data Protection Act 2018 / UK GDPR applies to AI',
+      'Financial Services and Markets Act 2023 — AI oversight authority for FCA/PRA',
+    ],
+    regulatoryGuidance: [
+      'FCA guidance on AI in financial services including insurance',
+      'PRA supervisory expectations on AI model risk',
+      'Lloyd\'s Market AI governance standards',
+    ],
+    industryStandards: [
+      'ABI (Association of British Insurers) AI principles',
+      'Lloyd\'s Lab innovation standards',
+      'UK Finance/insurance cross-sector AI working groups',
+    ],
+    notableCases: [
+      'FCA enforcement related to algorithmic trading (precedent for insurance)',
+      'ICO investigations into AI-powered insurance profiling',
+    ],
+    lastUpdated: 'February 2026',
+  },
+  {
+    name: 'Germany',
+    region: 'europe',
+    regulationStatus: 'enacted',
+    legislation: [
+      'EU AI Act applies directly',
+      'BaFin regulatory framework for AI in financial services',
+      'Sector-specific regulation through existing insurance law (VAG)',
+    ],
+    regulatoryGuidance: [
+      'BaFin Big Data/AI principles for financial sector',
+      'GDV (German Insurance Association) AI guidance',
+      'Federal data protection authority AI oversight',
+    ],
+    industryStandards: [
+      'GDV code of conduct for AI in insurance',
+      'German actuarial standards for AI models',
+    ],
+    notableCases: [
+      'BaFin enforcement on AI-driven credit scoring (precedent for insurance)',
+      'GDPR enforcement on automated insurance decisions',
+    ],
+    lastUpdated: 'February 2026',
+  },
+  {
+    name: 'Brazil',
+    region: 'latin-america',
+    regulationStatus: 'pending',
+    legislation: [
+      'AI Regulatory Framework (PL 2338/2023) — pending Senate approval',
+      'LGPD (data protection) applies to AI in insurance',
+      'SUSEP (Insurance Superintendency) monitoring AI adoption',
+    ],
+    regulatoryGuidance: [
+      'SUSEP Sandbox for insurtech innovation',
+      'Central Bank AI governance principles (cross-sector)',
+      'National AI Strategy emphasizes responsible adoption',
+    ],
+    industryStandards: [
+      'CNseg (Insurance Confederation) AI working group',
+      'FenSeg (Federation of Insurers) digital transformation guidelines',
+    ],
+    notableCases: [
+      'LGPD enforcement actions on automated insurance decisions',
+      'SUSEP sandbox projects involving AI underwriting',
+    ],
+    lastUpdated: 'February 2026',
+  },
+  {
+    name: 'Mexico',
+    region: 'latin-america',
+    regulationStatus: 'proposed',
+    legislation: [
+      'Multiple AI bills proposed in Congress',
+      'Federal Law on Data Protection applies to AI',
+      'CNSF (Insurance Commission) monitoring AI adoption',
+    ],
+    regulatoryGuidance: [
+      'CNSF regulatory sandbox for insurtech',
+      'Limited formal AI guidance for insurance sector',
+      'Digital transformation strategy for financial services',
+    ],
+    industryStandards: [
+      'AMIS (Mexican Insurance Association) technology initiatives',
+      'Limited formal industry AI standards',
+    ],
+    notableCases: [
+      'Early-stage regulatory discussions on AI in insurance',
+      'Insurtech licensing developments',
+    ],
+    lastUpdated: 'February 2026',
+  },
+  {
+    name: 'China',
+    region: 'asia-pacific',
+    regulationStatus: 'enacted',
+    legislation: [
+      'Interim Measures for Management of Generative AI (2023)',
+      'Algorithm Recommendation Regulations (2022)',
+      'CBIRC regulations on technology risk in insurance',
+    ],
+    regulatoryGuidance: [
+      'CBIRC (banking/insurance regulator) AI governance requirements',
+      'Mandatory algorithm filing and disclosure',
+      'AI ethics guidelines for financial services',
+    ],
+    industryStandards: [
+      'Insurance Association of China AI standards',
+      'InsurTech standardization working groups',
+    ],
+    notableCases: [
+      'Regulatory enforcement on algorithmic insurance pricing',
+      'Ping An AI governance as industry benchmark',
+    ],
+    lastUpdated: 'February 2026',
+  },
+  {
+    name: 'Japan',
+    region: 'asia-pacific',
+    regulationStatus: 'proposed',
+    legislation: [
+      'AI Guidelines for Business (2024)',
+      'No dedicated AI law — agile governance approach',
+      'Insurance Business Act applies to AI-driven decisions',
+    ],
+    regulatoryGuidance: [
+      'FSA (Financial Services Agency) AI guidance for insurers',
+      'JFSA supervisory expectations on AI model risk',
+      'Ministry of Economy AI governance framework',
+    ],
+    industryStandards: [
+      'GIAJ (General Insurance Association) AI principles',
+      'LIAJ (Life Insurance Association) technology guidelines',
+    ],
+    notableCases: [
+      'FSA supervisory actions on AI in insurance pricing',
+      'AI governance sandbox initiatives',
+    ],
+    lastUpdated: 'February 2026',
+  },
+  {
+    name: 'Singapore',
+    region: 'asia-pacific',
+    regulationStatus: 'enacted',
+    legislation: [
+      'Model AI Governance Framework (2019, updated 2024)',
+      'AI Verify testing framework for trustworthy AI',
+      'PDPA applies to AI data processing in insurance',
+    ],
+    regulatoryGuidance: [
+      'MAS (Monetary Authority) FEAT principles for AI in financial services',
+      'MAS guidelines on fair dealing with AI in insurance',
+      'Technology risk management guidelines for insurers',
+    ],
+    industryStandards: [
+      'GIA (General Insurance Association) digital transformation standards',
+      'LIA (Life Insurance Association) AI adoption guidelines',
+      'Singapore Actuarial Society AI working group',
+    ],
+    notableCases: [
+      'MAS regulatory sandbox AI projects in insurance',
+      'AI governance certification pilots',
+    ],
+    lastUpdated: 'February 2026',
+  },
+  {
+    name: 'Australia',
+    region: 'asia-pacific',
+    regulationStatus: 'proposed',
+    legislation: [
+      'Proposed mandatory guardrails for high-risk AI (2024)',
+      'Privacy Act reform with AI implications for insurance',
+      'Insurance Contracts Act applies to AI-driven decisions',
+    ],
+    regulatoryGuidance: [
+      'APRA guidance on AI model risk for insurers',
+      'ASIC enforcement focus on AI in financial services',
+      'OAIC AI and privacy guidance',
+    ],
+    industryStandards: [
+      'Insurance Council of Australia AI principles',
+      'Actuaries Institute AI working group standards',
+    ],
+    notableCases: [
+      'ASIC enforcement on automated financial advice (precedent for insurance)',
+      'Privacy investigations into AI-based risk scoring',
+    ],
+    lastUpdated: 'February 2026',
+  },
+  {
+    name: 'India',
+    region: 'asia-pacific',
+    regulationStatus: 'none',
+    legislation: [
+      'No dedicated AI legislation',
+      'Digital Personal Data Protection Act (2023) — AI implications',
+      'Insurance Act amendments being considered for AI',
+    ],
+    regulatoryGuidance: [
+      'IRDAI (Insurance Regulatory Authority) monitoring AI adoption',
+      'IRDAI sandbox for insurtech innovation',
+      'National AI Strategy (NITI Aayog) — cross-sector',
+    ],
+    industryStandards: [
+      'GIC (General Insurance Council) technology guidelines',
+      'LIC modernization initiatives',
+    ],
+    notableCases: [
+      'IRDAI sandbox projects involving AI underwriting',
+      'Growing insurtech ecosystem driving regulatory attention',
+    ],
+    lastUpdated: 'February 2026',
+  },
+];
+
+function getStatusBadgeClass(status: string): string {
+  switch (status) {
+    case 'enacted': return 'badge badge--beginner';
+    case 'pending': return 'badge badge--intermediate';
+    case 'none': return 'badge';
+    default: return 'badge';
+  }
+}
+
+function getStatusBadgeStyle(status: string): string {
+  if (status === 'proposed') return 'background: rgba(0,180,216,0.1); color: var(--color-accent-dark);';
+  return '';
+}
+---
+
+<BaseLayout
+  title={t(locale, 'jurisdictionGuide.title')}
+  description={t(locale, 'jurisdictionGuide.description')}
+  locale={locale}
+  keywords="AI regulation insurance, insurance AI law, jurisdiction guide, AI compliance insurance, NAIC AI, EU AI Act insurance, algorithmic bias insurance"
+>
+  <!-- Hero -->
+  <section class="hero" style="background: linear-gradient(135deg, rgba(15,43,70,0.88) 0%, rgba(0,180,216,0.15) 100%), url('/assets/images/hero-images/hero-image-resources.png') top/cover no-repeat;">
+    <div class="container" style="position: relative; z-index: 1;">
+      <div class="slide-up" style="max-width: 800px;">
+        <p class="text-sm font-semibold mb-4" style="color: var(--color-secondary); text-transform: uppercase; letter-spacing: 0.1em;">{t(locale, 'jurisdictionGuide.heroLabel')}</p>
+        <h1 style="font-size: var(--text-5xl); margin-bottom: var(--space-6);">{t(locale, 'jurisdictionGuide.title')}</h1>
+        <p class="lead" style="margin-bottom: var(--space-6);">
+          {t(locale, 'jurisdictionGuide.heroDesc')}
+        </p>
+      </div>
+    </div>
+    <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 120px; background: linear-gradient(to top, var(--surface-page), transparent);"></div>
+  </section>
+
+  <!-- Filters -->
+  <section class="section--sm">
+    <div class="container">
+      <div class="reveal" style="max-width: 900px; margin: 0 auto;">
+        <div style="text-align: center; margin-bottom: var(--space-4);">
+          <label class="text-sm font-semibold text-muted" style="display: block; margin-bottom: var(--space-2);">{t(locale, 'jurisdictionGuide.filterRegion')}</label>
+          <div class="filter-group" style="justify-content: center;">
+            {regions.map((r) => (
+              <button
+                class={`filter-chip ${r.key === 'all' ? 'is-active' : ''}`}
+                data-filter-region={r.key}
+              >
+                {r.label}
+              </button>
+            ))}
+          </div>
+        </div>
+        <div style="text-align: center; margin-bottom: var(--space-4);">
+          <label class="text-sm font-semibold text-muted" style="display: block; margin-bottom: var(--space-2);">{t(locale, 'jurisdictionGuide.filterStatus')}</label>
+          <div class="filter-group" style="justify-content: center;">
+            {statuses.map((s) => (
+              <button
+                class={`filter-chip ${s.key === 'all' ? 'is-active' : ''}`}
+                data-filter-status={s.key}
+              >
+                {s.label}
+              </button>
+            ))}
+          </div>
+        </div>
+        <p class="text-center text-sm text-muted" id="result-count">
+          Showing {jurisdictions.length} jurisdictions
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Jurisdiction Cards -->
+  <section class="section">
+    <div class="container">
+      <div class="reveal-stagger" id="jurisdictions-list" style="max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: var(--space-8);">
+        {jurisdictions.map((j) => (
+          <article class="card jurisdiction-card" data-region={j.region} data-status={j.regulationStatus} style="padding: var(--space-6);">
+            <div style="display: flex; gap: var(--space-2); align-items: center; margin-bottom: var(--space-3); flex-wrap: wrap;">
+              <span class="badge">{regionLabels[j.region]}</span>
+              <span class={getStatusBadgeClass(j.regulationStatus)} style={getStatusBadgeStyle(j.regulationStatus)}>{statusLabels[j.regulationStatus]}</span>
+              <span class="text-xs text-muted" style="margin-left: auto;">{t(locale, 'jurisdictionGuide.lastUpdated')}: {j.lastUpdated}</span>
+            </div>
+            <h3 style="font-size: var(--text-2xl); margin-bottom: var(--space-4);">{j.name}</h3>
+            <div class="jurisdiction-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4);">
+              <div>
+                <h4 class="text-sm font-semibold" style="color: var(--color-primary); margin-bottom: var(--space-2);">{t(locale, 'jurisdictionGuide.legislation')}</h4>
+                <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: var(--space-1);">
+                  {j.legislation.map((l) => (
+                    <li style="font-size: var(--text-sm); color: var(--text-secondary); padding-left: var(--space-4); position: relative;">
+                      <span style="position: absolute; left: 0; top: 0.5em; width: 6px; height: 6px; border-radius: 50%; background: var(--color-accent);"></span>
+                      {l}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <h4 class="text-sm font-semibold" style="color: var(--color-primary); margin-bottom: var(--space-2);">{t(locale, 'jurisdictionGuide.regulatoryGuidance')}</h4>
+                {j.regulatoryGuidance.length > 0 ? (
+                  <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: var(--space-1);">
+                    {j.regulatoryGuidance.map((r) => (
+                      <li style="font-size: var(--text-sm); color: var(--text-secondary); padding-left: var(--space-4); position: relative;">
+                        <span style="position: absolute; left: 0; top: 0.5em; width: 6px; height: 6px; border-radius: 50%; background: var(--color-accent);"></span>
+                        {r}
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p class="text-sm text-muted" style="font-style: italic;">None yet</p>
+                )}
+              </div>
+              <div>
+                <h4 class="text-sm font-semibold" style="color: var(--color-primary); margin-bottom: var(--space-2);">{t(locale, 'jurisdictionGuide.industryStandards')}</h4>
+                {j.industryStandards.length > 0 ? (
+                  <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: var(--space-1);">
+                    {j.industryStandards.map((s) => (
+                      <li style="font-size: var(--text-sm); color: var(--text-secondary); padding-left: var(--space-4); position: relative;">
+                        <span style="position: absolute; left: 0; top: 0.5em; width: 6px; height: 6px; border-radius: 50%; background: var(--color-accent);"></span>
+                        {s}
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p class="text-sm text-muted" style="font-style: italic;">None yet</p>
+                )}
+              </div>
+              <div>
+                <h4 class="text-sm font-semibold" style="color: var(--color-primary); margin-bottom: var(--space-2);">{t(locale, 'jurisdictionGuide.notableCases')}</h4>
+                {j.notableCases.length > 0 ? (
+                  <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: var(--space-1);">
+                    {j.notableCases.map((c) => (
+                      <li style="font-size: var(--text-sm); color: var(--text-secondary); padding-left: var(--space-4); position: relative;">
+                        <span style="position: absolute; left: 0; top: 0.5em; width: 6px; height: 6px; border-radius: 50%; background: var(--color-accent);"></span>
+                        {c}
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p class="text-sm text-muted" style="font-style: italic;">None yet</p>
+                )}
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- How to Use Callout -->
+  <section class="section--sm">
+    <div class="container">
+      <div style="max-width: 900px; margin: 0 auto;">
+        <div class="callout callout--info reveal">
+          <h3 class="callout__title">{t(locale, 'jurisdictionGuide.howToUse')}</h3>
+          <p style="margin-bottom: 0; line-height: var(--leading-relaxed);">
+            {t(locale, 'jurisdictionGuide.howToUseDesc')}
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section section--parchment">
+    <div class="container text-center">
+      <div class="reveal" style="max-width: 600px; margin: 0 auto;">
+        <h2 style="margin-bottom: var(--space-4);">{t(locale, 'jurisdictionGuide.ctaTitle')}</h2>
+        <p style="font-size: var(--text-lg); color: var(--text-secondary); margin-bottom: var(--space-6);">
+          {t(locale, 'jurisdictionGuide.ctaDesc')}
+        </p>
+        <div class="flex gap-4 flex--wrap" style="justify-content: center;">
+          <a href={p('/learn/program/')} class="btn btn--primary">{t(locale, 'jurisdictionGuide.ctaProgram')}</a>
+          <a href={p('/resources/glossary/')} class="btn btn--secondary">{t(locale, 'jurisdictionGuide.ctaResources')}</a>
+        </div>
+        <p style="margin-top: var(--space-4); font-size: var(--text-sm); color: var(--text-muted);">
+          {t(locale, 'learningProgram.programCta')}
+          <a href={p('/learn/program/')} style="font-weight: var(--font-semibold);">
+            {t(locale, 'learningProgram.programCtaLink')} &rarr;
+          </a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    @media (max-width: 640px) {
+      .jurisdiction-grid {
+        grid-template-columns: 1fr !important;
+      }
+    }
+  </style>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const regionChips = document.querySelectorAll('[data-filter-region]');
+      const statusChips = document.querySelectorAll('[data-filter-status]');
+      const cards = document.querySelectorAll('.jurisdiction-card');
+      const countEl = document.getElementById('result-count');
+      let activeRegion = 'all';
+      let activeStatus = 'all';
+
+      function applyFilters() {
+        let count = 0;
+        cards.forEach(card => {
+          const matchRegion = activeRegion === 'all' || card.getAttribute('data-region') === activeRegion;
+          const matchStatus = activeStatus === 'all' || card.getAttribute('data-status') === activeStatus;
+          const show = matchRegion && matchStatus;
+          (card as HTMLElement).style.display = show ? '' : 'none';
+          if (show) count++;
+        });
+        if (countEl) countEl.textContent = `Showing ${count} jurisdiction${count !== 1 ? 's' : ''}`;
+      }
+
+      regionChips.forEach(chip => {
+        chip.addEventListener('click', () => {
+          regionChips.forEach(c => c.classList.remove('is-active'));
+          chip.classList.add('is-active');
+          activeRegion = (chip as HTMLElement).getAttribute('data-filter-region') || 'all';
+          applyFilters();
+        });
+      });
+
+      statusChips.forEach(chip => {
+        chip.addEventListener('click', () => {
+          statusChips.forEach(c => c.classList.remove('is-active'));
+          chip.classList.add('is-active');
+          activeStatus = (chip as HTMLElement).getAttribute('data-filter-status') || 'all';
+          applyFilters();
+        });
+      });
+
+      applyFilters();
+    });
+  </script>
+</BaseLayout>

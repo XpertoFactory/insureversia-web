@@ -1,0 +1,541 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { t, getLocalePath } from '../../../i18n';
+const locale = 'en';
+const p = (path: string) => getLocalePath(locale, path);
+
+/* ── Tool Data ────────────────────────────────────────────── */
+const tools = [
+  {
+    name: 'ChatGPT',
+    website: 'https://chat.openai.com',
+    category: 'general-llm',
+    pricing: 'freemium',
+    description: "OpenAI's flagship LLM. Versatile across insurance tasks from policy analysis to customer communication drafting. GPT-4 excels at complex reasoning.",
+    strengths: ['Excellent at policy document analysis and summarization', 'Strong reasoning for underwriting assessments', 'Supports file uploads for claims documentation', 'Custom GPTs for repeated insurance workflows'],
+    weaknesses: ['Data sent to OpenAI servers — not suitable for confidential policyholder data', 'Can hallucinate case citations and regulatory references', 'Requires careful prompt engineering for accuracy', 'Subscription required for GPT-4 access'],
+    insuranceSectors: ['Claims Processing', 'Customer Service', 'Marketing & Sales', 'Compliance'],
+    confidentiality: 'low',
+    verdict: 'The Swiss Army knife of AI. Start here for general tasks, but never for confidential policyholder data without enterprise agreement.'
+  },
+  {
+    name: 'Claude',
+    website: 'https://claude.ai',
+    category: 'general-llm',
+    pricing: 'freemium',
+    description: "Anthropic's AI assistant. Excels at nuanced analysis, long document processing, and safety-focused outputs. Particularly strong for compliance-sensitive insurance work.",
+    strengths: ['200K token context window for long policy documents', 'Strong safety focus reduces harmful outputs', 'Excellent at nuanced regulatory analysis', 'Handles complex multi-step insurance reasoning well'],
+    weaknesses: ['Data sent to Anthropic servers', 'Smaller ecosystem than ChatGPT', 'Can be overly cautious in some analyses', 'Pro subscription needed for full capabilities'],
+    insuranceSectors: ['Compliance', 'Risk Management', 'Prospecting & Underwriting'],
+    confidentiality: 'medium',
+    verdict: 'Best general-purpose LLM for insurance compliance work. The long context window makes it ideal for policy document analysis.'
+  },
+  {
+    name: 'Google Gemini',
+    website: 'https://gemini.google.com',
+    category: 'general-llm',
+    pricing: 'freemium',
+    description: "Google's multimodal AI. Strong at analyzing images, documents, and data. Integration with Google Workspace makes it natural for insurance teams already in the Google ecosystem.",
+    strengths: ['Multimodal — can analyze damage photos for claims', 'Deep Google Workspace integration', 'Strong at data analysis and visualization', 'Free tier is generous'],
+    weaknesses: ["Data feeds Google's ecosystem", 'Less consistent than ChatGPT/Claude for long documents', 'Rapidly changing product lineup can be confusing', 'Limited enterprise controls'],
+    insuranceSectors: ['Claims Processing', 'Marketing & Sales', 'Customer Service'],
+    confidentiality: 'low',
+    verdict: 'Best for teams already using Google Workspace. Multimodal capabilities are particularly useful for photo-based claims assessment.'
+  },
+  {
+    name: 'Microsoft Copilot',
+    website: 'https://copilot.microsoft.com',
+    category: 'general-llm',
+    pricing: 'freemium',
+    description: "Microsoft's AI assistant integrated across Office 365. Natural fit for insurance operations already running on Microsoft infrastructure.",
+    strengths: ['Deep integration with Word, Excel, Outlook, Teams', 'Enterprise-grade security and compliance', 'Can analyze spreadsheets for loss run data', 'Familiar Microsoft interface'],
+    weaknesses: ['Microsoft 365 subscription required for full capabilities', 'Less capable than dedicated AI for complex analysis', 'Copilot for Microsoft 365 is expensive ($30/user/month)', 'Limited customization options'],
+    insuranceSectors: ['Prospecting & Underwriting', 'Customer Service', 'Marketing & Sales'],
+    confidentiality: 'medium',
+    verdict: 'Best for Microsoft-heavy organizations. Enterprise plan offers data protection that makes it suitable for internal insurance workflows.'
+  },
+  {
+    name: 'Cytora',
+    website: 'https://cytora.com',
+    category: 'insurance-specific',
+    pricing: 'enterprise',
+    description: 'AI-powered commercial underwriting platform. Digitizes and enriches submission data, automates risk assessment, and streamlines the underwriting workflow.',
+    strengths: ['Purpose-built for commercial insurance underwriting', 'Integrates with existing policy admin systems', 'Structured data extraction from unstructured submissions', 'Configurable risk models'],
+    weaknesses: ['Enterprise pricing — not accessible for small agencies', 'Requires integration effort with existing systems', 'Focused on commercial lines only', 'Limited transparency on AI decision-making'],
+    insuranceSectors: ['Prospecting & Underwriting', 'Risk Management'],
+    confidentiality: 'high',
+    verdict: "Leading AI underwriting platform for commercial insurance. If you're a mid-to-large carrier, this should be on your evaluation shortlist."
+  },
+  {
+    name: 'Tractable',
+    website: 'https://tractable.ai',
+    category: 'insurance-specific',
+    pricing: 'enterprise',
+    description: 'AI-powered visual intelligence for auto claims. Uses computer vision to assess vehicle damage from photos, estimate repair costs, and accelerate settlements.',
+    strengths: ['Industry-leading accuracy for auto damage assessment', 'Reduces claims cycle time dramatically', 'Integrates with major claims management systems', 'Handles both total loss and repairable assessments'],
+    weaknesses: ['Focused exclusively on auto/property damage', 'Enterprise pricing', 'Requires high-quality photos for best results', 'May miss damage not visible in photos'],
+    insuranceSectors: ['Claims Processing'],
+    confidentiality: 'high',
+    verdict: 'The gold standard for AI-powered auto claims assessment. If you process vehicle claims, Tractable delivers measurable ROI.'
+  },
+  {
+    name: 'Shift Technology',
+    website: 'https://shift-technology.com',
+    category: 'insurance-specific',
+    pricing: 'enterprise',
+    description: 'AI-native fraud detection and claims automation for P&C and health insurance. Analyzes claims patterns to identify fraud, abuse, and errors.',
+    strengths: ['75% reduction in false positive fraud alerts', 'Covers P&C, health, and workers comp', 'Network analysis identifies organized fraud rings', 'Regulatory-compliant audit trails'],
+    weaknesses: ['Enterprise-only pricing', 'Requires significant historical claims data', 'Implementation timeline of 3-6 months', 'Most effective for carriers with large claim volumes'],
+    insuranceSectors: ['Claims Processing', 'Compliance'],
+    confidentiality: 'high',
+    verdict: 'Best-in-class fraud detection. Particularly valuable for carriers with high claim volumes where manual review is impractical.'
+  },
+  {
+    name: 'FRISS',
+    website: 'https://friss.com',
+    category: 'insurance-specific',
+    pricing: 'enterprise',
+    description: 'Real-time risk and fraud detection platform for P&C insurers. Provides automated risk scoring at point of underwriting, claims, and SIU.',
+    strengths: ['Real-time risk scoring at point of sale', 'Covers entire insurance value chain', 'No-code configuration for business users', 'Strong track record with P&C carriers globally'],
+    weaknesses: ['Enterprise pricing', 'P&C focused — limited health/life coverage', 'Requires clean data for optimal performance', 'Implementation requires change management'],
+    insuranceSectors: ['Prospecting & Underwriting', 'Claims Processing', 'Risk Management'],
+    confidentiality: 'high',
+    verdict: 'Excellent for P&C carriers wanting fraud detection across the policy lifecycle. The no-code approach makes it accessible to business teams.'
+  },
+  {
+    name: 'Akur8',
+    website: 'https://akur8.com',
+    category: 'insurance-specific',
+    pricing: 'enterprise',
+    description: 'AI-powered pricing and reserving platform. Uses machine learning to automate actuarial modeling while maintaining full transparency and regulatory compliance.',
+    strengths: ['Transparent AI — models are explainable and auditable', 'Reduces pricing model development time by 10x', 'Regulatory-compliant methodology', 'Strong actuarial foundation'],
+    weaknesses: ['Enterprise pricing', 'Requires actuarial expertise to configure', 'Focused on pricing/reserving only', 'Newer entrant — less track record than legacy tools'],
+    insuranceSectors: ['Prospecting & Underwriting', 'Risk Management'],
+    confidentiality: 'high',
+    verdict: 'The future of actuarial pricing. Transparent AI that regulators can understand is exactly what insurance needs.'
+  },
+  {
+    name: 'Perplexity',
+    website: 'https://perplexity.ai',
+    category: 'research',
+    pricing: 'freemium',
+    description: 'AI-powered research assistant that provides cited answers from current sources. Excellent for insurance regulatory research and market intelligence.',
+    strengths: ['Always cites sources — reduces hallucination risk', 'Access to current information (not knowledge-cutoff limited)', 'Focus mode for academic and regulatory research', 'Clean, research-oriented interface'],
+    weaknesses: ['Less capable at document analysis than ChatGPT/Claude', 'Cannot process uploaded files in free tier', 'Sources may not always be authoritative', 'Limited customization options'],
+    insuranceSectors: ['Compliance', 'Risk Management'],
+    confidentiality: 'low',
+    verdict: 'Best AI tool for insurance regulatory research. The source citations make it ideal for compliance teams tracking evolving regulations.'
+  },
+  {
+    name: 'NotebookLM',
+    website: 'https://notebooklm.google.com',
+    category: 'research',
+    pricing: 'free',
+    description: "Google's AI-powered research and note-taking tool. Upload insurance documents and get AI analysis grounded only in your sources — no hallucinations from external data.",
+    strengths: ['Grounded in YOUR documents — no external hallucinations', 'Excellent for analyzing policy wordings and regulatory texts', 'Generates summaries and audio overviews', 'Free to use'],
+    weaknesses: ['Cannot access external information beyond uploaded docs', 'Limited document formats supported', 'No integration with insurance systems', 'Google account required'],
+    insuranceSectors: ['Compliance', 'Risk Management', 'Prospecting & Underwriting'],
+    confidentiality: 'medium',
+    verdict: 'Hidden gem for insurance professionals. Upload your policy documents and regulatory guidance, then ask questions grounded entirely in your own sources.'
+  },
+  {
+    name: 'LM Studio',
+    website: 'https://lmstudio.ai',
+    category: 'general-llm',
+    pricing: 'free',
+    description: 'Run large language models locally on your own computer. No data leaves your machine — ideal for confidential insurance work.',
+    strengths: ['100% local — policyholder data never leaves your machine', 'Free and open-source', 'Wide model selection (Llama, Mistral, Phi)', 'No subscription or API costs'],
+    weaknesses: ['Requires powerful hardware (16GB+ RAM recommended)', 'Local models less capable than cloud services', 'No internet access for current information', 'Technical setup required'],
+    insuranceSectors: ['Claims Processing', 'Prospecting & Underwriting', 'Customer Service'],
+    confidentiality: 'high',
+    verdict: 'Essential for insurance tasks involving confidential data. Quality is improving rapidly — what required cloud access last year may run locally today.'
+  },
+  {
+    name: 'Zywave',
+    website: 'https://zywave.com',
+    category: 'practice-management',
+    pricing: 'paid',
+    description: 'Insurance agency management platform with AI-powered analytics, content creation, and client engagement tools.',
+    strengths: ['Purpose-built for insurance agencies and brokerages', 'AI-powered content for client communications', 'Analytics for cross-selling opportunities', 'Compliance content library'],
+    weaknesses: ['Subscription pricing', 'Focused on agency operations', 'AI capabilities evolving — not yet comprehensive', 'Integration limitations with some AMS platforms'],
+    insuranceSectors: ['Marketing & Sales', 'Customer Service'],
+    confidentiality: 'high',
+    verdict: 'Solid choice for agencies wanting AI-enhanced client management without building custom solutions.'
+  },
+  {
+    name: 'Applied Epic',
+    website: 'https://appliedsystems.com',
+    category: 'practice-management',
+    pricing: 'enterprise',
+    description: 'Leading agency management system with growing AI capabilities. Applied AI provides smart recommendations, automated workflows, and predictive analytics.',
+    strengths: ['Market-leading agency management platform', 'AI-powered renewal management', 'Automated data extraction from documents', 'Extensive carrier connectivity'],
+    weaknesses: ['Enterprise pricing — significant investment', 'AI features still evolving', 'Legacy architecture in some areas', 'Training investment required'],
+    insuranceSectors: ['Prospecting & Underwriting', 'Customer Service', 'Marketing & Sales'],
+    confidentiality: 'high',
+    verdict: "If you're already on Applied Epic, leverage the growing AI features. For new adopters, evaluate against newer cloud-native alternatives."
+  },
+  {
+    name: 'Docsumo',
+    website: 'https://docsumo.com',
+    category: 'document-review',
+    pricing: 'paid',
+    description: 'AI-powered intelligent document processing. Extracts structured data from insurance documents including ACORD forms, loss runs, and policy declarations.',
+    strengths: ['Pre-trained on insurance document types', 'Handles ACORD forms, SOVs, loss runs', '99%+ accuracy on structured documents', 'API integration with claims and policy systems'],
+    weaknesses: ['Paid service with per-document pricing', 'Best for structured/semi-structured documents', 'Less capable with handwritten documents', 'May require custom training for unusual formats'],
+    insuranceSectors: ['Claims Processing', 'Prospecting & Underwriting', 'Compliance'],
+    confidentiality: 'medium',
+    verdict: 'If you process high volumes of ACORD forms or loss runs, this tool will pay for itself quickly.'
+  },
+  {
+    name: 'Chisel AI',
+    website: 'https://chisel.ai',
+    category: 'document-review',
+    pricing: 'enterprise',
+    description: 'AI platform for commercial insurance document review. Automatically extracts, classifies, and compares policy language across submissions.',
+    strengths: ['Purpose-built for commercial insurance documents', 'Policy comparison and gap analysis', 'Handles complex endorsements and riders', 'Integrates with commercial lines workflows'],
+    weaknesses: ['Enterprise pricing', 'Focused on commercial lines', 'Requires clean document scans', 'Newer player — still building market presence'],
+    insuranceSectors: ['Prospecting & Underwriting', 'Compliance'],
+    confidentiality: 'high',
+    verdict: 'Leading AI for commercial policy document review. The ability to compare and analyze endorsements is a genuine time-saver for underwriters.'
+  },
+  {
+    name: 'RiskGenius',
+    website: 'https://riskgenius.com',
+    category: 'document-review',
+    pricing: 'enterprise',
+    description: 'AI-powered policy analysis platform. Reads, categorizes, and compares insurance policy language to identify coverage gaps and non-standard terms.',
+    strengths: ['Deep understanding of policy language and intent', 'Extensive policy form library for comparison', 'Identifies non-standard or missing provisions', 'Used by carriers, MGAs, and large brokerages'],
+    weaknesses: ['Enterprise pricing', 'Focused on policy analysis only', 'Requires quality PDF inputs', 'Primarily US market coverage forms'],
+    insuranceSectors: ['Prospecting & Underwriting', 'Compliance', 'Risk Management'],
+    confidentiality: 'high',
+    verdict: 'If policy comparison and gap analysis is a major workflow for you, RiskGenius provides genuine value that general-purpose AI cannot match.'
+  }
+];
+
+/* ── Category display ─────────────────────────────────────── */
+const categoryDisplay: Record<string, {label: string; badgeClass: string}> = {
+  'general-llm':          { label: 'General LLM',          badgeClass: 'badge' },
+  'insurance-specific':   { label: 'Insurance-Specific',   badgeClass: 'badge badge--intermediate' },
+  'document-review':      { label: 'Document Review',      badgeClass: 'badge badge--advanced' },
+  'research':             { label: 'Research',             badgeClass: 'badge badge--beginner' },
+  'practice-management':  { label: 'Practice Management',  badgeClass: 'badge' },
+};
+
+/* ── Pricing display ──────────────────────────────────────── */
+const pricingDisplay: Record<string, {label: string; style: string}> = {
+  'free':       { label: 'Free',       style: 'background: rgba(56,161,105,0.1); color: #276749;' },
+  'freemium':   { label: 'Freemium',   style: 'background: rgba(0,180,216,0.1); color: #0090ab;' },
+  'paid':       { label: 'Paid',       style: 'background: rgba(214,158,46,0.1); color: #92600a;' },
+  'enterprise': { label: 'Enterprise', style: 'background: rgba(15,43,70,0.1); color: #0F2B46;' },
+};
+
+/* ── Confidentiality color map ────────────────────────────── */
+const confStyles: Record<string, string> = {
+  high:   'background: rgba(34,197,94,0.1); color: #16a34a;',
+  medium: 'background: rgba(251,191,36,0.1); color: #d97706;',
+  low:    'background: rgba(239,68,68,0.1); color: #dc2626;',
+};
+
+/* ── Filter categories and pricing tiers ──────────────────── */
+const categories = [
+  { value: 'all',                 label: t(locale, 'toolDirectory.categoryAll') },
+  { value: 'general-llm',        label: t(locale, 'toolDirectory.categoryGeneral') },
+  { value: 'insurance-specific',  label: t(locale, 'toolDirectory.categoryInsurance') },
+  { value: 'document-review',     label: t(locale, 'toolDirectory.categoryDocument') },
+  { value: 'research',            label: t(locale, 'toolDirectory.categoryResearch') },
+  { value: 'practice-management', label: t(locale, 'toolDirectory.categoryManagement') },
+];
+
+const pricingTiers = [
+  { value: 'all',        label: t(locale, 'toolDirectory.pricingAll') },
+  { value: 'free',       label: t(locale, 'toolDirectory.pricingFree') },
+  { value: 'freemium',   label: t(locale, 'toolDirectory.pricingFreemium') },
+  { value: 'paid',       label: t(locale, 'toolDirectory.pricingPaid') },
+  { value: 'enterprise', label: t(locale, 'toolDirectory.pricingEnterprise') },
+];
+---
+
+<BaseLayout
+  title={t(locale, 'toolDirectory.title')}
+  description={t(locale, 'toolDirectory.description')}
+  locale={locale}
+>
+
+  <!-- ═══ Hero ═══ -->
+  <section class="hero" style="background: linear-gradient(135deg, rgba(15,43,70,0.88) 0%, rgba(0,180,216,0.15) 100%), url('/assets/images/hero-images/hero-image-resources.png') top/cover no-repeat;">
+    <div class="container" style="position: relative; z-index: 1;">
+      <div class="slide-up" style="max-width: 800px;">
+        <p class="text-sm font-semibold mb-4" style="color: var(--color-secondary); text-transform: uppercase; letter-spacing: 0.1em;">
+          {t(locale, 'toolDirectory.heroLabel')}
+        </p>
+        <h1 style="font-size: var(--text-5xl); margin-bottom: var(--space-6);">
+          {t(locale, 'toolDirectory.title')}
+        </h1>
+        <p class="lead" style="margin-bottom: var(--space-6);">
+          {t(locale, 'toolDirectory.heroDesc')}
+        </p>
+      </div>
+    </div>
+    <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 120px; background: linear-gradient(to top, var(--surface-page), transparent);"></div>
+  </section>
+
+  <!-- ═══ Filters ═══ -->
+  <section class="section--sm">
+    <div class="container">
+      <div class="reveal" style="max-width: 900px; margin: 0 auto;">
+        <div style="display: flex; flex-direction: column; gap: var(--space-4); align-items: center; margin-bottom: var(--space-4);">
+
+          <!-- Category Filter -->
+          <div style="text-align: center;">
+            <label class="text-sm font-semibold text-muted" style="display: block; margin-bottom: var(--space-2);">
+              {t(locale, 'toolDirectory.filterCategory')}
+            </label>
+            <div class="filter-group" style="justify-content: center;">
+              {categories.map((cat) => (
+                <button
+                  class={`filter-chip ${cat.value === 'all' ? 'is-active' : ''}`}
+                  data-filter-category={cat.value}
+                >
+                  {cat.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <!-- Pricing Filter -->
+          <div style="text-align: center;">
+            <label class="text-sm font-semibold text-muted" style="display: block; margin-bottom: var(--space-2);">
+              {t(locale, 'toolDirectory.filterPricing')}
+            </label>
+            <div class="filter-group" style="justify-content: center;">
+              {pricingTiers.map((tier) => (
+                <button
+                  class={`filter-chip ${tier.value === 'all' ? 'is-active' : ''}`}
+                  data-filter-pricing={tier.value}
+                >
+                  {tier.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Result Count -->
+        <p class="text-center text-sm text-muted" id="result-count">
+          Showing {tools.length} tools
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ Tool Cards Grid ═══ -->
+  <section class="section">
+    <div class="container">
+      <div class="grid grid--3 reveal-stagger" id="tool-grid">
+        {tools.map((tool) => {
+          const catInfo = categoryDisplay[tool.category] || { label: tool.category, badgeClass: 'badge' };
+          const priceInfo = pricingDisplay[tool.pricing] || { label: tool.pricing, style: '' };
+          const confStyle = confStyles[tool.confidentiality] || '';
+          const confLabel = tool.confidentiality === 'high'
+            ? t(locale, 'toolDirectory.confidentialityHigh')
+            : tool.confidentiality === 'medium'
+              ? t(locale, 'toolDirectory.confidentialityMedium')
+              : t(locale, 'toolDirectory.confidentialityLow');
+
+          return (
+            <div
+              class="card tool-card"
+              data-category={tool.category}
+              data-pricing={tool.pricing}
+              style="display: flex; flex-direction: column;"
+            >
+              <!-- Header: Name + Badges -->
+              <div style="margin-bottom: var(--space-3);">
+                <h3 class="card__title" style="font-size: var(--text-xl); margin-bottom: var(--space-2);">
+                  {tool.name}
+                </h3>
+                <div class="card__meta">
+                  <span class={catInfo.badgeClass}>{catInfo.label}</span>
+                  <span class="badge" style={priceInfo.style}>{priceInfo.label}</span>
+                </div>
+              </div>
+
+              <!-- Description -->
+              <p class="card__body" style="font-size: var(--text-sm); margin-bottom: var(--space-4);">
+                {tool.description}
+              </p>
+
+              <!-- Strengths -->
+              <div style="margin-bottom: var(--space-3);">
+                <p class="text-xs font-semibold text-muted" style="text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: var(--space-2);">
+                  {t(locale, 'toolDirectory.strengths')}
+                </p>
+                <ul style="list-style: none; padding: 0; margin: 0;">
+                  {tool.strengths.map((s) => (
+                    <li style="display: flex; align-items: flex-start; gap: var(--space-2); margin-bottom: var(--space-1); font-size: var(--text-sm); color: var(--text-secondary); line-height: var(--leading-normal);">
+                      <span style="flex-shrink: 0; margin-top: 0.45em; width: 6px; height: 6px; border-radius: 50%; background: var(--color-success);"></span>
+                      {s}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <!-- Weaknesses -->
+              <div style="margin-bottom: var(--space-3);">
+                <p class="text-xs font-semibold text-muted" style="text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: var(--space-2);">
+                  {t(locale, 'toolDirectory.weaknesses')}
+                </p>
+                <ul style="list-style: none; padding: 0; margin: 0;">
+                  {tool.weaknesses.map((w) => (
+                    <li style="display: flex; align-items: flex-start; gap: var(--space-2); margin-bottom: var(--space-1); font-size: var(--text-sm); color: var(--text-secondary); line-height: var(--leading-normal);">
+                      <span style="flex-shrink: 0; margin-top: 0.45em; width: 6px; height: 6px; border-radius: 50%; background: var(--color-error);"></span>
+                      {w}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <!-- Insurance Sectors -->
+              <div style="margin-bottom: var(--space-3);">
+                <p class="text-xs font-semibold text-muted" style="text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: var(--space-2);">
+                  {t(locale, 'toolDirectory.insuranceSectors')}
+                </p>
+                <p style="font-size: var(--text-sm); color: var(--text-secondary); margin: 0;">
+                  {tool.insuranceSectors.join(', ')}
+                </p>
+              </div>
+
+              <!-- Confidentiality Rating -->
+              <div style="margin-bottom: var(--space-4);">
+                <p class="text-xs font-semibold text-muted" style="text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: var(--space-2);">
+                  {t(locale, 'toolDirectory.confidentiality')}
+                </p>
+                <span class="badge" style={confStyle}>
+                  {confLabel}
+                </span>
+              </div>
+
+              <!-- Verdict -->
+              <div style="margin-bottom: var(--space-4); padding: var(--space-3) var(--space-4); background: var(--surface-parchment); border-radius: var(--radius-md);">
+                <p class="text-xs font-semibold text-muted" style="text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: var(--space-1);">
+                  {t(locale, 'toolDirectory.verdict')}
+                </p>
+                <p style="font-size: var(--text-sm); font-style: italic; color: var(--color-primary); line-height: var(--leading-normal); margin: 0;">
+                  {tool.verdict}
+                </p>
+              </div>
+
+              <!-- Visit Website Link -->
+              <div style="margin-top: auto; padding-top: var(--space-4); border-top: 1px solid var(--border-light);">
+                <a
+                  href={tool.website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="btn btn--sm btn--secondary"
+                  style="width: 100%; justify-content: center;"
+                >
+                  {t(locale, 'toolDirectory.visitWebsite')}
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                    <polyline points="15 3 21 3 21 9" />
+                    <line x1="10" y1="14" x2="21" y2="3" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ Independence Disclaimer ═══ -->
+  <section class="section--sm">
+    <div class="container">
+      <div class="reveal" style="max-width: 800px; margin: 0 auto;">
+        <div class="callout callout--info">
+          <p class="callout__title" style="display: flex; align-items: center; gap: var(--space-2);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; color: var(--color-accent);">
+              <circle cx="12" cy="12" r="10" />
+              <line x1="12" y1="16" x2="12" y2="12" />
+              <line x1="12" y1="8" x2="12.01" y2="8" />
+            </svg>
+            {t(locale, 'toolDirectory.disclaimer')}
+          </p>
+          <p style="font-size: var(--text-sm); color: var(--text-secondary); margin: 0; line-height: var(--leading-relaxed);">
+            {t(locale, 'toolDirectory.disclaimerDesc')}
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ CTA Section ═══ -->
+  <section class="section--sm section--parchment">
+    <div class="container">
+      <div class="reveal" style="text-align: center; max-width: 600px; margin: 0 auto;">
+        <h2 style="font-size: var(--text-3xl); margin-bottom: var(--space-4);">
+          {t(locale, 'toolDirectory.ctaTitle')}
+        </h2>
+        <p class="lead" style="margin-bottom: var(--space-8);">
+          {t(locale, 'toolDirectory.ctaDesc')}
+        </p>
+        <div style="display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap;">
+          <a href={p('/practice/quick-wins')} class="btn btn--primary">
+            {t(locale, 'toolDirectory.ctaQuickWins')}
+          </a>
+          <a href={p('/learn/program')} class="btn btn--secondary">
+            {t(locale, 'toolDirectory.ctaProgram')}
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ Filter Script ═══ -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const catChips = document.querySelectorAll<HTMLButtonElement>('[data-filter-category]');
+      const priceChips = document.querySelectorAll<HTMLButtonElement>('[data-filter-pricing]');
+      const cards = document.querySelectorAll<HTMLElement>('.tool-card');
+      const countEl = document.getElementById('result-count');
+
+      let activeCat = 'all';
+      let activePrice = 'all';
+
+      function apply() {
+        let count = 0;
+        cards.forEach(card => {
+          const matchCat = activeCat === 'all' || card.getAttribute('data-category') === activeCat;
+          const matchPrice = activePrice === 'all' || card.getAttribute('data-pricing') === activePrice;
+          const show = matchCat && matchPrice;
+          card.style.display = show ? '' : 'none';
+          if (show) count++;
+        });
+        if (countEl) {
+          countEl.textContent = `Showing ${count} tool${count !== 1 ? 's' : ''}`;
+        }
+      }
+
+      catChips.forEach(chip => {
+        chip.addEventListener('click', () => {
+          activeCat = chip.getAttribute('data-filter-category') || 'all';
+          catChips.forEach(c => c.classList.remove('is-active'));
+          chip.classList.add('is-active');
+          apply();
+        });
+      });
+
+      priceChips.forEach(chip => {
+        chip.addEventListener('click', () => {
+          activePrice = chip.getAttribute('data-filter-pricing') || 'all';
+          priceChips.forEach(c => c.classList.remove('is-active'));
+          chip.classList.add('is-active');
+          apply();
+        });
+      });
+    });
+  </script>
+
+</BaseLayout>

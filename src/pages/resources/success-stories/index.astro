@@ -1,0 +1,596 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { t, getLocalePath } from '../../../i18n';
+const locale = 'en';
+const p = (path: string) => getLocalePath(locale, path);
+
+const stories = [
+  {
+    id: 'lemonade',
+    category: 'efficiency',
+    title: 'Lemonade: AI-First Claims Processing',
+    orgType: 'Insurtech',
+    insuranceSector: 'Claims Processing',
+    keyMetric: '3-second claims processing for qualifying claims',
+    context: {
+      orgDescription: 'Lemonade is a publicly traded insurtech company founded in 2015 that operates as a licensed insurance carrier offering renters, homeowners, pet, life, and car insurance. The company was built from the ground up around AI and behavioral economics, positioning itself as a digital-native alternative to traditional insurers.',
+      insuranceSector: 'Personal Lines — Renters, Homeowners, Pet, Life, Auto',
+      jurisdiction: 'United States (multi-state), expanding to Europe',
+      teamSize: 'Approximately 1,200 employees with a significant engineering and data science division',
+    },
+    challenge: {
+      problem: 'Traditional claims processing in personal lines insurance involves multiple handoffs between adjusters, extensive manual documentation review, and processing times measured in days or weeks. This creates poor customer experience, high operational costs, and inconsistent outcomes.',
+      previousApproach: 'Industry standard: manual claims intake via phone or portal, assignment to human adjusters, document collection, investigation, and settlement — averaging 30-45 days for homeowners claims.',
+      stakes: 'Customer satisfaction and retention in a competitive market where consumers increasingly expect instant digital experiences. Operational efficiency directly impacts the loss ratio and path to profitability for an insurtech scaling rapidly.',
+    },
+    approach: {
+      tools: ['Proprietary AI models (AI Jim)', 'Natural Language Processing', 'Computer vision for damage assessment', 'Behavioral analytics for fraud detection'],
+      strategy: 'Lemonade built AI Jim, a claims bot that handles the entire claims process for qualifying simple claims — from first notice of loss through payment. The system uses NLP to understand claim descriptions, computer vision to assess submitted photos, and behavioral analytics to screen for fraud indicators. Claims that pass automated checks are approved and paid instantly; complex or flagged claims are routed to human adjusters.',
+      investment: 'Core to company founding — AI infrastructure represents a fundamental part of the technology stack, not a bolt-on. Estimated hundreds of millions in cumulative R&D investment in AI and automation systems.',
+    },
+    results: {
+      quantified: [
+        'Approximately 30% of claims settled instantly without human intervention',
+        'Claims processing time reduced to as low as 3 seconds for qualifying claims',
+        '94% customer satisfaction rating reported across claims experience',
+        'Gross loss ratio improved from 113% (2020) to approximately 77% (2024) as AI models matured',
+      ],
+      qualitative: [
+        'Established a new benchmark for customer expectations in insurance claims speed',
+        'Demonstrated that AI-first insurance operations are viable at scale',
+        'Created competitive pressure on traditional carriers to accelerate digital transformation',
+        'Built a proprietary data flywheel where more claims data continuously improves model accuracy',
+      ],
+    },
+    lessons: {
+      whatWorked: [
+        'Building AI into the core operating model from day one rather than retrofitting',
+        'Clear segmentation between simple claims (AI-handled) and complex claims (human-handled)',
+        'Transparency with customers about AI involvement in the claims process',
+        'Continuous model improvement using growing claims data as a training resource',
+      ],
+      whatDidnt: [
+        'Early AI models had higher error rates before sufficient training data accumulated',
+        'Complex or ambiguous claims still require significant human expertise and judgment',
+        'Scaling to new insurance lines (auto, life) required substantially different AI models',
+        'Regulatory scrutiny of automated decision-making required additional explainability investments',
+      ],
+      advice: 'AI-first claims processing works best for high-volume, relatively simple claims with clear parameters. The key is not eliminating humans but intelligently routing: let AI handle what it does well and ensure experienced adjusters handle everything else.',
+    },
+    sources: [
+      { title: 'Lemonade 2024 Annual Report (SEC Filing)', url: 'https://investor.lemonade.com' },
+      { title: 'Lemonade AI Claims Technology Overview', url: 'https://www.lemonade.com/blog/lemonade-ai-jim/' },
+      { title: 'Insurance Journal: Lemonade Claims Processing Analysis', url: 'https://www.insurancejournal.com' },
+    ],
+  },
+  {
+    id: 'ping-an',
+    category: 'innovation',
+    title: 'Ping An Insurance: Comprehensive AI Transformation',
+    orgType: 'Global Insurer / Conglomerate',
+    insuranceSector: 'Prospecting & Underwriting',
+    keyMetric: 'AI processes 1.5 million claims per day',
+    context: {
+      orgDescription: 'Ping An Insurance Group is one of the world\'s largest insurance and financial services companies, headquartered in Shenzhen, China. With over 227 million retail customers, Ping An has invested heavily in technology, positioning itself as both an insurer and a technology company with subsidiaries focused on AI, healthcare, and fintech.',
+      insuranceSector: 'Life, Health, Property & Casualty, Auto — Full Spectrum',
+      jurisdiction: 'China (primary), with expanding international operations',
+      teamSize: 'Over 350,000 employees; approximately 110,000 in technology and R&D roles',
+    },
+    challenge: {
+      problem: 'At Ping An\'s scale, manual underwriting, claims processing, and customer service operations were unsustainable. Processing millions of policies and claims required an army of agents and adjusters, resulting in inconsistent quality, high costs, and slow turnaround times.',
+      previousApproach: 'Traditional agent-based distribution with manual underwriting and claims processes. Hundreds of thousands of agents handling customer interactions, policy issuance, and claims adjustments through conventional workflows.',
+      stakes: 'Competitive survival in China\'s rapidly digitizing insurance market. Ping An faced pressure from both traditional competitors and aggressive tech companies entering financial services. Operational efficiency at massive scale was essential for profitability.',
+    },
+    approach: {
+      tools: ['Proprietary AI platform (Ping An Brain)', 'Facial recognition technology', 'Natural Language Processing (multi-language)', 'Computer vision for damage and medical assessment', 'Predictive modeling for risk scoring'],
+      strategy: 'Ping An built an integrated AI platform called "Ping An Brain" that powers applications across the entire insurance value chain. The platform uses facial recognition for identity verification, NLP for automated document processing, computer vision for auto damage and medical image assessment, and predictive models for risk scoring and fraud detection. The company invested in building massive proprietary datasets and computing infrastructure.',
+      investment: 'Over $15 billion invested in technology R&D over the past decade. Technology revenue from subsidiary OneConnect and other platforms generates independent income streams. Approximately 30% of total revenue reinvested annually in technology.',
+    },
+    results: {
+      quantified: [
+        'AI processes approximately 1.5 million insurance claims per day',
+        '90% of underwriting processes automated with AI assistance',
+        '50% cost reduction in certain claims processing workflows',
+        'Auto damage assessment completed in seconds via photo AI, replacing multi-day manual inspections',
+        'Fraud detection identifies approximately $1.5 billion in potentially fraudulent claims annually',
+      ],
+      qualitative: [
+        'Transformed from a traditional insurer to a technology-driven financial services ecosystem',
+        'AI capabilities became a revenue-generating business line through technology licensing',
+        'Established a model for how large traditional insurers can reinvent themselves through technology',
+        'Created significant competitive advantages in customer acquisition and retention',
+      ],
+    },
+    lessons: {
+      whatWorked: [
+        'Massive, sustained investment in AI infrastructure and talent over more than a decade',
+        'Building proprietary platforms rather than relying exclusively on third-party vendors',
+        'Integrating AI across the entire value chain rather than isolated point solutions',
+        'Creating technology subsidiaries that generate independent revenue from AI capabilities',
+      ],
+      whatDidnt: [
+        'The scale of investment required is not replicable for most insurers globally',
+        'Facial recognition and extensive data collection raise significant privacy concerns in many jurisdictions',
+        'Cultural and regulatory differences limit direct exportability of the model to Western markets',
+        'Rapid automation created workforce transition challenges requiring significant reskilling programs',
+      ],
+      advice: 'Comprehensive AI transformation requires long-term commitment, massive data infrastructure, and sustained investment. For most insurers, the lesson is not to replicate Ping An\'s approach wholesale, but to identify which elements — integrated platforms, proprietary data strategies, cross-functional AI deployment — can be adapted at their own scale.',
+    },
+    sources: [
+      { title: 'Ping An Annual Report 2024 — Technology Strategy', url: 'https://group.pingan.com/investor_relations/annual_reports.html' },
+      { title: 'Harvard Business Review: Ping An\'s Digital Transformation', url: 'https://hbr.org' },
+      { title: 'McKinsey: AI in Insurance — Ping An Case Study', url: 'https://www.mckinsey.com/industries/insurance' },
+    ],
+  },
+  {
+    id: 'tractable',
+    category: 'quality',
+    title: 'Tractable: AI-Powered Visual Damage Assessment',
+    orgType: 'Insurtech / AI Vendor',
+    insuranceSector: 'Claims Processing',
+    keyMetric: '10x faster vehicle damage assessment',
+    context: {
+      orgDescription: 'Tractable is a London-founded AI company specializing in computer vision for auto and property insurance claims. The company provides AI-powered photo and video assessment tools used by major insurers and auto body shops worldwide to estimate vehicle damage, streamline repair processes, and accelerate claims settlement.',
+      insuranceSector: 'Auto Insurance — Claims and Repair',
+      jurisdiction: 'Global — operating across North America, Europe, and Asia-Pacific',
+      teamSize: 'Approximately 350 employees, with a strong focus on machine learning engineering and computer vision research',
+    },
+    challenge: {
+      problem: 'Vehicle damage assessment in auto insurance traditionally requires physical inspection by a trained adjuster, which creates bottlenecks, delays claims settlement, and adds cost. During high-volume periods such as after natural disasters, the backlog of inspections can extend processing times by weeks.',
+      previousApproach: 'Policyholders report claims, schedule an inspection (often days to weeks later), a physical adjuster examines the vehicle, writes an estimate, the estimate is reviewed and approved, and then repairs can begin. Average cycle time from claim to repair authorization: 7-14 days.',
+      stakes: 'Customer satisfaction hinges on claims speed. Prolonged claims processing leads to rental car costs, policyholder frustration, and competitive disadvantage. Accuracy of estimates also affects loss ratios and insurer profitability.',
+    },
+    approach: {
+      tools: ['Deep learning computer vision models', 'Proprietary image recognition trained on millions of vehicle damage photos', 'Integration APIs for claims management systems', 'Continuous learning pipeline from adjuster feedback'],
+      strategy: 'Tractable developed deep learning models trained on millions of labeled vehicle damage photos to automatically assess damage severity, identify affected parts, and generate repair cost estimates from policyholder-submitted photos. The AI integrates directly into insurer claims workflows via API, providing instant preliminary assessments that adjusters can review and approve. The system learns continuously from adjuster corrections and real repair outcomes.',
+      investment: 'Over $115 million in total funding raised. Significant ongoing investment in training data acquisition, model development, and expanding from auto to property damage assessment.',
+    },
+    results: {
+      quantified: [
+        'Vehicle damage assessment completed in minutes instead of days — approximately 10x faster',
+        'Claims cycle time reduced by up to 50% for participating insurers',
+        'AI estimates achieve accuracy comparable to experienced human adjusters',
+        'Deployed by over 25 of the top 100 global auto insurers',
+        'Processes millions of claims assessments annually across partner networks',
+      ],
+      qualitative: [
+        'Demonstrated that specialized, domain-specific AI can match or exceed generalist human performance in defined tasks',
+        'Improved consistency of damage estimates, reducing variability between adjusters',
+        'Enabled faster repair initiation, improving policyholder experience and reducing loss costs',
+        'Created a scalable model for applying computer vision to insurance beyond auto — including property damage',
+      ],
+    },
+    lessons: {
+      whatWorked: [
+        'Deep specialization — focusing exclusively on vehicle damage assessment rather than building a general-purpose AI',
+        'Training on massive domain-specific datasets rather than relying on general-purpose computer vision models',
+        'Building a continuous learning loop where adjuster feedback improves the model over time',
+        'Designing for integration into existing insurer workflows rather than requiring process redesign',
+      ],
+      whatDidnt: [
+        'Complex or unusual damage scenarios (custom vehicles, antiques, severe structural damage) still challenge the AI',
+        'Image quality from policyholder-submitted photos varies significantly, affecting assessment accuracy',
+        'Initial adoption required significant change management to build adjuster trust in AI estimates',
+        'The model performs best in markets with standardized parts and repair cost databases',
+      ],
+      advice: 'Specialized AI that solves one problem exceptionally well creates more value than general-purpose tools that do many things adequately. Invest in domain-specific training data, build feedback loops with human experts, and integrate into existing workflows rather than asking users to adopt entirely new processes.',
+    },
+    sources: [
+      { title: 'Tractable Company Overview and Technology', url: 'https://www.tractable.ai' },
+      { title: 'Tractable Series E Funding Announcement', url: 'https://www.tractable.ai/news' },
+      { title: 'Insurtech Insights: AI in Auto Claims — Tractable Analysis', url: 'https://www.insurtechinsights.com' },
+    ],
+  },
+  {
+    id: 'shift-technology',
+    category: 'regulatory',
+    title: 'Shift Technology: AI-Driven Fraud Detection',
+    orgType: 'Insurtech / AI Vendor',
+    insuranceSector: 'Compliance',
+    keyMetric: '75% reduction in false positive fraud alerts',
+    context: {
+      orgDescription: 'Shift Technology is a Paris-founded AI company that provides fraud detection, claims automation, and underwriting decision support solutions specifically designed for insurance. The company serves over 100 insurance companies across 25+ countries and has analyzed over 4 billion claims.',
+      insuranceSector: 'Property & Casualty, Health Insurance — Fraud Detection & Compliance',
+      jurisdiction: 'Global — operating across Europe, North America, Asia-Pacific, and Latin America',
+      teamSize: 'Approximately 600 employees, including data scientists, insurance domain experts, and compliance specialists',
+    },
+    challenge: {
+      problem: 'Insurance fraud costs the industry an estimated $80+ billion annually in the United States alone. Traditional rule-based fraud detection systems generate excessive false positives (legitimate claims incorrectly flagged as suspicious), overwhelming special investigation units (SIUs) and delaying legitimate claims. Conversely, sophisticated fraud schemes evade simple rules-based detection.',
+      previousApproach: 'Rules-based fraud detection using static criteria (e.g., claim amount thresholds, known fraud indicators). Manual review by SIU investigators. High false positive rates (often 50-70%) meant investigators spent more time clearing legitimate claims than investigating actual fraud.',
+      stakes: 'Financial losses from undetected fraud, customer dissatisfaction from delayed legitimate claims, regulatory scrutiny of fraud prevention efforts, and growing sophistication of organized fraud rings requiring more advanced detection methods.',
+    },
+    approach: {
+      tools: ['Machine learning ensemble models', 'Graph analytics for network detection', 'Natural Language Processing for claim narrative analysis', 'Integration with claims management systems', 'Explainable AI dashboards for investigators'],
+      strategy: 'Shift Technology developed AI models that analyze the full context of each claim — not just individual red flags, but relationships between claimants, providers, repair shops, and historical patterns across the entire portfolio. Graph analytics detect fraud networks invisible to traditional methods. NLP analyzes claim narratives and adjuster notes for inconsistencies. Critically, the system provides detailed explanations for each alert, enabling investigators to focus their expertise on the highest-value cases.',
+      investment: 'Over $320 million in total funding raised. Significant investment in building insurance-specific AI models rather than adapting general-purpose fraud detection tools.',
+    },
+    results: {
+      quantified: [
+        '75% reduction in false positive fraud alerts compared to rules-based systems',
+        'Over $3 billion in detected fraudulent claims across the client portfolio',
+        'Investigation time reduced by approximately 40% per case due to AI-generated context and explanations',
+        'Fraud detection accuracy rates exceeding 80% on flagged claims',
+        'Deployed across 100+ insurance companies in 25+ countries',
+      ],
+      qualitative: [
+        'Shifted SIU resources from clearing false positives to investigating genuine fraud',
+        'Identified organized fraud rings and network patterns invisible to traditional methods',
+        'Improved compliance posture by demonstrating proactive, technology-driven fraud prevention',
+        'Reduced collateral damage to legitimate policyholders from over-aggressive fraud screening',
+      ],
+    },
+    lessons: {
+      whatWorked: [
+        'AI augments investigators rather than replacing them — the best results come from AI-human collaboration',
+        'Explainability is essential: investigators need to understand why the AI flagged a claim to act on it effectively',
+        'Graph analytics and network analysis detect patterns impossible to identify through individual claim analysis',
+        'Insurance-specific AI models trained on insurance data significantly outperform generic fraud detection tools',
+      ],
+      whatDidnt: [
+        'Adoption requires significant change management — investigators accustomed to traditional methods need training and trust-building',
+        'AI models require ongoing tuning as fraud patterns evolve and adapt to detection methods',
+        'Data quality and integration challenges with legacy claims systems can limit initial effectiveness',
+        'Cross-jurisdictional deployment requires adapting models to different regulatory frameworks and fraud patterns',
+      ],
+      advice: 'The goal of AI in fraud detection is not to replace human investigators but to make them dramatically more effective. Invest in explainability, build trust through demonstrated accuracy, and recognize that the best fraud detection combines AI pattern recognition with human investigative expertise and judgment.',
+    },
+    sources: [
+      { title: 'Shift Technology Product Overview', url: 'https://www.shift-technology.com' },
+      { title: 'Coalition Against Insurance Fraud: AI in Fraud Detection', url: 'https://insurancefraud.org' },
+      { title: 'Shift Technology Series D Funding and Impact Report', url: 'https://www.shift-technology.com/newsroom' },
+    ],
+  },
+  {
+    id: 'root-insurance',
+    category: 'access',
+    title: 'Root Insurance: Telematics-Based Fair Pricing',
+    orgType: 'Insurtech',
+    insuranceSector: 'Marketing & Sales',
+    keyMetric: '80% of underwriting based on actual driving behavior',
+    context: {
+      orgDescription: 'Root Insurance is a publicly traded insurtech company headquartered in Columbus, Ohio, that uses smartphone-based telematics to price auto insurance primarily based on actual driving behavior rather than traditional demographic factors. Founded in 2015, Root aims to make insurance pricing fairer by measuring what matters most: how people actually drive.',
+      insuranceSector: 'Personal Auto Insurance — Underwriting & Distribution',
+      jurisdiction: 'United States — licensed in approximately 35 states',
+      teamSize: 'Approximately 1,300 employees with significant data science and mobile engineering teams',
+    },
+    challenge: {
+      problem: 'Traditional auto insurance pricing relies heavily on demographic factors — age, gender, credit score, zip code, marital status — that are proxies for risk but may not reflect individual driving behavior. This system penalizes safe drivers who happen to fall into higher-risk demographic categories and can raise fairness and discrimination concerns.',
+      previousApproach: 'Actuarial rating based primarily on demographic and credit-based variables. Usage-based insurance existed through plug-in OBD-II devices, but adoption was limited by the hardware requirement, installation friction, and privacy concerns about dedicated tracking devices.',
+      stakes: 'Customer acquisition in a competitive personal auto market where price is the primary differentiator. Regulatory pressure to reduce reliance on credit scores and demographic proxies in insurance pricing. Growing consumer demand for personalized, behavior-based products.',
+    },
+    approach: {
+      tools: ['Smartphone-based telematics (accelerometer, GPS, gyroscope)', 'Behavioral analytics AI models', 'Mobile sensor data processing', 'Machine learning risk scoring models', 'Real-time driving behavior analysis'],
+      strategy: 'Root uses the smartphone\'s built-in sensors to measure driving behavior during a test drive period — analyzing acceleration, braking, cornering, phone usage, and time-of-day patterns. AI models convert this behavioral data into a driving score that becomes the primary factor in pricing. This approach eliminates the need for hardware devices and allows rapid scaling. The pricing model weights actual driving behavior at approximately 80% of the underwriting decision.',
+      investment: 'Over $527 million in total funding raised prior to IPO. Publicly traded since 2020 (NASDAQ: ROOT). Significant ongoing investment in data science, telematics algorithms, and mobile technology.',
+    },
+    results: {
+      quantified: [
+        '80% of underwriting decisions based on actual driving behavior data',
+        'Safe drivers save 20-50% compared to traditional insurance pricing',
+        'Mobile app processes telematics data from millions of test drives',
+        'Policy binding available entirely through the mobile app in minutes',
+        'Licensed and operating in approximately 35 US states',
+      ],
+      qualitative: [
+        'Demonstrated viability of smartphone-only telematics at scale, without requiring hardware',
+        'Attracted younger, tech-savvy customers who felt penalized by traditional demographic-based pricing',
+        'Advanced the industry conversation about fairness in insurance pricing',
+        'Created competitive pressure on incumbent carriers to develop their own behavioral pricing products',
+      ],
+    },
+    lessons: {
+      whatWorked: [
+        'Using the smartphone as the telematics device eliminated hardware friction and enabled rapid scaling',
+        'Focusing on fairness as a brand proposition resonated with consumers frustrated by traditional pricing',
+        'AI-driven behavioral scoring created genuine pricing differentiation in a commoditized market',
+        'Digital-first distribution through mobile app reduced acquisition costs significantly',
+      ],
+      whatDidnt: [
+        'Path to profitability proved longer than expected — telematics-based pricing requires large data volumes to calibrate accurately',
+        'Test drive periods create friction in the customer journey compared to instant-quote competitors',
+        'Smartphone sensor data is noisier and less reliable than dedicated OBD-II telematics devices',
+        'Regulatory scrutiny of telematics pricing and data privacy practices varies significantly by state',
+      ],
+      advice: 'Data transparency is critical for customer trust in telematics-based insurance. Customers need to understand exactly what data is collected, how it affects their price, and how they can improve their score. Fair pricing based on actual behavior is a powerful value proposition, but it must be backed by genuine transparency and strong data privacy practices.',
+    },
+    sources: [
+      { title: 'Root Inc. SEC Filings and Investor Relations', url: 'https://ir.joinroot.com' },
+      { title: 'Root Insurance Technology Overview', url: 'https://www.joinroot.com' },
+      { title: 'Telematics Wire: Root Insurance Telematics Analysis', url: 'https://www.telematicswire.net' },
+    ],
+  },
+];
+
+const categories = [
+  { key: 'all', label: t(locale, 'successStories.filterAll') },
+  { key: 'efficiency', label: t(locale, 'successStories.filterEfficiency') },
+  { key: 'quality', label: t(locale, 'successStories.filterQuality') },
+  { key: 'access', label: t(locale, 'successStories.filterAccess') },
+  { key: 'innovation', label: t(locale, 'successStories.filterInnovation') },
+  { key: 'regulatory', label: t(locale, 'successStories.filterRegulatory') },
+];
+
+const categoryBadgeClass: Record<string, string> = {
+  efficiency: 'badge badge--beginner',
+  quality: 'badge badge--intermediate',
+  innovation: 'badge badge--advanced',
+  regulatory: 'badge',
+  access: 'badge',
+};
+
+const categoryLabels: Record<string, string> = {
+  efficiency: t(locale, 'successStories.filterEfficiency'),
+  quality: t(locale, 'successStories.filterQuality'),
+  access: t(locale, 'successStories.filterAccess'),
+  innovation: t(locale, 'successStories.filterInnovation'),
+  regulatory: t(locale, 'successStories.filterRegulatory'),
+};
+---
+
+<BaseLayout
+  title={t(locale, 'successStories.title')}
+  description={t(locale, 'successStories.subtitle')}
+  locale={locale}
+  keywords="AI success stories insurance, insurtech case studies, AI claims processing, insurance AI adoption, fraud detection AI insurance"
+>
+  <!-- Hero -->
+  <section class="hero" style="background: linear-gradient(135deg, rgba(15,43,70,0.88) 0%, rgba(0,180,216,0.15) 100%), url('/assets/images/hero-images/hero-image-resources.png') top/cover no-repeat;">
+    <div class="container" style="position: relative; z-index: 1;">
+      <div class="slide-up" style="max-width: 800px;">
+        <p class="text-sm font-semibold mb-4" style="color: var(--color-secondary); text-transform: uppercase; letter-spacing: 0.1em;">{t(locale, 'successStories.heroLabel')}</p>
+        <h1 style="font-size: var(--text-5xl); margin-bottom: var(--space-6);">{t(locale, 'successStories.title')}</h1>
+        <p class="lead" style="margin-bottom: var(--space-6);">
+          {t(locale, 'successStories.subtitle')}
+        </p>
+      </div>
+    </div>
+    <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 120px; background: linear-gradient(to top, var(--surface-page), transparent);"></div>
+  </section>
+
+  <!-- Filter & Stories -->
+  <section class="section">
+    <div class="container" style="max-width: 960px; margin: 0 auto;">
+
+      <!-- Filter Chips -->
+      <div style="margin-bottom: var(--space-8);">
+        <div class="filter-group" style="justify-content: center; margin-bottom: var(--space-4);">
+          {categories.map((cat) => (
+            <button
+              class={`filter-chip ${cat.key === 'all' ? 'is-active' : ''}`}
+              data-filter-category={cat.key}
+            >
+              {cat.label}
+            </button>
+          ))}
+        </div>
+        <p id="result-count" class="text-center text-sm text-muted">
+          Showing {stories.length} stories
+        </p>
+      </div>
+
+      <!-- Story Cards -->
+      <div style="display: flex; flex-direction: column; gap: var(--space-10);">
+        {stories.map((story) => (
+          <article class="card story-card reveal" data-category={story.category} style="padding: 0; overflow: hidden;">
+
+            <!-- Header -->
+            <div style="padding: var(--space-8); border-bottom: 1px solid var(--border-light);">
+              <div style="display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-4); flex-wrap: wrap;">
+                <span class={categoryBadgeClass[story.category] || 'badge'}>
+                  {categoryLabels[story.category]}
+                </span>
+                <span class="tag">{story.orgType}</span>
+                <span class="tag tag--category">{story.insuranceSector}</span>
+              </div>
+              <h2 style="font-size: var(--text-2xl); margin-bottom: var(--space-4);">{story.title}</h2>
+              <div style="display: inline-flex; align-items: center; gap: var(--space-3); padding: var(--space-3) var(--space-5); background: rgba(0, 180, 216, 0.08); border-radius: var(--radius-md); border: 1px solid rgba(0, 180, 216, 0.2);">
+                <span style="font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); font-weight: var(--font-semibold);">{t(locale, 'successStories.keyMetric')}</span>
+                <span style="font-weight: var(--font-bold); color: var(--color-accent-dark);">{story.keyMetric}</span>
+              </div>
+            </div>
+
+            <!-- Context -->
+            <div style="padding: var(--space-6) var(--space-8); border-bottom: 1px solid var(--border-light); background: var(--surface-parchment);">
+              <h3 style="font-size: var(--text-lg); color: var(--color-primary); margin-bottom: var(--space-4);">
+                {t(locale, 'successStories.context')}
+              </h3>
+              <p style="color: var(--text-secondary); line-height: var(--leading-relaxed); margin-bottom: var(--space-4);">
+                {story.context.orgDescription}
+              </p>
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-4);">
+                <div>
+                  <span style="font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); display: block; margin-bottom: var(--space-1);">{t(locale, 'successStories.insuranceSector')}</span>
+                  <span style="font-weight: var(--font-semibold); font-size: var(--text-sm);">{story.context.insuranceSector}</span>
+                </div>
+                <div>
+                  <span style="font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); display: block; margin-bottom: var(--space-1);">Jurisdiction</span>
+                  <span style="font-weight: var(--font-semibold); font-size: var(--text-sm);">{story.context.jurisdiction}</span>
+                </div>
+                <div>
+                  <span style="font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); display: block; margin-bottom: var(--space-1);">Team Size</span>
+                  <span style="font-weight: var(--font-semibold); font-size: var(--text-sm);">{story.context.teamSize}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Challenge -->
+            <div style="padding: var(--space-6) var(--space-8); border-bottom: 1px solid var(--border-light);">
+              <h3 style="font-size: var(--text-lg); color: var(--color-primary); margin-bottom: var(--space-4);">
+                {t(locale, 'successStories.challenge')}
+              </h3>
+              <div style="display: flex; flex-direction: column; gap: var(--space-4);">
+                <div>
+                  <span style="font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); font-weight: var(--font-semibold); display: block; margin-bottom: var(--space-2);">The Problem</span>
+                  <p style="color: var(--text-secondary); line-height: var(--leading-relaxed); margin: 0;">{story.challenge.problem}</p>
+                </div>
+                <div>
+                  <span style="font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); font-weight: var(--font-semibold); display: block; margin-bottom: var(--space-2);">Previous Approach</span>
+                  <p style="color: var(--text-secondary); line-height: var(--leading-relaxed); margin: 0;">{story.challenge.previousApproach}</p>
+                </div>
+                <div>
+                  <span style="font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); font-weight: var(--font-semibold); display: block; margin-bottom: var(--space-2);">Stakes</span>
+                  <p style="color: var(--text-secondary); line-height: var(--leading-relaxed); margin: 0;">{story.challenge.stakes}</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Approach -->
+            <div style="padding: var(--space-6) var(--space-8); border-bottom: 1px solid var(--border-light); background: var(--surface-parchment);">
+              <h3 style="font-size: var(--text-lg); color: var(--color-primary); margin-bottom: var(--space-4);">
+                {t(locale, 'successStories.approach')}
+              </h3>
+              <div style="margin-bottom: var(--space-4);">
+                <span style="font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); font-weight: var(--font-semibold); display: block; margin-bottom: var(--space-2);">Tools & Technologies</span>
+                <div style="display: flex; flex-wrap: wrap; gap: var(--space-2);">
+                  {story.approach.tools.map((tool) => (
+                    <span class="tag">{tool}</span>
+                  ))}
+                </div>
+              </div>
+              <div style="margin-bottom: var(--space-4);">
+                <span style="font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); font-weight: var(--font-semibold); display: block; margin-bottom: var(--space-2);">Strategy</span>
+                <p style="color: var(--text-secondary); line-height: var(--leading-relaxed); margin: 0;">{story.approach.strategy}</p>
+              </div>
+              <div>
+                <span style="font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); font-weight: var(--font-semibold); display: block; margin-bottom: var(--space-2);">Investment</span>
+                <p style="color: var(--text-secondary); line-height: var(--leading-relaxed); margin: 0;">{story.approach.investment}</p>
+              </div>
+            </div>
+
+            <!-- Results -->
+            <div style="padding: var(--space-6) var(--space-8); border-bottom: 1px solid var(--border-light);">
+              <h3 style="font-size: var(--text-lg); color: var(--color-primary); margin-bottom: var(--space-4);">
+                {t(locale, 'successStories.results')}
+              </h3>
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-6);">
+                <div>
+                  <span style="font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); font-weight: var(--font-semibold); display: block; margin-bottom: var(--space-3);">Quantified Results</span>
+                  <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: var(--space-3);">
+                    {story.results.quantified.map((result) => (
+                      <li style="display: flex; gap: var(--space-2); color: var(--text-secondary); line-height: var(--leading-relaxed);">
+                        <span style="color: var(--color-success); font-weight: var(--font-bold); flex-shrink: 0; margin-top: 2px;">
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
+                        </span>
+                        <span>{result}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div>
+                  <span style="font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); font-weight: var(--font-semibold); display: block; margin-bottom: var(--space-3);">Qualitative Results</span>
+                  <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: var(--space-3);">
+                    {story.results.qualitative.map((result) => (
+                      <li style="display: flex; gap: var(--space-2); color: var(--text-secondary); line-height: var(--leading-relaxed);">
+                        <span style="color: var(--color-accent); font-weight: var(--font-bold); flex-shrink: 0; margin-top: 2px;">
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
+                        </span>
+                        <span>{result}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <!-- Lessons -->
+            <div style="padding: var(--space-6) var(--space-8); border-bottom: 1px solid var(--border-light); background: var(--surface-parchment);">
+              <h3 style="font-size: var(--text-lg); color: var(--color-primary); margin-bottom: var(--space-4);">
+                {t(locale, 'successStories.lessons')}
+              </h3>
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-6); margin-bottom: var(--space-6);">
+                <div>
+                  <span style="font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-success-dark); font-weight: var(--font-semibold); display: block; margin-bottom: var(--space-3);">What Worked</span>
+                  <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: var(--space-2);">
+                    {story.lessons.whatWorked.map((item) => (
+                      <li style="display: flex; gap: var(--space-2); color: var(--text-secondary); line-height: var(--leading-relaxed); font-size: var(--text-sm);">
+                        <span style="color: var(--color-success); flex-shrink: 0;">+</span>
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div>
+                  <span style="font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-alert); font-weight: var(--font-semibold); display: block; margin-bottom: var(--space-3);">What Didn't</span>
+                  <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: var(--space-2);">
+                    {story.lessons.whatDidnt.map((item) => (
+                      <li style="display: flex; gap: var(--space-2); color: var(--text-secondary); line-height: var(--leading-relaxed); font-size: var(--text-sm);">
+                        <span style="color: var(--color-alert); flex-shrink: 0;">-</span>
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+              <div style="padding: var(--space-4); background: var(--surface-card); border-radius: var(--radius-md); border-left: 4px solid var(--color-accent);">
+                <span style="font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); font-weight: var(--font-semibold); display: block; margin-bottom: var(--space-2);">Advice for Practitioners</span>
+                <p style="color: var(--text-secondary); line-height: var(--leading-relaxed); margin: 0; font-style: italic;">{story.lessons.advice}</p>
+              </div>
+            </div>
+
+            <!-- Sources -->
+            <div style="padding: var(--space-4) var(--space-8);">
+              <h4 style="font-size: var(--text-sm); color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: var(--space-3);">
+                {t(locale, 'successStories.sources')}
+              </h4>
+              <div style="display: flex; flex-wrap: wrap; gap: var(--space-3);">
+                {story.sources.map((source) => (
+                  <a href={source.url} target="_blank" rel="noopener noreferrer" style="font-size: var(--text-sm); color: var(--text-link); text-decoration: none; display: inline-flex; align-items: center; gap: var(--space-1);">
+                    {source.title}
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" /><polyline points="15 3 21 3 21 9" /><line x1="10" y1="14" x2="21" y2="3" /></svg>
+                  </a>
+                ))}
+              </div>
+            </div>
+
+          </article>
+        ))}
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section section--primary" style="background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark, #0a1d33) 100%); color: var(--text-inverse);">
+    <div class="container text-center">
+      <div class="reveal" style="max-width: 640px; margin: 0 auto;">
+        <h2 style="color: var(--text-inverse); margin-bottom: var(--space-4);">{t(locale, 'successStories.ctaTitle')}</h2>
+        <p style="font-size: var(--text-lg); opacity: 0.9; margin-bottom: var(--space-8);">
+          {t(locale, 'successStories.ctaDesc')}
+        </p>
+        <div class="flex gap-4 flex--wrap" style="justify-content: center;">
+          <button class="btn btn--primary contact-trigger" style="background: var(--color-secondary); color: var(--color-primary);">
+            {t(locale, 'successStories.ctaButton')}
+          </button>
+          <a href={p('/learn/program/')} class="btn btn--secondary" style="border-color: rgba(255,255,255,0.4); color: var(--text-inverse);">
+            {t(locale, 'successStories.ctaSecondary')}
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const chips = document.querySelectorAll('[data-filter-category]');
+    const cards = document.querySelectorAll('.story-card');
+    const countEl = document.getElementById('result-count');
+
+    chips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        chips.forEach(c => c.classList.remove('is-active'));
+        chip.classList.add('is-active');
+        const cat = chip.getAttribute('data-filter-category');
+        let count = 0;
+        cards.forEach(card => {
+          const show = cat === 'all' || card.getAttribute('data-category') === cat;
+          (card as HTMLElement).style.display = show ? '' : 'none';
+          if (show) count++;
+        });
+        if (countEl) {
+          countEl.textContent = `Showing ${count} ${count === 1 ? 'story' : 'stories'}`;
+        }
+      });
+    });
+  });
+</script>

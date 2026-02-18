@@ -2,6 +2,27 @@
 
 All notable changes to the Insureversia website will be documented in this file.
 
+## [0.5.0] - 2026-02-18
+
+### Added
+
+**Phase 5: Resources Section**
+
+- **Resources section** (5 pages):
+  - `resources/faq/` — 20 FAQ items across 5 categories (Skeptical, Curious, Using AI, Leading Adoption, Making Decisions) with collection-based accordion layout, tab filtering, and source citations
+  - `resources/glossary/` — 32 AI and insurance terms (17 AI + 15 insurance-specific) with alphabetical navigation
+  - `resources/success-stories/` — 5 detailed case studies (Lemonade, Ping An, Tractable, Shift Technology, Root Insurance) with category filters, context/challenge/approach/results/lessons structure
+  - `resources/tool-directory/` — 17 AI tools across 5 categories (General LLM, Insurance-Specific, Document Review, Research, Practice Management) with dual filters (category + pricing), confidentiality ratings, and independence disclaimer
+  - `resources/jurisdiction-guide/` — 15 jurisdictions across 4 regions with insurance-focused AI regulation data (legislation, regulatory guidance, industry standards, notable cases), dual filters (region + status)
+- **FAQ content collection** (20 markdown files):
+  - `faq/en/01-04` — Skeptical: AI replacement fears, hype concerns, complexity understanding, data safety
+  - `faq/en/05-08` — Curious: getting started, best tools, costs, technical skills
+  - `faq/en/09-12` — Using AI: content verification, client disclosure, hallucinations, common mistakes
+  - `faq/en/13-16` — Leading: governance frameworks, team training, ROI measurement, regulatory obligations
+  - `faq/en/17-20` — Deciding: build vs buy, liability risks, competitor analysis, transformation timeline
+
+---
+
 ## [0.4.0] - 2026-02-18
 
 ### Added

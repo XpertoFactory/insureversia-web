@@ -1,0 +1,183 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { t, getLocalePath } from '../../../i18n';
+const locale = 'en';
+const p = (path: string) => getLocalePath(locale, path);
+
+const allFaqsRaw = (await getCollection('faq'))
+  .filter(entry => entry.id.startsWith('en/'))
+  .sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
+
+const allFaqs = await Promise.all(
+  allFaqsRaw.map(async (faq) => {
+    const { Content } = await faq.render();
+    return { ...faq, Content };
+  })
+);
+
+const categoryLabels: Record<string, string> = {
+  skeptical: t(locale, 'faq.skeptical'),
+  curious: t(locale, 'faq.curious'),
+  using: t(locale, 'faq.using'),
+  leading: t(locale, 'faq.leading'),
+  deciding: t(locale, 'faq.deciding'),
+};
+
+const categoryDescriptions: Record<string, string> = {
+  skeptical: "You've heard the hype. You're not buying it. These answers address the real concerns.",
+  curious: "You're interested but not sure where to start. Here's what you need to know.",
+  using: "You've started experimenting. Here's how to level up safely.",
+  leading: "You're championing AI in your organization. Here's strategic guidance.",
+  deciding: "You need to make informed decisions about AI investment and policy.",
+};
+
+// Group FAQs by category
+const categories = [...new Set(allFaqs.map(faq => faq.data.category))];
+const faqsByCategory: Record<string, typeof allFaqs> = {};
+categories.forEach(cat => {
+  faqsByCategory[cat] = allFaqs.filter(faq => faq.data.category === cat);
+});
+---
+
+<BaseLayout
+  title={t(locale, 'faq.title')}
+  description={t(locale, 'faq.subtitle')}
+  locale={locale}
+>
+  <!-- Hero -->
+  <section class="hero" style="background: linear-gradient(135deg, rgba(15,43,70,0.88) 0%, rgba(0,180,216,0.15) 100%), url('/assets/images/hero-images/hero-image-resources.png') top/cover no-repeat;">
+    <div class="container" style="position: relative; z-index: 1;">
+      <div class="slide-up" style="max-width: 800px;">
+        <p class="text-sm font-semibold mb-4" style="color: var(--color-secondary); text-transform: uppercase; letter-spacing: 0.1em;">Resources</p>
+        <h1 style="font-size: var(--text-5xl); margin-bottom: var(--space-6);">{t(locale, 'faq.title')}</h1>
+        <p class="lead" style="margin-bottom: var(--space-6);">
+          {t(locale, 'faq.subtitle')}
+        </p>
+      </div>
+    </div>
+    <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 120px; background: linear-gradient(to top, var(--surface-page), transparent);"></div>
+  </section>
+
+  <!-- Category Tabs -->
+  <section class="section">
+    <div class="container">
+      <div class="reveal">
+        <!-- Tabs Navigation -->
+        <div class="tabs" id="faq-tabs" style="justify-content: center; margin-bottom: var(--space-8);">
+          <button class="tab is-active" data-tab="all">All Questions</button>
+          {categories.map((cat) => (
+            <button class="tab" data-tab={cat}>
+              {categoryLabels[cat] || cat}
+            </button>
+          ))}
+        </div>
+
+        <!-- Category descriptions (shown when a specific tab is active) -->
+        {categories.map((cat) => (
+          <div class="faq-category-desc hidden" data-category-desc={cat} style="text-align: center; max-width: 600px; margin: 0 auto var(--space-8);">
+            <p class="text-lg" style="color: var(--text-secondary);">
+              {categoryDescriptions[cat] || ''}
+            </p>
+          </div>
+        ))}
+      </div>
+
+      <!-- FAQ Accordions -->
+      <div style="max-width: 800px; margin: 0 auto;" class="reveal-stagger">
+        {categories.map((cat) => (
+          <div class="faq-group" data-category={cat} style="margin-bottom: var(--space-8);">
+            <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-4);">
+              <span class="badge badge--intermediate">{categoryLabels[cat] || cat}</span>
+            </div>
+            <div class="accordion">
+              {faqsByCategory[cat].map((faq) => (
+                <div class="accordion__item">
+                  <button class="accordion__trigger">{faq.data.title}</button>
+                  <div class="accordion__content">
+                    <div style="line-height: var(--leading-relaxed);"><faq.Content /></div>
+                    {faq.data.sources && faq.data.sources.length > 0 && (
+                      <div style="margin-top: var(--space-4); padding-top: var(--space-4); border-top: 1px solid var(--border-light);">
+                        <p class="text-xs font-semibold text-muted" style="text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: var(--space-2);">Sources</p>
+                        <ul style="padding-left: var(--space-5); margin-bottom: 0;">
+                          {faq.data.sources.map((source) => (
+                            <li class="text-sm" style="color: var(--text-muted); margin-bottom: var(--space-1);">
+                              {source.url ? (
+                                <a href={source.url} target="_blank" rel="noopener">{source.title}</a>
+                              ) : (
+                                <span>{source.title}</span>
+                              )}
+                              {source.author && <span> — {source.author}</span>}
+                              {source.date && <span> ({source.date})</span>}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Still Have Questions -->
+  <section class="section section--parchment">
+    <div class="container text-center">
+      <div class="reveal" style="max-width: 600px; margin: 0 auto;">
+        <h2 style="margin-bottom: var(--space-4);">Still Have Questions?</h2>
+        <p style="font-size: var(--text-lg); color: var(--text-secondary); margin-bottom: var(--space-6);">
+          The best way to answer questions about AI is to experience it firsthand. Try a Quick Win, explore our AI 101 learning path, or dive into real-world applications to build your own informed perspective.
+        </p>
+        <div class="flex gap-4 flex--wrap" style="justify-content: center;">
+          <a href="/practice/quick-wins/" class="btn btn--primary">Try a Quick Win</a>
+          <a href="/learn/ai-101/" class="btn btn--secondary">Start AI 101</a>
+        </div>
+        <p style="margin-top: var(--space-4); font-size: var(--text-sm); color: var(--text-muted);">
+          {t(locale, 'learningProgram.programCta')}
+          <a href={p('/learn/program/')} style="font-weight: var(--font-semibold);">
+            {t(locale, 'learningProgram.programCtaLink')} &rarr;
+          </a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Tab filtering (accordion is handled by BaseLayout)
+    const tabs = document.querySelectorAll('#faq-tabs .tab');
+    const groups = document.querySelectorAll('.faq-group');
+    const descs = document.querySelectorAll('.faq-category-desc');
+
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('is-active'));
+        tab.classList.add('is-active');
+        const category = (tab as HTMLElement).dataset.tab;
+
+        // Show/hide groups
+        groups.forEach((group) => {
+          const el = group as HTMLElement;
+          if (category === 'all' || el.dataset.category === category) {
+            el.style.display = '';
+          } else {
+            el.style.display = 'none';
+          }
+        });
+
+        // Show/hide category descriptions
+        descs.forEach((desc) => {
+          const el = desc as HTMLElement;
+          if (category !== 'all' && el.dataset.categoryDesc === category) {
+            el.classList.remove('hidden');
+          } else {
+            el.classList.add('hidden');
+          }
+        });
+      });
+    });
+  </script>
+</BaseLayout>
