@@ -1,0 +1,536 @@
+---
+import { t, type Locale } from '../i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+
+const taskTypeKeys = [
+  'riskAssessment',
+  'policyDrafting',
+  'claimsAnalysis',
+  'underwritingReview',
+  'customerCommunication',
+  'complianceCheck',
+  'fraudDetection',
+  'portfolioAnalysis',
+];
+
+const insuranceSectorKeys = [
+  'prospecting',
+  'riskManagement',
+  'compliance',
+  'claims',
+  'customerService',
+  'marketing',
+  'general',
+];
+
+const constraintKeys = [
+  'formalTone',
+  'plainLanguage',
+  'includeCitations',
+  'includeCounterarguments',
+  'timeSensitive',
+  'confidentiality',
+  'stepByStep',
+  'summaryFormat',
+];
+
+const totalSteps = 5;
+---
+
+<div class="prompt-builder" id="prompt-builder" data-locale={locale}>
+  <!-- Step Indicator -->
+  <div class="prompt-builder__steps" role="navigation" aria-label={t(locale, 'promptBuilder.stepLabel')}>
+    {Array.from({ length: totalSteps }, (_, i) => i + 1).map((step, idx) => (
+      <>
+        {idx > 0 && (
+          <div class={`prompt-builder__step-line`} data-line={idx}></div>
+        )}
+        <button
+          class={`prompt-builder__step-dot ${step === 1 ? 'is-active' : ''}`}
+          data-step-dot={step}
+          aria-label={`${t(locale, 'promptBuilder.stepLabel')} ${step} ${t(locale, 'promptBuilder.stepOf')} ${totalSteps}`}
+          type="button"
+        >
+          {step}
+        </button>
+      </>
+    ))}
+  </div>
+
+  <!-- Step 1: Task Type -->
+  <div class="prompt-builder__step is-active" data-step="1">
+    <div class="prompt-builder__step-header">
+      <h2>{t(locale, 'promptBuilder.step1Title')}</h2>
+      <p>{t(locale, 'promptBuilder.step1Subtitle')}</p>
+    </div>
+    <div class="prompt-builder__options">
+      {taskTypeKeys.map((key) => (
+        <button
+          class="prompt-builder__option"
+          data-task-type={key}
+          type="button"
+        >
+          <span class="prompt-builder__option-radio"></span>
+          <span>{t(locale, `promptBuilder.taskTypes.${key}`)}</span>
+        </button>
+      ))}
+    </div>
+  </div>
+
+  <!-- Step 2: Insurance Sector -->
+  <div class="prompt-builder__step" data-step="2">
+    <div class="prompt-builder__step-header">
+      <h2>{t(locale, 'promptBuilder.step2Title')}</h2>
+      <p>{t(locale, 'promptBuilder.step2Subtitle')}</p>
+    </div>
+    <div class="prompt-builder__options">
+      {insuranceSectorKeys.map((key) => (
+        <button
+          class="prompt-builder__option"
+          data-insurance-sector={key}
+          type="button"
+        >
+          <span class="prompt-builder__option-radio"></span>
+          <span>{t(locale, `promptBuilder.insuranceSectors.${key}`)}</span>
+        </button>
+      ))}
+    </div>
+  </div>
+
+  <!-- Step 3: Specifics -->
+  <div class="prompt-builder__step" data-step="3">
+    <div class="prompt-builder__step-header">
+      <h2>{t(locale, 'promptBuilder.step3Title')}</h2>
+      <p>{t(locale, 'promptBuilder.step3Subtitle')}</p>
+    </div>
+    <div class="prompt-builder__fields">
+      <div class="prompt-builder__field">
+        <label class="prompt-builder__label" for="pb-task-desc">
+          {t(locale, 'promptBuilder.specifics.taskLabel')}
+          <span class="prompt-builder__label-hint">({t(locale, 'promptBuilder.required')})</span>
+        </label>
+        <textarea
+          class="prompt-builder__textarea"
+          id="pb-task-desc"
+          placeholder={t(locale, 'promptBuilder.specifics.taskPlaceholder')}
+          rows="4"
+          required
+        ></textarea>
+      </div>
+      <div class="prompt-builder__field">
+        <label class="prompt-builder__label" for="pb-jurisdiction">
+          {t(locale, 'promptBuilder.specifics.jurisdictionLabel')}
+          <span class="prompt-builder__label-hint">({t(locale, 'promptBuilder.optional')})</span>
+        </label>
+        <input
+          class="prompt-builder__input"
+          id="pb-jurisdiction"
+          type="text"
+          placeholder={t(locale, 'promptBuilder.specifics.jurisdictionPlaceholder')}
+        />
+      </div>
+      <div class="prompt-builder__field">
+        <label class="prompt-builder__label" for="pb-context">
+          {t(locale, 'promptBuilder.specifics.contextLabel')}
+          <span class="prompt-builder__label-hint">({t(locale, 'promptBuilder.optional')})</span>
+        </label>
+        <textarea
+          class="prompt-builder__textarea"
+          id="pb-context"
+          placeholder={t(locale, 'promptBuilder.specifics.contextPlaceholder')}
+          rows="3"
+        ></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 4: Constraints & Style -->
+  <div class="prompt-builder__step" data-step="4">
+    <div class="prompt-builder__step-header">
+      <h2>{t(locale, 'promptBuilder.step4Title')}</h2>
+      <p>{t(locale, 'promptBuilder.step4Subtitle')}</p>
+    </div>
+    <div class="prompt-builder__checkboxes">
+      {constraintKeys.map((key) => (
+        <button
+          class="prompt-builder__checkbox"
+          data-constraint={key}
+          type="button"
+        >
+          <span class="prompt-builder__checkbox-box">&#10003;</span>
+          <span>{t(locale, `promptBuilder.constraints.${key}`)}</span>
+        </button>
+      ))}
+    </div>
+  </div>
+
+  <!-- Step 5: Generated Prompt -->
+  <div class="prompt-builder__step" data-step="5">
+    <div class="prompt-builder__step-header">
+      <h2>{t(locale, 'promptBuilder.step5Title')}</h2>
+      <p>{t(locale, 'promptBuilder.step5Subtitle')}</p>
+    </div>
+
+    <!-- Edit shortcuts -->
+    <div class="prompt-builder__edit-steps">
+      <span class="text-xs text-muted" style="display: flex; align-items: center; margin-right: var(--space-2);">{t(locale, 'promptBuilder.nav.edit')}:</span>
+      <button class="prompt-builder__edit-step-btn" data-goto-step="1" type="button">
+        {t(locale, 'promptBuilder.nav.goToStep')} 1
+      </button>
+      <button class="prompt-builder__edit-step-btn" data-goto-step="2" type="button">
+        {t(locale, 'promptBuilder.nav.goToStep')} 2
+      </button>
+      <button class="prompt-builder__edit-step-btn" data-goto-step="3" type="button">
+        {t(locale, 'promptBuilder.nav.goToStep')} 3
+      </button>
+      <button class="prompt-builder__edit-step-btn" data-goto-step="4" type="button">
+        {t(locale, 'promptBuilder.nav.goToStep')} 4
+      </button>
+    </div>
+
+    <div class="prompt-builder__output">
+      <div class="prompt-builder__output-header">
+        <span class="prompt-builder__output-label">{t(locale, 'promptBuilder.output.label')}</span>
+        <button class="copy-btn" id="pb-copy-btn" type="button">
+          {t(locale, 'promptBuilder.nav.copy')}
+        </button>
+      </div>
+      <div class="prompt-builder__output-text" id="pb-output-text"></div>
+    </div>
+
+    <div class="prompt-builder__output-actions">
+      <button class="btn btn--primary" id="pb-copy-main" type="button">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        {t(locale, 'promptBuilder.nav.copy')}
+      </button>
+      <button class="btn btn--secondary" id="pb-start-over" type="button">
+        {t(locale, 'promptBuilder.nav.startOver')}
+      </button>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <div class="prompt-builder__nav" id="pb-nav">
+    <button class="btn btn--secondary btn--sm" id="pb-back" type="button" style="visibility: hidden;">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6" /></svg>
+      {t(locale, 'promptBuilder.nav.back')}
+    </button>
+    <div class="prompt-builder__nav-spacer"></div>
+    <button class="btn btn--primary btn--sm" id="pb-next" type="button" disabled>
+      {t(locale, 'promptBuilder.nav.next')}
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6" /></svg>
+    </button>
+  </div>
+</div>
+
+<script define:vars={{
+  locale,
+  tStepLabel: t(locale, 'promptBuilder.stepLabel'),
+  tStepOf: t(locale, 'promptBuilder.stepOf'),
+  tNext: t(locale, 'promptBuilder.nav.next'),
+  tGenerate: t(locale, 'promptBuilder.nav.generate'),
+  tCopy: t(locale, 'promptBuilder.nav.copy'),
+  tCopied: t(locale, 'promptBuilder.nav.copied'),
+  tYouAre: t(locale, 'promptBuilder.output.youAre'),
+  tTask: t(locale, 'promptBuilder.output.task'),
+  tJurisdiction: t(locale, 'promptBuilder.output.jurisdiction'),
+  tAdditionalContext: t(locale, 'promptBuilder.output.additionalContext'),
+  tRequirements: t(locale, 'promptBuilder.output.requirements'),
+  tClosing: t(locale, 'promptBuilder.output.closing'),
+  taskTypeLabels: JSON.stringify(
+    ['riskAssessment','policyDrafting','claimsAnalysis','underwritingReview','customerCommunication','complianceCheck','fraudDetection','portfolioAnalysis'].reduce((acc, key) => {
+      acc[key] = t(locale, `promptBuilder.taskTypes.${key}`);
+      return acc;
+    }, {} as Record<string, string>)
+  ),
+  insuranceSectorLabels: JSON.stringify(
+    ['prospecting','riskManagement','compliance','claims','customerService','marketing','general'].reduce((acc, key) => {
+      acc[key] = t(locale, `promptBuilder.insuranceSectors.${key}`);
+      return acc;
+    }, {} as Record<string, string>)
+  ),
+  constraintLabels: JSON.stringify(
+    ['formalTone','plainLanguage','includeCitations','includeCounterarguments','timeSensitive','confidentiality','stepByStep','summaryFormat'].reduce((acc, key) => {
+      acc[key] = t(locale, `promptBuilder.constraints.${key}`);
+      return acc;
+    }, {} as Record<string, string>)
+  ),
+}}>
+  document.addEventListener('DOMContentLoaded', () => {
+    const builder = document.getElementById('prompt-builder');
+    if (!builder) return;
+
+    const taskLabels = JSON.parse(taskTypeLabels);
+    const sectorLabels = JSON.parse(insuranceSectorLabels);
+    const constLabels = JSON.parse(constraintLabels);
+
+    // State
+    let currentStep = 1;
+    const totalSteps = 5;
+    let selectedTaskType = '';
+    let selectedInsuranceSector = '';
+    let selectedConstraints = new Set();
+
+    // DOM refs
+    const steps = builder.querySelectorAll('.prompt-builder__step');
+    const stepDots = builder.querySelectorAll('.prompt-builder__step-dot');
+    const stepLines = builder.querySelectorAll('.prompt-builder__step-line');
+    const backBtn = document.getElementById('pb-back');
+    const nextBtn = document.getElementById('pb-next');
+    const navBar = document.getElementById('pb-nav');
+    const outputText = document.getElementById('pb-output-text');
+    const copyBtn = document.getElementById('pb-copy-btn');
+    const copyMainBtn = document.getElementById('pb-copy-main');
+    const startOverBtn = document.getElementById('pb-start-over');
+
+    function goToStep(step) {
+      if (step < 1 || step > totalSteps) return;
+      currentStep = step;
+
+      // Update step panels
+      steps.forEach(s => {
+        const el = s;
+        const stepNum = parseInt(el.dataset.step);
+        if (stepNum === currentStep) {
+          el.classList.add('is-active');
+        } else {
+          el.classList.remove('is-active');
+        }
+      });
+
+      // Update step dots
+      stepDots.forEach(dot => {
+        const dotStep = parseInt(dot.dataset.stepDot);
+        dot.classList.remove('is-active', 'is-completed');
+        if (dotStep === currentStep) {
+          dot.classList.add('is-active');
+        } else if (dotStep < currentStep) {
+          dot.classList.add('is-completed');
+        }
+      });
+
+      // Update step lines
+      stepLines.forEach(line => {
+        const lineIdx = parseInt(line.dataset.line);
+        if (lineIdx < currentStep) {
+          line.classList.add('is-completed');
+        } else {
+          line.classList.remove('is-completed');
+        }
+      });
+
+      // Update nav
+      if (backBtn) {
+        backBtn.style.visibility = currentStep > 1 && currentStep < totalSteps ? 'visible' : 'hidden';
+      }
+
+      if (navBar) {
+        navBar.style.display = currentStep === totalSteps ? 'none' : '';
+      }
+
+      // Update next button text
+      if (nextBtn) {
+        if (currentStep === totalSteps - 1) {
+          nextBtn.innerHTML = `${tGenerate} <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6" /></svg>`;
+        } else {
+          nextBtn.innerHTML = `${tNext} <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6" /></svg>`;
+        }
+      }
+
+      updateNextState();
+
+      // Generate prompt if on step 5
+      if (currentStep === totalSteps) {
+        generatePrompt();
+      }
+
+      // Scroll to top of builder
+      builder.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function updateNextState() {
+      if (!nextBtn) return;
+      let canAdvance = false;
+
+      switch (currentStep) {
+        case 1:
+          canAdvance = selectedTaskType !== '';
+          break;
+        case 2:
+          canAdvance = selectedInsuranceSector !== '';
+          break;
+        case 3:
+          const taskDesc = document.getElementById('pb-task-desc');
+          canAdvance = taskDesc && taskDesc.value.trim().length > 0;
+          break;
+        case 4:
+          canAdvance = true; // Constraints are optional
+          break;
+        default:
+          canAdvance = false;
+      }
+
+      nextBtn.disabled = !canAdvance;
+    }
+
+    // Step 1: Task Type selection
+    builder.querySelectorAll('[data-task-type]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        builder.querySelectorAll('[data-task-type]').forEach(b => b.classList.remove('is-selected'));
+        btn.classList.add('is-selected');
+        selectedTaskType = btn.dataset.taskType;
+        updateNextState();
+      });
+    });
+
+    // Step 2: Insurance Sector selection
+    builder.querySelectorAll('[data-insurance-sector]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        builder.querySelectorAll('[data-insurance-sector]').forEach(b => b.classList.remove('is-selected'));
+        btn.classList.add('is-selected');
+        selectedInsuranceSector = btn.dataset.insuranceSector;
+        updateNextState();
+      });
+    });
+
+    // Step 3: Text input validation
+    const taskDescEl = document.getElementById('pb-task-desc');
+    if (taskDescEl) {
+      taskDescEl.addEventListener('input', () => updateNextState());
+    }
+
+    // Step 4: Constraint toggling
+    builder.querySelectorAll('[data-constraint]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const key = btn.dataset.constraint;
+        if (selectedConstraints.has(key)) {
+          selectedConstraints.delete(key);
+          btn.classList.remove('is-checked');
+        } else {
+          selectedConstraints.add(key);
+          btn.classList.add('is-checked');
+        }
+      });
+    });
+
+    // Back / Next navigation
+    backBtn?.addEventListener('click', () => goToStep(currentStep - 1));
+    nextBtn?.addEventListener('click', () => {
+      if (!nextBtn.disabled) {
+        goToStep(currentStep + 1);
+      }
+    });
+
+    // Step dot clicks (for completed steps)
+    stepDots.forEach(dot => {
+      dot.addEventListener('click', () => {
+        const dotStep = parseInt(dot.dataset.stepDot);
+        if (dot.classList.contains('is-completed')) {
+          goToStep(dotStep);
+        }
+      });
+    });
+
+    // Edit step buttons on step 5
+    builder.querySelectorAll('[data-goto-step]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const step = parseInt(btn.dataset.gotoStep);
+        goToStep(step);
+      });
+    });
+
+    // Start over
+    startOverBtn?.addEventListener('click', () => {
+      selectedTaskType = '';
+      selectedInsuranceSector = '';
+      selectedConstraints.clear();
+
+      // Reset all selections
+      builder.querySelectorAll('.is-selected').forEach(el => el.classList.remove('is-selected'));
+      builder.querySelectorAll('.is-checked').forEach(el => el.classList.remove('is-checked'));
+
+      // Reset text fields
+      const fields = ['pb-task-desc', 'pb-jurisdiction', 'pb-context'];
+      fields.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = '';
+      });
+
+      goToStep(1);
+    });
+
+    // Generate prompt
+    function generatePrompt() {
+      const taskDesc = document.getElementById('pb-task-desc')?.value.trim() || '';
+      const jurisdiction = document.getElementById('pb-jurisdiction')?.value.trim() || '';
+      const context = document.getElementById('pb-context')?.value.trim() || '';
+
+      const sectorLabel = sectorLabels[selectedInsuranceSector] || selectedInsuranceSector;
+      const taskLabel = taskLabels[selectedTaskType] || selectedTaskType;
+
+      let prompt = `${tYouAre} ${sectorLabel}.\n\n`;
+      prompt += `${tTask}: ${taskLabel}\n\n`;
+      prompt += `${taskDesc}\n`;
+
+      if (jurisdiction) {
+        prompt += `\n${tJurisdiction}: ${jurisdiction}\n`;
+      }
+
+      if (context) {
+        prompt += `\n${tAdditionalContext}: ${context}\n`;
+      }
+
+      if (selectedConstraints.size > 0) {
+        prompt += `\n${tRequirements}:\n`;
+        selectedConstraints.forEach(key => {
+          const label = constLabels[key] || key;
+          prompt += `- ${label}\n`;
+        });
+      }
+
+      prompt += `\n${tClosing}`;
+
+      if (outputText) {
+        outputText.textContent = prompt;
+      }
+    }
+
+    // Copy to clipboard
+    function copyPrompt(btn) {
+      const prompt = outputText?.textContent || '';
+      if (!prompt) return;
+
+      navigator.clipboard.writeText(prompt).then(() => {
+        const originalHTML = btn.innerHTML;
+        const isSmallBtn = btn.classList.contains('copy-btn');
+
+        if (isSmallBtn) {
+          btn.textContent = tCopied;
+          btn.classList.add('is-copied');
+        } else {
+          btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> ${tCopied}`;
+        }
+
+        setTimeout(() => {
+          if (isSmallBtn) {
+            btn.textContent = tCopy;
+            btn.classList.remove('is-copied');
+          } else {
+            btn.innerHTML = originalHTML;
+          }
+        }, 2000);
+      });
+    }
+
+    copyBtn?.addEventListener('click', () => copyPrompt(copyBtn));
+    copyMainBtn?.addEventListener('click', () => copyPrompt(copyMainBtn));
+
+    // Init
+    updateNextState();
+  });
+</script>

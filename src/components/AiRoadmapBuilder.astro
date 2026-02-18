@@ -1,0 +1,658 @@
+---
+import { t, getLocalePath, type Locale } from '../i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const p = (path: string) => getLocalePath(locale, path);
+
+const totalSteps = 5;
+
+const roleKeys = ['underwriter', 'claimsAdjuster', 'actuary', 'broker', 'complianceOfficer', 'executive', 'riskManager'];
+const sectorKeys = ['prospecting', 'riskManagement', 'compliance', 'claims', 'customerService', 'marketing', 'reinsurance', 'actuarial', 'general'];
+const orgSizeKeys = ['solo', 'small', 'mid', 'large', 'carrier', 'reinsurer'];
+const experienceKeys = ['never', 'triedOnce', 'occasional', 'regular'];
+const goalKeys = ['riskAssessment', 'policyDrafting', 'claimsProcessing', 'customerComm', 'fraudDetection', 'underwriting', 'compliance', 'portfolioManagement', 'learning'];
+const approachKeys = ['conservative', 'moderate', 'progressive'];
+
+// Role icons as inline SVGs
+const roleIconSvgs: Record<string, string> = {
+  underwriter: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
+  claimsAdjuster: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>',
+  actuary: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="12" y2="14"/><line x1="8" y1="18" x2="16" y2="18"/></svg>',
+  broker: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+  complianceOfficer: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 4.5-9 4.5-9-4.5z"/><path d="M3 7.5v4.5l9 4.5 9-4.5V7.5"/></svg>',
+  executive: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="12.01"/></svg>',
+  riskManager: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
+};
+
+// Translations for JS
+const jsTranslations = {
+  stepOf: t(locale, 'aiRoadmap.stepOf'),
+  prev: t(locale, 'aiRoadmap.prev'),
+  next: t(locale, 'aiRoadmap.next'),
+  generateRoadmap: t(locale, 'aiRoadmap.generateRoadmap'),
+  resultsTitle: t(locale, 'aiRoadmap.resultsTitle'),
+  resultsSubtitle: t(locale, 'aiRoadmap.resultsSubtitle'),
+  stage: t(locale, 'aiRoadmap.stage'),
+  exploreOnInsureversia: t(locale, 'aiRoadmap.exploreOnInsureversia'),
+  checkpoint: t(locale, 'aiRoadmap.checkpoint'),
+  copyRoadmap: t(locale, 'aiRoadmap.copyRoadmap'),
+  copyRoadmapDone: t(locale, 'aiRoadmap.copyRoadmapDone'),
+  startOver: t(locale, 'aiRoadmap.startOver'),
+  // Stage themes
+  themeFoundation: t(locale, 'aiRoadmap.stageThemes.foundation'),
+  themeFirstApps: t(locale, 'aiRoadmap.stageThemes.firstApps'),
+  themeWorkflow: t(locale, 'aiRoadmap.stageThemes.workflow'),
+  themeAdvanced: t(locale, 'aiRoadmap.stageThemes.advanced'),
+  // Foundation actions
+  foundationA1: t(locale, 'aiRoadmap.foundationActions.a1'),
+  foundationA2: t(locale, 'aiRoadmap.foundationActions.a2'),
+  foundationA3: t(locale, 'aiRoadmap.foundationActions.a3'),
+  foundationA4: t(locale, 'aiRoadmap.foundationActions.a4'),
+  foundationCheckpoint: t(locale, 'aiRoadmap.foundationCheckpoint'),
+  // First apps actions (goal-based)
+  firstAppsRiskAssessment: t(locale, 'aiRoadmap.firstAppsActions.riskAssessment'),
+  firstAppsPolicyDrafting: t(locale, 'aiRoadmap.firstAppsActions.policyDrafting'),
+  firstAppsClaimsProcessing: t(locale, 'aiRoadmap.firstAppsActions.claimsProcessing'),
+  firstAppsCustomerComm: t(locale, 'aiRoadmap.firstAppsActions.customerComm'),
+  firstAppsFraudDetection: t(locale, 'aiRoadmap.firstAppsActions.fraudDetection'),
+  firstAppsUnderwriting: t(locale, 'aiRoadmap.firstAppsActions.underwriting'),
+  firstAppsCompliance: t(locale, 'aiRoadmap.firstAppsActions.compliance'),
+  firstAppsPortfolioManagement: t(locale, 'aiRoadmap.firstAppsActions.portfolioManagement'),
+  firstAppsLearning: t(locale, 'aiRoadmap.firstAppsActions.learning'),
+  firstAppsCheckpoint: t(locale, 'aiRoadmap.firstAppsCheckpoint'),
+  // Workflow actions (org-size-based)
+  workflowSolo: t(locale, 'aiRoadmap.workflowActions.solo'),
+  workflowSmall: t(locale, 'aiRoadmap.workflowActions.small'),
+  workflowMid: t(locale, 'aiRoadmap.workflowActions.mid'),
+  workflowLarge: t(locale, 'aiRoadmap.workflowActions.large'),
+  workflowCarrier: t(locale, 'aiRoadmap.workflowActions.carrier'),
+  workflowReinsurer: t(locale, 'aiRoadmap.workflowActions.reinsurer'),
+  workflowCheckpoint: t(locale, 'aiRoadmap.workflowCheckpoint'),
+  // Advanced actions (approach-based)
+  advancedConservative: t(locale, 'aiRoadmap.advancedActions.conservative'),
+  advancedModerate: t(locale, 'aiRoadmap.advancedActions.moderate'),
+  advancedProgressive: t(locale, 'aiRoadmap.advancedActions.progressive'),
+  advancedCommonA1: t(locale, 'aiRoadmap.advancedActionsCommon.a1'),
+  advancedCommonA2: t(locale, 'aiRoadmap.advancedActionsCommon.a2'),
+  advancedCommonA3: t(locale, 'aiRoadmap.advancedActionsCommon.a3'),
+  advancedCheckpoint: t(locale, 'aiRoadmap.advancedCheckpoint'),
+  // Role labels for results
+  ...roleKeys.reduce((acc, key) => {
+    acc[`role_${key}`] = t(locale, `aiRoadmap.roles.${key}`);
+    return acc;
+  }, {} as Record<string, string>),
+  // Sector labels for results
+  ...sectorKeys.reduce((acc, key) => {
+    acc[`sector_${key}`] = t(locale, `aiRoadmap.insuranceSectors.${key}`);
+    return acc;
+  }, {} as Record<string, string>),
+  // Org size labels
+  ...orgSizeKeys.reduce((acc, key) => {
+    acc[`orgSize_${key}`] = t(locale, `aiRoadmap.orgSizes.${key}`);
+    return acc;
+  }, {} as Record<string, string>),
+};
+
+const linkPaths = {
+  ai101: p('/learn/ai-101/'),
+  whatToDo: p('/learn/what-to-do/'),
+  quickWins: p('/practice/quick-wins/'),
+  promptEng: p('/learn/prompt-engineering/'),
+  promptLib: p('/practice/prompt-library/'),
+  promptBuilder: p('/practice/prompt-builder/'),
+  whatNotToDo: p('/learn/what-not-to-do/'),
+  challenges: p('/explore/challenges/'),
+  applications: p('/practice/applications/'),
+};
+---
+
+<div class="ai-roadmap" id="ai-roadmap">
+  <!-- Step Indicator -->
+  <div class="ai-roadmap__steps" role="navigation" aria-label={t(locale, 'aiRoadmap.stepOf')}>
+    {Array.from({ length: totalSteps }, (_, i) => i + 1).map((step, idx) => (
+      <>
+        {idx > 0 && (
+          <div class="ai-roadmap__step-line" data-line={idx}></div>
+        )}
+        <button
+          class={`ai-roadmap__step-dot ${step === 1 ? 'is-active' : ''}`}
+          data-step-dot={step}
+          type="button"
+        >
+          {step}
+        </button>
+      </>
+    ))}
+  </div>
+
+  <!-- Step 1: Your Role -->
+  <div class="ai-roadmap__step is-active" data-step="1">
+    <div class="ai-roadmap__step-header">
+      <h2>{t(locale, 'aiRoadmap.step1Title')}</h2>
+      <p>{t(locale, 'aiRoadmap.step1Desc')}</p>
+    </div>
+    <div class="ai-roadmap__options">
+      {roleKeys.map((key) => (
+        <button
+          class="ai-roadmap__option"
+          data-role={key}
+          type="button"
+        >
+          <span class="ai-roadmap__option-icon" set:html={roleIconSvgs[key]} />
+          <span class="ai-roadmap__option-label">{t(locale, `aiRoadmap.roles.${key}`)}</span>
+        </button>
+      ))}
+    </div>
+  </div>
+
+  <!-- Step 2: Your Practice -->
+  <div class="ai-roadmap__step" data-step="2">
+    <div class="ai-roadmap__step-header">
+      <h2>{t(locale, 'aiRoadmap.step2Title')}</h2>
+      <p>{t(locale, 'aiRoadmap.step2Desc')}</p>
+    </div>
+
+    <h3 class="ai-roadmap__sub-heading">{t(locale, 'common.insuranceSector')}</h3>
+    <div class="ai-roadmap__checkboxes">
+      {sectorKeys.map((key) => (
+        <button
+          class="ai-roadmap__checkbox"
+          data-sector={key}
+          type="button"
+        >
+          <span class="ai-roadmap__checkbox-box">&#10003;</span>
+          <span>{t(locale, `aiRoadmap.insuranceSectors.${key}`)}</span>
+        </button>
+      ))}
+    </div>
+
+    <h3 class="ai-roadmap__sub-heading" style="margin-top: var(--space-6);">{t(locale, 'aiRoadmap.orgSize')}</h3>
+    <div class="ai-roadmap__options ai-roadmap__options--compact">
+      {orgSizeKeys.map((key) => (
+        <button
+          class="ai-roadmap__option ai-roadmap__option--sm"
+          data-org-size={key}
+          type="button"
+        >
+          <span class="ai-roadmap__option-radio"></span>
+          <span>{t(locale, `aiRoadmap.orgSizes.${key}`)}</span>
+        </button>
+      ))}
+    </div>
+  </div>
+
+  <!-- Step 3: AI Experience -->
+  <div class="ai-roadmap__step" data-step="3">
+    <div class="ai-roadmap__step-header">
+      <h2>{t(locale, 'aiRoadmap.step3Title')}</h2>
+      <p>{t(locale, 'aiRoadmap.step3Desc')}</p>
+    </div>
+    <div class="ai-roadmap__options ai-roadmap__options--2col">
+      {experienceKeys.map((key) => (
+        <button
+          class="ai-roadmap__option ai-roadmap__option--card"
+          data-experience={key}
+          type="button"
+        >
+          <span class="ai-roadmap__option-radio"></span>
+          <div>
+            <span class="ai-roadmap__option-title">{t(locale, `aiRoadmap.experience.${key}`)}</span>
+            <span class="ai-roadmap__option-desc">{t(locale, `aiRoadmap.experience.${key}Desc`)}</span>
+          </div>
+        </button>
+      ))}
+    </div>
+  </div>
+
+  <!-- Step 4: Your Goals -->
+  <div class="ai-roadmap__step" data-step="4">
+    <div class="ai-roadmap__step-header">
+      <h2>{t(locale, 'aiRoadmap.step4Title')}</h2>
+      <p>{t(locale, 'aiRoadmap.step4Desc')}</p>
+    </div>
+    <div class="ai-roadmap__checkboxes">
+      {goalKeys.map((key) => (
+        <button
+          class="ai-roadmap__checkbox"
+          data-goal={key}
+          type="button"
+        >
+          <span class="ai-roadmap__checkbox-box">&#10003;</span>
+          <span>{t(locale, `aiRoadmap.goals.${key}`)}</span>
+        </button>
+      ))}
+    </div>
+  </div>
+
+  <!-- Step 5: Your Approach -->
+  <div class="ai-roadmap__step" data-step="5">
+    <div class="ai-roadmap__step-header">
+      <h2>{t(locale, 'aiRoadmap.step5Title')}</h2>
+      <p>{t(locale, 'aiRoadmap.step5Desc')}</p>
+    </div>
+    <div class="ai-roadmap__options ai-roadmap__options--approach">
+      {approachKeys.map((key) => (
+        <button
+          class="ai-roadmap__option ai-roadmap__option--card"
+          data-approach={key}
+          type="button"
+        >
+          <span class="ai-roadmap__option-radio"></span>
+          <div>
+            <span class="ai-roadmap__option-title">{t(locale, `aiRoadmap.approach.${key}`)}</span>
+            <span class="ai-roadmap__option-desc">{t(locale, `aiRoadmap.approach.${key}Desc`)}</span>
+          </div>
+        </button>
+      ))}
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <div class="ai-roadmap__nav" id="ar-nav">
+    <button class="btn btn--secondary btn--sm" id="ar-back" type="button" style="visibility: hidden;">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6" /></svg>
+      {t(locale, 'aiRoadmap.prev')}
+    </button>
+    <div class="ai-roadmap__nav-spacer"></div>
+    <button class="btn btn--primary btn--sm" id="ar-next" type="button" disabled>
+      {t(locale, 'aiRoadmap.next')}
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6" /></svg>
+    </button>
+  </div>
+
+  <!-- Results -->
+  <div class="ai-roadmap__results" id="ar-results" style="display: none;">
+    <!-- Rendered by JS -->
+  </div>
+</div>
+
+<script define:vars={{ jsTranslations, linkPaths, totalSteps }}>
+  document.addEventListener('DOMContentLoaded', () => {
+    const container = document.getElementById('ai-roadmap');
+    if (!container) return;
+
+    // State
+    let currentStep = 1;
+    let selectedRole = '';
+    let selectedSectors = new Set();
+    let selectedOrgSize = '';
+    let selectedExperience = '';
+    let selectedGoals = new Set();
+    let selectedApproach = '';
+
+    // DOM refs
+    const steps = container.querySelectorAll('.ai-roadmap__step');
+    const stepDots = container.querySelectorAll('.ai-roadmap__step-dot');
+    const stepLines = container.querySelectorAll('.ai-roadmap__step-line');
+    const backBtn = document.getElementById('ar-back');
+    const nextBtn = document.getElementById('ar-next');
+    const navBar = document.getElementById('ar-nav');
+    const resultsEl = document.getElementById('ar-results');
+
+    function goToStep(step) {
+      if (step < 1 || step > totalSteps) return;
+      currentStep = step;
+
+      steps.forEach(s => {
+        const stepNum = parseInt(s.dataset.step);
+        if (stepNum === currentStep) {
+          s.classList.add('is-active');
+        } else {
+          s.classList.remove('is-active');
+        }
+      });
+
+      stepDots.forEach(dot => {
+        const dotStep = parseInt(dot.dataset.stepDot);
+        dot.classList.remove('is-active', 'is-completed');
+        if (dotStep === currentStep) dot.classList.add('is-active');
+        else if (dotStep < currentStep) dot.classList.add('is-completed');
+      });
+
+      stepLines.forEach(line => {
+        const lineIdx = parseInt(line.dataset.line);
+        if (lineIdx < currentStep) line.classList.add('is-completed');
+        else line.classList.remove('is-completed');
+      });
+
+      // Nav visibility
+      if (backBtn) {
+        backBtn.style.visibility = currentStep > 1 ? 'visible' : 'hidden';
+      }
+
+      // Update next button text
+      if (nextBtn) {
+        if (currentStep === totalSteps) {
+          nextBtn.innerHTML = `${jsTranslations.generateRoadmap} <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6" /></svg>`;
+        } else {
+          nextBtn.innerHTML = `${jsTranslations.next} <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6" /></svg>`;
+        }
+      }
+
+      updateNextState();
+      container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function updateNextState() {
+      if (!nextBtn) return;
+      let canAdvance = false;
+
+      switch (currentStep) {
+        case 1: canAdvance = selectedRole !== ''; break;
+        case 2: canAdvance = selectedSectors.size > 0 && selectedOrgSize !== ''; break;
+        case 3: canAdvance = selectedExperience !== ''; break;
+        case 4: canAdvance = selectedGoals.size > 0; break;
+        case 5: canAdvance = selectedApproach !== ''; break;
+      }
+
+      nextBtn.disabled = !canAdvance;
+    }
+
+    // Step 1: Role selection
+    container.querySelectorAll('[data-role]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        container.querySelectorAll('[data-role]').forEach(b => b.classList.remove('is-selected'));
+        btn.classList.add('is-selected');
+        selectedRole = btn.dataset.role;
+        updateNextState();
+      });
+    });
+
+    // Step 2: Sector checkboxes
+    container.querySelectorAll('[data-sector]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const key = btn.dataset.sector;
+        if (selectedSectors.has(key)) {
+          selectedSectors.delete(key);
+          btn.classList.remove('is-checked');
+        } else {
+          selectedSectors.add(key);
+          btn.classList.add('is-checked');
+        }
+        updateNextState();
+      });
+    });
+
+    // Step 2: Org size radio
+    container.querySelectorAll('[data-org-size]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        container.querySelectorAll('[data-org-size]').forEach(b => b.classList.remove('is-selected'));
+        btn.classList.add('is-selected');
+        selectedOrgSize = btn.dataset.orgSize;
+        updateNextState();
+      });
+    });
+
+    // Step 3: Experience radio
+    container.querySelectorAll('[data-experience]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        container.querySelectorAll('[data-experience]').forEach(b => b.classList.remove('is-selected'));
+        btn.classList.add('is-selected');
+        selectedExperience = btn.dataset.experience;
+        updateNextState();
+      });
+    });
+
+    // Step 4: Goals checkboxes
+    container.querySelectorAll('[data-goal]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const key = btn.dataset.goal;
+        if (selectedGoals.has(key)) {
+          selectedGoals.delete(key);
+          btn.classList.remove('is-checked');
+        } else {
+          selectedGoals.add(key);
+          btn.classList.add('is-checked');
+        }
+        updateNextState();
+      });
+    });
+
+    // Step 5: Approach radio
+    container.querySelectorAll('[data-approach]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        container.querySelectorAll('[data-approach]').forEach(b => b.classList.remove('is-selected'));
+        btn.classList.add('is-selected');
+        selectedApproach = btn.dataset.approach;
+        updateNextState();
+      });
+    });
+
+    // Nav clicks
+    backBtn?.addEventListener('click', () => goToStep(currentStep - 1));
+    nextBtn?.addEventListener('click', () => {
+      if (nextBtn.disabled) return;
+      if (currentStep === totalSteps) {
+        showResults();
+      } else {
+        goToStep(currentStep + 1);
+      }
+    });
+
+    // Step dot clicks
+    stepDots.forEach(dot => {
+      dot.addEventListener('click', () => {
+        const dotStep = parseInt(dot.dataset.stepDot);
+        if (dot.classList.contains('is-completed')) {
+          goToStep(dotStep);
+        }
+      });
+    });
+
+    // Goal-to-action mapping
+    const goalActionMap = {
+      riskAssessment: jsTranslations.firstAppsRiskAssessment,
+      policyDrafting: jsTranslations.firstAppsPolicyDrafting,
+      claimsProcessing: jsTranslations.firstAppsClaimsProcessing,
+      customerComm: jsTranslations.firstAppsCustomerComm,
+      fraudDetection: jsTranslations.firstAppsFraudDetection,
+      underwriting: jsTranslations.firstAppsUnderwriting,
+      compliance: jsTranslations.firstAppsCompliance,
+      portfolioManagement: jsTranslations.firstAppsPortfolioManagement,
+      learning: jsTranslations.firstAppsLearning,
+    };
+
+    // Org size to workflow action
+    const orgWorkflowMap = {
+      solo: jsTranslations.workflowSolo,
+      small: jsTranslations.workflowSmall,
+      mid: jsTranslations.workflowMid,
+      large: jsTranslations.workflowLarge,
+      carrier: jsTranslations.workflowCarrier,
+      reinsurer: jsTranslations.workflowReinsurer,
+    };
+
+    // Approach to advanced action
+    const approachAdvancedMap = {
+      conservative: jsTranslations.advancedConservative,
+      moderate: jsTranslations.advancedModerate,
+      progressive: jsTranslations.advancedProgressive,
+    };
+
+    // Goal-to-link mapping
+    const goalLinkMap = {
+      riskAssessment: { label: 'AI 101', href: linkPaths.ai101 },
+      policyDrafting: { label: 'Prompt Library', href: linkPaths.promptLib },
+      claimsProcessing: { label: 'Quick Wins', href: linkPaths.quickWins },
+      customerComm: { label: 'Prompt Builder', href: linkPaths.promptBuilder },
+      fraudDetection: { label: 'Applications', href: linkPaths.applications },
+      underwriting: { label: 'Applications', href: linkPaths.applications },
+      compliance: { label: 'What Not to Do', href: linkPaths.whatNotToDo },
+      portfolioManagement: { label: 'Quick Wins', href: linkPaths.quickWins },
+      learning: { label: 'AI 101', href: linkPaths.ai101 },
+    };
+
+    function showResults() {
+      // Hide step UI
+      steps.forEach(s => s.classList.remove('is-active'));
+      container.querySelector('.ai-roadmap__steps').style.display = 'none';
+      navBar.style.display = 'none';
+
+      const roleLabel = jsTranslations['role_' + selectedRole] || selectedRole;
+      const firstSector = [...selectedSectors][0];
+      const sectorLabel = jsTranslations['sector_' + firstSector] || firstSector;
+      const orgLabel = jsTranslations['orgSize_' + selectedOrgSize] || selectedOrgSize;
+
+      const subtitle = jsTranslations.resultsSubtitle
+        .replace('{role}', roleLabel)
+        .replace('{practice}', sectorLabel);
+
+      // Build Stage 1: Foundation
+      const foundationActions = [
+        jsTranslations.foundationA1,
+        jsTranslations.foundationA2,
+        jsTranslations.foundationA3,
+        jsTranslations.foundationA4,
+      ];
+
+      // Build Stage 2: First Applications (based on goals, pick up to 3)
+      const goalsArr = [...selectedGoals];
+      const firstAppActions = goalsArr.slice(0, 3).map(g => goalActionMap[g]).filter(Boolean);
+      if (firstAppActions.length === 0) {
+        firstAppActions.push(goalActionMap.riskAssessment);
+      }
+
+      // Build Stage 3: Workflow Integration (based on org size)
+      const workflowAction = orgWorkflowMap[selectedOrgSize] || orgWorkflowMap.solo;
+
+      // Build Stage 4: Advanced (based on approach)
+      const advancedAction = approachAdvancedMap[selectedApproach] || approachAdvancedMap.moderate;
+
+      // Stage links
+      const foundationLinks = [
+        { label: 'AI 101', href: linkPaths.ai101 },
+        { label: 'What Not to Do', href: linkPaths.whatNotToDo },
+      ];
+
+      const firstAppLinks = [];
+      const seenLinks = new Set();
+      goalsArr.forEach(g => {
+        const link = goalLinkMap[g];
+        if (link && !seenLinks.has(link.href)) {
+          seenLinks.add(link.href);
+          firstAppLinks.push(link);
+        }
+      });
+      if (firstAppLinks.length === 0) {
+        firstAppLinks.push({ label: 'Quick Wins', href: linkPaths.quickWins });
+      }
+
+      const workflowLinks = [
+        { label: 'Prompt Engineering', href: linkPaths.promptEng },
+        { label: 'What to Do', href: linkPaths.whatToDo },
+      ];
+
+      const advancedLinks = [
+        { label: 'Applications', href: linkPaths.applications },
+        { label: 'Challenges', href: linkPaths.challenges },
+      ];
+
+      // Build stages HTML
+      function stageHtml(num, theme, actions, links, checkpoint) {
+        const actionsHtml = actions.map(a => `<li>${a}</li>`).join('');
+        const linksHtml = links.map(l => `<a href="${l.href}" class="btn btn--sm btn--primary">${l.label}</a>`).join(' ');
+        return `
+          <div class="ai-roadmap__stage">
+            <div class="ai-roadmap__stage-header">
+              <span class="ai-roadmap__stage-num">${jsTranslations.stage} ${num}</span>
+              <h3 class="ai-roadmap__stage-theme">${theme}</h3>
+            </div>
+            <ul class="ai-roadmap__stage-actions">${actionsHtml}</ul>
+            <div class="ai-roadmap__stage-links">
+              <span class="ai-roadmap__stage-links-label">${jsTranslations.exploreOnInsureversia}:</span>
+              <div class="flex gap-2 flex--wrap">${linksHtml}</div>
+            </div>
+            <div class="ai-roadmap__checkpoint">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              <div>
+                <strong>${jsTranslations.checkpoint}</strong>
+                <p>${checkpoint}</p>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      const stage1 = stageHtml(1, jsTranslations.themeFoundation, foundationActions, foundationLinks, jsTranslations.foundationCheckpoint);
+      const stage2 = stageHtml(2, jsTranslations.themeFirstApps, firstAppActions, firstAppLinks.slice(0, 3), jsTranslations.firstAppsCheckpoint);
+      const stage3 = stageHtml(3, jsTranslations.themeWorkflow, [workflowAction], workflowLinks, jsTranslations.workflowCheckpoint);
+      const stage4 = stageHtml(4, jsTranslations.themeAdvanced, [
+        advancedAction,
+        jsTranslations.advancedCommonA1,
+        jsTranslations.advancedCommonA2,
+        jsTranslations.advancedCommonA3,
+      ], advancedLinks, jsTranslations.advancedCheckpoint);
+
+      resultsEl.innerHTML = `
+        <h2 class="ai-roadmap__results-title">${jsTranslations.resultsTitle}</h2>
+        <p class="ai-roadmap__results-subtitle">${subtitle}</p>
+        <div class="ai-roadmap__stages">
+          ${stage1}
+          ${stage2}
+          ${stage3}
+          ${stage4}
+        </div>
+        <div class="ai-roadmap__actions">
+          <button type="button" class="btn btn--secondary" id="ar-copy-roadmap">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            ${jsTranslations.copyRoadmap}
+          </button>
+          <button type="button" class="btn btn--primary" id="ar-start-over">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+            ${jsTranslations.startOver}
+          </button>
+        </div>
+      `;
+
+      resultsEl.style.display = '';
+
+      // Copy button
+      resultsEl.querySelector('#ar-copy-roadmap')?.addEventListener('click', () => {
+        const stagesText = resultsEl.querySelectorAll('.ai-roadmap__stage');
+        let text = jsTranslations.resultsTitle + '\n' + subtitle + '\n\n';
+        stagesText.forEach((stage, i) => {
+          const theme = stage.querySelector('.ai-roadmap__stage-theme')?.textContent;
+          const actions = [...stage.querySelectorAll('.ai-roadmap__stage-actions li')].map(li => '  - ' + li.textContent).join('\n');
+          const checkpoint = stage.querySelector('.ai-roadmap__checkpoint p')?.textContent;
+          text += `${jsTranslations.stage} ${i + 1}: ${theme}\n${actions}\n  ${jsTranslations.checkpoint} ${checkpoint}\n\n`;
+        });
+        text += window.location.href;
+
+        navigator.clipboard.writeText(text).then(() => {
+          const btn = resultsEl.querySelector('#ar-copy-roadmap');
+          const origHtml = btn.innerHTML;
+          btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> ${jsTranslations.copyRoadmapDone}`;
+          setTimeout(() => { btn.innerHTML = origHtml; }, 2000);
+        });
+      });
+
+      // Start over button
+      resultsEl.querySelector('#ar-start-over')?.addEventListener('click', () => {
+        selectedRole = '';
+        selectedSectors.clear();
+        selectedOrgSize = '';
+        selectedExperience = '';
+        selectedGoals.clear();
+        selectedApproach = '';
+
+        container.querySelectorAll('.is-selected').forEach(el => el.classList.remove('is-selected'));
+        container.querySelectorAll('.is-checked').forEach(el => el.classList.remove('is-checked'));
+
+        resultsEl.style.display = 'none';
+        resultsEl.innerHTML = '';
+        container.querySelector('.ai-roadmap__steps').style.display = '';
+        navBar.style.display = '';
+        goToStep(1);
+      });
+
+      container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // Init
+    updateNextState();
+  });
+</script>

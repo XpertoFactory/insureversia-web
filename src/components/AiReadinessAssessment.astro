@@ -1,0 +1,463 @@
+---
+import { t, getLocalePath, type Locale } from '../i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const p = (path: string) => getLocalePath(locale, path);
+
+// Build section data for the template
+const sections = [
+  {
+    key: 'technical',
+    title: t(locale, 'aiReadiness.sectionTechnical'),
+    questions: [
+      t(locale, 'aiReadiness.techQ1'),
+      t(locale, 'aiReadiness.techQ2'),
+      t(locale, 'aiReadiness.techQ3'),
+    ],
+  },
+  {
+    key: 'cultural',
+    title: t(locale, 'aiReadiness.sectionCultural'),
+    questions: [
+      t(locale, 'aiReadiness.culturalQ1'),
+      t(locale, 'aiReadiness.culturalQ2'),
+      t(locale, 'aiReadiness.culturalQ3'),
+    ],
+  },
+  {
+    key: 'policy',
+    title: t(locale, 'aiReadiness.sectionPolicy'),
+    questions: [
+      t(locale, 'aiReadiness.policyQ1'),
+      t(locale, 'aiReadiness.policyQ2'),
+      t(locale, 'aiReadiness.policyQ3'),
+    ],
+  },
+  {
+    key: 'skills',
+    title: t(locale, 'aiReadiness.sectionSkills'),
+    questions: [
+      t(locale, 'aiReadiness.skillsQ1'),
+      t(locale, 'aiReadiness.skillsQ2'),
+      t(locale, 'aiReadiness.skillsQ3'),
+    ],
+  },
+];
+
+const scaleLabels = [
+  t(locale, 'aiReadiness.scale1'),
+  t(locale, 'aiReadiness.scale2'),
+  t(locale, 'aiReadiness.scale3'),
+  t(locale, 'aiReadiness.scale4'),
+];
+
+// Translations for JS usage
+const jsTranslations = {
+  stepOf: t(locale, 'aiReadiness.stepOf'),
+  prev: t(locale, 'aiReadiness.prev'),
+  next: t(locale, 'aiReadiness.next'),
+  seeResults: t(locale, 'aiReadiness.seeResults'),
+  resultsTitle: t(locale, 'aiReadiness.resultsTitle'),
+  overallScore: t(locale, 'aiReadiness.overallScore'),
+  readinessLevel: t(locale, 'aiReadiness.readinessLevel'),
+  levelReady: t(locale, 'aiReadiness.levelReady'),
+  levelGetting: t(locale, 'aiReadiness.levelGetting'),
+  levelBuilding: t(locale, 'aiReadiness.levelBuilding'),
+  levelEarly: t(locale, 'aiReadiness.levelEarly'),
+  dimensionBreakdown: t(locale, 'aiReadiness.dimensionBreakdown'),
+  strengths: t(locale, 'aiReadiness.strengths'),
+  strengthsDesc: t(locale, 'aiReadiness.strengthsDesc'),
+  improvements: t(locale, 'aiReadiness.improvements'),
+  improvementsDesc: t(locale, 'aiReadiness.improvementsDesc'),
+  nextSteps: t(locale, 'aiReadiness.nextSteps'),
+  nextStepsDesc: t(locale, 'aiReadiness.nextStepsDesc'),
+  recTechnical: t(locale, 'aiReadiness.recTechnical'),
+  recCultural: t(locale, 'aiReadiness.recCultural'),
+  recPolicy: t(locale, 'aiReadiness.recPolicy'),
+  recSkills: t(locale, 'aiReadiness.recSkills'),
+  linkAi101: t(locale, 'aiReadiness.linkAi101'),
+  linkWhatToDo: t(locale, 'aiReadiness.linkWhatToDo'),
+  linkResources: t(locale, 'aiReadiness.linkResources'),
+  linkQuickWins: t(locale, 'aiReadiness.linkQuickWins'),
+  linkPromptEng: t(locale, 'aiReadiness.linkPromptEng'),
+  shareResults: t(locale, 'aiReadiness.shareResults'),
+  shareResultsCopied: t(locale, 'aiReadiness.shareResultsCopied'),
+  retake: t(locale, 'aiReadiness.retake'),
+  sectionTechnical: t(locale, 'aiReadiness.sectionTechnical'),
+  sectionCultural: t(locale, 'aiReadiness.sectionCultural'),
+  sectionPolicy: t(locale, 'aiReadiness.sectionPolicy'),
+  sectionSkills: t(locale, 'aiReadiness.sectionSkills'),
+};
+
+const linkPaths = {
+  ai101: p('/learn/ai-101/'),
+  whatToDo: p('/learn/what-to-do/'),
+  resources: p('/resources/'),
+  quickWins: p('/practice/quick-wins/'),
+  promptEng: p('/learn/prompt-engineering/'),
+};
+---
+
+<div class="ai-readiness" id="ai-readiness">
+  <!-- Progress Indicator -->
+  <div class="ai-readiness__progress" id="ar-progress">
+    {[1, 2, 3, 4].map((step) => (
+      <div class={`ai-readiness__progress-step ${step === 1 ? 'is-active' : ''}`} data-step={step}>
+        <span class="ai-readiness__progress-num">{step}</span>
+        <span class="ai-readiness__progress-label">{sections[step - 1].title}</span>
+      </div>
+    ))}
+  </div>
+
+  <!-- Sections (one per dimension) -->
+  {sections.map((section, sIdx) => (
+    <div
+      class={`ai-readiness__section ${sIdx === 0 ? 'is-active' : ''}`}
+      data-section={sIdx}
+      id={`ar-section-${sIdx}`}
+    >
+      <h3 class="ai-readiness__section-title">{section.title}</h3>
+      <p class="ai-readiness__section-step">
+        {t(locale, 'aiReadiness.stepOf').replace('{current}', String(sIdx + 1)).replace('{total}', '4')}
+      </p>
+
+      {section.questions.map((question, qIdx) => (
+        <div class="ai-readiness__question-block" data-dimension={section.key} data-qindex={qIdx}>
+          <p class="ai-readiness__question">{question}</p>
+          <div class="ai-readiness__scale" role="radiogroup" aria-label={question}>
+            {scaleLabels.map((label, lIdx) => (
+              <button
+                type="button"
+                class="ai-readiness__scale-btn"
+                data-value={lIdx + 1}
+                data-dimension={section.key}
+                data-qindex={qIdx}
+                aria-label={label}
+                title={label}
+              >
+                <span class="ai-readiness__scale-num">{lIdx + 1}</span>
+                <span class="ai-readiness__scale-label">{label}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      ))}
+
+      <!-- Navigation Buttons -->
+      <div class="ai-readiness__nav">
+        {sIdx > 0 && (
+          <button type="button" class="btn btn--secondary ai-readiness__btn-prev" data-target={sIdx - 1}>
+            {t(locale, 'aiReadiness.prev')}
+          </button>
+        )}
+        {sIdx < 3 ? (
+          <button type="button" class="btn btn--primary ai-readiness__btn-next" data-target={sIdx + 1}>
+            {t(locale, 'aiReadiness.next')}
+          </button>
+        ) : (
+          <button type="button" class="btn btn--primary ai-readiness__btn-results" id="ar-see-results">
+            {t(locale, 'aiReadiness.seeResults')}
+          </button>
+        )}
+      </div>
+    </div>
+  ))}
+
+  <!-- Results Dashboard -->
+  <div class="ai-readiness__results" id="ar-results" style="display: none;">
+    <!-- Rendered by JS -->
+  </div>
+</div>
+
+<script define:vars={{ jsTranslations, linkPaths, sections: sections.map(s => ({ key: s.key, title: s.title })) }}>
+  document.addEventListener('DOMContentLoaded', () => {
+    const container = document.getElementById('ai-readiness');
+    if (!container) return;
+
+    // State: answers[dimension][questionIndex] = value (1-4)
+    const answers = {
+      technical: [0, 0, 0],
+      cultural: [0, 0, 0],
+      policy: [0, 0, 0],
+      skills: [0, 0, 0],
+    };
+
+    let currentSection = 0;
+
+    // Handle scale button clicks
+    container.querySelectorAll('.ai-readiness__scale-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const el = btn;
+        const dim = el.dataset.dimension;
+        const qi = parseInt(el.dataset.qindex, 10);
+        const val = parseInt(el.dataset.value, 10);
+
+        answers[dim][qi] = val;
+
+        // Update visual state: deselect siblings, select this one
+        const parent = el.closest('.ai-readiness__scale');
+        parent.querySelectorAll('.ai-readiness__scale-btn').forEach((b) => b.classList.remove('is-selected'));
+        el.classList.add('is-selected');
+      });
+    });
+
+    // Navigate between sections
+    function showSection(idx) {
+      container.querySelectorAll('.ai-readiness__section').forEach((s) => s.classList.remove('is-active'));
+      const target = document.getElementById('ar-section-' + idx);
+      if (target) target.classList.add('is-active');
+
+      // Update progress
+      container.querySelectorAll('.ai-readiness__progress-step').forEach((step) => {
+        const stepNum = parseInt(step.dataset.step, 10);
+        step.classList.remove('is-active', 'is-completed');
+        if (stepNum < idx + 1) step.classList.add('is-completed');
+        if (stepNum === idx + 1) step.classList.add('is-active');
+      });
+
+      currentSection = idx;
+
+      // Scroll to top of assessment
+      container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    container.querySelectorAll('.ai-readiness__btn-prev').forEach((btn) => {
+      btn.addEventListener('click', () => showSection(parseInt(btn.dataset.target, 10)));
+    });
+
+    container.querySelectorAll('.ai-readiness__btn-next').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const target = parseInt(btn.dataset.target, 10);
+        showSection(target);
+      });
+    });
+
+    // Calculate and show results
+    document.getElementById('ar-see-results')?.addEventListener('click', () => {
+      showResults();
+    });
+
+    function getDimensionScore(dim) {
+      return answers[dim].reduce((sum, v) => sum + v, 0);
+    }
+
+    function showResults() {
+      const techScore = getDimensionScore('technical');
+      const culturalScore = getDimensionScore('cultural');
+      const policyScore = getDimensionScore('policy');
+      const skillsScore = getDimensionScore('skills');
+      const totalScore = techScore + culturalScore + policyScore + skillsScore;
+      const maxScore = 48;
+      const percentage = Math.round((totalScore / maxScore) * 100);
+
+      // Determine level
+      let levelLabel, levelClass;
+      if (percentage >= 75) {
+        levelLabel = jsTranslations.levelReady;
+        levelClass = 'level-ready';
+      } else if (percentage >= 50) {
+        levelLabel = jsTranslations.levelGetting;
+        levelClass = 'level-getting';
+      } else if (percentage >= 25) {
+        levelLabel = jsTranslations.levelBuilding;
+        levelClass = 'level-building';
+      } else {
+        levelLabel = jsTranslations.levelEarly;
+        levelClass = 'level-early';
+      }
+
+      // Dimension data for ranking
+      const dims = [
+        { key: 'technical', label: jsTranslations.sectionTechnical, score: techScore },
+        { key: 'cultural', label: jsTranslations.sectionCultural, score: culturalScore },
+        { key: 'policy', label: jsTranslations.sectionPolicy, score: policyScore },
+        { key: 'skills', label: jsTranslations.sectionSkills, score: skillsScore },
+      ];
+
+      const sorted = [...dims].sort((a, b) => b.score - a.score);
+      const strengths = sorted.slice(0, 2).filter(d => d.score > 0);
+      const weaknesses = sorted.slice(-2).reverse().filter(d => d.score < 12);
+      // If all scores are the same, show all as strengths and no weaknesses
+      const allSame = dims.every(d => d.score === dims[0].score);
+
+      // Recommendations mapping
+      const recMap = {
+        technical: { text: jsTranslations.recTechnical, links: [
+          { label: jsTranslations.linkAi101, href: linkPaths.ai101 }
+        ]},
+        cultural: { text: jsTranslations.recCultural, links: [
+          { label: jsTranslations.linkWhatToDo, href: linkPaths.whatToDo }
+        ]},
+        policy: { text: jsTranslations.recPolicy, links: [
+          { label: jsTranslations.linkResources, href: linkPaths.resources }
+        ]},
+        skills: { text: jsTranslations.recSkills, links: [
+          { label: jsTranslations.linkQuickWins, href: linkPaths.quickWins },
+          { label: jsTranslations.linkPromptEng, href: linkPaths.promptEng }
+        ]},
+      };
+
+      // Build dimension bars HTML
+      function getBarColor(score) {
+        const pct = (score / 12) * 100;
+        if (pct >= 75) return 'var(--color-success)';
+        if (pct >= 50) return 'var(--color-accent)';
+        if (pct >= 25) return 'var(--color-alert)';
+        return 'var(--color-error)';
+      }
+
+      const barsHtml = dims.map(d => `
+        <div class="ai-readiness__dimension-row">
+          <span class="ai-readiness__dimension-label">${d.label}</span>
+          <div class="ai-readiness__dimension-bar">
+            <div class="ai-readiness__dimension-fill" style="width: ${Math.round((d.score / 12) * 100)}%; background: ${getBarColor(d.score)};"></div>
+          </div>
+          <span class="ai-readiness__dimension-score">${d.score}/12</span>
+        </div>
+      `).join('');
+
+      // Strengths HTML
+      const strengthsHtml = allSame ? `<p style="color: var(--text-secondary);">${strengths.map(s => s.label).join(', ')}</p>` :
+        strengths.map(s => `<div class="ai-readiness__strength-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-success)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          <span>${s.label} (${s.score}/12)</span>
+        </div>`).join('');
+
+      // Weaknesses HTML
+      const weaknessesHtml = (allSame ? [] : weaknesses).map(w => `<div class="ai-readiness__improvement-item">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-alert)" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <span>${w.label} (${w.score}/12)</span>
+      </div>`).join('');
+
+      // Next steps HTML: recommend for weakest dimensions
+      const stepsToShow = allSame ? Object.keys(recMap).slice(0, 3) : [...new Set(weaknesses.map(w => w.key))];
+      const nextStepsHtml = stepsToShow.map(key => {
+        const rec = recMap[key];
+        return `<div class="ai-readiness__rec-card card">
+          <p style="margin-bottom: var(--space-3);">${rec.text}</p>
+          <div class="flex gap-2 flex--wrap">
+            ${rec.links.map(l => `<a href="${l.href}" class="btn btn--sm btn--primary">${l.label}</a>`).join('')}
+          </div>
+        </div>`;
+      }).join('');
+
+      // Circumference for the circle: r=54, C = 2 * pi * 54 ~= 339.29
+      const circumference = 339.29;
+      const offset = circumference - (circumference * percentage / 100);
+
+      // Build results HTML
+      const resultsEl = document.getElementById('ar-results');
+      resultsEl.innerHTML = `
+        <h2 class="ai-readiness__results-title">${jsTranslations.resultsTitle}</h2>
+
+        <div class="ai-readiness__results-grid">
+          <!-- Overall Score -->
+          <div class="ai-readiness__score-card card">
+            <h4 style="margin-bottom: var(--space-4); text-align: center;">${jsTranslations.overallScore}</h4>
+            <div class="ai-readiness__score-circle-wrap">
+              <svg class="ai-readiness__score-circle" viewBox="0 0 120 120" width="140" height="140">
+                <circle cx="60" cy="60" r="54" fill="none" stroke="var(--border-light)" stroke-width="8" />
+                <circle cx="60" cy="60" r="54" fill="none" stroke="${getBarColor(totalScore / 4)}" stroke-width="8"
+                  stroke-dasharray="${circumference}" stroke-dashoffset="${offset}"
+                  stroke-linecap="round" transform="rotate(-90 60 60)" class="ai-readiness__score-ring" />
+                <text x="60" y="55" text-anchor="middle" fill="var(--text-primary)" font-size="28" font-weight="700" font-family="var(--font-heading)">${percentage}%</text>
+                <text x="60" y="75" text-anchor="middle" fill="var(--text-muted)" font-size="10" font-family="var(--font-body)">${totalScore}/${maxScore}</text>
+              </svg>
+            </div>
+            <div class="ai-readiness__level-badge ${levelClass}" style="text-align: center; margin-top: var(--space-4);">
+              <span class="badge ai-readiness__level-tag ${levelClass}">${levelLabel}</span>
+            </div>
+          </div>
+
+          <!-- Dimension Breakdown -->
+          <div class="ai-readiness__breakdown-card card">
+            <h4 style="margin-bottom: var(--space-4);">${jsTranslations.dimensionBreakdown}</h4>
+            <div class="ai-readiness__dimension-bars">
+              ${barsHtml}
+            </div>
+          </div>
+        </div>
+
+        <!-- Strengths & Improvements -->
+        <div class="ai-readiness__insights-grid">
+          <div class="card ai-readiness__insights-card">
+            <h4 style="margin-bottom: var(--space-2);">${jsTranslations.strengths}</h4>
+            <p class="text-sm text-muted" style="margin-bottom: var(--space-3);">${jsTranslations.strengthsDesc}</p>
+            ${strengthsHtml}
+          </div>
+          ${weaknessesHtml ? `<div class="card ai-readiness__insights-card">
+            <h4 style="margin-bottom: var(--space-2);">${jsTranslations.improvements}</h4>
+            <p class="text-sm text-muted" style="margin-bottom: var(--space-3);">${jsTranslations.improvementsDesc}</p>
+            ${weaknessesHtml}
+          </div>` : ''}
+        </div>
+
+        <!-- Personalized Next Steps -->
+        <div class="ai-readiness__next-steps">
+          <h4 style="margin-bottom: var(--space-2);">${jsTranslations.nextSteps}</h4>
+          <p class="text-sm text-muted" style="margin-bottom: var(--space-4);">${jsTranslations.nextStepsDesc}</p>
+          <div class="ai-readiness__recs-grid">
+            ${nextStepsHtml}
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="ai-readiness__actions">
+          <button type="button" class="btn btn--secondary" id="ar-share-results">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            ${jsTranslations.shareResults}
+          </button>
+          <button type="button" class="btn btn--primary" id="ar-retake">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+            ${jsTranslations.retake}
+          </button>
+        </div>
+      `;
+
+      // Hide sections, show results
+      container.querySelectorAll('.ai-readiness__section').forEach((s) => s.classList.remove('is-active'));
+      document.getElementById('ar-progress').style.display = 'none';
+      resultsEl.style.display = '';
+
+      // Animate the ring
+      requestAnimationFrame(() => {
+        const ring = resultsEl.querySelector('.ai-readiness__score-ring');
+        if (ring) {
+          ring.style.transition = 'stroke-dashoffset 1s ease-out';
+        }
+      });
+
+      // Share button
+      resultsEl.querySelector('#ar-share-results')?.addEventListener('click', () => {
+        const dimLines = dims.map(d => `${d.label}: ${d.score}/12`).join('\n');
+        const text = `${jsTranslations.resultsTitle}\n\n${jsTranslations.overallScore}: ${percentage}% (${totalScore}/${maxScore})\n${jsTranslations.readinessLevel}: ${levelLabel}\n\n${jsTranslations.dimensionBreakdown}:\n${dimLines}\n\n${window.location.href}`;
+        navigator.clipboard.writeText(text).then(() => {
+          const btn = resultsEl.querySelector('#ar-share-results');
+          const origHtml = btn.innerHTML;
+          btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> ${jsTranslations.shareResultsCopied}`;
+          setTimeout(() => { btn.innerHTML = origHtml; }, 2000);
+        });
+      });
+
+      // Retake button
+      resultsEl.querySelector('#ar-retake')?.addEventListener('click', () => {
+        // Reset all answers
+        Object.keys(answers).forEach(dim => {
+          answers[dim] = [0, 0, 0];
+        });
+        // Reset all button selections
+        container.querySelectorAll('.ai-readiness__scale-btn').forEach(b => b.classList.remove('is-selected'));
+        // Show first section
+        resultsEl.style.display = 'none';
+        document.getElementById('ar-progress').style.display = '';
+        showSection(0);
+      });
+
+      container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+</script>

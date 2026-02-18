@@ -1,0 +1,503 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Icon from '../../../components/Icon.astro';
+import { t, getLocalePath } from '../../../i18n';
+const locale = 'en';
+const p = (path: string) => getLocalePath(locale, path);
+
+function slug(s: string) { return s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''); }
+
+const categories = [
+  {
+    name: 'Policy Analysis',
+    icon: 'file-text',
+    prompts: [
+      {
+        title: 'Executive Policy Summary',
+        prompt: 'Act as a senior insurance coverage attorney. Analyze the following insurance policy and prepare an executive summary that includes: (1) named insured and additional insureds, (2) policy period and territory, (3) all coverage parts with per-occurrence and aggregate limits, (4) deductibles, self-insured retentions, and coinsurance provisions, (5) key exclusions organized by coverage part, (6) conditions precedent to coverage (notice, cooperation, consent), (7) endorsements modifying standard ISO forms, (8) subrogation and other-insurance clauses. Policy type: [COMMERCIAL GENERAL LIABILITY / PROPERTY / PROFESSIONAL LIABILITY / OTHER]. Jurisdiction: [STATE]. [PASTE POLICY OR KEY SECTIONS]',
+        sector: 'Commercial Lines',
+      },
+      {
+        title: 'Coverage Gap Identification',
+        prompt: 'You are a risk management consultant specializing in insurance program design. Review the following insurance program against the risk exposure profile of [DESCRIBE BUSINESS TYPE, SIZE, OPERATIONS, AND LOCATIONS]. For each identified risk, determine: (1) whether existing coverage applies and under which policy, (2) any gaps between the risk exposure and current coverage, (3) sublimit adequacy for specific perils (flood, earthquake, cyber, etc.), (4) manuscript endorsements or policy modifications needed, (5) recommended additional coverage lines or increased limits. Current program: [LIST POLICIES WITH CARRIERS, LIMITS, AND KEY TERMS]. Industry: [INDUSTRY]. Annual revenue: [AMOUNT].',
+        sector: 'Risk Management',
+      },
+      {
+        title: 'Policy Version Comparison',
+        prompt: 'Act as a coverage specialist. Compare the two versions of the insurance policy I am providing. For each change identify: (1) the specific provision modified (section number and title), (2) the exact language added, removed, or altered, (3) classification by importance (critical - affects coverage scope/limits, significant - affects conditions/procedures, minor - clarification only), (4) the practical impact on the insured\'s coverage, (5) whether the change broadens or narrows coverage. Pay particular attention to changes in definitions, exclusions, conditions, and endorsements. Flag any changes that could create coverage disputes. Policy type: [ISO FORM NUMBER OR MANUSCRIPT]. Version 1: [PASTE] Version 2: [PASTE]',
+        sector: 'Commercial Lines',
+      },
+      {
+        title: 'Exclusion & Limitation Deep Dive',
+        prompt: 'You are an insurance coverage attorney experienced in policyholder representation. Analyze all exclusions and limitations in the following insurance policy. For each exclusion: (1) identify the specific provision (section, paragraph, and endorsement number), (2) explain the scope of what is excluded in plain language, (3) identify any exceptions to the exclusion that restore coverage, (4) cite relevant case law from [STATE] on how courts have interpreted this exclusion, (5) flag any ambiguities that could be construed in favor of the insured under contra proferentem, (6) note whether the exclusion is standard ISO language or manuscript. Organize findings by coverage part. Policy: [PASTE POLICY]. Jurisdiction: [STATE].',
+        sector: 'Coverage Litigation',
+      },
+      {
+        title: 'Subrogation Rights Assessment',
+        prompt: 'Act as a subrogation specialist. Analyze the following insurance policy and claim facts to assess subrogation rights and recovery opportunities. Evaluate: (1) the policy\'s subrogation clause and any waivers of subrogation granted by endorsement, (2) potential third-party tortfeasors and their likely insurance coverage, (3) contractual indemnification or hold harmless agreements between parties, (4) applicable statutes of limitation and repose in [STATE], (5) the made-whole doctrine applicability under [STATE] law, (6) anti-subrogation rule considerations, (7) workers\' compensation lien rights if applicable, (8) estimated recovery probability and cost-benefit analysis. Claim facts: [DESCRIBE LOSS EVENT, PARTIES INVOLVED, DAMAGES]. Policy type: [TYPE]. Amount paid: [AMOUNT].',
+        sector: 'Claims',
+      },
+    ],
+  },
+  {
+    name: 'Claims Processing',
+    icon: 'clipboard-list',
+    prompts: [
+      {
+        title: 'First Notice of Loss Analysis',
+        prompt: 'Act as a senior claims adjuster. Analyze the following First Notice of Loss (FNOL) report and provide: (1) initial coverage determination - identify which policy provisions are triggered and any coverage concerns, (2) coverage issues to investigate further (late notice, excluded perils, policy condition violations), (3) immediate action items (emergency mitigation, independent adjuster assignment, expert retention), (4) reserve recommendation with supporting rationale, (5) key documents and evidence to request from the insured, (6) third-party liability assessment if applicable, (7) regulatory notification requirements under [STATE] law, (8) timeline for acknowledgment and investigation per [STATE] claims handling regulations. FNOL details: [PASTE REPORT]. Policy type: [TYPE]. Policy number: [NUMBER]. Date of loss: [DATE].',
+        sector: 'Claims',
+      },
+      {
+        title: 'Claims Denial Letter Draft',
+        prompt: 'You are a claims manager responsible for drafting coverage determination letters. Draft a compliant claims denial letter for the following claim. The letter must: (1) identify the claim number, insured, date of loss, and policy number, (2) summarize the relevant facts as investigated, (3) cite the specific policy provisions (by section and page) that support the denial, (4) quote the exact policy language being applied, (5) explain clearly why the facts do not satisfy coverage requirements, (6) address each coverage theory the insured raised, (7) include required [STATE] regulatory disclosures (appraisal rights, department of insurance complaint process, time limits), (8) comply with [STATE] Unfair Claims Settlement Practices Act requirements, (9) preserve the insurer\'s rights under a reservation of rights if applicable. Claim facts: [DESCRIBE]. Denial basis: [EXCLUSION/CONDITION VIOLATED/POLICY NOT IN FORCE]. State: [STATE].',
+        sector: 'Claims',
+      },
+      {
+        title: 'Reserve Estimation Memo',
+        prompt: 'Act as a senior claims examiner. Analyze the following claim facts and prepare a detailed reserve estimation memorandum. Include: (1) claim summary with date of loss, coverage, and current status, (2) indemnity reserve estimate broken down by component (damages, medical, lost wages, pain and suffering if applicable), (3) expense reserve estimate (defense costs, expert fees, independent adjusters), (4) methodology used (individual case basis, tabular, actuarial), (5) comparable claim data and jury verdict research for [STATE/VENUE], (6) best case, expected, and worst case scenarios with probability weighting, (7) subrogation or contribution potential that may offset reserves, (8) recommended reserve amount with supporting rationale, (9) triggers for reserve review and adjustment. Claim facts: [DESCRIBE IN DETAIL]. Coverage: [TYPE AND LIMITS]. Jurisdiction: [STATE].',
+        sector: 'Claims',
+      },
+      {
+        title: 'Subrogation Recovery Analysis',
+        prompt: 'You are a subrogation recovery specialist. Evaluate the following claim for subrogation potential. Analyze: (1) the facts giving rise to third-party liability (negligence, product defect, breach of contract), (2) identification of all potentially responsible parties and their likely insurance coverage, (3) evidence preservation requirements and spoliation concerns, (4) applicable statute of limitations in [STATE] and any tolling considerations, (5) comparative/contributory negligence impact on recovery under [STATE] law, (6) contractual waivers of subrogation or indemnification agreements, (7) estimated gross recovery and net recovery after costs, (8) recommended recovery strategy (demand, arbitration, litigation), (9) cost-benefit analysis including expected legal fees. Claim facts: [DESCRIBE LOSS]. Amount paid to insured: [AMOUNT]. Date of loss: [DATE]. State: [STATE].',
+        sector: 'Claims',
+      },
+      {
+        title: 'Claims Investigation Summary',
+        prompt: 'Act as a claims investigation supervisor. Compile the following investigation findings into a structured claims investigation report. The report must include: (1) executive summary with coverage determination recommendation, (2) chronological timeline of the loss event, (3) summary of all statements taken (insured, witnesses, claimants) with key admissions and inconsistencies noted, (4) documentation review (police reports, medical records, repair estimates, financial records), (5) scene inspection or expert findings, (6) coverage analysis mapping facts to policy provisions, (7) liability assessment with percentage allocation if multiple parties involved, (8) damages evaluation with supporting documentation, (9) fraud indicators or red flags identified (if any), (10) recommended next steps and disposition. Claim: [CLAIM NUMBER]. Investigation findings: [PASTE OR DESCRIBE ALL EVIDENCE AND STATEMENTS].',
+        sector: 'Claims',
+      },
+    ],
+  },
+  {
+    name: 'Underwriting',
+    icon: 'shield',
+    prompts: [
+      {
+        title: 'Risk Assessment Report',
+        prompt: 'Act as a senior commercial lines underwriter. Analyze the following applicant data and produce a structured underwriting risk assessment. Evaluate: (1) applicant profile (business type, years in operation, revenue, employee count, locations), (2) loss history analysis covering the past [5/10] years including frequency, severity, and trends, (3) hazard identification (premises, operations, products/completed operations, contractual), (4) industry benchmarking against class code [NCCI/ISO CLASS CODE] norms, (5) management quality indicators (safety programs, certifications, financial stability), (6) territorial risk factors for [STATE/REGION], (7) recommended coverage structure (limits, deductibles, endorsements), (8) pricing indication with loss ratio projection, (9) risk improvement requirements as conditions of coverage, (10) overall recommendation (accept, modify, or decline) with justification. Submission: [PASTE APPLICATION DATA AND LOSS RUNS].',
+        sector: 'Underwriting',
+      },
+      {
+        title: 'Supplemental Questions Generator',
+        prompt: 'You are an underwriting specialist reviewing a new business submission. Based on the following insurance application, identify information gaps and generate targeted supplemental questions. For each question: (1) explain what underwriting concern it addresses, (2) specify what the expected answer should contain, (3) indicate the risk significance (critical - affects acceptability, important - affects pricing, clarifying - completes file). Organize questions by category: operations, loss history, risk management, financial, contractual, and regulatory. Application type: [COMMERCIAL PROPERTY / GL / PROFESSIONAL LIABILITY / WORKERS COMP / OTHER]. Class of business: [DESCRIBE]. Application: [PASTE OR SUMMARIZE KEY DETAILS AND GAPS].',
+        sector: 'Underwriting',
+      },
+      {
+        title: 'Competitive Market Analysis',
+        prompt: 'Act as an underwriting manager. Compare the proposed terms for [INSURED NAME] against market benchmarks and competitive positioning. Analyze: (1) premium rate per unit of exposure vs. industry average for class code [CLASS CODE], (2) limit and deductible structure compared to typical market offerings, (3) coverage breadth (forms, endorsements) vs. standard market product, (4) commission structure relative to market norms, (5) loss ratio expectation vs. the carrier\'s target and industry combined ratio, (6) terms and conditions that differentiate the offering (value-added services, claims handling, risk engineering), (7) key competitors likely quoting this account and their probable approach, (8) recommended adjustments to improve competitive position while maintaining profitability. Proposed terms: [DESCRIBE PREMIUM, LIMITS, DEDUCTIBLES, KEY ENDORSEMENTS]. Industry: [INDUSTRY]. Territory: [STATE/REGION].',
+        sector: 'Underwriting',
+      },
+      {
+        title: 'Loss Run Analysis',
+        prompt: 'You are an underwriting analyst. Analyze the following loss history data and provide a comprehensive loss run analysis. Include: (1) loss summary by policy year showing incurred losses, paid losses, and outstanding reserves, (2) frequency analysis (number of claims per year, claims per unit of exposure), (3) severity analysis (average claim size, large loss identification above [THRESHOLD]), (4) loss ratio trending by year (incurred loss ratio and paid loss ratio), (5) loss development analysis using [INDUSTRY DEVELOPMENT FACTORS], (6) identification of loss drivers and patterns (specific perils, locations, operations, claimant types), (7) large loss detail and narrative for any claim exceeding [AMOUNT], (8) comparison to industry benchmarks for [CLASS CODE/INDUSTRY], (9) projected ultimate losses for open policy years, (10) underwriting recommendations based on loss trends. Loss runs: [PASTE LOSS DATA]. Exposure data: [PREMIUMS OR PAYROLL BY YEAR].',
+        sector: 'Underwriting',
+      },
+      {
+        title: 'Appetite Matching Assessment',
+        prompt: 'Act as an underwriting triage specialist. Evaluate the following new business submission against the carrier\'s appetite guidelines and determine fit. For each appetite criterion, assess: (1) class of business eligibility (NAICS/SIC code and description match), (2) acceptable territory and state licensing status, (3) size of risk (premium, TIV, employee count) within guidelines, (4) loss history acceptability (loss ratio, frequency thresholds), (5) years in business minimum, (6) prohibited operations or exclusionary criteria, (7) required risk management programs or certifications, (8) financial stability requirements (credit score, financial statements), (9) overall appetite score (preferred, standard, borderline, decline), (10) referral authority required if outside field underwriting limits. Submission summary: [DESCRIBE APPLICANT]. Appetite guidelines: [PASTE OR DESCRIBE CARRIER APPETITE FOR THIS LINE OF BUSINESS].',
+        sector: 'Underwriting',
+      },
+    ],
+  },
+  {
+    name: 'Risk Management',
+    icon: 'alert-triangle',
+    prompts: [
+      {
+        title: 'Risk Identification & Prioritization',
+        prompt: 'You are a certified risk manager (ARM/CRM). Identify and prioritize risks for a [DESCRIBE BUSINESS TYPE, SIZE, AND INDUSTRY] operating in [STATE/REGION]. For each risk: (1) describe the risk scenario in specific terms, (2) classify by category (property, liability, personnel, financial, operational, regulatory, reputational, cyber), (3) estimate frequency (rare, unlikely, possible, likely, almost certain), (4) estimate severity (insignificant, minor, moderate, major, catastrophic), (5) calculate risk priority number using a 5x5 risk matrix, (6) identify current controls in place and their effectiveness, (7) recommend additional risk treatment strategies (avoidance, reduction, transfer, retention), (8) specify the appropriate insurance coverage to transfer the risk. Produce a risk register sorted by priority with the top 10 risks requiring immediate action. Business details: [DESCRIBE OPERATIONS, LOCATIONS, REVENUE, EMPLOYEES, KEY ASSETS].',
+        sector: 'Risk Management',
+      },
+      {
+        title: 'Business Continuity Plan Review',
+        prompt: 'Act as a business continuity planning consultant. Review the following Business Continuity Plan (BCP) for a [DESCRIBE ORGANIZATION] and assess its adequacy. Evaluate: (1) business impact analysis (BIA) - are critical functions, RTOs, and RPOs properly identified?, (2) risk assessment - does it address all relevant threats (natural catastrophe, cyber, pandemic, supply chain, utility failure)?, (3) recovery strategies - are they realistic and adequately resourced?, (4) emergency response procedures - clear chain of command, communication protocols, and escalation triggers?, (5) IT disaster recovery - backup systems, data recovery, alternate processing sites?, (6) supply chain continuity - key vendor dependencies and alternatives?, (7) testing and exercise program - frequency, type, and documentation of results?, (8) plan maintenance - review cycle, change management, version control?, (9) compliance with [ISO 22301 / NFPA 1600 / REGULATORY REQUIREMENTS]. Identify the top 5 gaps and provide prioritized recommendations. [PASTE BCP OR KEY SECTIONS].',
+        sector: 'Risk Management',
+      },
+      {
+        title: 'Safety Recommendation Letter',
+        prompt: 'You are a loss control engineer. Draft a risk improvement recommendation letter for [INSURED NAME] following a risk assessment survey of their [DESCRIBE FACILITY/OPERATIONS] located at [ADDRESS]. The letter should: (1) summarize the survey scope and date, (2) acknowledge positive risk management practices observed, (3) detail each recommendation organized by priority (A - immediate action required, B - action within 90 days, C - advisory), (4) for each recommendation cite the applicable OSHA standard, NFPA code, building code, or industry best practice, (5) explain the potential loss scenarios if the hazard is not addressed, (6) provide specific corrective actions with implementation guidance, (7) note any conditions or time requirements tied to insurance coverage, (8) request a written response with an action plan by [DATE]. Key hazards identified: [DESCRIBE HAZARDS]. Insurance line: [PROPERTY / GL / WORKERS COMP]. Carrier: [CARRIER NAME].',
+        sector: 'Loss Control',
+      },
+      {
+        title: 'Catastrophe Exposure Analysis',
+        prompt: 'Act as a catastrophe risk analyst. Analyze the following property portfolio for natural catastrophe risk exposure. Evaluate: (1) total insured values (TIV) by location with building, contents, and business income values, (2) geographic concentration risk (county/ZIP code level aggregation), (3) exposure by peril: hurricane/windstorm (wind zones, distance to coast), earthquake (fault proximity, soil type, seismic zone), flood (FEMA flood zone designation, NFIP participation), wildfire (WUI proximity, defensible space), tornado (tornado alley exposure), (4) construction quality and age impact on vulnerability, (5) probable maximum loss (PML) estimates by peril at [100/250/500]-year return periods, (6) adequacy of current limits and sublimits vs. modeled losses, (7) business interruption exposure and interdependency analysis, (8) recommended risk mitigation measures and insurance program adjustments. Portfolio: [PASTE LOCATION SCHEDULE WITH TIV, CONSTRUCTION, OCCUPANCY, YEAR BUILT]. Territory: [STATE/REGION].',
+        sector: 'Property',
+      },
+      {
+        title: 'Risk Mitigation Strategy',
+        prompt: 'You are a risk management advisor. Develop a comprehensive risk mitigation strategy for the following identified exposures at [ORGANIZATION NAME]. For each exposure: (1) describe the current risk state and potential impact (financial, operational, reputational), (2) analyze root causes and contributing factors, (3) evaluate the four risk treatment options (avoid, reduce, transfer, retain) and recommend the optimal combination, (4) for risk reduction: specify engineering controls, administrative controls, and PPE requirements, (5) for risk transfer: recommend appropriate insurance coverage, contractual risk transfer mechanisms (indemnification, hold harmless, additional insured status), and alternative risk transfer tools, (6) for risk retention: calculate appropriate retention levels and recommend funded or unfunded retention mechanisms, (7) provide implementation timeline with milestones and responsible parties, (8) define key risk indicators (KRIs) for monitoring effectiveness, (9) estimate cost-benefit ratio for each recommendation. Exposures: [DESCRIBE TOP 5-10 IDENTIFIED RISKS WITH CURRENT ASSESSMENT].',
+        sector: 'Risk Management',
+      },
+    ],
+  },
+  {
+    name: 'Compliance & Regulation',
+    icon: 'scale',
+    prompts: [
+      {
+        title: 'Regulatory Impact Assessment',
+        prompt: 'Act as an insurance regulatory compliance officer. Analyze the following new regulation and assess its impact on insurance operations. Provide: (1) regulation summary (issuing body, effective date, scope of applicability), (2) specific requirements imposed on insurers, agents/brokers, and/or MGAs, (3) operational areas affected (underwriting, claims, marketing, policy administration, data management), (4) gap analysis between current practices and new requirements, (5) required system or process changes with estimated implementation effort, (6) compliance timeline with key milestones and deadlines, (7) penalties for non-compliance (fines, license suspension, private right of action), (8) interaction with existing federal and state regulations, (9) recommended compliance action plan with responsible departments, (10) estimated cost of compliance implementation. Regulation: [CITE REGULATION, BULLETIN, OR PROPOSED RULE]. States affected: [STATE(S)]. Lines of business affected: [LINES]. [PASTE REGULATION TEXT OR KEY PROVISIONS].',
+        sector: 'Compliance',
+      },
+      {
+        title: 'Market Conduct Examination Prep',
+        prompt: 'You are a market conduct compliance consultant. Prepare a readiness assessment for an upcoming market conduct examination by the [STATE] Department of Insurance. Evaluate the company\'s practices in: (1) underwriting and rating - proper classification, rate application, consent-to-rate documentation, and unfair discrimination controls, (2) claims handling - timeliness standards per [STATE] regulations, proper denial documentation, prompt payment compliance, (3) marketing and advertising - producer licensing verification, advertising review procedures, suitability documentation, (4) policyholder service - cancellation/nonrenewal procedures, renewal practices, complaint handling, (5) forms and filings - approved form usage, filing status verification, (6) producer management - appointment compliance, compensation disclosure, oversight procedures. For each area: identify the specific [STATE] statutes and regulations that apply, assess current compliance status (compliant, at risk, non-compliant), and recommend remediation steps for deficiencies. Company profile: [DESCRIBE LINES OF BUSINESS, PREMIUM VOLUME, STATES OF OPERATION].',
+        sector: 'Compliance',
+      },
+      {
+        title: 'Filing Compliance Check',
+        prompt: 'Act as a rate and form filing specialist. Review the following rate/form filing for regulatory compliance before submission to [STATE] DOI via [SERFF/STATE FILING SYSTEM]. Verify: (1) filing type classification (new program, rate revision, rule revision, form revision), (2) actuarial memorandum completeness - supporting data, methodology, indicated vs. selected rate change, credibility standards, (3) rate impact analysis - statewide and by territory/class average and maximum rate changes, (4) form review - compliance with [STATE] statutory requirements and DOI bulletins, (5) readability score compliance if applicable, (6) required supporting documentation (loss data, expense data, profit provision justification), (7) competitive market analysis if required by [STATE] prior approval/file-and-use/use-and-file law, (8) consumer disclosure requirements, (9) effective date lead time requirements, (10) any [STATE]-specific filing requirements or DOI preferences. Filing materials: [DESCRIBE OR PASTE KEY FILING COMPONENTS]. Line of business: [LINE]. Filing type: [PRIOR APPROVAL / FILE AND USE / USE AND FILE].',
+        sector: 'Compliance',
+      },
+      {
+        title: 'NAIC Model Law Analysis',
+        prompt: 'You are an insurance regulatory attorney. Analyze the [SPECIFIC NAIC MODEL LAW OR REGULATION - e.g., Insurance Data Security Model Law #668, Unfair Trade Practices Act #880, Producer Licensing Model Act #218] and its applicability to [COMPANY NAME]\'s operations. Provide: (1) summary of the model law\'s key requirements and purpose, (2) current adoption status across all states where the company operates ([LIST STATES]), (3) state-by-state comparison of material deviations from the model law as adopted, (4) specific compliance obligations for the company based on its size, lines of business, and operations, (5) timeline requirements (implementation deadlines, reporting periods, examination cycles), (6) interaction with other federal requirements (GLBA, HIPAA, Dodd-Frank) if applicable, (7) enforcement mechanisms and penalties, (8) recommended compliance framework and gap analysis, (9) cost estimate for implementation across affected states. Company profile: [DESCRIBE SIZE, PREMIUM VOLUME, LINES, STATES OF OPERATION].',
+        sector: 'Compliance',
+      },
+      {
+        title: 'Data Privacy Compliance Audit',
+        prompt: 'Act as a data privacy and cybersecurity compliance specialist in the insurance industry. Assess the company\'s compliance with applicable data privacy regulations. Evaluate: (1) NAIC Insurance Data Security Model Law (#668) compliance - information security program, incident response plan, third-party service provider oversight, (2) CCPA/CPRA obligations for California policyholders and claimants - consumer rights, opt-out mechanisms, privacy notices, (3) state-specific insurance privacy laws (e.g., NY DFS Cybersecurity Regulation 23 NYCRR 500, CO Privacy Act), (4) GLBA Safeguards Rule compliance for NPI protection, (5) state data breach notification law compliance across [LIST STATES OF OPERATION], (6) privacy notice adequacy under state insurance regulations, (7) third-party vendor data processing agreements, (8) employee training programs on data handling, (9) data retention and disposal policies for claims files, underwriting data, and policyholder records, (10) cross-border data transfer considerations. Current practices: [DESCRIBE DATA COLLECTION, STORAGE, SHARING PRACTICES]. Company profile: [SIZE, STATES, LINES OF BUSINESS].',
+        sector: 'Compliance',
+      },
+    ],
+  },
+  {
+    name: 'Customer Communication',
+    icon: 'message-square',
+    prompts: [
+      {
+        title: 'Coverage Explanation Letter',
+        prompt: 'You are an insurance customer communications specialist. Draft a plain-language letter explaining the following complex coverage to a policyholder who is not an insurance professional. The letter should: (1) clearly state what is covered and what is not in everyday language, (2) explain key terms and conditions without using unexplained jargon, (3) provide specific examples of covered and non-covered scenarios relevant to the policyholder\'s situation, (4) explain the deductible, limits, and how they work in practice, (5) describe the claims process and what the policyholder needs to do if a loss occurs, (6) highlight any important conditions the policyholder must meet to maintain coverage, (7) include contact information for questions. Maintain a professional, helpful, and reassuring tone while being accurate. Coverage type: [DESCRIBE COVERAGE]. Policy form: [ISO FORM OR MANUSCRIPT]. Key provisions to explain: [DESCRIBE SPECIFIC COMPLEX PROVISIONS]. Policyholder profile: [INDIVIDUAL / SMALL BUSINESS / DESCRIBE].',
+        sector: 'Personal Lines',
+      },
+      {
+        title: 'Renewal Recommendation',
+        prompt: 'Act as an insurance account manager. Draft a personalized renewal recommendation letter for [POLICYHOLDER NAME], whose [POLICY TYPE] policy is expiring on [DATE]. The letter should: (1) summarize the current coverage program with key limits, deductibles, and premium, (2) highlight any claims activity during the expiring term and its impact on renewal terms, (3) describe changes in the insured\'s risk profile that warrant coverage adjustments (new locations, operations, revenue changes, acquisitions), (4) explain market conditions affecting renewal pricing for [LINE OF BUSINESS] in [STATE/REGION], (5) present the renewal terms with clear comparison to expiring terms (premium, limits, deductibles, coverage changes), (6) recommend specific coverage enhancements or modifications with cost estimates, (7) identify any newly available endorsements or coverage options, (8) provide a clear timeline for renewal decision and binding. Expiring terms: [DESCRIBE]. Renewal terms: [DESCRIBE]. Account history: [YEARS AS CLIENT, CLAIMS EXPERIENCE].',
+        sector: 'Account Management',
+      },
+      {
+        title: 'Claims Status Update',
+        prompt: 'You are a claims adjuster responsible for policyholder communication. Write a professional claims status update letter for [POLICYHOLDER NAME] regarding claim number [CLAIM NUMBER]. The update should: (1) reference the claim number, date of loss, and type of loss for clear identification, (2) summarize the current status of the investigation or adjustment, (3) explain any coverage issues being evaluated and the timeline for resolution, (4) detail any payments made or pending with itemized breakdown, (5) describe next steps in the process and what the policyholder can expect, (6) list any outstanding items needed from the policyholder (documentation, proof of loss, estimates), (7) provide specific deadlines for any required actions, (8) include the adjuster\'s direct contact information and availability, (9) comply with [STATE] claims communication timing requirements. Maintain an empathetic, clear, and professional tone. Claim details: [DESCRIBE CURRENT STATUS, ACTIONS TAKEN, AND OUTSTANDING ITEMS].',
+        sector: 'Claims',
+      },
+      {
+        title: 'New Business Welcome Package',
+        prompt: 'Act as a client services director. Draft a comprehensive onboarding welcome communication for [NEW POLICYHOLDER NAME], a [DESCRIBE BUSINESS/INDIVIDUAL] who has just bound coverage with [AGENCY/CARRIER NAME]. The welcome package should include: (1) a personalized welcome letter thanking them for their business, (2) summary of all coverages bound with effective dates, key limits, and deductibles, (3) explanation of how to access policy documents (portal, app, or delivery timeline), (4) step-by-step claims reporting instructions (phone, online, after-hours), (5) introduction to their service team with names, roles, and contact information, (6) overview of value-added services (risk management resources, safety training, certificates of insurance process), (7) important policyholder responsibilities (premium payment schedule, notification requirements, property maintenance), (8) FAQ section addressing common new policyholder questions, (9) certificate of insurance request process. Coverage: [LIST ALL POLICIES BOUND]. Premium: [TOTAL ANNUAL PREMIUM].',
+        sector: 'Account Management',
+      },
+      {
+        title: 'Policy Change Confirmation',
+        prompt: 'You are an insurance account service representative. Draft a policy change confirmation letter for [POLICYHOLDER NAME] regarding the following endorsement or modification to their [POLICY TYPE] policy, number [POLICY NUMBER]. The letter should: (1) clearly state the effective date of the change, (2) describe what was changed in plain language (not just endorsement numbers), (3) explain how the change affects coverage - what is now covered, what is no longer covered, or how limits/deductibles have changed, (4) provide a before-and-after comparison for key modified terms, (5) state the premium impact (additional premium, return premium, or no change) with proration explanation if applicable, (6) note any new conditions or requirements resulting from the change, (7) confirm the next steps (endorsement document delivery timeline, updated declarations page), (8) remind the policyholder to review the endorsement and contact the agency with questions. Change requested: [DESCRIBE CHANGE]. Endorsement: [ENDORSEMENT NUMBER AND TITLE]. Premium impact: [AMOUNT AND DIRECTION].',
+        sector: 'Personal Lines',
+      },
+    ],
+  },
+  {
+    name: 'Fraud Detection',
+    icon: 'search',
+    prompts: [
+      {
+        title: 'Claims Red Flag Analysis',
+        prompt: 'Act as a claims fraud analyst. Analyze the following claim for fraud indicators and red flags using established SIU screening criteria. Evaluate: (1) timing red flags (recent policy inception, lapse history, coverage increase before loss, Friday/Monday losses), (2) claimant behavior (overly familiar with claims process, insistence on fast settlement, reluctance to provide documentation, attorney retained immediately), (3) loss circumstance indicators (no witnesses, inconsistent statements, prior similar claims, unlikely loss scenarios), (4) financial red flags (premium payment issues, financial distress indicators, over-insurance, inflated values), (5) documentation concerns (suspicious receipts, altered documents, pre-loss inventory convenience), (6) medical red flags if applicable (subjective injuries, excessive treatment, prior injuries, provider patterns), (7) digital evidence indicators (social media contradictions, metadata inconsistencies), (8) comparison to known fraud schemes in [LINE OF BUSINESS]. Score each category and provide an overall fraud probability assessment (low, medium, high) with recommendation for SIU referral. Claim details: [DESCRIBE CLAIM FACTS IN DETAIL].',
+        sector: 'Special Investigations',
+      },
+      {
+        title: 'Special Investigation Unit Referral',
+        prompt: 'You are a claims examiner preparing an SIU referral. Draft a comprehensive SIU referral memo for the following suspicious claim. The memo should include: (1) claim identification (number, insured, claimant, policy details, date of loss), (2) summary of the reported loss and claimed damages, (3) specific red flags identified with supporting evidence for each, (4) chronological timeline of events and claim handling activities, (5) statements obtained and key discrepancies between them, (6) documentation review findings (authenticity concerns, inconsistencies), (7) database search results (ISO ClaimSearch, NICB, prior claims history), (8) relevant public records findings (court records, property records, financial filings), (9) recommended investigation activities (surveillance, examinations under oath, IME, financial analysis, origin and cause investigation), (10) applicable [STATE] fraud statutes and reporting obligations, (11) estimated investigation cost and timeline. Claim facts: [DESCRIBE IN DETAIL]. Red flags identified: [LIST SPECIFIC INDICATORS].',
+        sector: 'Special Investigations',
+      },
+      {
+        title: 'Pattern Analysis Report',
+        prompt: 'Act as an insurance fraud data analyst. Analyze the following claims dataset for suspicious patterns that may indicate organized or opportunistic fraud. Look for: (1) provider ring patterns (common medical providers, contractors, or attorneys across unrelated claims), (2) geographic clustering (same loss locations, addresses, or regions with abnormal claim frequency), (3) temporal patterns (claims filed at specific intervals, seasonal spikes inconsistent with peril), (4) claimant network analysis (shared addresses, phone numbers, employers, or relationships between claimants), (5) staged accident indicators (low-speed impacts with disproportionate injuries, vehicle recycling), (6) premium fraud indicators (misrepresentation patterns in applications), (7) billing anomalies (upcoding, unbundling, phantom billing among providers), (8) statistical outliers (claim amounts, treatment durations, or repair costs exceeding norms by >2 standard deviations). Present findings with visualizable data points and recommend targeted investigations. Dataset parameters: [DESCRIBE DATA FIELDS, TIME PERIOD, VOLUME, LINE OF BUSINESS]. Known fraud trends in [STATE/REGION]: [DESCRIBE IF KNOWN].',
+        sector: 'Special Investigations',
+      },
+      {
+        title: 'Social Media Investigation Summary',
+        prompt: 'You are an SIU investigator. Structure the following social media investigation findings into a formal report for potential use in claim evaluation and possible legal proceedings. The report should: (1) document the investigation methodology (platforms searched, search terms, date range, tools used), (2) verify account ownership and connection to the subject (matching identifiers, photos, connections), (3) present relevant findings chronologically with screenshots referenced by exhibit number, (4) identify contradictions between social media activity and claimed injuries/damages/losses, (5) note location check-ins or travel inconsistent with claimed restrictions, (6) document physical activity inconsistent with claimed disability or injury, (7) identify undisclosed assets, employment, or income sources, (8) flag pre-loss posts suggesting motive or premeditation, (9) preserve chain of custody documentation for each piece of evidence, (10) include disclaimers about limitations and authentication requirements. Comply with [STATE] privacy laws and FCRA requirements. Subject: [NAME]. Claim type: [DESCRIBE]. Claimed condition: [DESCRIBE]. Findings: [SUMMARIZE WHAT WAS DISCOVERED].',
+        sector: 'Special Investigations',
+      },
+      {
+        title: 'Statement Inconsistency Analysis',
+        prompt: 'Act as a claims investigation analyst. Compare the following multiple statements obtained during the investigation of claim [CLAIM NUMBER] and identify all contradictions, inconsistencies, and discrepancies. For each inconsistency: (1) quote the exact conflicting language from each statement with date and source identified, (2) classify the inconsistency (material - affects coverage or liability, significant - suggests credibility issues, minor - may be explained by memory differences), (3) assess whether the inconsistency is consistent with normal memory variation or suggests fabrication, (4) identify follow-up questions needed to resolve each inconsistency, (5) note any statements that contradict physical evidence, expert findings, or independent witness accounts. Provide a summary credibility assessment and recommendations for next steps (examination under oath, additional investigation, surveillance). Statements to compare: [PASTE RECORDED STATEMENT 1], [PASTE RECORDED STATEMENT 2], [PASTE ANY ADDITIONAL STATEMENTS OR WRITTEN PROOFS OF LOSS].',
+        sector: 'Special Investigations',
+      },
+    ],
+  },
+  {
+    name: 'Reinsurance',
+    icon: 'layers',
+    prompts: [
+      {
+        title: 'Treaty Summary',
+        prompt: 'Act as a reinsurance contract analyst. Summarize the following reinsurance treaty and produce a structured overview for the ceding company\'s management. Include: (1) type of treaty (quota share, surplus, excess of loss - per risk/per occurrence/aggregate, stop loss), (2) parties (cedent, reinsurer(s), intermediary), (3) effective period and cancellation provisions (notice period, run-off terms), (4) subject matter (lines of business, classes, territories covered), (5) retention and limit structure with all layers, (6) rate, premium calculation method, and minimum/deposit premium, (7) ceding commission terms including sliding scale or profit commission formulas, (8) loss definitions, occurrence definition, and hours clause for cat treaties, (9) exclusions (nuclear, war, cyber, communicable disease, sanctions), (10) claims cooperation and reporting requirements, (11) dispute resolution (arbitration panel, governing law), (12) offset rights, insolvency provisions, and follow-the-fortunes/settlements obligations. Treaty: [PASTE TREATY OR KEY SECTIONS].',
+        sector: 'Reinsurance',
+      },
+      {
+        title: 'Cession Analysis',
+        prompt: 'You are a reinsurance operations analyst. Analyze the following cession patterns and provide recommendations to optimize reinsurance utilization. Evaluate: (1) current treaty structure with retention, limits, and capacity by layer, (2) historical cession ratios by line of business and class over [NUMBER] years, (3) premium ceded vs. losses recovered - ceded loss ratio by treaty and year, (4) net retained exposure analysis - largest net retained risks and accumulations, (5) capacity utilization rate by treaty (are limits being fully used or underutilized?), (6) facultative cession volume and whether treaty capacity could absorb some placements, (7) inuring reinsurance interactions and proper application order, (8) reinstatement utilization on excess of loss treaties, (9) profit commission performance and projection, (10) recommended adjustments to retention levels, treaty limits, or structure to improve cost-effectiveness while maintaining adequate risk transfer. Cession data: [PASTE PREMIUM AND LOSS DATA BY TREATY AND YEAR]. Treaty structure: [DESCRIBE CURRENT PROGRAM].',
+        sector: 'Reinsurance',
+      },
+      {
+        title: 'Commutation Evaluation',
+        prompt: 'Act as a reinsurance finance specialist. Evaluate the following commutation proposal and provide a financial analysis to support the decision. Analyze: (1) outstanding reserves on ceded losses subject to commutation (case reserves and IBNR), (2) actuarial projection of ultimate losses using [DESCRIBE METHOD: chain ladder, Bornhuetter-Ferguson, cape cod], (3) loss development analysis specific to the ceded portfolio, (4) discount factor application and time value of money considerations, (5) commutation offer compared to expected ultimate recoveries (commutation premium vs. projected collections), (6) credit risk assessment of the reinsurer (financial strength ratings, regulatory status, collateral held), (7) administrative cost savings from eliminating ongoing reporting and claims handling, (8) impact on the cedent\'s balance sheet, income statement, and statutory surplus, (9) tax implications of the commutation, (10) regulatory considerations and approvals required in [STATE/DOMICILE]. Commutation proposal: [DESCRIBE OFFER]. Outstanding positions: [PASTE RESERVE AND LOSS DATA]. Reinsurer: [NAME AND FINANCIAL DETAILS].',
+        sector: 'Reinsurance',
+      },
+      {
+        title: 'Bordereau Reconciliation',
+        prompt: 'You are a reinsurance accounting specialist. Reconcile the following premium and/or claims bordereau data against the treaty terms and the cedent\'s underlying records. Verify: (1) all reported policies/claims fall within the treaty scope (effective dates, classes, territories), (2) premium calculations are correct (proper rate application, minimum/deposit premium, adjustable features), (3) ceding commission calculations match treaty terms (flat, sliding scale, profit commission), (4) loss amounts reported match underlying claim files (paid, outstanding, incurred), (5) cession percentages or excess points are correctly applied per treaty structure, (6) proper currency conversion if applicable (exchange rates, currency clauses), (7) aggregate data ties to individual records without unexplained variances, (8) treaty-specific provisions are properly reflected (net loss clause, loss corridor, aggregate deductible), (9) prior period adjustments are properly documented and calculated, (10) any reporting deadline compliance issues. Bordereau data: [PASTE BORDEREAU]. Treaty terms: [DESCRIBE KEY COMMERCIAL TERMS]. Known discrepancies: [DESCRIBE IF ANY].',
+        sector: 'Reinsurance',
+      },
+      {
+        title: 'Cat Bond Structure Analysis',
+        prompt: 'Act as an insurance-linked securities analyst. Analyze the following catastrophe bond structure and evaluate the risk/return profile. Assess: (1) sponsor (cedent) and purpose of the risk transfer, (2) special purpose vehicle (SPV) structure and domicile, (3) covered perils and territory (hurricane, earthquake, severe convective storm, wildfire, etc.), (4) trigger mechanism type and details (indemnity, modeled loss, industry index, parametric, hybrid), (5) attachment and exhaustion points relative to historical and modeled loss experience, (6) expected loss, probability of attachment, and probability of exhaustion, (7) risk period and scheduled maturity, (8) coupon structure (spread over money market reference rate), (9) collateral account investment guidelines and counterparty risk, (10) moral hazard considerations and basis risk for each trigger type, (11) comparison to traditional reinsurance pricing for equivalent coverage, (12) secondary market liquidity considerations. Cat bond offering: [PASTE OFFERING CIRCULAR SUMMARY OR KEY TERMS]. Peril modeling source: [AIR / RMS / VENDOR].',
+        sector: 'Reinsurance',
+      },
+    ],
+  },
+  {
+    name: 'Marketing & Sales',
+    icon: 'target',
+    prompts: [
+      {
+        title: 'Market Segment Analysis',
+        prompt: 'You are an insurance marketing strategist. Analyze the following target market segment for insurance product opportunities. Provide: (1) segment definition and size (number of businesses/individuals, premium potential, growth trajectory), (2) risk profile of the segment (common exposures, loss characteristics, typical claims), (3) current insurance purchasing behavior (coverage gaps, price sensitivity, distribution channel preferences), (4) competitive landscape (dominant carriers, market share estimates, white space opportunities), (5) regulatory considerations specific to this segment in [STATE/REGION], (6) ideal product design (coverage features, limits, deductibles, value-added services), (7) distribution strategy recommendation (direct, independent agents, wholesale, digital, affinity groups), (8) messaging and positioning strategy (key pain points to address, differentiators to emphasize), (9) estimated customer acquisition cost and lifetime value, (10) go-to-market timeline with key milestones. Target segment: [DESCRIBE INDUSTRY/DEMOGRAPHIC]. Geographic focus: [STATE/REGION]. Lines of business: [DESCRIBE TARGET PRODUCTS].',
+        sector: 'Marketing',
+      },
+      {
+        title: 'Product Comparison Sheet',
+        prompt: 'Act as an insurance product marketing specialist. Create a detailed competitive product comparison for the sales team comparing [YOUR PRODUCT NAME] against [2-3 COMPETITOR PRODUCTS]. For each product include: (1) carrier name, financial strength rating, and market reputation, (2) coverage highlights organized by insuring agreement, (3) key exclusions and limitations, (4) available endorsements and coverage extensions, (5) pricing structure and premium range for [DESCRIBE TARGET RISK], (6) deductible options and their impact on premium, (7) claims handling process and reputation (average cycle time, satisfaction scores), (8) risk management and loss control services included, (9) technology and self-service capabilities (online portal, mobile app, certificates), (10) commission structure and producer incentives. Conclude with a "Why Choose Us" section highlighting 3-5 competitive advantages. Format as a side-by-side comparison table where possible. Product line: [LINE OF BUSINESS]. Target class: [DESCRIBE].',
+        sector: 'Marketing',
+      },
+      {
+        title: 'Cross-Sell Opportunity Identification',
+        prompt: 'You are an insurance account development specialist. Analyze the following book of business to identify cross-sell opportunities. For each opportunity: (1) identify the specific account and their current coverage (policies in force, premiums, carriers), (2) identify the missing coverage line based on their business type, size, and risk profile, (3) explain why this coverage is needed based on their specific exposures, (4) estimate the premium opportunity and probability of sale (high/medium/low), (5) recommend the approach and talking points for each conversation, (6) identify the best timing for the cross-sell (renewal, mid-term event, regulatory change), (7) note any underwriting considerations or potential obstacles. Prioritize opportunities by total premium potential multiplied by probability of sale. Organize results into three tiers: immediate action (next 30 days), near-term (60-90 days), and renewal timing. Book of business: [DESCRIBE ACCOUNTS - INDUSTRY, SIZE, CURRENT COVERAGE, RELATIONSHIP TENURE]. Available product lines: [LIST PRODUCTS AVAILABLE TO OFFER].',
+        sector: 'Sales',
+      },
+      {
+        title: 'Insurance Proposal Generation',
+        prompt: 'Act as a senior insurance producer. Draft a professional insurance proposal for [PROSPECT NAME], a [DESCRIBE BUSINESS TYPE AND SIZE]. The proposal should include: (1) executive summary demonstrating understanding of the prospect\'s business and risk management goals, (2) company overview and financial strength of proposed carrier(s), (3) risk assessment summary based on publicly available information about the prospect, (4) recommended coverage program organized by line of business with limits, deductibles, and premium for each policy, (5) coverage highlights explaining why each coverage was selected for their specific operations, (6) comparison to their current program (if known) highlighting improvements, (7) value-added services (risk management, loss control, claims handling, certificates, online portal), (8) implementation timeline from binding through policy delivery, (9) service team introduction with credentials and specialization, (10) terms and conditions including payment options. Prospect details: [DESCRIBE BUSINESS, REVENUE, LOCATIONS, EMPLOYEE COUNT, OPERATIONS]. Current coverage (if known): [DESCRIBE]. Proposed terms: [DESCRIBE QUOTES RECEIVED].',
+        sector: 'Sales',
+      },
+      {
+        title: 'Win-Back Campaign',
+        prompt: 'You are an insurance agency marketing director. Draft a personalized win-back outreach campaign for lapsed policyholders. Create: (1) a segmentation strategy identifying which lapsed accounts to prioritize (by premium size, tenure, reason for departure, time since lapse), (2) a multi-touch outreach sequence (initial letter, follow-up email, phone call script) for each segment, (3) personalized messaging that acknowledges the prior relationship and addresses common reasons for leaving (price, service, coverage), (4) a compelling value proposition highlighting improvements since their departure (new products, technology, service enhancements, claims performance), (5) a specific offer or incentive appropriate for each segment (policy review, competitive quote, loyalty discount if applicable), (6) re-underwriting considerations and streamlined quoting process, (7) success metrics and tracking methodology, (8) compliance considerations for outreach under [STATE] regulations and CAN-SPAM/TCPA requirements. Lapsed accounts profile: [DESCRIBE SEGMENT SIZE, AVERAGE PREMIUM, TENURE, TIME SINCE LAPSE, KNOWN REASONS FOR LEAVING]. Agency capabilities: [DESCRIBE CURRENT PRODUCT AND SERVICE OFFERINGS].',
+        sector: 'Marketing',
+      },
+    ],
+  },
+  {
+    name: 'Actuarial & Pricing',
+    icon: 'calculator',
+    prompts: [
+      {
+        title: 'Rate Adequacy Analysis',
+        prompt: 'Act as a pricing actuary. Analyze the following loss data to assess rate adequacy for [LINE OF BUSINESS] in [STATE/TERRITORY]. Provide: (1) earned premium and incurred loss data organized by accident/policy year for the past [5-10] years, (2) loss development to ultimate using [PAID/INCURRED] development factors (include triangle and selection rationale), (3) trend analysis for both frequency and severity with selected annual trend factors and supporting data, (4) ultimate loss ratio by year at current rate level (on-level adjustments for rate changes), (5) projected loss ratio at proposed rate level, (6) indicated rate change using the loss ratio method (ultimate loss ratio / permissible loss ratio - 1), (7) credibility weighting with complement of credibility (industry data or Bayesian complement), (8) expense analysis (fixed vs. variable, commission, general, taxes/fees) and target combined ratio, (9) ULAE and ALAE allocation, (10) profit and contingency provision, (11) final indicated rate change with selected rate change and justification for any deviation from the indication. Loss data: [PASTE PREMIUM AND LOSS TRIANGLES]. Rate history: [LIST RATE CHANGES BY EFFECTIVE DATE AND PERCENTAGE].',
+        sector: 'Actuarial',
+      },
+      {
+        title: 'Experience Modification Calculation',
+        prompt: 'You are a workers\' compensation rating specialist. Review the following experience modification calculation for accuracy and identify any correction opportunities. Verify: (1) the experience period used (correct policy years, typically 3 years excluding the most recent year), (2) payroll data by class code against policy records and audit results, (3) expected loss rates (ELR) applied match the current NCCI or [STATE RATING BUREAU] table by class code, (4) actual primary and excess loss split is correct per the split point table, (5) the D-ratio and discount ratio calculations, (6) ballast (B) value application, (7) actual incurred losses match unit stat reports and include proper development, (8) medical-only claims are discounted at 70% as required, (9) subrogation recoveries are properly reflected, (10) catastrophic loss limitations are applied correctly, (11) the mathematical calculation of the mod factor (actual/expected) is accurate. Current mod: [MOD FACTOR]. Employer: [NAME, FEIN]. States: [LIST]. Experience period: [YEARS]. Payroll and loss data: [PASTE EXPERIENCE RATING WORKSHEET OR KEY DATA].',
+        sector: 'Workers Compensation',
+      },
+      {
+        title: 'Trend Factor Analysis',
+        prompt: 'Act as a casualty actuary specializing in trend analysis. Analyze the following loss data to select appropriate trend factors for [LINE OF BUSINESS] in [STATE]. Provide: (1) frequency trend analysis - claims per earned exposure by accident year, regression analysis, and selected annual frequency trend, (2) severity trend analysis - average paid and incurred claim by accident year (adjusted to current cost levels), regression analysis, and selected annual severity trend, (3) pure premium trend (combined frequency and severity), (4) comparison of selected trends to industry benchmarks (ISO, NCCI, AAIS), (5) analysis of trend drivers (medical cost inflation, wage inflation, legal environment changes, regulatory impacts, loss cost containment initiatives), (6) evaluation of whether a single or multiple trend periods are appropriate, (7) prospective trend period calculation based on the proposed effective date and policy period, (8) sensitivity analysis showing rate indication impact at +/- 1 percentage point trend variation, (9) credibility of the company\'s own trend vs. industry trend, (10) final selected trend factors with supporting rationale. Loss data: [PASTE CLAIM COUNT, EARNED EXPOSURE, AND LOSS DATA BY ACCIDENT YEAR]. External benchmarks: [DESCRIBE AVAILABLE INDUSTRY DATA].',
+        sector: 'Actuarial',
+      },
+      {
+        title: 'Credibility Assessment',
+        prompt: 'You are a consulting actuary. Evaluate the statistical credibility of the following data for use in insurance pricing decisions. Assess: (1) the credibility standard being applied (full credibility standard - expected number of claims for full credibility, typically 1,082 for pure premium at 90/10), (2) partial credibility calculation using [CLASSICAL/BUHLMANN/BAYESIAN] method, (3) credibility factor (Z) for the subject data based on actual claim counts or earned premium volume, (4) selection of the complement of credibility - evaluate alternatives (industry loss costs, larger pool data, prior years, loss-free credibility), (5) credibility-weighted result combining subject experience (Z) with the complement (1-Z), (6) sensitivity analysis of results to different credibility methods, (7) homogeneity assessment of the data (are the underlying risks sufficiently similar for pooling?), (8) impact of large losses on credibility (excess loss procedure, winsorizing, or limited fluctuation), (9) minimum premium volume or claim count needed for meaningful pricing signals. Data parameters: [DESCRIBE VOLUME - PREMIUM, CLAIM COUNT, EXPOSURES, NUMBER OF YEARS]. Pricing element: [OVERALL RATE LEVEL / CLASS RELATIVITY / TERRITORY FACTOR / INCREASED LIMITS].',
+        sector: 'Actuarial',
+      },
+      {
+        title: 'Loss Development Triangle Review',
+        prompt: 'Act as a reserving actuary. Analyze the following loss development triangles and project ultimate losses for each accident/policy year. Provide: (1) paid and incurred loss development triangles with at least [5-10] years of maturity, (2) age-to-age development factor calculations for each maturity interval, (3) evaluation of multiple factor selection methods (simple average, volume-weighted, 3-year average, 5-year average, medial), (4) selected link ratios with rationale for selection at each maturity, (5) age-to-ultimate factor chain, (6) projected ultimate losses by year, (7) IBNR (incurred but not reported) estimate by year, (8) comparison of chain ladder results with Bornhuetter-Ferguson and expected loss ratio methods, (9) diagnostic ratios (case outstanding development, paid-to-incurred ratios, closure rates), (10) assessment of any distortions in the data (large losses, changes in claims practices, reserve strengthening/releases, operational changes), (11) recommended actuarial central estimate and reasonable range. Loss triangles: [PASTE PAID AND INCURRED TRIANGLES]. Earned premium by year: [PASTE]. A priori expected loss ratio: [IF AVAILABLE]. Known operational changes: [DESCRIBE ANY CHANGES IN CLAIMS HANDLING, CASE RESERVING PHILOSOPHY, OR PORTFOLIO MIX].',
+        sector: 'Actuarial',
+      },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="Prompt Library"
+  description="A curated collection of 50 professional insurance prompts across 10 practice areas. Each prompt is designed to produce structured, actionable results for insurance professionals."
+  locale={locale}
+>
+  <!-- Hero -->
+  <section class="hero" style="background: linear-gradient(135deg, rgba(27,42,74,0.82) 0%, rgba(45,55,72,0.78) 100%), url('/assets/images/hero-images/hero-image-practice.png') top/cover no-repeat;">
+    <div class="container" style="position: relative; z-index: 1;">
+      <div class="slide-up" style="max-width: 800px;">
+        <p class="text-sm font-semibold mb-4" style="color: var(--color-secondary); text-transform: uppercase; letter-spacing: 0.1em;">Practice</p>
+        <h1 style="font-size: var(--text-5xl); margin-bottom: var(--space-6);">Prompt Library</h1>
+        <p class="lead" style="margin-bottom: var(--space-6);">
+          50 professional insurance prompts across 10 practice areas, designed to produce structured, actionable results adaptable to any line of business, jurisdiction, or carrier.
+        </p>
+      </div>
+    </div>
+    <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 120px; background: linear-gradient(to top, var(--surface-page), transparent);"></div>
+  </section>
+
+  <!-- Prompt Categories -->
+  <section class="section">
+    <div class="container">
+      <div>
+        {categories.map(cat => (
+          <div class="reveal" style="margin-bottom: var(--space-10);">
+            <button
+              class="accordion__trigger"
+              style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-6); background: none; border: none; cursor: pointer; padding: 0; width: 100%; text-align: left;"
+              aria-expanded="true"
+              data-category={slug(cat.name)}
+            >
+              <span style="color: var(--color-primary);"><Icon name={cat.icon} size={32} /></span>
+              <h2 style="margin: 0; font-size: var(--text-2xl); flex: 1;">{cat.name}</h2>
+              <svg class="accordion-chevron" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transition: transform 300ms ease; flex-shrink: 0;">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+            <div class="category-content" data-content={slug(cat.name)}>
+              <div class="grid grid--1" style="gap: var(--space-4);">
+                {cat.prompts.map(p => (
+                  <div class="card" style="padding: var(--space-6);">
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-3); flex-wrap: wrap; gap: var(--space-2);">
+                      <h3 style="margin: 0; font-size: var(--text-lg);">{p.title}</h3>
+                      <span class="tag tag--category">{p.sector}</span>
+                    </div>
+                    <div style="background: var(--surface-parchment); padding: var(--space-4); border-radius: var(--radius-md); font-family: var(--font-mono, monospace); font-size: var(--text-sm); line-height: 1.6; white-space: pre-wrap; position: relative;">
+                      {p.prompt}
+                    </div>
+                    <div style="margin-top: var(--space-3); display: flex; justify-content: flex-end;">
+                      <button class="btn btn--sm btn--ghost copy-btn" data-prompt={p.prompt} aria-label="Copy prompt to clipboard">
+                        <Icon name="copy" size={16} />
+                        <span class="copy-label">Copy</span>
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Tips -->
+  <section class="section section--parchment">
+    <div class="container">
+      <div class="reveal" style="max-width: 800px; margin: 0 auto;">
+        <h2 style="text-align: center; margin-bottom: var(--space-8);">How to Use These Prompts</h2>
+        <div class="card card--accent" style="padding: var(--space-8);">
+          <ul style="padding-left: var(--space-6); margin: 0;">
+            <li style="padding: var(--space-2) 0;">
+              <strong>Replace all placeholders</strong> in brackets [LIKE THIS] with the specific information for your matter before submitting the prompt.
+            </li>
+            <li style="padding: var(--space-2) 0;">
+              <strong>Always specify your jurisdiction</strong> and applicable regulatory framework to avoid responses that mix requirements from different states.
+            </li>
+            <li style="padding: var(--space-2) 0;">
+              <strong>Include relevant policy forms</strong> and ISO form numbers when analyzing coverage to ensure accurate and specific responses.
+            </li>
+            <li style="padding: var(--space-2) 0;">
+              <strong>Add constraints</strong> when needed: "reference only current NAIC model laws," "limit to admitted market carriers," "exclude surplus lines considerations."
+            </li>
+            <li style="padding: var(--space-2) 0;">
+              <strong>Verify all output</strong>. These prompts produce high-quality drafts, but every reference to policy language, regulations, ISO forms, and NAIC standards must be confirmed against primary sources.
+            </li>
+            <li style="padding: var(--space-2) 0;">
+              <strong>Save your improved versions</strong>. As you refine prompts for your specific line of business or carrier, build your own personalized library.
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section">
+    <div class="container">
+      <div class="reveal" style="text-align: center;">
+        <h2 style="margin-bottom: var(--space-4);">Improve Your Technique</h2>
+        <div style="display: flex; gap: var(--space-4); flex-wrap: wrap; justify-content: center;">
+          <a href="/learn/prompt-engineering/" class="btn btn--primary">Prompt Engineering</a>
+          <a href="/practice/quick-wins/" class="btn btn--secondary">Quick Wins</a>
+        </div>
+        <p style="margin-top: var(--space-4); font-size: var(--text-sm); color: var(--text-muted);">
+          {t(locale, 'learningProgram.programCta')}
+          <a href={p('/learn/program/')} style="font-weight: var(--font-semibold);">
+            {t(locale, 'learningProgram.programCtaLink')} &rarr;
+          </a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Client-side JavaScript -->
+  <script>
+    // === Accordion Toggle ===
+    document.querySelectorAll('.accordion__trigger').forEach(trigger => {
+      trigger.addEventListener('click', () => {
+        const category = trigger.getAttribute('data-category');
+        const content = document.querySelector(`[data-content="${category}"]`) as HTMLElement;
+        const chevron = trigger.querySelector('.accordion-chevron') as SVGElement;
+        const isExpanded = trigger.getAttribute('aria-expanded') === 'true';
+
+        if (isExpanded) {
+          trigger.setAttribute('aria-expanded', 'false');
+          content.style.maxHeight = '0';
+          content.style.overflow = 'hidden';
+          content.style.opacity = '0';
+          chevron.style.transform = 'rotate(-90deg)';
+        } else {
+          trigger.setAttribute('aria-expanded', 'true');
+          content.style.maxHeight = 'none';
+          content.style.overflow = 'visible';
+          content.style.opacity = '1';
+          chevron.style.transform = 'rotate(0deg)';
+        }
+      });
+    });
+
+    // === Copy to Clipboard ===
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const prompt = btn.getAttribute('data-prompt');
+        if (!prompt) return;
+
+        try {
+          await navigator.clipboard.writeText(prompt);
+          const label = btn.querySelector('.copy-label');
+          if (label) {
+            const original = label.textContent;
+            label.textContent = 'Copied!';
+            setTimeout(() => {
+              label.textContent = original;
+            }, 2000);
+          }
+        } catch (err) {
+          // Fallback for older browsers
+          const textarea = document.createElement('textarea');
+          textarea.value = prompt || '';
+          textarea.style.position = 'fixed';
+          textarea.style.opacity = '0';
+          document.body.appendChild(textarea);
+          textarea.select();
+          document.execCommand('copy');
+          document.body.removeChild(textarea);
+
+          const label = btn.querySelector('.copy-label');
+          if (label) {
+            const original = label.textContent;
+            label.textContent = 'Copied!';
+            setTimeout(() => {
+              label.textContent = original;
+            }, 2000);
+          }
+        }
+      });
+    });
+  </script>
+</BaseLayout>

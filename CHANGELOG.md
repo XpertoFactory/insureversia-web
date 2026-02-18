@@ -2,6 +2,39 @@
 
 All notable changes to the Insureversia website will be documented in this file.
 
+## [0.4.0] - 2026-02-18
+
+### Added
+
+**Phase 4: Practice Section (Interactive Tools)**
+
+- **Practice section** (9 pages):
+  - `practice/quick-wins/` — Filterable grid of 9 quick-win cards with difficulty and insurance sector filters
+  - `practice/applications/` — 7 AI application categories for insurance (Policy Analysis, Claims Processing, Underwriting, Customer Communication, Compliance, Fraud Detection, Data Analytics)
+  - `practice/prompt-library/` — 50 insurance prompts across 10 categories (Policy Analysis, Claims, Underwriting, Risk Management, Compliance, Customer Communication, Fraud Detection, Reinsurance, Marketing, Actuarial) with copy-to-clipboard
+  - `practice/prompt-builder/` — 5-step interactive prompt wizard (Task Type → Insurance Sector → Specifics → Constraints → Generated Prompt)
+  - `practice/ai-readiness/` — 4-dimension AI readiness assessment (Technical, Cultural, Policy, Skills) with SVG score visualization
+  - `practice/ai-help-calculator/` — 4-step AI assistance calculator with insurance-specific tool suggestions (Cytora, Tractable, Shift Technology, Akur8, FRISS)
+  - `practice/ai-roadmap/` — 5-step personalized AI adoption roadmap builder with 7 insurance roles and 6 org sizes
+  - `practice/ethics-simulator/` — 5-scenario interactive ethics quiz with scoring, profiles, and per-scenario feedback (en + es)
+  - `practice/local-ai/` — Step-by-step LM Studio guide for local AI with insurance-specific use cases
+- **Interactive components** (5 new):
+  - `PromptBuilder.astro` — Multi-step wizard with 8 task types and 7 insurance sectors
+  - `AiReadinessAssessment.astro` — 12-question assessment with SVG ring score and dimension bars
+  - `AiHelpCalculator.astro` — Task-based calculator with SVG gauge and insurance tool recommendations
+  - `AiRoadmapBuilder.astro` — Role-based roadmap with 4-stage progression and custom SVG icons
+  - `EthicsSimulator.astro` — 5 insurance ethics scenarios (Automated Denial, Data Enrichment, Pricing Algorithm, AI Underwriting, Predictive Cancellation)
+- **Quick-win content** (6 new markdown files, 9 total):
+  - `04-compare-policies.md` — Compare Two Insurance Policies
+  - `05-coverage-recommendation.md` — Draft a Coverage Recommendation Letter
+  - `06-loss-run-analysis.md` — Analyze Loss Run Data
+  - `07-underwriting-questions.md` — Generate Targeted Underwriting Questions
+  - `08-compliance-checklist.md` — Create a Regulatory Compliance Checklist
+  - `09-fraud-investigation.md` — Build a Fraud Investigation Outline
+- **Icon.astro**: Added 3 new SVG icons (layers, calculator, copy)
+
+---
+
 ## [0.3.1] - 2026-02-18
 
 ### Fixed

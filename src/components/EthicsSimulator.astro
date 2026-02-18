@@ -1,0 +1,398 @@
+---
+import { t, getLocalePath, type Locale } from '../i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const p = (path: string) => getLocalePath(locale, path);
+
+// UI strings by locale
+const ui = {
+  en: {
+    scenarioOf: 'Scenario {current} of {total}',
+    ruleAtStake: 'Ethical Principle at Stake',
+    makeYourChoice: 'What would you do?',
+    nextScenario: 'Next Scenario',
+    seeResults: 'See Results',
+    resultsTitle: 'Your Ethics Profile',
+    overallScore: 'Overall Score',
+    pointsEarned: '{pts} / {max} points',
+    profileChampion: 'Ethical Champion',
+    profileResponsible: 'Responsible Practitioner',
+    profileDeveloping: 'Developing Awareness',
+    profileNeedsWork: 'Needs Improvement',
+    scenarioRecap: 'Scenario Recap',
+    shareResults: 'Copy Results',
+    shareResultsCopied: 'Copied!',
+    retake: 'Retake Simulator',
+    bestChoice: 'Best choice',
+    acceptable: 'Acceptable',
+    risky: 'Risky approach',
+    poorChoice: 'Poor choice',
+  },
+  es: {
+    scenarioOf: 'Escenario {current} de {total}',
+    ruleAtStake: 'Principio Etico en Juego',
+    makeYourChoice: 'Que harias?',
+    nextScenario: 'Siguiente Escenario',
+    seeResults: 'Ver Resultados',
+    resultsTitle: 'Tu Perfil Etico',
+    overallScore: 'Puntuacion General',
+    pointsEarned: '{pts} / {max} puntos',
+    profileChampion: 'Campeon Etico',
+    profileResponsible: 'Profesional Responsable',
+    profileDeveloping: 'Conciencia en Desarrollo',
+    profileNeedsWork: 'Necesita Mejorar',
+    scenarioRecap: 'Resumen de Escenarios',
+    shareResults: 'Copiar Resultados',
+    shareResultsCopied: 'Copiado!',
+    retake: 'Repetir Simulador',
+    bestChoice: 'Mejor opcion',
+    acceptable: 'Aceptable',
+    risky: 'Enfoque arriesgado',
+    poorChoice: 'Mala eleccion',
+  },
+};
+
+const uiStrings = ui[locale];
+
+// Scenario data by locale
+type Choice = { text: string; points: number; riskLevel: 'low'|'medium'|'high'; feedback: string };
+type Scenario = { title: string; rule: string; situation: string; context: string; choices: Choice[] };
+
+const scenariosMap: Record<string, Scenario[]> = {
+  en: [
+    {
+      title: 'The Automated Denial',
+      rule: 'Duty of Fair Claims Handling',
+      situation: 'Your company\'s AI claims triage system automatically flagged a homeowner\'s water damage claim as "likely fraudulent" based on pattern matching. The system recommends denial. You\'re the claims adjuster reviewing the case. The policyholder is a 72-year-old widow who has been with the company for 30 years with no prior claims. The AI\'s confidence score is 73%.',
+      context: 'State unfair claims practices acts require insurers to conduct reasonable investigations before denying claims. The NAIC Unfair Claims Settlement Practices Model Act prohibits refusing to pay claims without conducting a reasonable investigation. AI-assisted decisions still require human oversight and judgment.',
+      choices: [
+        { text: 'Conduct a full independent investigation regardless of the AI\'s recommendation, then make your own coverage determination', points: 20, riskLevel: 'low', feedback: 'Correct. The AI flag is a starting point, not a conclusion. A 73% confidence score means a 27% chance the AI is wrong. Your duty under the unfair claims practices act is to conduct a reasonable investigation. The policyholder\'s 30-year history and the AI\'s moderate confidence both warrant thorough human review.' },
+        { text: 'Deny the claim based on the AI recommendation — the system was designed by experts', points: 5, riskLevel: 'high', feedback: 'This violates your duty to conduct a reasonable investigation. AI pattern matching is not an investigation. If the denial is challenged, your company faces bad faith liability for relying solely on an algorithm without human review.' },
+        { text: 'Approve the claim to avoid complications — the policyholder seems trustworthy', points: 10, riskLevel: 'medium', feedback: 'While your instinct to look beyond the AI is right, approving without investigation is also problematic. You need to verify the claim\'s validity through proper investigation. Approving fraudulent claims harms the insurance pool.' },
+        { text: 'Request a second AI analysis with more data before deciding', points: 15, riskLevel: 'medium', feedback: 'Getting more data is reasonable, but running it through the same AI system doesn\'t replace human investigation. The issue isn\'t the AI\'s data — it\'s that AI pattern matching cannot substitute for the professional investigation required by unfair claims practices statutes.' },
+      ],
+    },
+    {
+      title: 'The Data Enrichment Shortcut',
+      rule: 'Data Privacy & Consent',
+      situation: 'Your underwriting team wants to use a third-party AI tool that scrapes social media, public records, and consumer data to build "risk profiles" for applicants. The tool promises 40% more accurate risk assessment. The data subjects (applicants) are not informed that this data enrichment is occurring, and consent was not obtained for this specific use.',
+      context: 'Insurance regulators increasingly require transparency in data use for underwriting. The NAIC\'s model bulletin on AI requires insurers to ensure data use complies with applicable privacy laws and anti-discrimination standards. Many states have specific consent requirements for certain types of consumer data use in insurance.',
+      choices: [
+        { text: 'Refuse to use the tool until legal and compliance review confirms regulatory compliance and proper consent mechanisms are in place', points: 20, riskLevel: 'low', feedback: 'Correct. Using consumer data without proper consent and regulatory compliance exposes the company to regulatory action, privacy lawsuits, and reputational damage. The 40% accuracy improvement is meaningless if the data collection violates privacy laws.' },
+        { text: 'Use the tool only for commercial lines where privacy expectations are lower', points: 15, riskLevel: 'medium', feedback: 'Commercial lines do have different privacy considerations, but this doesn\'t eliminate regulatory requirements. Data scraping without consent may still violate state privacy laws and NAIC guidelines regardless of the line of business. A compliance review is still necessary.' },
+        { text: 'Use it — the data is publicly available, so no consent is needed', points: 5, riskLevel: 'high', feedback: '"Publicly available" does not mean "free to use for any purpose." Many privacy regulations distinguish between data being publicly accessible and using it for automated decision-making. CCPA, state insurance regulations, and NAIC guidance all address this distinction.' },
+        { text: 'Use the tool but anonymize the data so it can\'t be traced back to individuals', points: 10, riskLevel: 'medium', feedback: 'Anonymization doesn\'t solve the core problem. The data was collected without consent for insurance underwriting purposes. Additionally, truly anonymizing data while retaining its usefulness for individual risk assessment is technically contradictory.' },
+      ],
+    },
+    {
+      title: 'The Pricing Algorithm\'s Blind Spot',
+      rule: 'Fair Pricing & Non-Discrimination',
+      situation: 'Your company\'s AI pricing model has been generating excellent loss ratios. However, an internal audit reveals the model uses ZIP code as a primary rating factor, and the resulting premiums are strongly correlated with the racial demographics of those ZIP codes. The model doesn\'t use race directly, but the effect is discriminatory pricing through proxy variables.',
+      context: 'State insurance laws prohibit unfair discrimination in pricing. Colorado SB 21-169 specifically requires testing AI systems for unfair discrimination. The NAIC Model Bulletin requires insurers to ensure AI systems don\'t produce unfairly discriminatory outcomes, even if protected characteristics are not used as direct inputs.',
+      choices: [
+        { text: 'Halt the model, commission a bias audit, and develop a remediation plan before resuming AI-assisted pricing', points: 20, riskLevel: 'low', feedback: 'This is the responsible path. Disparate impact through proxy variables is exactly what regulators like Colorado\'s DOI are targeting. Continuing to use a model you know produces discriminatory outcomes creates massive regulatory and legal exposure. A bias audit and remediation plan demonstrate good governance.' },
+        { text: 'Keep using the model but add a disclaimer that rates are actuarially justified', points: 10, riskLevel: 'high', feedback: 'Actuarial justification doesn\'t insulate you from unfair discrimination claims. If a rating factor produces discriminatory outcomes through proxy correlation, the fact that it\'s statistically predictive of loss doesn\'t make it legally or ethically permissible under modern regulatory frameworks.' },
+        { text: 'Remove ZIP code from the model and find alternative risk factors', points: 15, riskLevel: 'medium', feedback: 'Removing the most obvious proxy is a start, but it may not be sufficient. Other variables in the model may also serve as proxies. A comprehensive bias audit examines all variables and their interactions, not just the most obvious one. This is a partial fix when a systematic approach is needed.' },
+        { text: 'Report the finding to compliance but continue using the model until they respond', points: 5, riskLevel: 'high', feedback: 'You\'ve identified a discriminatory outcome and choosing to continue is indefensible. "Waiting for compliance" doesn\'t protect you or the company. Under Colorado SB 21-169 and similar laws, continuing to use a model you know produces unfairly discriminatory outcomes while a memo sits in someone\'s inbox is exactly the kind of conduct that leads to enforcement actions.' },
+      ],
+    },
+    {
+      title: 'The AI Underwriting Assistant',
+      rule: 'Transparency & Disclosure',
+      situation: 'Your agency uses AI to pre-screen applications and generate underwriting recommendations. The AI produces a detailed risk assessment that your underwriters largely follow. A commercial client asks directly: "Is a human making my underwriting decision, or is it a computer?" Your manager says to tell them a human reviews every application — which is technically true, but the human typically spends less than 2 minutes reviewing the AI\'s recommendation.',
+      context: 'Many states are developing or have enacted requirements for disclosure of AI use in insurance decisions. The NAIC Model Bulletin expects insurers to be transparent about AI\'s role in decision-making. Consumer trust in insurance depends on honest representation of how decisions are made.',
+      choices: [
+        { text: 'Tell the client honestly that AI assists in the analysis and a human underwriter makes the final decision, explaining how the process works', points: 20, riskLevel: 'low', feedback: 'Transparency builds trust and is increasingly required by regulation. Explaining that AI handles initial analysis while humans make final decisions is both honest and positions your agency as technologically sophisticated. Most clients appreciate knowing AI is used responsibly.' },
+        { text: 'Follow your manager\'s direction — a human does review every application', points: 10, riskLevel: 'high', feedback: 'While technically accurate, this is misleading by omission. If the human review is a rubber stamp of AI recommendations, representing it as human decision-making misrepresents the process. When regulators or courts examine your underwriting, the gap between representation and reality will be problematic.' },
+        { text: 'Deflect the question — say you can\'t discuss proprietary underwriting processes', points: 5, riskLevel: 'high', feedback: 'Deflection signals that something is being hidden. This damages client trust and may violate disclosure requirements in your jurisdiction. It also fails to address the legitimate question of a commercial client who has a right to understand how their coverage decisions are made.' },
+        { text: 'Tell them you\'ll check with your underwriting department and get back to them', points: 15, riskLevel: 'medium', feedback: 'This buys time but doesn\'t resolve the ethical tension. If you come back with the same misleading "a human reviews everything" line, you\'ve just delayed the problem. Use this time to advocate internally for a transparent disclosure policy about AI use.' },
+      ],
+    },
+    {
+      title: 'The Predictive Cancellation Model',
+      rule: 'Policyholder Fairness & Good Faith',
+      situation: 'Your company has developed an AI model that predicts which policyholders are likely to file large claims in the next 12 months based on behavioral patterns, life events, and external data. Management wants to use this model to proactively non-renew or cancel policies before the anticipated claims occur. The model has a 68% accuracy rate.',
+      context: 'Insurance is fundamentally a contract of good faith. Non-renewal and cancellation are regulated by state law, with specific permitted grounds. Using predictive models to avoid paying claims undermines the entire insurance mechanism and may constitute unfair trade practices.',
+      choices: [
+        { text: 'Refuse to implement the model for non-renewal/cancellation purposes and recommend using it instead for proactive risk management and loss prevention outreach', points: 20, riskLevel: 'low', feedback: 'Excellent. This redirects the AI\'s predictive power toward helping policyholders rather than dropping them. Using predictions for loss prevention serves both the company and policyholders. Using them to avoid claims is the antithesis of insurance and likely violates unfair trade practice regulations.' },
+        { text: 'Implement it only for the highest-risk policies where the model has 90%+ confidence', points: 15, riskLevel: 'medium', feedback: 'Even at 90% confidence, using predictive models to non-renew before claims occur fundamentally undermines the insurance contract. If regulators discover you\'re canceling policies specifically to avoid anticipated claims, the regulatory and reputational consequences could be severe.' },
+        { text: 'Implement the model as management requests — the company needs to manage its loss ratio', points: 5, riskLevel: 'high', feedback: 'This is the path to regulatory enforcement and class-action litigation. Proactively non-renewing policyholders because you predict they\'ll use their coverage violates the fundamental purpose of insurance. A 68% accuracy also means 32% of affected policyholders would be wrongly non-renewed.' },
+        { text: 'Suggest using the model only to adjust renewal pricing rather than canceling', points: 10, riskLevel: 'medium', feedback: 'Using predictive models for pricing adjustments is more defensible than cancellation, but raises its own concerns. If the price increases are designed to force policyholders out, it\'s constructive cancellation. Additionally, the underlying data and methodology must comply with rating law requirements.' },
+      ],
+    },
+  ],
+  es: [
+    {
+      title: 'La Denegacion Automatizada',
+      rule: 'Deber de Manejo Justo de Reclamaciones',
+      situation: 'El sistema de triaje de reclamaciones con IA de su empresa marco automaticamente una reclamacion de danos por agua de un propietario como "probablemente fraudulenta" basandose en coincidencia de patrones. El sistema recomienda la denegacion. Usted es el ajustador de reclamaciones que revisa el caso. La asegurada es una viuda de 72 anos que ha estado con la empresa durante 30 anos sin reclamaciones previas. La puntuacion de confianza de la IA es del 73%.',
+      context: 'Las leyes estatales de practicas injustas de reclamaciones requieren que las aseguradoras realicen investigaciones razonables antes de denegar reclamaciones. La Ley Modelo de Practicas Injustas de Liquidacion de Reclamaciones de la NAIC prohibe rechazar el pago de reclamaciones sin realizar una investigacion razonable. Las decisiones asistidas por IA aun requieren supervision y juicio humano.',
+      choices: [
+        { text: 'Realizar una investigacion independiente completa independientemente de la recomendacion de la IA, y luego tomar su propia determinacion de cobertura', points: 20, riskLevel: 'low', feedback: 'Correcto. La alerta de la IA es un punto de partida, no una conclusion. Una puntuacion de confianza del 73% significa un 27% de probabilidad de que la IA este equivocada. Su deber bajo la ley de practicas injustas de reclamaciones es realizar una investigacion razonable. Los 30 anos de historial de la asegurada y la confianza moderada de la IA justifican una revision humana exhaustiva.' },
+        { text: 'Denegar la reclamacion basandose en la recomendacion de la IA — el sistema fue disenado por expertos', points: 5, riskLevel: 'high', feedback: 'Esto viola su deber de realizar una investigacion razonable. La coincidencia de patrones de IA no es una investigacion. Si la denegacion es impugnada, su empresa enfrenta responsabilidad por mala fe al depender unicamente de un algoritmo sin revision humana.' },
+        { text: 'Aprobar la reclamacion para evitar complicaciones — la asegurada parece confiable', points: 10, riskLevel: 'medium', feedback: 'Si bien su instinto de mirar mas alla de la IA es correcto, aprobar sin investigacion tambien es problematico. Necesita verificar la validez de la reclamacion mediante una investigacion adecuada. Aprobar reclamaciones fraudulentas perjudica al fondo de seguros.' },
+        { text: 'Solicitar un segundo analisis de IA con mas datos antes de decidir', points: 15, riskLevel: 'medium', feedback: 'Obtener mas datos es razonable, pero ejecutarlo a traves del mismo sistema de IA no reemplaza la investigacion humana. El problema no son los datos de la IA — es que la coincidencia de patrones de IA no puede sustituir la investigacion profesional requerida por los estatutos de practicas injustas de reclamaciones.' },
+      ],
+    },
+    {
+      title: 'El Atajo del Enriquecimiento de Datos',
+      rule: 'Privacidad de Datos y Consentimiento',
+      situation: 'Su equipo de suscripcion quiere utilizar una herramienta de IA de terceros que recopila datos de redes sociales, registros publicos y datos de consumidores para construir "perfiles de riesgo" para los solicitantes. La herramienta promete una evaluacion de riesgo un 40% mas precisa. Los sujetos de los datos (solicitantes) no son informados de que este enriquecimiento de datos esta ocurriendo, y no se obtuvo consentimiento para este uso especifico.',
+      context: 'Los reguladores de seguros exigen cada vez mas transparencia en el uso de datos para la suscripcion. El boletin modelo de la NAIC sobre IA requiere que las aseguradoras garanticen que el uso de datos cumpla con las leyes de privacidad aplicables y los estandares contra la discriminacion. Muchos estados tienen requisitos especificos de consentimiento para ciertos tipos de uso de datos de consumidores en seguros.',
+      choices: [
+        { text: 'Negarse a usar la herramienta hasta que la revision legal y de cumplimiento confirme el cumplimiento regulatorio y los mecanismos de consentimiento adecuados esten en su lugar', points: 20, riskLevel: 'low', feedback: 'Correcto. Usar datos de consumidores sin el consentimiento adecuado y el cumplimiento regulatorio expone a la empresa a acciones regulatorias, demandas por privacidad y dano reputacional. La mejora del 40% en precision no tiene sentido si la recopilacion de datos viola las leyes de privacidad.' },
+        { text: 'Usar la herramienta solo para lineas comerciales donde las expectativas de privacidad son menores', points: 15, riskLevel: 'medium', feedback: 'Las lineas comerciales tienen diferentes consideraciones de privacidad, pero esto no elimina los requisitos regulatorios. La recopilacion de datos sin consentimiento aun puede violar las leyes estatales de privacidad y las directrices de la NAIC independientemente de la linea de negocio. Una revision de cumplimiento sigue siendo necesaria.' },
+        { text: 'Usarla — los datos estan disponibles publicamente, por lo que no se necesita consentimiento', points: 5, riskLevel: 'high', feedback: '"Disponible publicamente" no significa "libre para usar con cualquier proposito." Muchas regulaciones de privacidad distinguen entre datos accesibles publicamente y usarlos para la toma de decisiones automatizada. La CCPA, las regulaciones estatales de seguros y la guia de la NAIC abordan esta distincion.' },
+        { text: 'Usar la herramienta pero anonimizar los datos para que no se puedan rastrear hasta los individuos', points: 10, riskLevel: 'medium', feedback: 'La anonimizacion no resuelve el problema central. Los datos fueron recopilados sin consentimiento para fines de suscripcion de seguros. Ademas, anonimizar verdaderamente los datos mientras se retiene su utilidad para la evaluacion de riesgo individual es tecnicamente contradictorio.' },
+      ],
+    },
+    {
+      title: 'El Punto Ciego del Algoritmo de Precios',
+      rule: 'Precios Justos y No Discriminacion',
+      situation: 'El modelo de precios con IA de su empresa ha estado generando excelentes ratios de siniestralidad. Sin embargo, una auditoria interna revela que el modelo utiliza el codigo postal como factor de calificacion principal, y las primas resultantes estan fuertemente correlacionadas con la demografia racial de esos codigos postales. El modelo no usa la raza directamente, pero el efecto es una fijacion de precios discriminatoria a traves de variables proxy.',
+      context: 'Las leyes estatales de seguros prohiben la discriminacion injusta en los precios. La ley Colorado SB 21-169 requiere especificamente probar los sistemas de IA para detectar discriminacion injusta. El Boletin Modelo de la NAIC requiere que las aseguradoras garanticen que los sistemas de IA no produzcan resultados injustamente discriminatorios, incluso si las caracteristicas protegidas no se usan como entradas directas.',
+      choices: [
+        { text: 'Detener el modelo, encargar una auditoria de sesgo y desarrollar un plan de remediacion antes de reanudar los precios asistidos por IA', points: 20, riskLevel: 'low', feedback: 'Este es el camino responsable. El impacto dispar a traves de variables proxy es exactamente lo que los reguladores como el DOI de Colorado estan apuntando. Continuar usando un modelo que sabe que produce resultados discriminatorios crea una exposicion regulatoria y legal masiva. Una auditoria de sesgo y un plan de remediacion demuestran buena gobernanza.' },
+        { text: 'Seguir usando el modelo pero agregar un descargo de que las tarifas estan actuarialmente justificadas', points: 10, riskLevel: 'high', feedback: 'La justificacion actuarial no lo aisla de reclamaciones por discriminacion injusta. Si un factor de calificacion produce resultados discriminatorios a traves de correlacion proxy, el hecho de que sea estadisticamente predictivo de perdidas no lo hace legal o eticamente permisible bajo los marcos regulatorios modernos.' },
+        { text: 'Eliminar el codigo postal del modelo y encontrar factores de riesgo alternativos', points: 15, riskLevel: 'medium', feedback: 'Eliminar el proxy mas obvio es un comienzo, pero puede no ser suficiente. Otras variables en el modelo tambien pueden servir como proxies. Una auditoria de sesgo integral examina todas las variables y sus interacciones, no solo la mas obvia. Esta es una solucion parcial cuando se necesita un enfoque sistematico.' },
+        { text: 'Informar el hallazgo a cumplimiento pero continuar usando el modelo hasta que respondan', points: 5, riskLevel: 'high', feedback: 'Ha identificado un resultado discriminatorio y elegir continuar es indefendible. "Esperar a cumplimiento" no lo protege a usted ni a la empresa. Bajo Colorado SB 21-169 y leyes similares, continuar usando un modelo que sabe que produce resultados injustamente discriminatorios mientras un memo esta en la bandeja de entrada de alguien es exactamente el tipo de conducta que lleva a acciones de cumplimiento.' },
+      ],
+    },
+    {
+      title: 'El Asistente de Suscripcion con IA',
+      rule: 'Transparencia y Divulgacion',
+      situation: 'Su agencia usa IA para preseleccionar solicitudes y generar recomendaciones de suscripcion. La IA produce una evaluacion de riesgo detallada que sus suscriptores en gran medida siguen. Un cliente comercial pregunta directamente: "Un humano esta tomando mi decision de suscripcion, o es una computadora?" Su gerente dice que le diga que un humano revisa cada solicitud — lo cual es tecnicamente cierto, pero el humano tipicamente pasa menos de 2 minutos revisando la recomendacion de la IA.',
+      context: 'Muchos estados estan desarrollando o han promulgado requisitos para la divulgacion del uso de IA en decisiones de seguros. El Boletin Modelo de la NAIC espera que las aseguradoras sean transparentes sobre el papel de la IA en la toma de decisiones. La confianza del consumidor en los seguros depende de la representacion honesta de como se toman las decisiones.',
+      choices: [
+        { text: 'Decirle al cliente honestamente que la IA asiste en el analisis y un suscriptor humano toma la decision final, explicando como funciona el proceso', points: 20, riskLevel: 'low', feedback: 'La transparencia construye confianza y es cada vez mas requerida por la regulacion. Explicar que la IA maneja el analisis inicial mientras los humanos toman las decisiones finales es honesto y posiciona a su agencia como tecnologicamente sofisticada. La mayoria de los clientes aprecian saber que la IA se usa responsablemente.' },
+        { text: 'Seguir la direccion de su gerente — un humano si revisa cada solicitud', points: 10, riskLevel: 'high', feedback: 'Si bien es tecnicamente preciso, esto es enganoso por omision. Si la revision humana es un sello de goma de las recomendaciones de la IA, representarlo como toma de decisiones humana tergiversa el proceso. Cuando los reguladores o tribunales examinen su suscripcion, la brecha entre la representacion y la realidad sera problematica.' },
+        { text: 'Evadir la pregunta — decir que no puede discutir procesos de suscripcion propietarios', points: 5, riskLevel: 'high', feedback: 'La evasion senala que algo se esta ocultando. Esto dana la confianza del cliente y puede violar los requisitos de divulgacion en su jurisdiccion. Tambien no aborda la pregunta legitima de un cliente comercial que tiene derecho a entender como se toman las decisiones de su cobertura.' },
+        { text: 'Decirle que consultara con su departamento de suscripcion y le respondera', points: 15, riskLevel: 'medium', feedback: 'Esto gana tiempo pero no resuelve la tension etica. Si regresa con la misma linea enganosa de "un humano revisa todo", solo ha retrasado el problema. Use este tiempo para abogar internamente por una politica de divulgacion transparente sobre el uso de IA.' },
+      ],
+    },
+    {
+      title: 'El Modelo de Cancelacion Predictiva',
+      rule: 'Equidad del Asegurado y Buena Fe',
+      situation: 'Su empresa ha desarrollado un modelo de IA que predice que asegurados probablemente presentaran grandes reclamaciones en los proximos 12 meses basandose en patrones de comportamiento, eventos de vida y datos externos. La gerencia quiere usar este modelo para no renovar o cancelar proactivamente las polizas antes de que ocurran las reclamaciones anticipadas. El modelo tiene una tasa de precision del 68%.',
+      context: 'El seguro es fundamentalmente un contrato de buena fe. La no renovacion y la cancelacion estan reguladas por la ley estatal, con motivos especificos permitidos. Usar modelos predictivos para evitar pagar reclamaciones socava todo el mecanismo de seguros y puede constituir practicas comerciales injustas.',
+      choices: [
+        { text: 'Negarse a implementar el modelo para fines de no renovacion/cancelacion y recomendar usarlo en su lugar para gestion proactiva de riesgos y alcance de prevencion de perdidas', points: 20, riskLevel: 'low', feedback: 'Excelente. Esto redirige el poder predictivo de la IA hacia ayudar a los asegurados en lugar de abandonarlos. Usar predicciones para la prevencion de perdidas sirve tanto a la empresa como a los asegurados. Usarlas para evitar reclamaciones es la antitesis del seguro y probablemente viola las regulaciones de practicas comerciales injustas.' },
+        { text: 'Implementarlo solo para las polizas de mayor riesgo donde el modelo tiene confianza del 90%+', points: 15, riskLevel: 'medium', feedback: 'Incluso con un 90% de confianza, usar modelos predictivos para no renovar antes de que ocurran las reclamaciones socava fundamentalmente el contrato de seguro. Si los reguladores descubren que esta cancelando polizas especificamente para evitar reclamaciones anticipadas, las consecuencias regulatorias y reputacionales podrian ser severas.' },
+        { text: 'Implementar el modelo como la gerencia solicita — la empresa necesita gestionar su ratio de siniestralidad', points: 5, riskLevel: 'high', feedback: 'Este es el camino hacia la aplicacion regulatoria y los litigios de accion colectiva. No renovar proactivamente a los asegurados porque predice que usaran su cobertura viola el proposito fundamental del seguro. Una precision del 68% tambien significa que el 32% de los asegurados afectados serian incorrectamente no renovados.' },
+        { text: 'Sugerir usar el modelo solo para ajustar los precios de renovacion en lugar de cancelar', points: 10, riskLevel: 'medium', feedback: 'Usar modelos predictivos para ajustes de precios es mas defendible que la cancelacion, pero plantea sus propias preocupaciones. Si los aumentos de precios estan disenados para forzar a los asegurados a irse, es una cancelacion constructiva. Ademas, los datos y la metodologia subyacentes deben cumplir con los requisitos de la ley de tarifas.' },
+      ],
+    },
+  ],
+};
+
+const scenarios = scenariosMap[locale] || scenariosMap.en;
+
+// Pass data to client JS
+const totalScenarios = scenarios.length;
+const maxScore = totalScenarios * 20;
+---
+
+<div class="ethics-sim" id="ethics-simulator">
+  <!-- Progress Bar -->
+  <div class="ethics-sim__progress">
+    <div class="ethics-sim__progress-bar">
+      <div class="ethics-sim__progress-fill" id="es-progress-fill" style="width: 20%;"></div>
+    </div>
+    <p class="ethics-sim__progress-label" id="es-progress-label"></p>
+  </div>
+
+  <!-- Scenario Container -->
+  <div id="es-scenario-container">
+    <!-- Populated by JS -->
+  </div>
+
+  <!-- Results Container (hidden initially) -->
+  <div id="es-results-container" style="display: none;">
+    <!-- Populated by JS -->
+  </div>
+</div>
+
+<script define:vars={{ scenarios, uiStrings, totalScenarios, maxScore }}>
+  // State
+  let currentScenario = 0;
+  let scores = [];
+  let selectedChoices = [];
+  let answered = [];
+
+  const container = document.getElementById('es-scenario-container');
+  const resultsContainer = document.getElementById('es-results-container');
+  const progressFill = document.getElementById('es-progress-fill');
+  const progressLabel = document.getElementById('es-progress-label');
+
+  function renderScenario(index) {
+    const s = scenarios[index];
+    const progressPct = ((index + 1) / totalScenarios) * 100;
+    progressFill.style.width = progressPct + '%';
+    progressLabel.textContent = uiStrings.scenarioOf.replace('{current}', index + 1).replace('{total}', totalScenarios);
+
+    let html = `<div class="ethics-sim__scenario">
+      <div class="ethics-sim__scenario-header">
+        <h2 class="ethics-sim__scenario-title">${s.title}</h2>
+        <span class="ethics-sim__rule-badge">${uiStrings.ruleAtStake}: ${s.rule}</span>
+      </div>
+      <p class="ethics-sim__situation">${s.situation}</p>
+      <div class="ethics-sim__context">${s.context}</div>
+      <p style="font-weight: var(--font-semibold); margin-bottom: var(--space-3);">${uiStrings.makeYourChoice}</p>
+      <div class="ethics-sim__choices" id="es-choices">`;
+
+    s.choices.forEach((c, ci) => {
+      const isAnswered = answered[index] !== undefined;
+      const wasSelected = selectedChoices[index] === ci;
+      let extraClass = '';
+      if (isAnswered) {
+        if (wasSelected) {
+          if (c.riskLevel === 'low' && c.points === 20) extraClass = 'is-correct';
+          else if (c.riskLevel === 'high') extraClass = 'is-wrong';
+          else extraClass = 'is-risky';
+        }
+      }
+      html += `<button class="ethics-sim__choice ${wasSelected ? 'is-selected' : ''} ${extraClass}" data-choice="${ci}" ${isAnswered ? 'disabled' : ''}>
+        <span class="ethics-sim__choice-radio"></span>
+        <span>${c.text}</span>
+      </button>`;
+    });
+
+    html += `</div>`;
+
+    // Show feedback if already answered
+    if (answered[index] !== undefined) {
+      const choice = s.choices[selectedChoices[index]];
+      const feedbackClass = choice.riskLevel === 'low' && choice.points === 20 ? 'correct' : choice.riskLevel === 'high' ? 'wrong' : 'risky';
+      const label = choice.points === 20 ? uiStrings.bestChoice : choice.points === 15 ? uiStrings.acceptable : choice.points === 10 ? uiStrings.risky : uiStrings.poorChoice;
+      html += `<div class="ethics-sim__feedback ethics-sim__feedback--${feedbackClass}">
+        <p class="ethics-sim__feedback-title">${label}</p>
+        <p class="ethics-sim__feedback-text">${choice.feedback}</p>
+        <p class="ethics-sim__feedback-points">+${choice.points} / 20</p>
+      </div>`;
+
+      // Navigation
+      html += `<div class="ethics-sim__nav">`;
+      if (index < totalScenarios - 1) {
+        html += `<button class="btn btn--primary" id="es-next-btn">${uiStrings.nextScenario}</button>`;
+      } else {
+        html += `<button class="btn btn--primary" id="es-results-btn">${uiStrings.seeResults}</button>`;
+      }
+      html += `</div>`;
+    }
+
+    html += `</div>`;
+    container.innerHTML = html;
+
+    // Bind choice clicks
+    if (answered[index] === undefined) {
+      document.querySelectorAll('#es-choices .ethics-sim__choice').forEach(btn => {
+        btn.addEventListener('click', () => handleChoice(index, parseInt(btn.getAttribute('data-choice'))));
+      });
+    }
+
+    // Bind next/results buttons
+    document.getElementById('es-next-btn')?.addEventListener('click', () => {
+      currentScenario++;
+      renderScenario(currentScenario);
+    });
+    document.getElementById('es-results-btn')?.addEventListener('click', () => showResults());
+  }
+
+  function handleChoice(scenarioIndex, choiceIndex) {
+    const choice = scenarios[scenarioIndex].choices[choiceIndex];
+    selectedChoices[scenarioIndex] = choiceIndex;
+    scores[scenarioIndex] = choice.points;
+    answered[scenarioIndex] = true;
+    renderScenario(scenarioIndex);
+  }
+
+  function showResults() {
+    container.style.display = 'none';
+    document.querySelector('.ethics-sim__progress').style.display = 'none';
+    resultsContainer.style.display = 'block';
+
+    const totalScore = scores.reduce((a, b) => a + b, 0);
+    const pct = Math.round((totalScore / maxScore) * 100);
+
+    let profileLabel, profileClass, profileColor;
+    if (pct >= 85) { profileLabel = uiStrings.profileChampion; profileClass = 'level-champion'; profileColor = '#38A169'; }
+    else if (pct >= 65) { profileLabel = uiStrings.profileResponsible; profileClass = 'level-responsible'; profileColor = '#00B4D8'; }
+    else if (pct >= 45) { profileLabel = uiStrings.profileDeveloping; profileClass = 'level-developing'; profileColor = '#D69E2E'; }
+    else { profileLabel = uiStrings.profileNeedsWork; profileClass = 'level-needs-work'; profileColor = '#C53030'; }
+
+    // SVG score ring
+    const radius = 70;
+    const circumference = 2 * Math.PI * radius;
+    const dashOffset = circumference - (pct / 100) * circumference;
+
+    let html = `<div class="ethics-sim__results">
+      <h2 class="ethics-sim__results-title">${uiStrings.resultsTitle}</h2>
+
+      <div class="ethics-sim__score-section">
+        <svg class="ethics-sim__score-ring" width="180" height="180" viewBox="0 0 180 180">
+          <circle cx="90" cy="90" r="${radius}" fill="none" stroke="var(--border-light)" stroke-width="10" />
+          <circle class="ethics-sim__score-ring-fill" cx="90" cy="90" r="${radius}" fill="none" stroke="${profileColor}" stroke-width="10" stroke-linecap="round" stroke-dasharray="${circumference}" stroke-dashoffset="${circumference}" transform="rotate(-90 90 90)" />
+          <text x="90" y="82" text-anchor="middle" fill="var(--text-primary)" font-family="var(--font-heading)" font-size="36" font-weight="800">${pct}</text>
+          <text x="90" y="104" text-anchor="middle" fill="var(--text-muted)" font-size="12">${uiStrings.overallScore}</text>
+        </svg>
+        <p style="margin-top: var(--space-2); font-size: var(--text-sm); color: var(--text-muted);">${uiStrings.pointsEarned.replace('{pts}', totalScore).replace('{max}', maxScore)}</p>
+        <span class="ethics-sim__profile-badge ${profileClass}" style="margin-top: var(--space-3);">${profileLabel}</span>
+      </div>
+
+      <h3 style="font-family: var(--font-heading); font-size: var(--text-xl); font-weight: var(--font-bold); color: var(--color-primary); margin-bottom: var(--space-4);">${uiStrings.scenarioRecap}</h3>
+      <div class="ethics-sim__recap-grid">`;
+
+    scenarios.forEach((s, i) => {
+      const score = scores[i] || 0;
+      const color = score === 20 ? 'var(--color-success)' : score >= 15 ? 'var(--color-accent)' : score >= 10 ? 'var(--color-alert)' : 'var(--color-error)';
+      html += `<div class="ethics-sim__recap-card">
+        <span class="ethics-sim__recap-score" style="color: ${color};">${score}/20</span>
+        <span class="ethics-sim__recap-title">${s.title}</span>
+      </div>`;
+    });
+
+    html += `</div>
+
+      <div class="ethics-sim__actions">
+        <button class="btn btn--primary" id="es-share-btn">${uiStrings.shareResults}</button>
+        <button class="btn btn--secondary" id="es-retake-btn">${uiStrings.retake}</button>
+      </div>
+    </div>`;
+
+    resultsContainer.innerHTML = html;
+
+    // Animate score ring
+    requestAnimationFrame(() => {
+      const ring = document.querySelector('.ethics-sim__score-ring-fill');
+      if (ring) ring.style.strokeDashoffset = dashOffset.toString();
+    });
+
+    // Share button
+    document.getElementById('es-share-btn')?.addEventListener('click', function() {
+      const text = `${uiStrings.resultsTitle}: ${pct}% — ${profileLabel} (${totalScore}/${maxScore})`;
+      navigator.clipboard.writeText(text).then(() => {
+        this.textContent = uiStrings.shareResultsCopied;
+        setTimeout(() => { this.textContent = uiStrings.shareResults; }, 2000);
+      });
+    });
+
+    // Retake button
+    document.getElementById('es-retake-btn')?.addEventListener('click', () => {
+      currentScenario = 0;
+      scores = [];
+      selectedChoices = [];
+      answered = [];
+      resultsContainer.style.display = 'none';
+      container.style.display = 'block';
+      document.querySelector('.ethics-sim__progress').style.display = 'block';
+      renderScenario(0);
+    });
+  }
+
+  // Initialize
+  renderScenario(0);
+</script>

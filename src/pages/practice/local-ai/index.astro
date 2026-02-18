@@ -1,0 +1,482 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Icon from '../../../components/Icon.astro';
+import { t, getLocalePath } from '../../../i18n';
+const locale = 'en';
+const p = (path: string) => getLocalePath(locale, path);
+---
+
+<BaseLayout
+  title="Install a Local AI"
+  description="How to install and run LM Studio on your own computer so you can analyze confidential insurance documents with AI — without uploading anything to the cloud."
+  locale={locale}
+>
+  <!-- Hero -->
+  <section class="hero" style="background: linear-gradient(135deg, rgba(27,42,74,0.82) 0%, rgba(45,55,72,0.78) 100%), url('/assets/images/hero-images/hero-image-practice.png') top/cover no-repeat;">
+    <div class="container" style="position: relative; z-index: 1;">
+      <div class="slide-up" style="max-width: 800px;">
+        <p class="text-sm font-semibold mb-4" style="color: var(--color-secondary); text-transform: uppercase; letter-spacing: 0.1em;">Practice</p>
+        <h1 style="font-size: var(--text-5xl); margin-bottom: var(--space-6);">Install a Local AI</h1>
+        <p class="lead" style="margin-bottom: var(--space-6);">
+          Run a powerful AI on your own computer. Analyze confidential policies, process claims documentation, and summarize loss reports — without sending a single word to the cloud. This guide gets you from zero to a working local AI in under 30 minutes.
+        </p>
+      </div>
+    </div>
+    <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 120px; background: linear-gradient(to top, var(--surface-page), transparent);"></div>
+  </section>
+
+  <!-- Section 1: Why Local AI Matters -->
+  <section class="section">
+    <div class="container">
+      <div class="reveal" style="max-width: 900px; margin: 0 auto;">
+        <div class="section-header" style="text-align: left; max-width: none; margin-bottom: var(--space-8);">
+          <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-4);">
+            <div style="color: var(--color-primary);"><Icon name="shield" size={32} /></div>
+            <h2 style="margin-bottom: 0;">Why Local AI Matters for Insurance Professionals</h2>
+          </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: var(--space-6);">
+          <p style="font-size: var(--text-lg); color: var(--text-secondary); line-height: var(--leading-relaxed);">
+            As an insurance professional, you handle some of the most sensitive personal and commercial data in any industry. Policyholder information, claims details, medical records, financial data, and proprietary underwriting models all demand strict confidentiality. Regulatory frameworks like HIPAA, state insurance data security laws, and NAIC model regulations all point to one simple truth: <strong>you must control where sensitive data goes</strong>.
+          </p>
+
+          <div class="callout callout--danger">
+            <h4 class="callout__title" style="color: var(--color-error-dark);">The Problem with Cloud AI</h4>
+            <p style="color: var(--text-secondary); margin-bottom: 0; line-height: var(--leading-relaxed);">
+              When you paste a policy document, a claims file, or policyholder details into a cloud-based AI tool like ChatGPT or Claude, that data leaves your machine and travels to a third-party server. Even with enterprise agreements, you are relying on someone else's infrastructure, someone else's data retention policies, and someone else's security team. For many types of confidential insurance work — especially involving protected health information or proprietary loss data — that is an unacceptable risk.
+            </p>
+          </div>
+
+          <div class="callout callout--success">
+            <h4 class="callout__title" style="color: var(--color-success-dark);">The Local AI Solution</h4>
+            <p style="color: var(--text-secondary); margin-bottom: 0; line-height: var(--leading-relaxed);">
+              A local AI runs entirely on your computer. No internet connection is needed. No data is transmitted anywhere. The model loads into your machine's memory, processes your input locally, and generates its response locally. Your documents never leave your desk.
+            </p>
+          </div>
+
+          <div class="card card--accent" style="padding: var(--space-6);">
+            <p style="color: var(--text-secondary); margin-bottom: 0; line-height: var(--leading-relaxed);">
+              <strong>Related reading:</strong> For a deeper look at the risks of putting confidential information into cloud AI tools, see <a href="/learn/what-not-to-do/" style="color: var(--color-accent);">What Not to Do #2 — Don't Paste Confidential Information Into AI Tools Without Safeguards</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 2: What is LM Studio? -->
+  <section class="section section--parchment">
+    <div class="container">
+      <div class="reveal" style="max-width: 900px; margin: 0 auto;">
+        <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-6);">
+          <div style="color: var(--color-primary);"><Icon name="monitor" size={32} /></div>
+          <h2 style="margin-bottom: 0;">What is LM Studio?</h2>
+        </div>
+
+        <p style="font-size: var(--text-lg); color: var(--text-secondary); line-height: var(--leading-relaxed); margin-bottom: var(--space-6);">
+          <a href="https://lmstudio.ai" target="_blank" rel="noopener noreferrer" style="color: var(--color-accent); font-weight: var(--font-semibold);">LM Studio</a> is a free, cross-platform desktop application that lets you download and run open-source large language models (LLMs) directly on your computer. Think of it as having your own private ChatGPT — but one that runs offline and keeps everything local.
+        </p>
+
+        <div class="grid grid--2" style="gap: var(--space-4);">
+          <div class="card" style="padding: var(--space-5);">
+            <div style="display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-3);">
+              <div style="color: var(--color-accent);"><Icon name="lock" size={20} /></div>
+              <h4 style="margin-bottom: 0; font-size: var(--text-base);">Completely Private</h4>
+            </div>
+            <p class="card__body" style="margin-bottom: 0;">Your data never leaves your computer. No telemetry, no cloud sync, no API calls. Everything stays local.</p>
+          </div>
+
+          <div class="card" style="padding: var(--space-5);">
+            <div style="display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-3);">
+              <div style="color: var(--color-accent);"><Icon name="globe" size={20} /></div>
+              <h4 style="margin-bottom: 0; font-size: var(--text-base);">Works Offline</h4>
+            </div>
+            <p class="card__body" style="margin-bottom: 0;">After the initial model download, no internet connection is required. Use it on a plane, at a client site, or in a secure facility.</p>
+          </div>
+
+          <div class="card" style="padding: var(--space-5);">
+            <div style="display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-3);">
+              <div style="color: var(--color-accent);"><Icon name="settings" size={20} /></div>
+              <h4 style="margin-bottom: 0; font-size: var(--text-base);">Cross-Platform</h4>
+            </div>
+            <p class="card__body" style="margin-bottom: 0;">Available for Windows, macOS, and Linux. Runs on laptops with 16GB RAM or more.</p>
+          </div>
+
+          <div class="card" style="padding: var(--space-5);">
+            <div style="display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-3);">
+              <div style="color: var(--color-accent);"><Icon name="search" size={20} /></div>
+              <h4 style="margin-bottom: 0; font-size: var(--text-base);">Thousands of Models</h4>
+            </div>
+            <p class="card__body" style="margin-bottom: 0;">Browse and download from thousands of open-source models on Hugging Face. Find the right one for your task and hardware.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 3: Step-by-Step Installation -->
+  <section class="section">
+    <div class="container">
+      <div class="reveal" style="max-width: 900px; margin: 0 auto;">
+        <div class="section-header" style="text-align: left; max-width: none; margin-bottom: var(--space-8);">
+          <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-4);">
+            <div style="color: var(--color-primary);"><Icon name="clipboard-list" size={32} /></div>
+            <h2 style="margin-bottom: 0;">Step-by-Step Installation</h2>
+          </div>
+          <p style="color: var(--text-secondary); font-size: var(--text-lg);">Follow these five steps to go from nothing to a working local AI. Most insurance professionals complete this in 20-30 minutes, depending on internet speed for the model download.</p>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: var(--space-6);">
+
+          <!-- Step 1 -->
+          <div class="card" style="padding: var(--space-6);">
+            <div style="display: flex; align-items: flex-start; gap: var(--space-4);">
+              <div style="display: inline-flex; align-items: center; justify-content: center; width: 2.5rem; height: 2.5rem; border-radius: var(--radius-full); background: var(--color-accent); color: var(--text-inverse); font-family: var(--font-heading); font-size: var(--text-lg); font-weight: var(--font-bold); flex-shrink: 0;">1</div>
+              <div style="flex: 1;">
+                <h3 style="font-size: var(--text-xl); margin-bottom: var(--space-3); color: var(--color-primary);">Download LM Studio</h3>
+                <p style="color: var(--text-secondary); line-height: var(--leading-relaxed); margin-bottom: var(--space-4);">
+                  Go to <a href="https://lmstudio.ai" target="_blank" rel="noopener noreferrer" style="color: var(--color-accent); font-weight: var(--font-semibold);">lmstudio.ai</a> and download the installer for your operating system. LM Studio is available for:
+                </p>
+                <div class="flex gap-2 flex--wrap" style="margin-bottom: var(--space-3);">
+                  <span class="tag">Windows 10/11</span>
+                  <span class="tag">macOS (Apple Silicon & Intel)</span>
+                  <span class="tag">Linux (Ubuntu/Debian)</span>
+                </div>
+                <p class="text-sm" style="color: var(--text-muted); margin-bottom: 0;">
+                  The download is approximately 400-500 MB. The application itself is free with no account required.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="card" style="padding: var(--space-6);">
+            <div style="display: flex; align-items: flex-start; gap: var(--space-4);">
+              <div style="display: inline-flex; align-items: center; justify-content: center; width: 2.5rem; height: 2.5rem; border-radius: var(--radius-full); background: var(--color-accent); color: var(--text-inverse); font-family: var(--font-heading); font-size: var(--text-lg); font-weight: var(--font-bold); flex-shrink: 0;">2</div>
+              <div style="flex: 1;">
+                <h3 style="font-size: var(--text-xl); margin-bottom: var(--space-3); color: var(--color-primary);">Install and Launch</h3>
+                <p style="color: var(--text-secondary); line-height: var(--leading-relaxed); margin-bottom: var(--space-4);">
+                  Run the installer. On Windows, double-click the <code>.exe</code> file. On macOS, drag the app to your Applications folder. On Linux, follow the package instructions on the site.
+                </p>
+                <p style="color: var(--text-secondary); line-height: var(--leading-relaxed); margin-bottom: 0;">
+                  When you launch LM Studio for the first time, you will see a clean interface with a search bar and a chat window. No configuration is needed yet.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="card" style="padding: var(--space-6);">
+            <div style="display: flex; align-items: flex-start; gap: var(--space-4);">
+              <div style="display: inline-flex; align-items: center; justify-content: center; width: 2.5rem; height: 2.5rem; border-radius: var(--radius-full); background: var(--color-accent); color: var(--text-inverse); font-family: var(--font-heading); font-size: var(--text-lg); font-weight: var(--font-bold); flex-shrink: 0;">3</div>
+              <div style="flex: 1;">
+                <h3 style="font-size: var(--text-xl); margin-bottom: var(--space-3); color: var(--color-primary);">Download a Model</h3>
+                <p style="color: var(--text-secondary); line-height: var(--leading-relaxed); margin-bottom: var(--space-4);">
+                  Click the <strong>Discover</strong> tab (magnifying glass icon) in the left sidebar. Search for a model by name. For your first model, we recommend:
+                </p>
+                <div class="callout callout--info" style="margin-bottom: var(--space-4);">
+                  <h4 class="callout__title">Recommended First Model</h4>
+                  <p style="color: var(--text-secondary); margin-bottom: var(--space-2);">
+                    <strong>Llama 3.1 8B Instruct</strong> — Search for "llama 3.1 8b instruct" in the Discover tab. This is a strong general-purpose model that runs well on most modern laptops with 16GB of RAM.
+                  </p>
+                  <p class="text-sm" style="color: var(--text-muted); margin-bottom: 0;">
+                    The "8B" means 8 billion parameters. Larger models (70B) are more capable but require significantly more hardware — typically 64GB+ RAM or a dedicated GPU. Start small.
+                  </p>
+                </div>
+                <p style="color: var(--text-secondary); line-height: var(--leading-relaxed); margin-bottom: 0;">
+                  Click the download button next to the model. LM Studio will show you the recommended quantization (file size variant). The default is usually fine. The download will be 4-6 GB for an 8B model — this is a one-time download.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 4 -->
+          <div class="card" style="padding: var(--space-6);">
+            <div style="display: flex; align-items: flex-start; gap: var(--space-4);">
+              <div style="display: inline-flex; align-items: center; justify-content: center; width: 2.5rem; height: 2.5rem; border-radius: var(--radius-full); background: var(--color-accent); color: var(--text-inverse); font-family: var(--font-heading); font-size: var(--text-lg); font-weight: var(--font-bold); flex-shrink: 0;">4</div>
+              <div style="flex: 1;">
+                <h3 style="font-size: var(--text-xl); margin-bottom: var(--space-3); color: var(--color-primary);">Load the Model and Start Chatting</h3>
+                <p style="color: var(--text-secondary); line-height: var(--leading-relaxed); margin-bottom: var(--space-4);">
+                  Go to the <strong>Chat</strong> tab (speech bubble icon). At the top of the chat window, click the model selector dropdown and choose the model you just downloaded. LM Studio will load the model into memory — this takes 10-30 seconds depending on your hardware.
+                </p>
+                <p style="color: var(--text-secondary); line-height: var(--leading-relaxed); margin-bottom: 0;">
+                  Once loaded, you can start typing prompts just like you would with ChatGPT. Try something simple first: <em>"Summarize the key coverages and exclusions in this commercial general liability policy."</em> You should see the model generate a response in real time.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 5 -->
+          <div class="card" style="padding: var(--space-6);">
+            <div style="display: flex; align-items: flex-start; gap: var(--space-4);">
+              <div style="display: inline-flex; align-items: center; justify-content: center; width: 2.5rem; height: 2.5rem; border-radius: var(--radius-full); background: var(--color-accent); color: var(--text-inverse); font-family: var(--font-heading); font-size: var(--text-lg); font-weight: var(--font-bold); flex-shrink: 0;">5</div>
+              <div style="flex: 1;">
+                <h3 style="font-size: var(--text-xl); margin-bottom: var(--space-3); color: var(--color-primary);">Use the Local Server (Advanced)</h3>
+                <p style="color: var(--text-secondary); line-height: var(--leading-relaxed); margin-bottom: var(--space-4);">
+                  LM Studio includes a built-in local server feature. Click the <strong>Developer</strong> tab (code icon) and start the server. This creates an OpenAI-compatible API endpoint at <code>http://localhost:1234</code> on your machine.
+                </p>
+                <p style="color: var(--text-secondary); line-height: var(--leading-relaxed); margin-bottom: 0;">
+                  This lets other applications on your computer (note-taking apps, coding tools, document processors) connect to your local AI using the same interface they would use for cloud APIs — but all traffic stays on your machine. This is optional and not required for basic use.
+                </p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 4: Recommended Models -->
+  <section class="section section--parchment">
+    <div class="container">
+      <div class="reveal" style="max-width: 900px; margin: 0 auto;">
+        <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-6);">
+          <div style="color: var(--color-primary);"><Icon name="box" size={32} /></div>
+          <h2 style="margin-bottom: 0;">Recommended Models for Insurance Work</h2>
+        </div>
+
+        <p style="font-size: var(--text-lg); color: var(--text-secondary); line-height: var(--leading-relaxed); margin-bottom: var(--space-8);">
+          Not all models are equal. Here are four models we recommend for insurance professionals, ranging from lightweight to powerful. Start with the first one and upgrade as your hardware and confidence allow.
+        </p>
+
+        <div style="display: flex; flex-direction: column; gap: var(--space-4);">
+
+          <!-- Model 1 -->
+          <div class="card" style="padding: var(--space-6);">
+            <div style="display: flex; align-items: flex-start; gap: var(--space-4); flex-wrap: wrap;">
+              <div style="flex: 1; min-width: 250px;">
+                <div style="display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-2);">
+                  <h3 style="font-size: var(--text-xl); margin-bottom: 0; color: var(--color-primary);">Llama 3.1 8B Instruct</h3>
+                  <span class="badge badge--beginner">Recommended</span>
+                </div>
+                <p style="color: var(--text-secondary); line-height: var(--leading-relaxed); margin-bottom: var(--space-3);">
+                  The best all-around choice for most insurance professionals. Strong general reasoning, good at following instructions, and capable of summarization, drafting, and analysis tasks. Ideal for policy review, claims summarization, and generating first-draft communications.
+                </p>
+                <div class="flex gap-2 flex--wrap">
+                  <span class="tag">16GB RAM minimum</span>
+                  <span class="tag">~4-6 GB download</span>
+                  <span class="tag">General purpose</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Model 2 -->
+          <div class="card" style="padding: var(--space-6);">
+            <div style="display: flex; align-items: flex-start; gap: var(--space-4); flex-wrap: wrap;">
+              <div style="flex: 1; min-width: 250px;">
+                <h3 style="font-size: var(--text-xl); margin-bottom: var(--space-2); color: var(--color-primary);">Mistral 7B Instruct</h3>
+                <p style="color: var(--text-secondary); line-height: var(--leading-relaxed); margin-bottom: var(--space-3);">
+                  Fast and efficient. Mistral 7B punches above its weight class for summarization and text generation. If your primary need is quickly summarizing claims files or generating first drafts of policyholder communications, this is an excellent option that responds quickly.
+                </p>
+                <div class="flex gap-2 flex--wrap">
+                  <span class="tag">16GB RAM minimum</span>
+                  <span class="tag">~4 GB download</span>
+                  <span class="tag">Fast summarization</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Model 3 -->
+          <div class="card" style="padding: var(--space-6);">
+            <div style="display: flex; align-items: flex-start; gap: var(--space-4); flex-wrap: wrap;">
+              <div style="flex: 1; min-width: 250px;">
+                <h3 style="font-size: var(--text-xl); margin-bottom: var(--space-2); color: var(--color-primary);">Phi-3 Mini</h3>
+                <p style="color: var(--text-secondary); line-height: var(--leading-relaxed); margin-bottom: var(--space-3);">
+                  Microsoft's compact model. At only 3.8 billion parameters, it runs on older or less powerful hardware. Good for basic tasks: simple policy summarization, Q&A, and quick drafting. Not as capable as larger models for complex coverage analysis, but a solid entry point if your machine has limited resources.
+                </p>
+                <div class="flex gap-2 flex--wrap">
+                  <span class="tag">8GB RAM minimum</span>
+                  <span class="tag">~2 GB download</span>
+                  <span class="tag">Lightweight</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Model 4 -->
+          <div class="card" style="padding: var(--space-6);">
+            <div style="display: flex; align-items: flex-start; gap: var(--space-4); flex-wrap: wrap;">
+              <div style="flex: 1; min-width: 250px;">
+                <div style="display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-2);">
+                  <h3 style="font-size: var(--text-xl); margin-bottom: 0; color: var(--color-primary);">Llama 3.1 70B</h3>
+                  <span class="badge badge--advanced">Power Users</span>
+                </div>
+                <p style="color: var(--text-secondary); line-height: var(--leading-relaxed); margin-bottom: var(--space-3);">
+                  The heavyweight. 70 billion parameters deliver substantially better reasoning, nuance, and accuracy. Closer to cloud model quality. But it requires serious hardware: 64GB+ RAM or a dedicated GPU with 48GB+ VRAM. Best for insurance professionals with workstation-class machines or IT-managed infrastructure.
+                </p>
+                <div class="flex gap-2 flex--wrap">
+                  <span class="tag">64GB+ RAM or GPU</span>
+                  <span class="tag">~40 GB download</span>
+                  <span class="tag">Near cloud quality</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 5: Practical Use Cases -->
+  <section class="section">
+    <div class="container">
+      <div class="reveal" style="max-width: 900px; margin: 0 auto;">
+        <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-6);">
+          <div style="color: var(--color-primary);"><Icon name="lightbulb" size={32} /></div>
+          <h2 style="margin-bottom: 0;">Practical Use Cases</h2>
+        </div>
+
+        <p style="font-size: var(--text-lg); color: var(--text-secondary); line-height: var(--leading-relaxed); margin-bottom: var(--space-8);">
+          Once you have LM Studio running, here are the most valuable ways insurance professionals are using local AI today. Each of these keeps your data completely on your machine.
+        </p>
+
+        <div class="grid grid--2" style="gap: var(--space-4);">
+
+          <div class="card" style="padding: var(--space-5);">
+            <div style="display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-3);">
+              <div style="color: var(--color-accent);"><Icon name="file-text" size={20} /></div>
+              <h4 style="margin-bottom: 0; font-size: var(--text-base);">Analyzing Policies</h4>
+            </div>
+            <p class="card__body" style="margin-bottom: 0;">Paste full policy text into the chat and ask the model to identify key coverages, exclusions, conditions, and endorsements. Compare terms against standard forms or identify unusual provisions. All analysis happens locally.</p>
+          </div>
+
+          <div class="card" style="padding: var(--space-5);">
+            <div style="display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-3);">
+              <div style="color: var(--color-accent);"><Icon name="clipboard-list" size={20} /></div>
+              <h4 style="margin-bottom: 0; font-size: var(--text-base);">Summarizing Claims Files</h4>
+            </div>
+            <p class="card__body" style="margin-bottom: 0;">Feed in claims documentation, adjuster notes, medical records, or repair estimates and ask for structured summaries, chronologies, or key fact extraction for reserve reviews.</p>
+          </div>
+
+          <div class="card" style="padding: var(--space-5);">
+            <div style="display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-3);">
+              <div style="color: var(--color-accent);"><Icon name="pen-tool" size={20} /></div>
+              <h4 style="margin-bottom: 0; font-size: var(--text-base);">Drafting from Confidential Data</h4>
+            </div>
+            <p class="card__body" style="margin-bottom: 0;">Provide the model with proprietary loss data, actuarial findings, or internal performance metrics and ask it to draft reports, executive summaries, or board presentations. The data never leaves your machine, so confidentiality is maintained.</p>
+          </div>
+
+          <div class="card" style="padding: var(--space-5);">
+            <div style="display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-3);">
+              <div style="color: var(--color-accent);"><Icon name="search" size={20} /></div>
+              <h4 style="margin-bottom: 0; font-size: var(--text-base);">Extracting Key Dates & Obligations</h4>
+            </div>
+            <p class="card__body" style="margin-bottom: 0;">Ask the model to extract all deadlines, proof-of-loss requirements, notice periods, subrogation timelines, and policy effective dates from claims files and policies into a structured table.</p>
+          </div>
+
+          <div class="card" style="padding: var(--space-5); grid-column: 1 / -1;">
+            <div style="display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-3);">
+              <div style="color: var(--color-accent);"><Icon name="file" size={20} /></div>
+              <h4 style="margin-bottom: 0; font-size: var(--text-base);">Comparing Policy Versions</h4>
+            </div>
+            <p class="card__body" style="margin-bottom: 0;">Paste two versions of a policy from different renewal years and ask the model to identify all coverage changes, modified exclusions, adjusted limits, and new endorsements. Useful for renewal review when you need the analysis to stay confidential.</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 6: Limitations -->
+  <section class="section section--parchment">
+    <div class="container">
+      <div class="reveal" style="max-width: 900px; margin: 0 auto;">
+        <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-6);">
+          <div style="color: var(--color-primary);"><Icon name="alert-triangle" size={32} /></div>
+          <h2 style="margin-bottom: 0;">Limitations to Keep in Mind</h2>
+        </div>
+
+        <p style="font-size: var(--text-lg); color: var(--text-secondary); line-height: var(--leading-relaxed); margin-bottom: var(--space-8);">
+          Local AI is a powerful tool, but it is not a replacement for cloud models in every situation. Understand these trade-offs so you can choose the right tool for each task.
+        </p>
+
+        <div style="display: flex; flex-direction: column; gap: var(--space-4);">
+
+          <div class="card card--danger" style="padding: var(--space-5);">
+            <div style="display: flex; align-items: flex-start; gap: var(--space-4);">
+              <div class="number-badge number-badge--danger" style="margin-top: var(--space-1); font-size: var(--text-sm);">1</div>
+              <div style="flex: 1;">
+                <h4 style="margin-bottom: var(--space-2); color: var(--color-error-dark);">Smaller Models, Lower Capability</h4>
+                <p style="color: var(--text-secondary); margin-bottom: 0; line-height: var(--leading-relaxed);">
+                  An 8B parameter model running locally is substantially less capable than GPT-4o or Claude 3.5 Sonnet running in the cloud. Expect simpler reasoning, occasional errors, and less nuanced output. Always verify AI-generated analysis against the actual policy language and claims documentation.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="card card--danger" style="padding: var(--space-5);">
+            <div style="display: flex; align-items: flex-start; gap: var(--space-4);">
+              <div class="number-badge number-badge--danger" style="margin-top: var(--space-1); font-size: var(--text-sm);">2</div>
+              <div style="flex: 1;">
+                <h4 style="margin-bottom: var(--space-2); color: var(--color-error-dark);">No Internet Access</h4>
+                <p style="color: var(--text-secondary); margin-bottom: 0; line-height: var(--leading-relaxed);">
+                  Local models cannot search the web, access insurance databases, or retrieve current regulatory information. They work only with what you provide in the prompt and their training data (which has a knowledge cutoff date).
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="card card--danger" style="padding: var(--space-5);">
+            <div style="display: flex; align-items: flex-start; gap: var(--space-4);">
+              <div class="number-badge number-badge--danger" style="margin-top: var(--space-1); font-size: var(--text-sm);">3</div>
+              <div style="flex: 1;">
+                <h4 style="margin-bottom: var(--space-2); color: var(--color-error-dark);">Slower Response Times</h4>
+                <p style="color: var(--text-secondary); margin-bottom: 0; line-height: var(--leading-relaxed);">
+                  Local inference is slower than cloud APIs, especially on consumer hardware. A response that takes 2 seconds from ChatGPT might take 15-30 seconds from a local model. This is acceptable for careful analysis but less ideal for rapid iteration.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="card card--danger" style="padding: var(--space-5);">
+            <div style="display: flex; align-items: flex-start; gap: var(--space-4);">
+              <div class="number-badge number-badge--danger" style="margin-top: var(--space-1); font-size: var(--text-sm);">4</div>
+              <div style="flex: 1;">
+                <h4 style="margin-bottom: var(--space-2); color: var(--color-error-dark);">Output Still Requires Verification</h4>
+                <p style="color: var(--text-secondary); margin-bottom: 0; line-height: var(--leading-relaxed);">
+                  A local model can hallucinate just like a cloud model. It can misinterpret policy language, invent coverage provisions, or produce plausible-sounding but incorrect analysis. The verification obligation is the same regardless of where the model runs — always check AI output against the source documents.
+                </p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="callout callout--info" style="margin-top: var(--space-8);">
+          <h4 class="callout__title">The Smart Approach: Use Both</h4>
+          <p style="color: var(--text-secondary); margin-bottom: 0; line-height: var(--leading-relaxed);">
+            The most effective insurance professionals use cloud AI for non-confidential work (general research, learning, template creation) and local AI for confidential work (policyholder documents, claims files, proprietary loss data). This gives you the best of both worlds: maximum capability when privacy is less critical, and maximum privacy when it matters most.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section">
+    <div class="container text-center">
+      <div class="reveal" style="max-width: 700px; margin: 0 auto;">
+        <h2 style="margin-bottom: var(--space-4);">Keep Building Your AI Skills</h2>
+        <p style="font-size: var(--text-lg); color: var(--text-secondary); margin-bottom: var(--space-8);">
+          Now that you have a local AI running, learn how to get the best results from it. Our prompt engineering guide and quick wins work just as well with local models as they do with cloud tools.
+        </p>
+        <div class="flex gap-4 flex--wrap" style="justify-content: center;">
+          <a href="/learn/prompt-engineering/" class="btn btn--primary">Learn Prompt Engineering</a>
+          <a href="/practice/quick-wins/" class="btn btn--secondary">Try Quick Wins</a>
+          <a href="/learn/what-not-to-do/" class="btn btn--secondary">Review What Not to Do</a>
+        </div>
+        <p style="margin-top: var(--space-4); font-size: var(--text-sm); color: var(--text-muted);">
+          {t(locale, 'learningProgram.programCta')}
+          <a href={p('/learn/program/')} style="font-weight: var(--font-semibold);">
+            {t(locale, 'learningProgram.programCtaLink')} &rarr;
+          </a>
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

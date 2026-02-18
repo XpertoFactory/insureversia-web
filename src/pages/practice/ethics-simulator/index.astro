@@ -1,0 +1,60 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import EthicsSimulator from '../../../components/EthicsSimulator.astro';
+import { t, getLocalePath } from '../../../i18n';
+const locale = 'en';
+const p = (path: string) => getLocalePath(locale, path);
+---
+<BaseLayout title={t(locale, 'ethicsSimulator.title')} description={t(locale, 'ethicsSimulator.description')} locale={locale}>
+  <!-- Hero -->
+  <section class="hero" style="background: linear-gradient(135deg, rgba(27,42,74,0.82) 0%, rgba(45,55,72,0.78) 100%), url('/assets/images/hero-images/hero-image-practice.png') top/cover no-repeat;">
+    <div class="container" style="position: relative; z-index: 1;">
+      <div class="slide-up" style="max-width: 800px;">
+        <p class="text-sm font-semibold mb-4" style="color: var(--color-secondary); text-transform: uppercase; letter-spacing: 0.1em;">{t(locale, 'ethicsSimulator.heroLabel')}</p>
+        <h1 style="font-size: var(--text-5xl); margin-bottom: var(--space-6);">{t(locale, 'ethicsSimulator.title')}</h1>
+        <p class="lead" style="margin-bottom: var(--space-6);">{t(locale, 'ethicsSimulator.heroDesc')}</p>
+      </div>
+    </div>
+    <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 120px; background: linear-gradient(to top, var(--surface-page), transparent);"></div>
+  </section>
+
+  <!-- Intro -->
+  <section class="section--sm">
+    <div class="container" style="max-width: 800px; margin: 0 auto;">
+      <div class="reveal callout callout--info">
+        <p style="font-size: var(--text-sm); color: var(--text-secondary); line-height: var(--leading-relaxed); margin: 0;">
+          <strong>{t(locale, 'ethicsSimulator.introTitle')}:</strong> {t(locale, 'ethicsSimulator.introDesc')}
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Simulator -->
+  <section class="section">
+    <div class="container">
+      <div class="reveal">
+        <EthicsSimulator locale={locale} />
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section section--parchment">
+    <div class="container text-center">
+      <div class="reveal" style="max-width: 600px; margin: 0 auto;">
+        <h2>{t(locale, 'ethicsSimulator.ctaTitle')}</h2>
+        <p style="font-size: var(--text-lg); color: var(--text-secondary); margin-bottom: var(--space-6);">{t(locale, 'ethicsSimulator.ctaDesc')}</p>
+        <div class="flex gap-4 flex--wrap" style="justify-content: center;">
+          <a href={p('/learn/program/')} class="btn btn--primary">{t(locale, 'ethicsSimulator.ctaProgram')}</a>
+          <a href={p('/resources/')} class="btn btn--secondary">{t(locale, 'ethicsSimulator.ctaResources')}</a>
+        </div>
+        <p style="margin-top: var(--space-4); font-size: var(--text-sm); color: var(--text-muted);">
+          {t(locale, 'learningProgram.programCta')}
+          <a href={p('/learn/program/')} style="font-weight: var(--font-semibold);">
+            {t(locale, 'learningProgram.programCtaLink')} &rarr;
+          </a>
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

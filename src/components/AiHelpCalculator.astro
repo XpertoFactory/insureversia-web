@@ -1,0 +1,816 @@
+---
+import { t, getLocalePath, type Locale } from '../i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const p = (path: string) => getLocalePath(locale, path);
+---
+
+<div class="ai-calc" id="ai-calc" data-locale={locale}>
+  <!-- Progress Bar -->
+  <div class="ai-calc__progress">
+    <div class="ai-calc__progress-bar">
+      <div class="ai-calc__progress-fill" id="calc-progress-fill" style="width: 25%;"></div>
+    </div>
+    <p class="ai-calc__step-label text-sm text-muted" id="calc-step-label"></p>
+  </div>
+
+  <!-- Step 1: Task Type -->
+  <div class="ai-calc__step" data-step="1">
+    <h2 class="ai-calc__question">{t(locale, 'aiCalculator.step1Title')}</h2>
+    <p class="ai-calc__question-desc">{t(locale, 'aiCalculator.step1Desc')}</p>
+    <div class="ai-calc__options">
+      <button class="ai-calc__option" data-value="research">
+        <span class="ai-calc__option-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </span>
+        <span class="ai-calc__option-title">{t(locale, 'aiCalculator.taskResearch')}</span>
+        <span class="ai-calc__option-desc">{t(locale, 'aiCalculator.taskResearchDesc')}</span>
+      </button>
+      <button class="ai-calc__option" data-value="drafting">
+        <span class="ai-calc__option-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        </span>
+        <span class="ai-calc__option-title">{t(locale, 'aiCalculator.taskDrafting')}</span>
+        <span class="ai-calc__option-desc">{t(locale, 'aiCalculator.taskDraftingDesc')}</span>
+      </button>
+      <button class="ai-calc__option" data-value="review">
+        <span class="ai-calc__option-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        </span>
+        <span class="ai-calc__option-title">{t(locale, 'aiCalculator.taskReview')}</span>
+        <span class="ai-calc__option-desc">{t(locale, 'aiCalculator.taskReviewDesc')}</span>
+      </button>
+      <button class="ai-calc__option" data-value="communication">
+        <span class="ai-calc__option-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        </span>
+        <span class="ai-calc__option-title">{t(locale, 'aiCalculator.taskCommunication')}</span>
+        <span class="ai-calc__option-desc">{t(locale, 'aiCalculator.taskCommunicationDesc')}</span>
+      </button>
+      <button class="ai-calc__option" data-value="strategy">
+        <span class="ai-calc__option-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+        </span>
+        <span class="ai-calc__option-title">{t(locale, 'aiCalculator.taskStrategy')}</span>
+        <span class="ai-calc__option-desc">{t(locale, 'aiCalculator.taskStrategyDesc')}</span>
+      </button>
+      <button class="ai-calc__option" data-value="admin">
+        <span class="ai-calc__option-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </span>
+        <span class="ai-calc__option-title">{t(locale, 'aiCalculator.taskAdmin')}</span>
+        <span class="ai-calc__option-desc">{t(locale, 'aiCalculator.taskAdminDesc')}</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Step 2: Complexity -->
+  <div class="ai-calc__step" data-step="2" style="display: none;">
+    <h2 class="ai-calc__question">{t(locale, 'aiCalculator.step2Title')}</h2>
+    <p class="ai-calc__question-desc">{t(locale, 'aiCalculator.step2Desc')}</p>
+    <div class="ai-calc__options ai-calc__options--2col">
+      <button class="ai-calc__option" data-value="routine">
+        <span class="ai-calc__option-title">{t(locale, 'aiCalculator.complexityRoutine')}</span>
+        <span class="ai-calc__option-desc">{t(locale, 'aiCalculator.complexityRoutineDesc')}</span>
+      </button>
+      <button class="ai-calc__option" data-value="moderate">
+        <span class="ai-calc__option-title">{t(locale, 'aiCalculator.complexityModerate')}</span>
+        <span class="ai-calc__option-desc">{t(locale, 'aiCalculator.complexityModerateDesc')}</span>
+      </button>
+      <button class="ai-calc__option" data-value="complex">
+        <span class="ai-calc__option-title">{t(locale, 'aiCalculator.complexityComplex')}</span>
+        <span class="ai-calc__option-desc">{t(locale, 'aiCalculator.complexityComplexDesc')}</span>
+      </button>
+      <button class="ai-calc__option" data-value="highly">
+        <span class="ai-calc__option-title">{t(locale, 'aiCalculator.complexityHighly')}</span>
+        <span class="ai-calc__option-desc">{t(locale, 'aiCalculator.complexityHighlyDesc')}</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Step 3: Risk -->
+  <div class="ai-calc__step" data-step="3" style="display: none;">
+    <h2 class="ai-calc__question">{t(locale, 'aiCalculator.step3Title')}</h2>
+    <p class="ai-calc__question-desc">{t(locale, 'aiCalculator.step3Desc')}</p>
+    <div class="ai-calc__options ai-calc__options--2col">
+      <button class="ai-calc__option" data-value="low">
+        <span class="ai-calc__option-title">{t(locale, 'aiCalculator.riskLow')}</span>
+        <span class="ai-calc__option-desc">{t(locale, 'aiCalculator.riskLowDesc')}</span>
+      </button>
+      <button class="ai-calc__option" data-value="medium">
+        <span class="ai-calc__option-title">{t(locale, 'aiCalculator.riskMedium')}</span>
+        <span class="ai-calc__option-desc">{t(locale, 'aiCalculator.riskMediumDesc')}</span>
+      </button>
+      <button class="ai-calc__option" data-value="high">
+        <span class="ai-calc__option-title">{t(locale, 'aiCalculator.riskHigh')}</span>
+        <span class="ai-calc__option-desc">{t(locale, 'aiCalculator.riskHighDesc')}</span>
+      </button>
+      <button class="ai-calc__option" data-value="critical">
+        <span class="ai-calc__option-title">{t(locale, 'aiCalculator.riskCritical')}</span>
+        <span class="ai-calc__option-desc">{t(locale, 'aiCalculator.riskCriticalDesc')}</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Step 4: Experience -->
+  <div class="ai-calc__step" data-step="4" style="display: none;">
+    <h2 class="ai-calc__question">{t(locale, 'aiCalculator.step4Title')}</h2>
+    <p class="ai-calc__question-desc">{t(locale, 'aiCalculator.step4Desc')}</p>
+    <div class="ai-calc__options ai-calc__options--2col">
+      <button class="ai-calc__option" data-value="never">
+        <span class="ai-calc__option-title">{t(locale, 'aiCalculator.expNever')}</span>
+        <span class="ai-calc__option-desc">{t(locale, 'aiCalculator.expNeverDesc')}</span>
+      </button>
+      <button class="ai-calc__option" data-value="tried">
+        <span class="ai-calc__option-title">{t(locale, 'aiCalculator.expTried')}</span>
+        <span class="ai-calc__option-desc">{t(locale, 'aiCalculator.expTriedDesc')}</span>
+      </button>
+      <button class="ai-calc__option" data-value="occasional">
+        <span class="ai-calc__option-title">{t(locale, 'aiCalculator.expOccasional')}</span>
+        <span class="ai-calc__option-desc">{t(locale, 'aiCalculator.expOccasionalDesc')}</span>
+      </button>
+      <button class="ai-calc__option" data-value="regular">
+        <span class="ai-calc__option-title">{t(locale, 'aiCalculator.expRegular')}</span>
+        <span class="ai-calc__option-desc">{t(locale, 'aiCalculator.expRegularDesc')}</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Step 5: Results (hidden until calculated) -->
+  <div class="ai-calc__step ai-calc__results-step" data-step="5" style="display: none;">
+    <h2 class="ai-calc__question">{t(locale, 'aiCalculator.resultsTitle')}</h2>
+
+    <!-- Score Gauge -->
+    <div class="ai-calc__results">
+      <div class="ai-calc__score-section">
+        <h3 class="ai-calc__results-label">{t(locale, 'aiCalculator.aiSuitability')}</h3>
+        <div class="ai-calc__score">
+          <div class="ai-calc__score-track">
+            <div class="ai-calc__score-fill" id="calc-score-fill"></div>
+            <div class="ai-calc__score-marker" id="calc-score-marker"></div>
+          </div>
+          <div class="ai-calc__score-labels">
+            <span>1</span>
+            <span>10</span>
+          </div>
+        </div>
+        <div class="ai-calc__score-value">
+          <span id="calc-score-number" class="ai-calc__score-number"></span>
+          <span id="calc-score-text" class="ai-calc__score-text"></span>
+        </div>
+      </div>
+
+      <!-- Risk Badge -->
+      <div class="ai-calc__risk-section">
+        <h3 class="ai-calc__results-label">{t(locale, 'aiCalculator.riskLevel')}</h3>
+        <span id="calc-risk-badge" class="badge"></span>
+      </div>
+
+      <!-- Recommendation -->
+      <div class="ai-calc__rec-section">
+        <h3 class="ai-calc__results-label">{t(locale, 'aiCalculator.recommendation')}</h3>
+        <p id="calc-recommendation" class="ai-calc__rec-text"></p>
+      </div>
+
+      <!-- Recommended Approach -->
+      <div class="ai-calc__rec-section">
+        <h3 class="ai-calc__results-label">{t(locale, 'aiCalculator.recommendedApproach')}</h3>
+        <p id="calc-approach" class="ai-calc__rec-text"></p>
+      </div>
+
+      <!-- Suggested Tools -->
+      <div class="ai-calc__rec-section">
+        <h3 class="ai-calc__results-label">{t(locale, 'aiCalculator.suggestedTools')}</h3>
+        <div id="calc-tools" class="ai-calc__tools"></div>
+      </div>
+
+      <!-- Sample Prompt -->
+      <div class="ai-calc__rec-section">
+        <h3 class="ai-calc__results-label">{t(locale, 'aiCalculator.samplePrompt')}</h3>
+        <div class="ai-calc__prompt">
+          <div class="ai-calc__prompt-header">
+            <span class="prompt-block__label">PROMPT</span>
+            <button class="copy-btn" id="calc-copy-prompt"
+              data-label-copy={t(locale, 'aiCalculator.copyPrompt')}
+              data-label-copied={t(locale, 'aiCalculator.copied')}>
+              {t(locale, 'aiCalculator.copyPrompt')}
+            </button>
+          </div>
+          <p id="calc-prompt-text" class="ai-calc__prompt-text"></p>
+        </div>
+      </div>
+
+      <!-- Key Cautions -->
+      <div class="ai-calc__rec-section">
+        <h3 class="ai-calc__results-label">{t(locale, 'aiCalculator.keyCautions')}</h3>
+        <ul id="calc-cautions" class="ai-calc__cautions"></ul>
+      </div>
+
+      <!-- Related Content -->
+      <div class="ai-calc__rec-section">
+        <h3 class="ai-calc__results-label">{t(locale, 'aiCalculator.relatedContent')}</h3>
+        <div id="calc-links" class="ai-calc__links"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation Buttons -->
+  <div class="ai-calc__nav" id="calc-nav">
+    <button class="btn btn--secondary btn--sm" id="calc-prev" style="visibility: hidden;">
+      {t(locale, 'aiCalculator.prev')}
+    </button>
+    <button class="btn btn--primary btn--sm" id="calc-next" disabled>
+      {t(locale, 'aiCalculator.next')}
+    </button>
+  </div>
+</div>
+
+<script define:vars={{ locale }}>
+document.addEventListener('DOMContentLoaded', () => {
+  const calc = document.getElementById('ai-calc');
+  if (!calc) return;
+
+  const currentLocale = calc.dataset.locale || 'en';
+  let currentStep = 1;
+  const totalSteps = 4;
+  const answers = { task: '', complexity: '', risk: '', experience: '' };
+
+  const stepFields = { 1: 'task', 2: 'complexity', 3: 'risk', 4: 'experience' };
+
+  const prevBtn = document.getElementById('calc-prev');
+  const nextBtn = document.getElementById('calc-next');
+  const progressFill = document.getElementById('calc-progress-fill');
+  const stepLabel = document.getElementById('calc-step-label');
+
+  // Translations for step label
+  const stepOfTemplate = currentLocale === 'es'
+    ? 'Paso {current} de {total}'
+    : 'Step {current} of {total}';
+
+  function updateStepLabel() {
+    if (stepLabel) {
+      if (currentStep <= totalSteps) {
+        stepLabel.textContent = stepOfTemplate
+          .replace('{current}', String(currentStep))
+          .replace('{total}', String(totalSteps));
+      } else {
+        stepLabel.textContent = '';
+      }
+    }
+  }
+
+  function showStep(step) {
+    calc.querySelectorAll('.ai-calc__step').forEach(s => {
+      (s).style.display = 'none';
+    });
+    const target = calc.querySelector(`[data-step="${step}"]`);
+    if (target) (target).style.display = '';
+
+    // Update progress
+    if (progressFill) {
+      const pct = step <= totalSteps ? (step / totalSteps) * 100 : 100;
+      progressFill.style.width = pct + '%';
+    }
+
+    // Update buttons
+    if (prevBtn) {
+      prevBtn.style.visibility = step > 1 && step <= totalSteps ? 'visible' : 'hidden';
+    }
+    if (nextBtn) {
+      if (step === totalSteps) {
+        nextBtn.textContent = currentLocale === 'es' ? 'Ver Resultados' : 'See Results';
+      } else if (step > totalSteps) {
+        nextBtn.textContent = currentLocale === 'es' ? 'Empezar de Nuevo' : 'Start Over';
+        nextBtn.classList.remove('btn--primary');
+        nextBtn.classList.add('btn--secondary');
+        if (prevBtn) prevBtn.style.visibility = 'hidden';
+      } else {
+        nextBtn.textContent = currentLocale === 'es' ? 'Siguiente' : 'Next';
+        nextBtn.classList.remove('btn--secondary');
+        nextBtn.classList.add('btn--primary');
+      }
+      // Enable/disable next
+      if (step <= totalSteps) {
+        const field = stepFields[step];
+        nextBtn.disabled = !answers[field];
+      } else {
+        nextBtn.disabled = false;
+      }
+    }
+
+    updateStepLabel();
+  }
+
+  // Option selection
+  calc.querySelectorAll('.ai-calc__step').forEach(stepEl => {
+    const stepNum = parseInt(stepEl.dataset.step);
+    if (stepNum > totalSteps) return;
+
+    stepEl.querySelectorAll('.ai-calc__option').forEach(option => {
+      option.addEventListener('click', () => {
+        // Clear siblings
+        stepEl.querySelectorAll('.ai-calc__option').forEach(o => o.classList.remove('is-selected'));
+        option.classList.add('is-selected');
+
+        const field = stepFields[stepNum];
+        answers[field] = option.dataset.value;
+
+        if (nextBtn) nextBtn.disabled = false;
+
+        // Auto-advance after a short delay
+        setTimeout(() => {
+          if (currentStep < totalSteps) {
+            currentStep++;
+            showStep(currentStep);
+          } else if (currentStep === totalSteps) {
+            currentStep = 5;
+            calculateResults();
+            showStep(currentStep);
+          }
+        }, 300);
+      });
+    });
+  });
+
+  // Navigation
+  if (prevBtn) {
+    prevBtn.addEventListener('click', () => {
+      if (currentStep > 1) {
+        currentStep--;
+        showStep(currentStep);
+      }
+    });
+  }
+
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => {
+      if (currentStep > totalSteps) {
+        // Reset
+        currentStep = 1;
+        answers.task = '';
+        answers.complexity = '';
+        answers.risk = '';
+        answers.experience = '';
+        calc.querySelectorAll('.ai-calc__option').forEach(o => o.classList.remove('is-selected'));
+        nextBtn.classList.remove('btn--secondary');
+        nextBtn.classList.add('btn--primary');
+        showStep(currentStep);
+        return;
+      }
+      if (currentStep === totalSteps) {
+        currentStep = 5;
+        calculateResults();
+        showStep(currentStep);
+        return;
+      }
+      if (currentStep < totalSteps) {
+        currentStep++;
+        showStep(currentStep);
+      }
+    });
+  }
+
+  // ======= SCORING LOGIC =======
+
+  const baseScores = {
+    research: 8, drafting: 7, review: 6, communication: 8, strategy: 4, admin: 9
+  };
+  const complexityModifiers = {
+    routine: 1, moderate: 0, complex: -2, highly: -3
+  };
+  const riskModifiers = {
+    low: 1, medium: 0, high: -2, critical: -4
+  };
+  const experienceModifiers = {
+    never: -1, tried: 0, occasional: 0.5, regular: 1
+  };
+
+  function clamp(val, min, max) {
+    return Math.max(min, Math.min(max, val));
+  }
+
+  function calculateResults() {
+    const base = baseScores[answers.task] || 5;
+    const compMod = complexityModifiers[answers.complexity] || 0;
+    const riskMod = riskModifiers[answers.risk] || 0;
+    const expMod = experienceModifiers[answers.experience] || 0;
+    const score = clamp(Math.round((base + compMod + riskMod + expMod) * 10) / 10, 1, 10);
+    const roundedScore = Math.round(score * 10) / 10;
+
+    renderResults(roundedScore, answers.task, answers.complexity, answers.risk, answers.experience);
+  }
+
+  function renderResults(score, task, complexity, risk, experience) {
+    // Score fill and marker
+    const scoreFill = document.getElementById('calc-score-fill');
+    const scoreMarker = document.getElementById('calc-score-marker');
+    const scoreNumber = document.getElementById('calc-score-number');
+    const scoreText = document.getElementById('calc-score-text');
+    const riskBadge = document.getElementById('calc-risk-badge');
+    const recEl = document.getElementById('calc-recommendation');
+    const approachEl = document.getElementById('calc-approach');
+    const toolsEl = document.getElementById('calc-tools');
+    const promptEl = document.getElementById('calc-prompt-text');
+    const cautionsEl = document.getElementById('calc-cautions');
+    const linksEl = document.getElementById('calc-links');
+
+    const pct = ((score - 1) / 9) * 100;
+
+    // Determine color category
+    let colorClass, labelKey;
+    if (score >= 8) {
+      colorClass = 'green';
+      labelKey = 'scoreHighly';
+    } else if (score >= 6) {
+      colorClass = 'blue';
+      labelKey = 'scoreRecommended';
+    } else if (score >= 4) {
+      colorClass = 'yellow';
+      labelKey = 'scoreCaution';
+    } else {
+      colorClass = 'red';
+      labelKey = 'scoreNot';
+    }
+
+    const scoreLabels = {
+      en: { scoreHighly: 'Highly Recommended', scoreRecommended: 'Recommended with Review', scoreCaution: 'Use with Caution', scoreNot: 'Not Recommended' },
+      es: { scoreHighly: 'Altamente Recomendado', scoreRecommended: 'Recomendado con Revision', scoreCaution: 'Usar con Precaucion', scoreNot: 'No Recomendado' }
+    };
+
+    if (scoreFill) {
+      scoreFill.style.width = pct + '%';
+      scoreFill.dataset.color = colorClass;
+    }
+    if (scoreMarker) {
+      scoreMarker.style.left = pct + '%';
+      scoreMarker.dataset.color = colorClass;
+    }
+    if (scoreNumber) {
+      scoreNumber.textContent = score.toFixed(1);
+      scoreNumber.dataset.color = colorClass;
+    }
+    if (scoreText) {
+      scoreText.textContent = (scoreLabels[currentLocale] || scoreLabels.en)[labelKey];
+      scoreText.dataset.color = colorClass;
+    }
+
+    // Risk badge
+    const riskLabels = {
+      en: { low: 'Low Risk', medium: 'Medium Risk', high: 'High Risk', critical: 'Critical Risk' },
+      es: { low: 'Riesgo Bajo', medium: 'Riesgo Medio', high: 'Riesgo Alto', critical: 'Riesgo Critico' }
+    };
+    const riskClasses = { low: 'badge--beginner', medium: 'badge--intermediate', high: 'badge--advanced', critical: 'badge--advanced' };
+
+    if (riskBadge) {
+      riskBadge.className = `badge ${riskClasses[risk] || 'badge--intermediate'}`;
+      riskBadge.textContent = (riskLabels[currentLocale] || riskLabels.en)[risk] || risk;
+    }
+
+    // Recommendation text
+    const recommendations = getRecommendations(task, complexity, risk, experience, score);
+    if (recEl) recEl.textContent = recommendations.text;
+    if (approachEl) approachEl.textContent = recommendations.approach;
+
+    // Tools
+    if (toolsEl) {
+      toolsEl.innerHTML = recommendations.tools.map(tool =>
+        `<span class="tag">${tool}</span>`
+      ).join('');
+    }
+
+    // Prompt
+    if (promptEl) {
+      promptEl.textContent = recommendations.prompt;
+    }
+
+    // Cautions
+    if (cautionsEl) {
+      cautionsEl.innerHTML = recommendations.cautions.map(c =>
+        `<li>${c}</li>`
+      ).join('');
+    }
+
+    // Related links
+    const basePath = currentLocale === 'es' ? '/es' : '';
+    if (linksEl) {
+      linksEl.innerHTML = recommendations.links.map(link =>
+        `<a href="${basePath}${link.href}" class="ai-calc__link">${link.label}</a>`
+      ).join('');
+    }
+
+    // Copy prompt button
+    const copyBtn = document.getElementById('calc-copy-prompt');
+    if (copyBtn) {
+      copyBtn.onclick = () => {
+        navigator.clipboard.writeText(recommendations.prompt).then(() => {
+          const original = copyBtn.textContent;
+          copyBtn.textContent = copyBtn.dataset.labelCopied || 'Copied!';
+          copyBtn.classList.add('is-copied');
+          setTimeout(() => {
+            copyBtn.textContent = copyBtn.dataset.labelCopy || original;
+            copyBtn.classList.remove('is-copied');
+          }, 2000);
+        });
+      };
+    }
+  }
+
+  function getRecommendations(task, complexity, risk, experience, score) {
+    const isEs = currentLocale === 'es';
+
+    // ---- Recommendation text by score bracket ----
+    const recTexts = {
+      en: {
+        high: {
+          research: "AI is an excellent fit for this insurance research task. It can accelerate finding relevant regulations, market data, and policy precedents significantly. Use it as a powerful starting point, then verify every finding against official regulatory sources and industry databases.",
+          drafting: "AI can substantially speed up your policy drafting process for this task. It excels at generating first drafts of policy language, endorsements, and coverage documents that you can then refine with your insurance expertise and knowledge of specific risk factors.",
+          review: "AI can assist with initial claims screening and pattern identification. It works well for flagging potential issues in claims documentation, though you should always perform a final manual review for complex liability questions and coverage determinations.",
+          communication: "AI is highly effective for customer communications at this level. It can help you draft clear, professional renewal notices, coverage explanations, and policyholder updates quickly, freeing your time for more complex underwriting or claims analysis.",
+          strategy: "AI can help you brainstorm and organize your underwriting strategy. While it should not replace your professional judgment on risk selection and pricing, it can surface market trends and competitive angles you might not have considered.",
+          admin: "AI is perfectly suited for this administrative task. It can save you significant time on routine reporting, data entry, and filing work, allowing you to focus on higher-value insurance activities like risk assessment and client relationships."
+        },
+        medium: {
+          research: "AI can be helpful for this insurance research task, but the complexity level means you should treat its output as a starting point only. Cross-reference everything against official regulatory databases and be especially careful with jurisdiction-specific requirements.",
+          drafting: "AI can assist with policy drafting, but given the complexity and risk level, plan to substantially revise and verify the output. Use it for structure and initial language, but ensure all coverage terms, exclusions, and conditions are reviewed by qualified underwriters.",
+          review: "AI can help with initial claims screening, but this level of complexity requires significant human oversight. Use it to create checklists and flag potential red flags, but rely on experienced adjusters for final coverage determinations and reserve estimates.",
+          communication: "AI can help draft customer communications, but at this risk level, every message should be carefully reviewed and personalized before sending. Pay attention to accuracy of coverage details and regulatory compliance in policyholder-facing language.",
+          strategy: "AI can help organize your strategic thinking, but underwriting strategy at this complexity level demands significant professional judgment. Use it for data analysis support and market research only, not for final pricing or risk selection decisions.",
+          admin: "AI can handle most of this administrative work effectively. Double-check any customer-facing outputs and ensure accuracy in any financial, regulatory, or policy-related details before filing or sharing."
+        },
+        low: {
+          research: "AI has significant limitations for insurance research at this complexity and risk level. If you use it, treat every output with skepticism and verify exhaustively against regulatory databases. Consider whether manual research using official industry resources might be safer.",
+          drafting: "AI is risky for policy drafting at this level. If you proceed, use it only for the most basic structural elements and draft all substantive coverage language, exclusions, and conditions manually. Every clause needs careful review by qualified personnel.",
+          review: "AI is not well-suited for claims review at this stakes level. If used at all, it should only supplement — never replace — thorough manual review by experienced claims adjusters and coverage counsel.",
+          communication: "Be very cautious using AI for customer communications at this risk level. Any output should be treated as a rough starting point at best. Manual drafting is strongly preferred for high-stakes policyholder communications.",
+          strategy: "AI is not recommended for underwriting strategy development at this complexity and risk level. The financial exposure is too significant to rely on AI-generated analysis. Use traditional actuarial methods and expert judgment.",
+          admin: "Even for administrative tasks, the high-risk context means you should verify AI outputs carefully. Errors in regulatory filings, financial reporting, or compliance documentation could have serious consequences."
+        }
+      },
+      es: {
+        high: {
+          research: "La IA es excelente para esta tarea de investigacion de seguros. Puede acelerar significativamente la busqueda de regulaciones relevantes, datos de mercado y precedentes de polizas. Usala como punto de partida y luego verifica cada hallazgo contra fuentes regulatorias oficiales.",
+          drafting: "La IA puede acelerar sustancialmente tu proceso de redaccion de polizas. Es excelente generando primeros borradores de lenguaje de poliza, endosos y documentos de cobertura que luego puedes refinar con tu experiencia en seguros.",
+          review: "La IA puede asistir con la revision inicial de reclamos e identificacion de patrones. Funciona bien para senalar posibles problemas, aunque siempre debes realizar una revision manual final para cuestiones complejas de responsabilidad.",
+          communication: "La IA es altamente efectiva para comunicaciones con clientes a este nivel. Puede ayudarte a redactar avisos de renovacion, explicaciones de cobertura y actualizaciones claras y profesionales rapidamente.",
+          strategy: "La IA puede ayudarte a organizar tu pensamiento estrategico de suscripcion. Aunque no debe reemplazar tu juicio profesional, puede revelar tendencias de mercado y angulos que podrias no haber considerado.",
+          admin: "La IA es perfecta para esta tarea administrativa. Puede ahorrarte tiempo significativo en reportes rutinarios, ingreso de datos y trabajo de archivo."
+        },
+        medium: {
+          research: "La IA puede ser util para esta investigacion de seguros, pero el nivel de complejidad significa que debes tratar su resultado solo como punto de partida. Verifica todo contra bases de datos regulatorias oficiales.",
+          drafting: "La IA puede asistir con la redaccion de polizas, pero dado el nivel de complejidad y riesgo, planea revisar y verificar sustancialmente el resultado. Asegura que todos los terminos de cobertura sean revisados por suscriptores calificados.",
+          review: "La IA puede ayudar con la revision inicial de reclamos, pero este nivel de complejidad requiere supervision humana significativa. Usa para crear listas de verificacion, pero confia en ajustadores experimentados para determinaciones finales.",
+          communication: "La IA puede ayudar a redactar comunicaciones, pero a este nivel de riesgo, cada mensaje debe ser cuidadosamente revisado y personalizado. Presta atencion a la precision de los detalles de cobertura.",
+          strategy: "La IA puede ayudar a organizar tu pensamiento, pero la estrategia de suscripcion a este nivel exige juicio profesional significativo. Usala solo para analisis de datos y apoyo en investigacion de mercado.",
+          admin: "La IA puede manejar la mayor parte de este trabajo administrativo. Verifica cualquier resultado dirigido a clientes y asegura la precision en detalles financieros o regulatorios."
+        },
+        low: {
+          research: "La IA tiene limitaciones significativas para investigacion de seguros a este nivel. Si la usas, trata cada resultado con escepticismo y verifica exhaustivamente contra bases de datos regulatorias.",
+          drafting: "La IA es riesgosa para redaccion de polizas a este nivel. Si procedes, usala solo para estructura basica y redacta todo el lenguaje de cobertura sustantivo manualmente.",
+          review: "La IA no es adecuada para revision de reclamos a este nivel de riesgo. Si se usa, solo debe complementar — nunca reemplazar — una revision manual exhaustiva por ajustadores experimentados.",
+          communication: "Ten mucha precaucion al usar IA para comunicaciones con clientes a este nivel de riesgo. Cualquier resultado debe tratarse como un punto de partida aproximado. Se prefiere la redaccion manual.",
+          strategy: "No se recomienda la IA para desarrollo de estrategia de suscripcion a este nivel. La exposicion financiera es demasiado significativa para depender de analisis generado por IA.",
+          admin: "Incluso para tareas administrativas, el contexto de alto riesgo significa que debes verificar cuidadosamente los resultados de la IA. Errores en reportes regulatorios o documentacion de cumplimiento podrian tener consecuencias serias."
+        }
+      }
+    };
+
+    // ---- Approach text ----
+    const approaches = {
+      en: {
+        high: {
+          research: "Use AI for initial market research and regulatory scanning, then verify all findings in official databases like NAIC resources and state insurance department filings. Start broad, narrow with follow-up prompts.",
+          drafting: "Use AI for the first draft of policy language, then revise thoroughly. Provide detailed context about the risk, coverage requirements, and jurisdiction for better results.",
+          review: "Use AI to create an initial claims review checklist, then work through it manually. Good for pattern spotting in claims data and identifying potential subrogation opportunities.",
+          communication: "Draft with AI, then personalize and review for tone and accuracy. Excellent for standard renewal notices, coverage summaries, and policyholder updates.",
+          strategy: "Use AI to brainstorm risk factors and market opportunities. Map out your underwriting strategy manually based on the analysis generated.",
+          admin: "Let AI handle report generation, data summaries, and filing notes. Minimal review needed for internal-use documents."
+        },
+        medium: {
+          research: "Use AI for background research only. Conduct primary regulatory research manually through official channels. Double-check every regulatory citation and effective date.",
+          drafting: "Use AI for outlines and section drafts only. Write critical coverage terms, exclusions, and conditions yourself. Review everything line by line against current regulatory requirements.",
+          review: "Use AI to flag potential issues in claims documentation, but perform independent analysis of each flag. Do not rely on AI conclusions for reserve estimates or coverage determinations.",
+          communication: "Use AI for initial structure only. Rewrite substantially, especially any coverage-specific language or regulatory disclosures.",
+          strategy: "Use AI for data analysis support only. Develop underwriting strategy through traditional actuarial analysis and team discussion.",
+          admin: "Use AI for first drafts of administrative content. Review customer-facing materials and regulatory filings more carefully."
+        },
+        low: {
+          research: "If using AI at all, limit to background orientation only. Conduct all substantive research manually with official regulatory sources and industry databases.",
+          drafting: "Manual drafting strongly recommended. If AI is used, only for formatting or basic structure — never for substantive policy language or coverage terms.",
+          review: "Manual review required. AI may be used to generate checklists, but every substantive finding must be independently verified by experienced claims professionals.",
+          communication: "Draft all policyholder communications manually. AI may be used only for grammar or clarity checking of your own text.",
+          strategy: "Develop strategy entirely through traditional actuarial and underwriting analysis. AI is not appropriate for this level of financial exposure.",
+          admin: "Proceed with caution. Verify all details manually before submitting or sharing any AI-generated administrative content, especially for regulatory filings."
+        }
+      },
+      es: {
+        high: {
+          research: "Usa IA para investigacion inicial de mercado y escaneo regulatorio, luego verifica todos los hallazgos en bases de datos oficiales. Empieza amplio, enfoca con prompts de seguimiento.",
+          drafting: "Usa IA para el primer borrador de lenguaje de poliza, luego revisa exhaustivamente. Proporciona contexto detallado sobre el riesgo y los requisitos de cobertura.",
+          review: "Usa IA para crear una lista de verificacion inicial de reclamos, luego trabajala manualmente. Buena para detectar patrones en datos de reclamos.",
+          communication: "Redacta con IA, luego personaliza y revisa el tono y precision. Excelente para avisos de renovacion y resúmenes de cobertura estandar.",
+          strategy: "Usa IA para lluvia de ideas sobre factores de riesgo y oportunidades de mercado. Mapea tu estrategia de suscripcion manualmente basandote en el analisis generado.",
+          admin: "Deja que la IA maneje la generacion de reportes, resumenes de datos y notas de archivo. Revision minima necesaria para documentos de uso interno."
+        },
+        medium: {
+          research: "Usa IA solo para investigacion de fondo. Realiza la investigacion regulatoria primaria manualmente. Verifica cada cita regulatoria y fecha de vigencia.",
+          drafting: "Usa IA solo para esquemas y borradores de secciones. Escribe los terminos de cobertura criticos tu mismo. Revisa todo linea por linea.",
+          review: "Usa IA para señalar problemas potenciales en documentacion de reclamos, pero realiza analisis independiente. No confies en conclusiones de IA para estimaciones de reserva.",
+          communication: "Usa IA solo para la estructura inicial. Reescribe sustancialmente, especialmente cualquier lenguaje especifico de cobertura o divulgaciones regulatorias.",
+          strategy: "Usa IA solo para apoyo en analisis de datos. Desarrolla la estrategia de suscripcion mediante analisis actuarial tradicional y discusion en equipo.",
+          admin: "Usa IA para primeros borradores de contenido administrativo. Revisa materiales dirigidos a clientes y presentaciones regulatorias con mas cuidado."
+        },
+        low: {
+          research: "Si usas IA, limitala a orientacion de fondo unicamente. Realiza toda la investigacion sustantiva manualmente con fuentes regulatorias oficiales.",
+          drafting: "Se recomienda firmemente la redaccion manual. Si se usa IA, solo para formato o estructura basica — nunca para lenguaje de poliza sustantivo.",
+          review: "Se requiere revision manual. La IA puede usarse para generar listas de verificacion, pero cada hallazgo sustantivo debe verificarse independientemente por profesionales de reclamos experimentados.",
+          communication: "Redacta todas las comunicaciones con asegurados manualmente. La IA puede usarse solo para revision gramatical o de claridad de tu propio texto.",
+          strategy: "Desarrolla la estrategia completamente mediante analisis actuarial y de suscripcion tradicional. La IA no es apropiada para este nivel de exposicion financiera.",
+          admin: "Procede con precaucion. Verifica todos los detalles manualmente antes de enviar o compartir cualquier contenido administrativo generado por IA, especialmente para presentaciones regulatorias."
+        }
+      }
+    };
+
+    // ---- Tools by task type (insurance-specific) ----
+    const toolSuggestions = {
+      research: ['ChatGPT Plus', 'Claude Pro', 'Cytora'],
+      drafting: ['ChatGPT', 'Claude', 'Microsoft Copilot'],
+      review: ['ChatGPT', 'Claude', 'Tractable', 'Shift Technology'],
+      communication: ['ChatGPT', 'Claude', 'Grammarly'],
+      strategy: ['Claude Pro', 'ChatGPT Plus', 'Akur8'],
+      admin: ['Microsoft Copilot', 'ChatGPT', 'Claude']
+    };
+
+    // ---- Sample prompts (insurance context) ----
+    const prompts = {
+      en: {
+        research: "I need to research [SPECIFIC INSURANCE TOPIC] for [LINE OF BUSINESS] in [JURISDICTION]. Please identify the relevant regulations, NAIC model laws, recent market trends, and key industry data. Focus on developments from the last 3 years. For each regulation, provide the reference, key requirements, and compliance implications. Note: I will verify all regulatory citations independently.",
+        drafting: "Draft a [POLICY/ENDORSEMENT/COVERAGE DOCUMENT] for the following situation: [DESCRIBE RISK AND COVERAGE NEEDS]. The jurisdiction is [JURISDICTION] and the line of business is [LINE]. Please include standard provisions for [SPECIFIC REQUIREMENTS]. Use standard insurance policy language and organize with clear sections. This is a first draft that I will review and revise thoroughly before submission.",
+        review: "I need to review the following [CLAIM/POLICY/DOCUMENT TYPE] for potential issues. Please analyze it for: (1) coverage gaps or ambiguities, (2) potential red flags or inconsistencies, (3) compliance concerns with [JURISDICTION] regulations, (4) missing documentation or information. Flag each issue with its location and a brief explanation. Here is the document: [PASTE TEXT]",
+        communication: "Draft a professional [EMAIL/LETTER/NOTICE] to [RECIPIENT - policyholder/agent/claimant] regarding [SUBJECT - renewal/claim status/coverage change]. The key points to convey are: [LIST POINTS]. Tone should be [professional/empathetic/clear]. Include any required regulatory disclosures for [JURISDICTION]. I will review and personalize before sending.",
+        strategy: "Help me analyze the risk factors and market opportunity for [DESCRIBE RISK/MARKET SEGMENT]. The key considerations are: [LIST FACTORS]. Please identify potential loss exposures, pricing considerations, competitor positioning, and relevant regulatory requirements. Include data points I should research further. This is for strategic planning only — I will develop the final underwriting guidelines through our formal process.",
+        admin: "Create a [report summary/filing checklist/compliance tracking document] for the following matter: [DESCRIBE]. Include [SPECIFIC REQUIREMENTS]. Format it as [DESIRED FORMAT]. This is for internal use to support our [underwriting/claims/compliance] operations."
+      },
+      es: {
+        research: "Necesito investigar [TEMA DE SEGUROS ESPECIFICO] para [LINEA DE NEGOCIO] en [JURISDICCION]. Por favor identifica las regulaciones relevantes, tendencias recientes del mercado y datos clave de la industria. Enfocate en desarrollos de los ultimos 3 anos. Nota: Verificare todas las citas regulatorias de forma independiente.",
+        drafting: "Redacta un [POLIZA/ENDOSO/DOCUMENTO DE COBERTURA] para la siguiente situacion: [DESCRIBE RIESGO Y NECESIDADES DE COBERTURA]. La jurisdiccion es [JURISDICCION] y la linea de negocio es [LINEA]. Incluye provisiones estandar para [REQUISITOS ESPECIFICOS]. Este es un primer borrador que revisare exhaustivamente.",
+        review: "Necesito revisar el siguiente [RECLAMO/POLIZA/TIPO DE DOCUMENTO] en busca de posibles problemas. Analiza en cuanto a: (1) brechas de cobertura, (2) posibles senales de alerta, (3) problemas de cumplimiento regulatorio, (4) documentacion faltante. Senala cada problema con su ubicacion. Aqui esta el documento: [PEGAR TEXTO]",
+        communication: "Redacta un [CORREO/CARTA/AVISO] profesional para [DESTINATARIO - asegurado/agente/reclamante] respecto a [ASUNTO - renovacion/estado de reclamo/cambio de cobertura]. Los puntos clave son: [LISTAR PUNTOS]. El tono debe ser [profesional/empatico/claro]. Revisare y personalizare antes de enviar.",
+        strategy: "Ayudame a analizar los factores de riesgo y oportunidad de mercado para [DESCRIBIR RIESGO/SEGMENTO]. Las consideraciones clave son: [LISTAR FACTORES]. Identifica exposiciones de perdida potenciales, consideraciones de precio, posicionamiento competitivo y requisitos regulatorios relevantes. Esto es solo para planificacion estrategica.",
+        admin: "Crea un [resumen de reporte/lista de verificacion de archivo/documento de seguimiento de cumplimiento] para el siguiente asunto: [DESCRIBIR]. Incluye [REQUISITOS ESPECIFICOS]. Formato como [FORMATO DESEADO]. Esto es para uso interno."
+      }
+    };
+
+    // ---- Cautions (insurance context) ----
+    const cautionsByRisk = {
+      en: {
+        low: [
+          "Always verify any regulatory citations or industry data independently.",
+          "Do not input confidential policyholder information into general AI tools.",
+          "Remember that AI output may contain inaccuracies — review before using in any insurance workflow."
+        ],
+        medium: [
+          "Every AI output must be independently verified before using in customer-facing materials or filings.",
+          "Never paste confidential policyholder data, claims details, or proprietary underwriting information into general AI tools.",
+          "Check NAIC guidance and your state insurance department rules on AI use in insurance operations.",
+          "Document your AI-assisted workflow for regulatory compliance and audit readiness."
+        ],
+        high: [
+          "Regulatory filings and binding coverage decisions require exhaustive verification of all AI-generated content.",
+          "AI hallucinations in regulatory citations or policy language can result in compliance violations — verify every source.",
+          "Maintain a clear record of what was AI-generated vs. professionally drafted for audit and E&O purposes.",
+          "Never rely solely on AI for compliance analysis, rate-setting, or coverage determinations.",
+          "Consider disclosure requirements per your jurisdiction's AI regulations for insurance."
+        ],
+        critical: [
+          "AI should play a minimal role when major financial exposure or regulatory compliance is at stake.",
+          "Every piece of AI output must be independently verified by qualified insurance professionals and compliance officers.",
+          "Document all AI use thoroughly for regulatory examination and potential litigation defense.",
+          "AI hallucinations in this context could cause significant financial harm and regulatory penalties.",
+          "Prioritize manual analysis, actuarial methods, and traditional insurance practices.",
+          "Consult your compliance department and legal counsel regarding AI use in high-stakes insurance decisions."
+        ]
+      },
+      es: {
+        low: [
+          "Siempre verifica de forma independiente cualquier cita regulatoria o dato de la industria.",
+          "No ingreses informacion confidencial de asegurados en herramientas de IA generales.",
+          "Recuerda que los resultados de la IA pueden contener inexactitudes — revisa antes de usar."
+        ],
+        medium: [
+          "Cada resultado de IA debe ser verificado independientemente antes de usarlo en materiales para clientes o presentaciones.",
+          "Nunca pegues datos confidenciales de asegurados o informacion propietaria de suscripcion en herramientas de IA generales.",
+          "Verifica la guia regulatoria sobre el uso de IA en operaciones de seguros en tu jurisdiccion.",
+          "Documenta tu flujo de trabajo asistido por IA para cumplimiento regulatorio y preparacion para auditorias."
+        ],
+        high: [
+          "Las presentaciones regulatorias y decisiones de cobertura vinculantes requieren verificacion exhaustiva de todo contenido generado por IA.",
+          "Las alucinaciones de IA en citas regulatorias o lenguaje de poliza pueden resultar en violaciones de cumplimiento — verifica cada fuente.",
+          "Manten un registro claro de que fue generado por IA vs. redactado profesionalmente para propositos de auditoria.",
+          "Nunca confies unicamente en la IA para analisis de cumplimiento, fijacion de tarifas o determinaciones de cobertura.",
+          "Considera los requisitos de divulgacion segun las regulaciones de IA de tu jurisdiccion para seguros."
+        ],
+        critical: [
+          "La IA debe tener un papel minimo cuando hay gran exposicion financiera o cumplimiento regulatorio en juego.",
+          "Cada resultado de IA debe ser verificado independientemente por profesionales de seguros calificados y oficiales de cumplimiento.",
+          "Documenta todo el uso de IA exhaustivamente para examenes regulatorios y posible defensa en litigios.",
+          "Las alucinaciones de IA en este contexto podrian causar dano financiero significativo y penalidades regulatorias.",
+          "Prioriza el analisis manual, metodos actuariales y practicas tradicionales de seguros.",
+          "Consulta tu departamento de cumplimiento y asesoria legal sobre el uso de IA en decisiones de seguros de alto riesgo."
+        ]
+      }
+    };
+
+    // ---- Related links (insurance pages) ----
+    const relatedLinks = {
+      en: {
+        research: [
+          { href: '/learn/ai-101/', label: 'AI 101 for Insurance Professionals' },
+          { href: '/practice/quick-wins/', label: 'Quick Wins: Research Prompts' },
+          { href: '/learn/what-not-to-do/', label: 'What Not to Do with AI' }
+        ],
+        drafting: [
+          { href: '/learn/prompt-engineering/', label: 'Prompt Engineering for Insurers' },
+          { href: '/practice/prompt-library/', label: 'Prompt Library' },
+          { href: '/practice/quick-wins/', label: 'Quick Wins' }
+        ],
+        review: [
+          { href: '/practice/applications/', label: 'Practical AI Applications' },
+          { href: '/learn/ai-101/', label: 'AI 101 for Insurance Professionals' },
+          { href: '/learn/what-not-to-do/', label: 'What Not to Do with AI' }
+        ],
+        communication: [
+          { href: '/practice/quick-wins/', label: 'Quick Wins: Communication Prompts' },
+          { href: '/learn/prompt-engineering/', label: 'Prompt Engineering for Insurers' },
+          { href: '/practice/prompt-library/', label: 'Prompt Library' }
+        ],
+        strategy: [
+          { href: '/learn/what-not-to-do/', label: 'What Not to Do with AI' },
+          { href: '/learn/ai-101/', label: 'AI 101 for Insurance Professionals' },
+          { href: '/practice/quick-wins/', label: 'Quick Wins' }
+        ],
+        admin: [
+          { href: '/practice/quick-wins/', label: 'Quick Wins: Admin Prompts' },
+          { href: '/practice/applications/', label: 'Practical AI Applications' },
+          { href: '/learn/prompt-engineering/', label: 'Prompt Engineering for Insurers' }
+        ]
+      },
+      es: {
+        research: [
+          { href: '/learn/ai-101/', label: 'IA 101 para Profesionales de Seguros' },
+          { href: '/practice/quick-wins/', label: 'Victorias Rapidas: Prompts de Investigacion' },
+          { href: '/learn/what-not-to-do/', label: 'Lo Que No Debes Hacer con IA' }
+        ],
+        drafting: [
+          { href: '/learn/prompt-engineering/', label: 'Ingenieria de Prompts para Aseguradores' },
+          { href: '/practice/prompt-library/', label: 'Biblioteca de Prompts' },
+          { href: '/practice/quick-wins/', label: 'Victorias Rapidas' }
+        ],
+        review: [
+          { href: '/practice/applications/', label: 'Aplicaciones Practicas de IA' },
+          { href: '/learn/ai-101/', label: 'IA 101 para Profesionales de Seguros' },
+          { href: '/learn/what-not-to-do/', label: 'Lo Que No Debes Hacer con IA' }
+        ],
+        communication: [
+          { href: '/practice/quick-wins/', label: 'Victorias Rapidas: Prompts de Comunicacion' },
+          { href: '/learn/prompt-engineering/', label: 'Ingenieria de Prompts para Aseguradores' },
+          { href: '/practice/prompt-library/', label: 'Biblioteca de Prompts' }
+        ],
+        strategy: [
+          { href: '/learn/what-not-to-do/', label: 'Lo Que No Debes Hacer con IA' },
+          { href: '/learn/ai-101/', label: 'IA 101 para Profesionales de Seguros' },
+          { href: '/practice/quick-wins/', label: 'Victorias Rapidas' }
+        ],
+        admin: [
+          { href: '/practice/quick-wins/', label: 'Victorias Rapidas: Prompts Administrativos' },
+          { href: '/practice/applications/', label: 'Aplicaciones Practicas de IA' },
+          { href: '/learn/prompt-engineering/', label: 'Ingenieria de Prompts para Aseguradores' }
+        ]
+      }
+    };
+
+    // Determine which bracket
+    let bracket;
+    if (score >= 8) bracket = 'high';
+    else if (score >= 4) bracket = 'medium';
+    else bracket = 'low';
+
+    const lang = isEs ? 'es' : 'en';
+
+    return {
+      text: (recTexts[lang][bracket] || recTexts.en[bracket])[task] || '',
+      approach: (approaches[lang][bracket] || approaches.en[bracket])[task] || '',
+      tools: toolSuggestions[task] || ['ChatGPT', 'Claude', 'Microsoft Copilot'],
+      prompt: (prompts[lang] || prompts.en)[task] || '',
+      cautions: (cautionsByRisk[lang] || cautionsByRisk.en)[risk] || [],
+      links: (relatedLinks[lang] || relatedLinks.en)[task] || []
+    };
+  }
+
+  // Initialize
+  showStep(1);
+});
+</script>
