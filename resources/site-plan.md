@@ -424,22 +424,54 @@ Each jurisdiction includes: regulation status (enacted/proposed/pending/none), l
 
 ## Phase 6: Polish & Launch
 
-**Version**: 0.6.0 | **Status**: Pending
+**Version**: 0.6.0 | **Status**: Complete (translations); Pending (infrastructure)
 
-### Tasks
+### Completed: Spanish Translations
 
-| Task | Priority | Status |
-|------|----------|--------|
-| Complete Spanish translations (`es.json` — all ~844 keys) | High | Pending |
-| Spanish content files (49 markdown files) | High | Pending |
-| Pagefind search verification and tuning | Medium | Verified (28 pages indexed) |
-| SEO audit (meta, OG, hreflang, JSON-LD, sitemap) | Medium | Pending |
-| Accessibility audit (WCAG 2.1 AA) | Medium | Pending |
-| GA4 property setup and event tracking | Low | Pending |
-| Firebase project setup (production) | Low | Pending |
-| Performance optimization (images, lazy loading) | Low | Pending |
-| Hero images and section illustrations | Medium | Pending |
-| Social media OG images | Low | Pending |
+#### `es.json` — Complete i18n (744 keys)
+All translation keys matching `en.json` 1:1 across every section: nav, hero, footer, about, promptBuilder, aiCalculator, aiReadiness, aiRoadmap, learningProgram, caseStudies, ethicsSimulator, toolDirectory, jurisdictionGuide, successStories, faq, sources, contact, share, search, common.
+
+#### Spanish Content Files (49 markdown files)
+
+| Collection | Files | Content |
+|-----------|-------|---------|
+| `quick-wins/es/` | 9 | Policy summary, denial letter, extract dates, compare policies, coverage recommendation, loss run analysis, underwriting questions, compliance checklist, fraud investigation |
+| `what-to-do/es/` | 10 | Verify output, accelerate research, establish AI policy, disclose AI use, first-draft generation, document review, prompt library, stay current, train your team, experiment low-risk |
+| `what-not-to-do/es/` | 10 | Don't submit unread, don't paste confidential, don't assume jurisdiction, don't replace judgment, don't hide AI use, don't treat as verified, don't use for emotional intelligence, don't ignore regulations, don't let AI write everything, don't assume limitations permanent |
+| `faq/es/` | 20 | All 5 categories: skeptical (4), curious (4), using (4), leading (4), deciding (4) |
+
+#### Translation Conventions
+- Professional, neutral Latin American Spanish (suitable for international audience)
+- Insurance terminology: suscripción, reclamaciones, asegurado, prima, deducible, endoso, cobertura, índice de siniestralidad, reaseguro, cumplimiento normativo
+- Proper nouns untranslated: ChatGPT, Claude, NAIC, CRAFT, Smoother, Lemonade, etc.
+- Placeholder patterns preserved: `{count}`, `{current}`, `{total}`, `{role}`, `{practice}`
+- Enum values preserved: difficulty levels, categories, insurance sectors
+
+### Verified: SEO & Search
+
+| Item | Status | Details |
+|------|--------|---------|
+| Pagefind search | Verified | 28 pages indexed, 3,531 words |
+| Meta description | Complete | Per-page via BaseLayout props |
+| Canonical URLs | Complete | Auto-generated from `siteUrl + pathname` |
+| Hreflang tags | Complete | en, es, x-default |
+| Open Graph | Complete | title, description, type, url, image, locale, site_name |
+| Twitter Cards | Complete | summary_large_image with title, description, image |
+| JSON-LD | Complete | WebSite schema with SearchAction, creator |
+| Sitemap | Complete | `@astrojs/sitemap` integration, referenced in robots.txt |
+| robots.txt | Complete | Allow all, sitemap reference |
+| Web manifest | Complete | Name, icons, theme color |
+
+### Pending: Infrastructure (requires manual setup)
+
+| Task | Status | Notes |
+|------|--------|-------|
+| Firebase project | Pending | See `resources/site-plan.md` Firebase instructions or ask for walkthrough |
+| GA4 measurement ID | Pending | Uncomment GA4 script in BaseLayout.astro (lines 57-65), replace `G-XXXXXXXXXX` |
+| GitHub Actions secrets | Pending | Add `PUBLIC_FIREBASE_*` env vars to repo Settings → Secrets |
+| Hero images | Pending | Need actual image assets in `public/assets/images/hero-images/` |
+| OG image | Pending | Need `public/assets/images/insureversia-site-image.png` (1200×630) |
+| Accessibility audit | Pending | WCAG 2.1 AA review recommended before public launch |
 
 ---
 
@@ -510,14 +542,22 @@ src/pages/
     └── team/index.astro
 ```
 
-### Content Collections (49 markdown files)
+### Content Collections (98 markdown files — 49 en + 49 es)
 ```
 src/content/
 ├── config.ts                          (7 collection schemas)
-├── quick-wins/en/                     (9 files: 01-09)
-├── what-to-do/en/                     (10 files: 01-10)
-├── what-not-to-do/en/                 (10 files: 01-10)
-└── faq/en/                            (20 files: 01-20)
+├── quick-wins/
+│   ├── en/                            (9 files: 01-09)
+│   └── es/                            (9 files: 01-09)
+├── what-to-do/
+│   ├── en/                            (10 files: 01-10)
+│   └── es/                            (10 files: 01-10)
+├── what-not-to-do/
+│   ├── en/                            (10 files: 01-10)
+│   └── es/                            (10 files: 01-10)
+└── faq/
+    ├── en/                            (20 files: 01-20)
+    └── es/                            (20 files: 01-20)
 ```
 
 ### Styles (10 CSS files)
@@ -539,8 +579,8 @@ src/styles/
 ```
 src/i18n/
 ├── index.ts
-├── en.json                            (~844 keys)
-└── es.json                            (~120 keys, stub)
+├── en.json                            (744 keys, complete)
+└── es.json                            (744 keys, complete)
 ```
 
 ### Library (3 files)
@@ -631,8 +671,8 @@ All collections share a source citation schema with types: `regulation`, `indust
 
 | Locale | Keys | Status |
 |--------|------|--------|
-| `en.json` | ~844 | Complete (all sections) |
-| `es.json` | ~120 | Stub (nav, hero, footer, common) |
+| `en.json` | 744 | Complete (all sections) |
+| `es.json` | 744 | Complete (all sections, 1:1 match) |
 
 ### Key Sections in `en.json`
 | Section | Keys | Content |
@@ -717,5 +757,6 @@ npm run preview      # Preview production build
 | 0.3.1 | 2026-02-18 | — | Dark mode speech bubble fix |
 | 0.4.0 | 2026-02-18 | Phase 4 | Practice section (9 pages, 5 components, 9 quick-wins) |
 | 0.5.0 | 2026-02-18 | Phase 5 | Resources section (5 pages, 20 FAQ files) |
+| 0.6.0 | 2026-02-18 | Phase 6 | Spanish translations (es.json 744 keys + 49 content files) |
 
 See `CHANGELOG.md` for detailed change notes per version.

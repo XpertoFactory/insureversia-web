@@ -8,8 +8,8 @@ dist/
 .astro/
 
 # environment variables
-.env
-.env.*
+# .env is committed — Firebase client config is public by design
+# Security comes from Firestore rules and Auth, not from hiding keys
 !.env.example
 
 # OS
