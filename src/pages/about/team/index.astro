@@ -1,0 +1,139 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { t, getLocalePath } from '../../../i18n';
+const locale = 'en';
+const p = (path: string) => getLocalePath(locale, path);
+---
+
+<BaseLayout
+  title="Our Team — CEMI.ai & The Curator"
+  description="Meet the organization and people behind Insureversia. Born from CEMI.ai, curated by Carlos Miranda Levy."
+  locale={locale}
+  keywords="Insureversia team, Carlos Miranda Levy, CEMI.ai, insurance AI"
+>
+  <!-- Back link + Mini Hero -->
+  <section class="section" style="padding-bottom: 0;">
+    <div class="container">
+      <a href={p('/about/')} class="back-link">&larr; Back to About</a>
+      <div class="mini-hero">
+        <h1>{t(locale, 'about.teamTitle')}</h1>
+        <p class="lead">{t(locale, 'about.teamSubtitle')}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Born from CEMI.ai -->
+  <section class="section">
+    <div class="container">
+      <div class="reveal" style="max-width: 800px; margin: 0 auto;">
+        <h2 style="margin-bottom: var(--space-6);">{t(locale, 'about.bornFromCemi')}</h2>
+        <div class="two-col" style="gap: var(--space-8); align-items: center;">
+          <div style="flex-shrink: 0; display: flex; justify-content: center;">
+            <a href="https://cemi.ai" target="_blank" rel="noopener">
+              <img src="/assets/logos/favicon.svg" alt="CEMI.ai" style="width: 180px; height: auto;" />
+            </a>
+          </div>
+          <div>
+            <p style="font-size: var(--text-lg); margin-bottom: var(--space-4);">
+              Insureversia is a project born out of the <a href="https://cemi.ai" target="_blank" rel="noopener"><strong>CEMI.ai</strong></a> collective — the <strong>Collectively Enhanced Multiple Intelligence</strong> initiative.
+            </p>
+            <p style="margin-bottom: var(--space-4);">
+              {t(locale, 'about.bornFromCemiDesc')}
+            </p>
+            <p style="margin-bottom: var(--space-4);">
+              The initiative's visual identity — the <em>Batowl</em>, a hybrid creature combining the owl (knowledge and insight) with the bat (mystery and discovery) — reflects its core mission: creating harmony between human and artificial cognition. Inspired by the artistic traditions of the Caribbean Taino people, the Batowl symbolizes the fusion of ancestral wisdom and modern innovation.
+            </p>
+            <p>
+              Insureversia embodies CEMI's vision applied to the insurance industry: the belief that collective intelligence — human expertise enhanced by AI capabilities — can transform how insurance is practiced, making it more accessible, efficient, and fair.
+            </p>
+            <div class="mt-6">
+              <a href="https://cemi.ai" target="_blank" rel="noopener" class="btn btn--secondary btn--sm">Visit CEMI.ai</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- The Curator -->
+  <section class="section section--parchment">
+    <div class="container">
+      <div class="reveal" style="max-width: 800px; margin: 0 auto;">
+        <h2 style="margin-bottom: var(--space-6);">{t(locale, 'about.theCurator')}</h2>
+        <div class="two-col" style="gap: var(--space-8); align-items: start;">
+          <div style="flex-shrink: 0; display: flex; justify-content: center;">
+            <div style="width: 320px; height: 320px; border-radius: var(--radius-xl); background: linear-gradient(135deg, var(--color-primary), var(--color-accent)); display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-lg);">
+              <span style="font-size: var(--text-6xl); color: white; font-family: var(--font-heading); font-weight: var(--font-extrabold);">CML</span>
+            </div>
+          </div>
+          <div>
+            <p style="font-size: var(--text-lg); margin-bottom: var(--space-4);">
+              Insureversia is curated by <strong>{t(locale, 'about.curatorName')}</strong> — a pioneer in Latin American internet innovation, Stanford Fellow, and {t(locale, 'about.curatorBio')}
+            </p>
+            <p style="margin-bottom: var(--space-4);">
+              With over 25 years of experience at the intersection of technology, strategy, and social impact — spanning Silicon Valley, the Caribbean, Europe, and Latin America — Carlos brings a rare combination of deep technical understanding and human-centered design thinking to the challenge of making AI accessible to insurance professionals.
+            </p>
+            <p style="margin-bottom: var(--space-4);">
+              His work has been recognized by CNN (20 Latin American Internet Leaders), MIT (Emerging Leader & Entrepreneur), Forbes (30 Business Promises), Google (Developing World Scholar), and Stanford (Digital Vision Fellow). He has developed multiple AI frameworks and educational platforms, including <a href="https://100.cemi.ai" target="_blank" rel="noopener">100+ Things to Do with AI</a>, and the SiteCraft AI-assisted web design methodology.
+            </p>
+            <p>
+              Insureversia reflects Carlos's core belief: <em>"Technology that empowers people to transcend circumstances with dignity, inclusion, and equity."</em> In the insurance context, this means ensuring that AI literacy is not a privilege of large carriers, but a capability accessible to every insurance professional — regardless of organization size, jurisdiction, or language.
+            </p>
+            <div class="flex gap-3 mt-6 flex--wrap">
+              <a href="https://thesocialentrepreneur.com" target="_blank" rel="noopener" class="btn btn--secondary btn--sm">thesocialentrepreneur.com</a>
+              <a href="https://100.cemi.ai" target="_blank" rel="noopener" class="btn btn--secondary btn--sm">100.cemi.ai</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section">
+    <div class="container">
+      <div class="reveal" style="text-align: center;">
+        <h2 style="margin-bottom: var(--space-4);">Start Your AI Journey</h2>
+        <div style="display: flex; gap: var(--space-4); flex-wrap: wrap; justify-content: center;">
+          <a href={p('/learn/ai-101/')} class="btn btn--primary">AI 101</a>
+          <a href={p('/practice/quick-wins/')} class="btn btn--secondary">Quick Wins</a>
+          <a href={p('/resources/faq/')} class="btn btn--ghost">FAQ</a>
+        </div>
+        <p style="margin-top: var(--space-4); font-size: var(--text-sm); color: var(--text-muted);">
+          {t(locale, 'learningProgram.programCta')}
+          <a href={p('/learn/program/')} style="font-weight: var(--font-semibold);">
+            {t(locale, 'learningProgram.programCtaLink')} &rarr;
+          </a>
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .back-link {
+    display: inline-block;
+    margin-bottom: var(--space-4);
+    color: var(--color-primary);
+    text-decoration: none;
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+  }
+  .back-link:hover { text-decoration: underline; }
+  .mini-hero {
+    max-width: 800px;
+    padding: var(--space-8) 0 var(--space-4);
+  }
+  .mini-hero h1 {
+    font-size: var(--text-4xl);
+    margin-bottom: var(--space-4);
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .mini-hero .lead {
+    color: var(--text-secondary);
+    font-size: var(--text-lg);
+  }
+</style>

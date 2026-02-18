@@ -1,0 +1,179 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Icon from '../../../components/Icon.astro';
+import { t, getLocalePath } from '../../../i18n';
+const locale = 'en';
+const p = (path: string) => getLocalePath(locale, path);
+
+const sectors = [
+  {
+    area: 'Prospecting & Underwriting',
+    icon: 'search',
+    impact: 'Very High',
+    transformations: [
+      'Automated risk scoring reduces quote turnaround from days to seconds',
+      'Machine learning models analyze alternative data sources (satellite imagery, IoT, social) for more accurate pricing',
+      'Predictive models identify profitable segments and flag adverse selection',
+      'AI-assisted medical and property underwriting reduces manual review by up to 80%',
+    ],
+    timeline: 'Happening now',
+  },
+  {
+    area: 'Risk Management',
+    icon: 'shield',
+    impact: 'Very High',
+    transformations: [
+      'Next-generation catastrophe models integrate real-time weather data and climate projections',
+      'Portfolio accumulation monitoring identifies concentration risks across geographies',
+      'AI-powered scenario analysis stress-tests portfolios against emerging threats',
+      'Predictive loss modeling enables proactive mitigation before events occur',
+    ],
+    timeline: 'Happening now',
+  },
+  {
+    area: 'Compliance',
+    icon: 'clipboard-list',
+    impact: 'High',
+    transformations: [
+      'Automated regulatory change monitoring across jurisdictions and lines of business',
+      'AI-powered rate filing review and compliance checking',
+      'Bias testing and fairness auditing of pricing and underwriting algorithms',
+      'Automated reporting generation for regulatory submissions',
+    ],
+    timeline: 'Happening now',
+  },
+  {
+    area: 'Claims Processing',
+    icon: 'file-text',
+    impact: 'Very High',
+    transformations: [
+      'Straight-through processing handles simple claims without human intervention',
+      'Computer vision assesses property and vehicle damage from photos',
+      'NLP extracts structured data from medical records, police reports, and adjuster notes',
+      'Fraud detection algorithms flag suspicious patterns in real time during claims intake',
+    ],
+    timeline: 'Happening now',
+  },
+  {
+    area: 'Customer Service',
+    icon: 'message-circle',
+    impact: 'High',
+    transformations: [
+      'AI chatbots handle policy inquiries, FNOL, and coverage explanations 24/7',
+      'Sentiment analysis identifies dissatisfied policyholders before they churn',
+      'Personalized renewal offers based on behavioral and usage data',
+      'Multilingual support expands service reach without proportional staffing increases',
+    ],
+    timeline: 'Happening now',
+  },
+  {
+    area: 'Marketing & Sales',
+    icon: 'bar-chart',
+    impact: 'High',
+    transformations: [
+      'Predictive lead scoring identifies high-conversion prospects from behavioral signals',
+      'Dynamic pricing and product bundling optimized by machine learning',
+      'AI-generated content personalizes communications across channels',
+      'Customer lifetime value models inform acquisition spend and retention strategies',
+    ],
+    timeline: 'Happening now',
+  },
+];
+
+const impactColors: Record<string, string> = {
+  'Very High': 'badge--advanced',
+  'High': 'badge--intermediate',
+  'Medium': 'badge--beginner',
+};
+---
+
+<BaseLayout
+  title="AI Impact on Insurance — The Transformation Map"
+  description="How AI is reshaping every sector of the insurance industry — from underwriting to claims, from risk management to customer service."
+  locale={locale}
+  keywords="AI impact insurance, AI underwriting, AI claims processing, insurance transformation, insurtech"
+>
+  <!-- Hero -->
+  <section class="hero" style="background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 50%, var(--color-dark-surface) 100%); position: relative;">
+    <div class="container" style="position: relative; z-index: 1;">
+      <div class="slide-up" style="max-width: 800px;">
+        <p class="text-sm font-semibold mb-4" style="color: var(--color-secondary); text-transform: uppercase; letter-spacing: 0.1em;">Explore</p>
+        <h1 style="font-size: var(--text-5xl); margin-bottom: var(--space-6);">The Transformation Map</h1>
+        <p class="lead" style="margin-bottom: var(--space-6);">
+          AI is not confined to insurtech startups — it is reshaping every established sector of the insurance industry. Understanding how AI transforms your specific area of practice is the first step toward harnessing its power effectively.
+        </p>
+      </div>
+    </div>
+    <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 120px; background: linear-gradient(to top, var(--surface-page), transparent);"></div>
+  </section>
+
+  <!-- Impact Legend -->
+  <section class="section--sm">
+    <div class="container">
+      <div class="reveal" style="max-width: 800px; margin: 0 auto; text-align: center;">
+        <p style="font-size: var(--text-lg); color: var(--text-secondary); margin-bottom: var(--space-6); line-height: var(--leading-relaxed);">
+          Every insurance sector is being transformed by AI, but the depth and speed varies. Underwriting, claims, and risk management are seeing the most radical efficiency gains. Others are in earlier stages, where forward-thinking professionals are building competitive advantages that will compound over the next decade.
+        </p>
+        <div class="flex gap-4 flex--wrap" style="justify-content: center; margin-bottom: var(--space-4);">
+          <span class="badge badge--advanced">Very High Impact</span>
+          <span class="badge badge--intermediate">High Impact</span>
+          <span class="badge badge--beginner">Medium Impact</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sectors Grid -->
+  <section class="section">
+    <div class="container">
+      <div class="grid grid--2 reveal-stagger">
+        {sectors.map((sector) => (
+          <div class="card">
+            <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-4);">
+              <div style="color: var(--color-primary);"><Icon name={sector.icon} size={32} /></div>
+              <div style="flex: 1;">
+                <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-2);">
+                  <h3 style="font-size: var(--text-xl); margin-bottom: 0;">{sector.area}</h3>
+                  <span class={`badge ${impactColors[sector.impact]}`}>{sector.impact} Impact</span>
+                </div>
+                <p class="text-sm text-muted" style="margin-bottom: 0; margin-top: var(--space-1);">{sector.timeline}</p>
+              </div>
+            </div>
+            <ul style="padding-left: var(--space-5); margin-bottom: 0;">
+              {sector.transformations.map((item) => (
+                <li class="text-sm" style="color: var(--text-secondary); margin-bottom: var(--space-2);">{item}</li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Key Insight -->
+  <section class="section section--parchment">
+    <div class="container">
+      <div class="reveal" style="max-width: 800px; margin: 0 auto;">
+        <div class="card card--accent" style="padding: var(--space-8);">
+          <h2 style="font-size: var(--text-3xl); margin-bottom: var(--space-4);">The Pattern Across Insurance Sectors</h2>
+          <p style="font-size: var(--text-lg); color: var(--text-secondary); margin-bottom: var(--space-4); line-height: var(--leading-relaxed);">
+            Regardless of your specialization, AI transformation follows a consistent pattern: routine, high-volume tasks are automated first, freeing professionals to focus on judgment, strategy, and client relationships. The professionals who thrive are those who learn to work at the interface between AI capability and human expertise.
+          </p>
+          <p style="color: var(--text-secondary); line-height: var(--leading-relaxed); margin-bottom: var(--space-6);">
+            The transformation is not about replacement. It is about augmentation. An underwriter who uses AI for risk scoring does not become less skilled — they become an underwriter with more time for complex risks. A claims adjuster who uses AI for damage assessment does not lose expertise — they gain the ability to process more claims with greater accuracy and consistency.
+          </p>
+          <div class="flex gap-4 flex--wrap">
+            <a href={p('/explore/new-frontiers/')} class="btn btn--primary btn--sm">Explore New Frontiers</a>
+            <a href={p('/practice/quick-wins/')} class="btn btn--secondary btn--sm">Try a Quick Win</a>
+          </div>
+          <p style="margin-top: var(--space-4); font-size: var(--text-sm); color: var(--text-muted);">
+            {t(locale, 'learningProgram.programCta')}
+            <a href={p('/learn/program/')} style="font-weight: var(--font-semibold);">
+              {t(locale, 'learningProgram.programCtaLink')} &rarr;
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

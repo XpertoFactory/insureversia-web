@@ -1,0 +1,148 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Icon from '../../../components/Icon.astro';
+import { t, getLocalePath } from '../../../i18n';
+const locale = 'en';
+const p = (path: string) => getLocalePath(locale, path);
+
+const frontiers = [
+  {
+    title: 'AI-Powered Underwriting',
+    icon: 'search',
+    description: 'Machine learning models analyze thousands of data points — medical records, property data, driving history, social determinants — to assess risk in minutes instead of days. Automated underwriting is already handling a growing share of personal lines, and commercial lines are following fast.',
+    status: 'Active',
+  },
+  {
+    title: 'Predictive Claims Analytics',
+    icon: 'bar-chart',
+    description: 'AI models predict claims frequency, severity, and development patterns before they unfold. Insurers use these insights for reserve setting, loss mitigation, and early intervention — turning reactive claims management into proactive risk reduction.',
+    status: 'Active',
+  },
+  {
+    title: 'Fraud Detection & Prevention',
+    icon: 'shield-alert',
+    description: 'Network analysis and anomaly detection algorithms identify suspicious patterns across millions of claims in real time. AI flags staged accidents, inflated losses, and organized fraud rings that human reviewers would miss — while reducing false positives that slow legitimate claims.',
+    status: 'Mature',
+  },
+  {
+    title: 'Parametric Insurance & Smart Contracts',
+    icon: 'file-text',
+    description: 'Index-based insurance products trigger automatic payouts when predefined conditions are met — a hurricane exceeds Category 3, rainfall drops below a threshold, or a flight is delayed. Blockchain-based smart contracts execute the payout without human intervention, dramatically reducing settlement times.',
+    status: 'Emerging',
+  },
+  {
+    title: 'Customer Experience & Personalization',
+    icon: 'message-circle',
+    description: 'AI-driven chatbots handle first notice of loss, policy inquiries, and renewal conversations 24/7. Behind the scenes, recommendation engines personalize coverage options, predict churn risk, and identify cross-sell opportunities — transforming insurance from a commodity into a tailored service.',
+    status: 'Active',
+  },
+  {
+    title: 'Regulatory Technology (RegTech)',
+    icon: 'clipboard-list',
+    description: 'AI monitors regulatory changes across jurisdictions in real time, flags compliance gaps, and automates reporting. As insurance regulation grows more complex globally — from the EU AI Act to state-by-state rate filing requirements — RegTech is becoming essential infrastructure.',
+    status: 'Active',
+  },
+  {
+    title: 'Catastrophe Modeling & Climate Risk',
+    icon: 'globe',
+    description: 'Next-generation cat models integrate satellite imagery, IoT sensor data, and climate projections to price risk in a changing world. AI helps insurers model wildfire spread, flood exposure, and hurricane trajectories with unprecedented granularity — critical as climate volatility reshapes the risk landscape.',
+    status: 'Active',
+  },
+  {
+    title: 'Telematics & IoT-Based Insurance',
+    icon: 'monitor',
+    description: 'Connected devices — dashcams, wearables, smart home sensors — generate continuous risk data that AI transforms into dynamic pricing, loss prevention alerts, and usage-based insurance products. The line between insurer and risk management partner is blurring.',
+    status: 'Active',
+  },
+  {
+    title: 'Embedded Insurance',
+    icon: 'box',
+    description: 'AI enables real-time risk assessment at the point of sale — buying a flight, renting a car, or completing an e-commerce checkout. Embedded insurance products are underwritten, priced, and issued by AI in milliseconds, opening distribution channels that traditional brokers cannot reach.',
+    status: 'Emerging',
+  },
+  {
+    title: 'AI-Driven Reinsurance',
+    icon: 'building',
+    description: 'Reinsurers use AI for portfolio optimization, treaty pricing, and accumulation monitoring. Machine learning models analyze cedant data faster and more granularly than traditional actuarial methods, enabling more precise risk transfer and capacity allocation across global markets.',
+    status: 'Emerging',
+  },
+];
+
+const statusColors: Record<string, string> = {
+  Active: 'badge--beginner',
+  Mature: 'badge--intermediate',
+  Emerging: 'badge--beginner',
+};
+---
+
+<BaseLayout
+  title="New Frontiers — AI Transforming Insurance"
+  description="Ten emerging frontiers where AI is creating entirely new capabilities in the insurance industry — from parametric products to catastrophe modeling."
+  locale={locale}
+  keywords="AI in insurance, insurtech frontiers, AI underwriting, parametric insurance, fraud detection AI"
+>
+  <!-- Hero -->
+  <section class="hero" style="background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 50%, var(--color-dark-surface) 100%); position: relative;">
+    <div class="container" style="position: relative; z-index: 1;">
+      <div class="slide-up" style="max-width: 800px;">
+        <p class="text-sm font-semibold mb-4" style="color: var(--color-secondary); text-transform: uppercase; letter-spacing: 0.1em;">Explore</p>
+        <h1 style="font-size: var(--text-5xl); margin-bottom: var(--space-6);">New Frontiers</h1>
+        <p class="lead" style="margin-bottom: var(--space-6);">
+          AI is not just optimizing insurance operations — it is creating entirely new products, markets, and business models. These ten frontiers represent the cutting edge where technology, data science, and risk management intersect. The professionals who master them now will define how insurance works for decades to come.
+        </p>
+      </div>
+    </div>
+    <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 120px; background: linear-gradient(to top, var(--surface-page), transparent);"></div>
+  </section>
+
+  <!-- Introduction -->
+  <section class="section">
+    <div class="container">
+      <div class="reveal" style="max-width: 800px; margin: 0 auto var(--space-12);">
+        <p style="font-size: var(--text-lg); color: var(--text-secondary); line-height: var(--leading-relaxed);">
+          Every technological revolution reshapes the insurance industry. The internet brought direct-to-consumer distribution. Mobile created on-demand coverage. AI is doing the same — but faster and across more dimensions. These ten frontiers barely existed five years ago. Today, they represent some of the most significant opportunities and challenges in the industry.
+        </p>
+      </div>
+
+      <!-- Frontiers Grid -->
+      <div class="grid grid--2 reveal-stagger">
+        {frontiers.map((frontier) => (
+          <div class="card" style="display: flex; flex-direction: column;">
+            <div style="display: flex; align-items: flex-start; gap: var(--space-4); margin-bottom: var(--space-4);">
+              <div style="flex-shrink: 0; color: var(--color-primary);"><Icon name={frontier.icon} size={32} /></div>
+              <div style="flex: 1;">
+                <div style="display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); flex-wrap: wrap; margin-bottom: var(--space-2);">
+                  <h3 style="font-size: var(--text-xl); margin-bottom: 0; color: var(--color-primary);">{frontier.title}</h3>
+                  <span class={`badge ${statusColors[frontier.status] || 'badge--beginner'}`}>{frontier.status}</span>
+                </div>
+              </div>
+            </div>
+            <p class="card__body" style="flex: 1;">{frontier.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action -->
+  <section class="section section--parchment">
+    <div class="container">
+      <div class="reveal" style="max-width: 800px; margin: 0 auto; text-align: center;">
+        <h2 style="margin-bottom: var(--space-4);">The Common Thread</h2>
+        <p style="font-size: var(--text-lg); color: var(--text-secondary); margin-bottom: var(--space-6); line-height: var(--leading-relaxed);">
+          Across all these frontiers, one principle holds: insurance professionals who understand AI will outperform those who do not. You do not need to become a data scientist. But you do need to understand how these systems work, where they fail, and what questions to ask. Start with the fundamentals, then explore the frontier that calls to you.
+        </p>
+        <div class="flex gap-4 flex--wrap" style="justify-content: center;">
+          <a href={p('/learn/ai-101/')} class="btn btn--primary">Start with AI 101</a>
+          <a href={p('/explore/ai-impact/')} class="btn btn--secondary">See AI Impact on Traditional Insurance</a>
+        </div>
+        <p style="margin-top: var(--space-4); font-size: var(--text-sm); color: var(--text-muted);">
+          {t(locale, 'learningProgram.programCta')}
+          <a href={p('/learn/program/')} style="font-weight: var(--font-semibold);">
+            {t(locale, 'learningProgram.programCtaLink')} &rarr;
+          </a>
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

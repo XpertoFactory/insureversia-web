@@ -1,0 +1,181 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { t, getLocalePath } from '../../../i18n';
+const locale = 'en';
+const p = (path: string) => getLocalePath(locale, path);
+
+const ethicalChallenges = [
+  {
+    title: 'Algorithmic Bias in Pricing & Underwriting',
+    description: 'AI models trained on historical insurance data can perpetuate and amplify existing biases — charging higher premiums based on zip code, credit score, or other proxies for race and income. The NAIC has issued model guidance requiring insurers to test AI systems for unfair discrimination, but enforcement varies widely.',
+    severity: 'Critical',
+  },
+  {
+    title: 'Data Privacy & Policyholder Trust',
+    description: 'Insurers collect vast quantities of personal data — health records, driving behavior, home sensor data, social media activity. AI makes it possible to analyze all of it simultaneously. The question is not whether you can, but whether you should. Regulatory frameworks like GDPR and state privacy laws are catching up, but gaps remain.',
+    severity: 'Critical',
+  },
+  {
+    title: 'Opaque Decision-Making',
+    description: 'When an AI model denies a claim, raises a premium, or flags a policyholder for fraud, can you explain exactly why? "Black box" models create accountability gaps. Regulators and courts increasingly demand explainability — and policyholders deserve to understand the decisions that affect their coverage.',
+    severity: 'High',
+  },
+  {
+    title: 'Unfair Discrimination vs. Actuarial Fairness',
+    description: 'Insurance has always been about classifying risk. But AI can discover correlations that act as proxies for protected characteristics. Where is the line between legitimate actuarial analysis and illegal discrimination? The answer varies by jurisdiction and is actively being litigated.',
+    severity: 'High',
+  },
+  {
+    title: 'Transparency in Claims Decisions',
+    description: 'AI-assisted claims triage and settlement can speed resolution — but when algorithms influence who gets paid and how much, transparency becomes a matter of fairness. Policyholders and regulators need to understand how AI affects claims outcomes.',
+    severity: 'High',
+  },
+  {
+    title: 'Duty of Care & Professional Responsibility',
+    description: 'Insurance professionals have obligations to act in good faith, provide suitable coverage, and handle claims fairly. Using AI without understanding its limitations — or without disclosing its role — may violate these professional duties. AI competence is becoming a professional obligation.',
+    severity: 'Medium',
+  },
+];
+
+const practicalChallenges = [
+  {
+    title: 'Model Drift & Reliability',
+    description: 'AI models degrade over time as the data landscape changes — pandemic shifts, climate patterns, economic cycles. A model that priced risk accurately in 2023 may be dangerously wrong in 2026. Continuous monitoring, validation, and recalibration are essential but often underinvested.',
+    severity: 'Critical',
+  },
+  {
+    title: 'Regulatory Fragmentation',
+    description: 'AI regulation in insurance is developing rapidly and inconsistently. The EU AI Act, NAIC model bulletins, state-by-state requirements, and emerging global frameworks create a patchwork of obligations. Multi-state and multinational insurers face especially complex compliance landscapes.',
+    severity: 'High',
+  },
+  {
+    title: 'Integration with Legacy Systems',
+    description: 'Most insurers run on decades-old policy administration, claims, and billing systems. Integrating modern AI tools with legacy infrastructure is expensive, slow, and fraught with data quality issues. The technology gap between leaders and laggards is widening.',
+    severity: 'High',
+  },
+  {
+    title: 'Talent Gap & Change Management',
+    description: 'The insurance industry faces a dual challenge: attracting data science talent that understands insurance, and upskilling existing professionals to work effectively with AI. Without both, AI initiatives fail — not because the technology does not work, but because the organization cannot absorb it.',
+    severity: 'High',
+  },
+  {
+    title: 'Hallucinations & AI-Generated Errors',
+    description: 'Large language models generate plausible but incorrect outputs — fabricated policy terms, wrong coverage interpretations, fictional regulatory citations. Every AI output in insurance must be verified against authoritative sources. This is not a bug that will be fixed — it is inherent to how LLMs work.',
+    severity: 'Medium',
+  },
+  {
+    title: 'Vendor Lock-In & Independence',
+    description: 'Insurers increasingly rely on third-party AI vendors for core functions. This creates dependencies on proprietary models whose inner workings are opaque, whose pricing can change, and whose continued operation is not guaranteed. Strategic technology governance is essential.',
+    severity: 'Medium',
+  },
+];
+
+const severityColors: Record<string, string> = {
+  Critical: 'badge--advanced',
+  High: 'badge--intermediate',
+  Medium: 'badge--beginner',
+};
+---
+
+<BaseLayout
+  title="Challenges & Risks of AI in Insurance"
+  description="Ethical and practical challenges of using AI in insurance — bias, privacy, transparency, and the regulatory landscape every professional must understand."
+  locale={locale}
+  keywords="AI risks insurance, algorithmic bias, AI ethics insurance, insurance AI challenges, regulatory compliance AI"
+>
+  <!-- Hero -->
+  <section class="hero" style="background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 50%, var(--color-dark-surface) 100%); position: relative;">
+    <div class="container" style="position: relative; z-index: 1;">
+      <div class="slide-up" style="max-width: 800px;">
+        <p class="text-sm font-semibold mb-4" style="color: var(--color-secondary); text-transform: uppercase; letter-spacing: 0.1em;">Explore</p>
+        <h1 style="font-size: var(--text-5xl); margin-bottom: var(--space-6);">Challenges & Risks</h1>
+        <p class="lead" style="margin-bottom: var(--space-6);">
+          AI offers extraordinary potential for the insurance industry — but only if its risks are understood and managed. Responsible adoption starts with clear-eyed awareness of what can go wrong and why.
+        </p>
+      </div>
+    </div>
+    <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 120px; background: linear-gradient(to top, var(--surface-page), transparent);"></div>
+  </section>
+
+  <!-- Ethical Challenges -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header reveal">
+        <h2>Ethical Challenges</h2>
+        <p>These are the issues that implicate your professional responsibilities, your policyholders' rights, and the integrity of the insurance system itself.</p>
+      </div>
+
+      <div class="grid grid--2 reveal-stagger">
+        {ethicalChallenges.map((challenge) => (
+          <div class="callout callout--danger">
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); margin-bottom: var(--space-3); flex-wrap: wrap;">
+              <h3 class="callout__title" style="margin-bottom: 0; font-size: var(--text-lg);">{challenge.title}</h3>
+              <span class={`badge ${severityColors[challenge.severity]}`}>{challenge.severity}</span>
+            </div>
+            <p style="color: var(--text-secondary); line-height: var(--leading-relaxed); margin-bottom: 0;">{challenge.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Practical Challenges -->
+  <section class="section section--parchment">
+    <div class="container">
+      <div class="section-header reveal">
+        <h2>Practical Challenges</h2>
+        <p>Beyond ethics, these are the operational and strategic challenges that affect how AI performs in day-to-day insurance work.</p>
+      </div>
+
+      <div class="grid grid--2 reveal-stagger">
+        {practicalChallenges.map((challenge) => (
+          <div class="callout callout--warning">
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); margin-bottom: var(--space-3); flex-wrap: wrap;">
+              <h3 class="callout__title" style="margin-bottom: 0; font-size: var(--text-lg);">{challenge.title}</h3>
+              <span class={`badge ${severityColors[challenge.severity]}`}>{challenge.severity}</span>
+            </div>
+            <p style="color: var(--text-secondary); line-height: var(--leading-relaxed); margin-bottom: 0;">{challenge.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Mitigation Framework -->
+  <section class="section">
+    <div class="container">
+      <div class="reveal" style="max-width: 800px; margin: 0 auto;">
+        <div class="card card--accent" style="padding: var(--space-8);">
+          <h2 style="font-size: var(--text-3xl); margin-bottom: var(--space-4);">The Responsible Path Forward</h2>
+          <p style="font-size: var(--text-lg); color: var(--text-secondary); margin-bottom: var(--space-4); line-height: var(--leading-relaxed);">
+            Awareness of these challenges is the first step. The next step is building a personal and organizational framework for managing them. The most effective framework follows three principles:
+          </p>
+          <div style="display: flex; flex-direction: column; gap: var(--space-4); margin-bottom: var(--space-6);">
+            <div class="callout callout--success" style="margin: 0;">
+              <h4 class="callout__title" style="color: var(--color-success-dark);">1. Verify Everything</h4>
+              <p style="color: var(--text-secondary); margin-bottom: 0;">Treat AI output as an unverified first draft. Check every risk assessment, every coverage recommendation, every claims determination against authoritative sources and professional judgment.</p>
+            </div>
+            <div class="callout callout--success" style="margin: 0;">
+              <h4 class="callout__title" style="color: var(--color-success-dark);">2. Protect Policyholder Data</h4>
+              <p style="color: var(--text-secondary); margin-bottom: 0;">Use enterprise tools with proper data processing agreements. Anonymize and aggregate where possible. Never expose personally identifiable policyholder information to consumer-grade AI tools.</p>
+            </div>
+            <div class="callout callout--success" style="margin: 0;">
+              <h4 class="callout__title" style="color: var(--color-success-dark);">3. Stay Human in the Loop</h4>
+              <p style="color: var(--text-secondary); margin-bottom: 0;">AI augments your judgment — it does not replace it. Maintain the skills, skepticism, and ethical compass that make you a competent insurance professional. The human in the loop is not optional.</p>
+            </div>
+          </div>
+          <div class="flex gap-4 flex--wrap">
+            <a href={p('/learn/what-not-to-do/')} class="btn btn--primary btn--sm">What Not to Do</a>
+            <a href={p('/learn/what-to-do/')} class="btn btn--secondary btn--sm">What to Do</a>
+          </div>
+          <p style="margin-top: var(--space-4); font-size: var(--text-sm); color: var(--text-muted);">
+            {t(locale, 'learningProgram.programCta')}
+            <a href={p('/learn/program/')} style="font-weight: var(--font-semibold);">
+              {t(locale, 'learningProgram.programCtaLink')} &rarr;
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

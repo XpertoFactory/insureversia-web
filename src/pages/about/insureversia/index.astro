@@ -1,0 +1,203 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Icon from '../../../components/Icon.astro';
+import { t, getLocalePath } from '../../../i18n';
+const locale = 'en';
+const p = (path: string) => getLocalePath(locale, path);
+
+const principles = [
+  {
+    title: t(locale, 'about.principleEvidence'),
+    description: t(locale, 'about.principleEvidenceDesc'),
+    icon: 'book-open',
+  },
+  {
+    title: t(locale, 'about.principlePractitioner'),
+    description: t(locale, 'about.principlePractitionerDesc'),
+    icon: 'target',
+  },
+  {
+    title: t(locale, 'about.principleEthical'),
+    description: t(locale, 'about.principleEthicalDesc'),
+    icon: 'shield',
+  },
+  {
+    title: t(locale, 'about.principleAccessible'),
+    description: t(locale, 'about.principleAccessibleDesc'),
+    icon: 'globe',
+  },
+  {
+    title: t(locale, 'about.principleMultilingual'),
+    description: t(locale, 'about.principleMultilingualDesc'),
+    icon: 'globe',
+  },
+  {
+    title: t(locale, 'about.principleCurrent'),
+    description: t(locale, 'about.principleCurrentDesc'),
+    icon: 'refresh-cw',
+  },
+];
+---
+
+<BaseLayout
+  title="What is Insureversia? — Identity, Mission & Principles"
+  description="Learn about Insureversia's identity, mission, core thesis, and the guiding principles behind this AI literacy platform for insurance professionals."
+  locale={locale}
+  keywords="Insureversia identity, insurance AI mission, AI literacy principles, core thesis"
+>
+  <!-- Back link + Mini Hero -->
+  <section class="section" style="padding-bottom: 0;">
+    <div class="container">
+      <a href={p('/about/')} class="back-link">&larr; Back to About</a>
+      <div class="mini-hero">
+        <h1>{t(locale, 'about.insureversiaTitle')}</h1>
+        <p class="lead">{t(locale, 'about.insureversiaSubtitle')}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- What Is Insureversia -->
+  <section class="section">
+    <div class="container">
+      <div class="reveal" style="max-width: 800px; margin: 0 auto;">
+        <h2 style="margin-bottom: var(--space-6);">{t(locale, 'about.whatIs')}</h2>
+        <div style="line-height: var(--leading-relaxed); color: var(--text-secondary);">
+          <p style="font-size: var(--text-lg);">
+            {t(locale, 'about.whatIsDesc')}
+          </p>
+          <p>
+            Insureversia does not replace professional judgment. It does not provide insurance advice. It does not pretend that AI is a magic solution to every problem in the industry. What Insureversia does is cut through the noise — the hype, the fear, the vendor pitches, and the breathless headlines — to give you a clear, evidence-based understanding of what AI can actually do for your practice, what it cannot do, and what you need to watch out for.
+          </p>
+          <blockquote>
+            <p>"{t(locale, 'about.coreThesisQuote')}"</p>
+            <cite class="quote-attribution">-- Insureversia's Core Thesis</cite>
+          </blockquote>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Our Mission -->
+  <section class="section section--parchment">
+    <div class="container">
+      <div class="reveal" style="max-width: 800px; margin: 0 auto;">
+        <h2 style="text-align: center; margin-bottom: var(--space-8);">{t(locale, 'about.mission')}</h2>
+        <div class="card card--accent" style="padding: var(--space-8);">
+          <p style="font-size: var(--text-lg); margin-bottom: var(--space-4);">
+            <strong>{t(locale, 'about.missionDesc')}</strong>
+          </p>
+          <p style="margin-bottom: var(--space-4);">
+            The insurance industry stands at a pivotal moment. AI tools are becoming genuinely useful for insurance work: underwriting, claims processing, risk assessment, fraud detection, and customer service. At the same time, these tools carry real risks — algorithmic bias in pricing, data privacy breaches, opaque decision-making, and the erosion of professional skills.
+          </p>
+          <p style="margin-bottom: var(--space-4);">
+            Most resources available to insurance professionals fall into two camps: uncritical enthusiasm from vendors trying to sell products, or reflexive fear from commentators who do not understand the technology. Neither serves the industry well.
+          </p>
+          <p>
+            Insureversia occupies the ground between hype and fear. We believe that AI competence is becoming a professional obligation, and that the best way to manage AI risk is through understanding, not avoidance. We believe that AI should augment human expertise, not replace it. And we believe that every insurance professional deserves access to clear, practical, evidence-based guidance on navigating this transformation.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- The Core Thesis -->
+  <section class="section section--primary">
+    <div class="container">
+      <div class="reveal" style="max-width: 800px; margin: 0 auto; text-align: center;">
+        <h2 style="margin-bottom: var(--space-6);">{t(locale, 'about.coreThesis')}</h2>
+        <p style="font-size: var(--text-2xl); font-family: var(--font-accent); font-style: italic; line-height: var(--leading-relaxed); color: rgba(255, 255, 255, 0.9); margin-bottom: var(--space-6);">
+          AI will not replace insurance professionals. But professionals who understand AI will replace those who do not. The industry's future belongs to those who learn to work at the intersection of human judgment and machine capability — who use AI to amplify their expertise, not abdicate it.
+        </p>
+        <p style="color: rgba(255, 255, 255, 0.7); margin-bottom: var(--space-8);">
+          This is not a prediction. It is already happening. The question is not whether AI will transform insurance — it is whether you will be leading that transformation or reacting to it.
+        </p>
+        <div class="flex gap-4 flex--wrap" style="justify-content: center;">
+          <a href={p('/learn/ai-101/')} class="btn btn--ghost btn--lg">Start Learning</a>
+          <a href={p('/practice/quick-wins/')} class="btn btn--ghost btn--lg">Try a Quick Win</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Core Principles -->
+  <section class="section section--parchment">
+    <div class="container">
+      <div class="section-header reveal">
+        <h2>{t(locale, 'about.principles')}</h2>
+        <p>The values that guide every piece of content, every recommendation, and every design decision on this platform.</p>
+      </div>
+
+      <div class="grid grid--3 reveal-stagger">
+        {principles.map((principle) => (
+          <div class="card card--flat">
+            <div style="margin-bottom: var(--space-3); color: var(--color-secondary);"><Icon name={principle.icon} size={32} /></div>
+            <h3 class="card__title" style="font-size: var(--text-lg);">{principle.title}</h3>
+            <p class="card__body text-sm">{principle.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Disclaimer -->
+  <section class="section">
+    <div class="container">
+      <div class="reveal" style="max-width: 800px; margin: 0 auto;">
+        <div class="card" style="padding: var(--space-8); text-align: center;">
+          <h2 style="margin-bottom: var(--space-4);">{t(locale, 'about.importantNotice')}</h2>
+          <p style="color: var(--text-secondary); margin-bottom: var(--space-4);">
+            {t(locale, 'about.importantNoticeDesc')}
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section">
+    <div class="container">
+      <div class="reveal" style="text-align: center;">
+        <h2 style="margin-bottom: var(--space-4);">Start Your AI Journey</h2>
+        <div style="display: flex; gap: var(--space-4); flex-wrap: wrap; justify-content: center;">
+          <a href={p('/learn/ai-101/')} class="btn btn--primary">AI 101</a>
+          <a href={p('/practice/quick-wins/')} class="btn btn--secondary">Quick Wins</a>
+          <a href={p('/resources/faq/')} class="btn btn--ghost">FAQ</a>
+        </div>
+        <p style="margin-top: var(--space-4); font-size: var(--text-sm); color: var(--text-muted);">
+          {t(locale, 'learningProgram.programCta')}
+          <a href={p('/learn/program/')} style="font-weight: var(--font-semibold);">
+            {t(locale, 'learningProgram.programCtaLink')} &rarr;
+          </a>
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .back-link {
+    display: inline-block;
+    margin-bottom: var(--space-4);
+    color: var(--color-primary);
+    text-decoration: none;
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+  }
+  .back-link:hover { text-decoration: underline; }
+  .mini-hero {
+    max-width: 800px;
+    padding: var(--space-8) 0 var(--space-4);
+  }
+  .mini-hero h1 {
+    font-size: var(--text-4xl);
+    margin-bottom: var(--space-4);
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .mini-hero .lead {
+    color: var(--text-secondary);
+    font-size: var(--text-lg);
+  }
+</style>

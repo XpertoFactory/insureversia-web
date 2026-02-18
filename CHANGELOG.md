@@ -2,6 +2,25 @@
 
 All notable changes to the Insureversia website will be documented in this file.
 
+## [0.2.0] - 2026-02-18
+
+### Added
+
+**Phase 2: Explore + About Pages**
+
+- **Explore section** (3 pages):
+  - `explore/new-frontiers/` — 10 emerging AI frontiers in insurance (AI underwriting, predictive claims, fraud detection, parametric insurance, RegTech, cat modeling, telematics, embedded insurance, AI-driven reinsurance)
+  - `explore/ai-impact/` — Transformation Map showing AI impact across 6 insurance sectors with severity badges and transformation timelines
+  - `explore/challenges/` — 6 ethical + 6 practical challenges with severity ratings and "Responsible Path Forward" framework
+- **About section** (4 pages):
+  - `about/` — Hub page with hero and 3 cards linking to sub-pages
+  - `about/insureversia/` — Identity, mission, core thesis, 6 principles, important notice
+  - `about/guide/` — Guided tour with color-coded section headers, interactive sitemap modal with full site navigation
+  - `about/team/` — Born from CEMI.ai, The Curator (Carlos Miranda Levy)
+- **InsureversiaAvatar component** — Reusable avatar with size variants and optional speech bubble
+
+---
+
 ## [0.1.1] - 2026-02-18
 
 ### Changed

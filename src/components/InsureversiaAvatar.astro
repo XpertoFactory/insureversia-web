@@ -1,0 +1,38 @@
+---
+interface Props {
+  size?: 'sm' | 'md' | 'lg' | 'xl';
+  withSpeech?: boolean;
+  speech?: string;
+}
+
+const { size = 'md', withSpeech = false, speech = '' } = Astro.props;
+
+const sizes = {
+  sm: '40px',
+  md: '64px',
+  lg: '96px',
+  xl: '160px',
+};
+
+const dim = sizes[size];
+---
+
+<div class="insureversia-avatar" style={`display: inline-flex; align-items: center; gap: var(--space-4);`}>
+  <img
+    src="/assets/logos/favicon.svg"
+    alt="Insureversia"
+    style={`
+      width: ${dim};
+      height: ${dim};
+      border-radius: var(--radius-full);
+      flex-shrink: 0;
+      box-shadow: var(--shadow-md);
+      object-fit: cover;
+    `}
+  />
+  {withSpeech && speech && (
+    <div style="background: var(--surface-parchment); padding: var(--space-3) var(--space-4); border-radius: var(--radius-lg); border-bottom-left-radius: var(--radius-sm); position: relative; font-family: var(--font-accent); font-style: italic; color: var(--color-primary); font-size: var(--text-base);">
+      {speech}
+    </div>
+  )}
+</div>
