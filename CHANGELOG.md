@@ -2,6 +2,21 @@
 
 All notable changes to the Insureversia website will be documented in this file.
 
+## [0.6.0] - 2026-02-18
+
+### Added
+
+**Phase 6: Spanish Translations (i18n Completion)**
+
+- **Complete Spanish i18n** (`es.json`): All 744 translation keys — matching en.json 1:1 across all sections (nav, hero, footer, about, promptBuilder, aiCalculator, aiReadiness, aiRoadmap, learningProgram, caseStudies, ethicsSimulator, toolDirectory, jurisdictionGuide, successStories, faq, sources, contact, share, search, common)
+- **Spanish content collections** (49 markdown files):
+  - `quick-wins/es/` — 9 files: policy summary, denial letter, extract dates, compare policies, coverage recommendation, loss run analysis, underwriting questions, compliance checklist, fraud investigation
+  - `what-to-do/es/` — 10 files: verify output, accelerate research, establish AI policy, disclose AI use, first-draft generation, document review, prompt library, stay current, train your team, experiment low-risk
+  - `what-not-to-do/es/` — 10 files: don't submit unread, don't paste confidential data, don't assume jurisdiction, don't replace judgment, don't hide AI use, don't treat as verified, don't use for emotional intelligence, don't ignore regulations, don't let AI write everything, don't assume limitations permanent
+  - `faq/es/` — 20 files across 5 categories (skeptical, curious, using, leading, deciding)
+
+---
+
 ## [0.5.0] - 2026-02-18
 
 ### Added
