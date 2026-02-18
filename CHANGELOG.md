@@ -2,6 +2,19 @@
 
 All notable changes to the Insureversia website will be documented in this file.
 
+## [0.1.1] - 2026-02-18
+
+### Changed
+
+**Site structure: new pages and About section split**
+
+- **Navigation & Footer**: Added Ethics Simulator (Practice), Tool Directory and Jurisdiction Guide (Resources) to all nav menus; About changed from single link to dropdown with 3 sub-pages
+- **About section**: Split into hub page + 3 sub-pages: `/about/insureversia/` (identity, mission, principles), `/about/guide/` (guided tour, site map), `/about/team/` (CEMI.ai, curator)
+- **i18n (en.json)**: Added ~135 new keys — nav items for new pages, full `about` sub-page content, `ethicsSimulator`, `toolDirectory`, and `jurisdictionGuide` sections
+- **Logo prompts**: Added `resources/auxiliary-images-prompts.md` with 9 Gemini prompt variations for brand logo
+
+---
+
 ## [0.1.0] - 2026-02-18
 
 ### Added

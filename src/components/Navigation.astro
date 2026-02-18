@@ -66,6 +66,7 @@ const p = (path: string) => getLocalePath(locale, path);
           <a href={p('/practice/ai-help-calculator/')} class="dropdown__item">{t(locale, 'nav.aiCalculator')}</a>
           <a href={p('/practice/ai-roadmap/')} class="dropdown__item">{t(locale, 'nav.aiRoadmap')}</a>
           <a href={p('/practice/local-ai/')} class="dropdown__item">{t(locale, 'nav.localAi')}</a>
+          <a href={p('/practice/ethics-simulator/')} class="dropdown__item">{t(locale, 'nav.ethicsSimulator')}</a>
         </div>
       </div>
 
@@ -79,10 +80,23 @@ const p = (path: string) => getLocalePath(locale, path);
           <a href={p('/resources/faq/')} class="dropdown__item">{t(locale, 'nav.faq')}</a>
           <a href={p('/resources/glossary/')} class="dropdown__item">{t(locale, 'nav.glossary')}</a>
           <a href={p('/resources/success-stories/')} class="dropdown__item">{t(locale, 'nav.successStories')}</a>
+          <a href={p('/resources/tool-directory/')} class="dropdown__item">{t(locale, 'nav.toolDirectory')}</a>
+          <a href={p('/resources/jurisdiction-guide/')} class="dropdown__item">{t(locale, 'nav.jurisdictionGuide')}</a>
         </div>
       </div>
 
-      <a href={p('/about/')} class="nav__link">{t(locale, 'nav.about')}</a>
+      <!-- About -->
+      <div class="dropdown">
+        <a href={p('/about/')} class="nav__link">
+          {t(locale, 'nav.about')}
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9" /></svg>
+        </a>
+        <div class="dropdown__menu">
+          <a href={p('/about/insureversia/')} class="dropdown__item">{t(locale, 'nav.aboutInsureversia')}</a>
+          <a href={p('/about/guide/')} class="dropdown__item">{t(locale, 'nav.siteGuide')}</a>
+          <a href={p('/about/team/')} class="dropdown__item">{t(locale, 'nav.ourTeam')}</a>
+        </div>
+      </div>
     </nav>
 
     <!-- Right Actions -->
@@ -158,6 +172,7 @@ const p = (path: string) => getLocalePath(locale, path);
     <a href={p('/practice/ai-help-calculator/')} class="mobile-nav__link">{t(locale, 'nav.aiCalculator')}</a>
     <a href={p('/practice/ai-roadmap/')} class="mobile-nav__link">{t(locale, 'nav.aiRoadmap')}</a>
     <a href={p('/practice/local-ai/')} class="mobile-nav__link">{t(locale, 'nav.localAi')}</a>
+    <a href={p('/practice/ethics-simulator/')} class="mobile-nav__link">{t(locale, 'nav.ethicsSimulator')}</a>
   </div>
 
   <div class="mobile-nav__link">{t(locale, 'nav.resources')}</div>
@@ -165,9 +180,16 @@ const p = (path: string) => getLocalePath(locale, path);
     <a href={p('/resources/faq/')} class="mobile-nav__link">{t(locale, 'nav.faq')}</a>
     <a href={p('/resources/glossary/')} class="mobile-nav__link">{t(locale, 'nav.glossary')}</a>
     <a href={p('/resources/success-stories/')} class="mobile-nav__link">{t(locale, 'nav.successStories')}</a>
+    <a href={p('/resources/tool-directory/')} class="mobile-nav__link">{t(locale, 'nav.toolDirectory')}</a>
+    <a href={p('/resources/jurisdiction-guide/')} class="mobile-nav__link">{t(locale, 'nav.jurisdictionGuide')}</a>
   </div>
 
-  <a href={p('/about/')} class="mobile-nav__link">{t(locale, 'nav.about')}</a>
+  <div class="mobile-nav__link">{t(locale, 'nav.about')}</div>
+  <div class="mobile-nav__sub">
+    <a href={p('/about/insureversia/')} class="mobile-nav__link">{t(locale, 'nav.aboutInsureversia')}</a>
+    <a href={p('/about/guide/')} class="mobile-nav__link">{t(locale, 'nav.siteGuide')}</a>
+    <a href={p('/about/team/')} class="mobile-nav__link">{t(locale, 'nav.ourTeam')}</a>
+  </div>
 </nav>
 
 <script>
