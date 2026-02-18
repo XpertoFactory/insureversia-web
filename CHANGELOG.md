@@ -2,6 +2,14 @@
 
 All notable changes to the Insureversia website will be documented in this file.
 
+## [0.3.1] - 2026-02-18
+
+### Fixed
+
+- **InsureversiaAvatar**: Fixed speech bubble text unreadable in dark mode — moved inline styles to CSS class with dark mode override (`--color-primary` → `--text-secondary`)
+
+---
+
 ## [0.3.0] - 2026-02-18
 
 ### Added
