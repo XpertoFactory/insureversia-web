@@ -1,0 +1,347 @@
+---
+import { t, type Locale } from '../i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+---
+
+<!-- Contact Modal Overlay -->
+<div class="contact-modal-overlay" id="contact-modal-overlay" aria-hidden="true"
+  data-locale={locale}
+  data-success={t(locale, 'contact.success')}
+  data-error={t(locale, 'contact.error')}
+  data-submitting={t(locale, 'contact.submitting')}
+  data-submit={t(locale, 'contact.submit')}
+  data-required={t(locale, 'contact.validationRequired')}
+  data-email-error={t(locale, 'contact.validationEmail')}
+>
+  <div class="contact-modal" role="dialog" aria-modal="true" aria-label={t(locale, 'contact.title')}>
+    <!-- Close button -->
+    <button class="contact-modal__close" id="contact-modal-close" aria-label="Close">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+      </svg>
+    </button>
+
+    <!-- Header -->
+    <h2 class="contact-modal__title">{t(locale, 'contact.title')}</h2>
+    <p class="contact-modal__subtitle">{t(locale, 'contact.subtitle')}</p>
+
+    <!-- Type Selector -->
+    <div class="contact-modal__types" id="contact-types">
+      <button class="contact-modal__type is-active" data-type="contact" type="button">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        {t(locale, 'contact.typeContact')}
+      </button>
+      <button class="contact-modal__type" data-type="case" type="button">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+        {t(locale, 'contact.typeCase')}
+      </button>
+      <button class="contact-modal__type" data-type="idea" type="button">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/></svg>
+        {t(locale, 'contact.typeIdea')}
+      </button>
+      <button class="contact-modal__type" data-type="request" type="button">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="12" x2="12" y1="18" y2="12"/><line x1="9" x2="15" y1="15" y2="15"/></svg>
+        {t(locale, 'contact.typeRequest')}
+      </button>
+    </div>
+
+    <!-- Form -->
+    <form class="contact-modal__form" id="contact-form" novalidate>
+      <!-- Name (always) -->
+      <div class="contact-modal__field">
+        <label class="contact-modal__label">
+          {t(locale, 'contact.name')} <span class="contact-modal__req">*</span>
+        </label>
+        <input type="text" name="name" class="contact-modal__input" placeholder={t(locale, 'contact.namePlaceholder')} required />
+        <span class="contact-modal__error"></span>
+      </div>
+
+      <!-- Email (always) -->
+      <div class="contact-modal__field">
+        <label class="contact-modal__label">
+          {t(locale, 'contact.email')} <span class="contact-modal__req">*</span>
+        </label>
+        <input type="email" name="email" class="contact-modal__input" placeholder={t(locale, 'contact.emailPlaceholder')} required />
+        <span class="contact-modal__error"></span>
+      </div>
+
+      <!-- Message (contact, idea) -->
+      <div class="contact-modal__field" data-show-for="contact idea">
+        <label class="contact-modal__label">
+          {t(locale, 'contact.message')} <span class="contact-modal__req">*</span>
+        </label>
+        <textarea name="message" class="contact-modal__textarea" rows="4" placeholder={t(locale, 'contact.messagePlaceholder')} required></textarea>
+        <span class="contact-modal__error"></span>
+      </div>
+
+      <!-- Practice Area (case, idea) -->
+      <div class="contact-modal__field" data-show-for="case idea">
+        <label class="contact-modal__label">
+          {t(locale, 'contact.insuranceSector')}
+          <span class="contact-modal__opt">{t(locale, 'contact.optional')}</span>
+        </label>
+        <input type="text" name="insuranceSector" class="contact-modal__input" placeholder={t(locale, 'contact.insuranceSectorPlaceholder')} />
+      </div>
+
+      <!-- Jurisdiction (case) -->
+      <div class="contact-modal__field" data-show-for="case">
+        <label class="contact-modal__label">
+          {t(locale, 'contact.jurisdiction')} <span class="contact-modal__req">*</span>
+        </label>
+        <input type="text" name="jurisdiction" class="contact-modal__input" placeholder={t(locale, 'contact.jurisdictionPlaceholder')} required />
+        <span class="contact-modal__error"></span>
+      </div>
+
+      <!-- Case Description (case) -->
+      <div class="contact-modal__field" data-show-for="case">
+        <label class="contact-modal__label">
+          {t(locale, 'contact.caseDescription')} <span class="contact-modal__req">*</span>
+        </label>
+        <textarea name="caseDescription" class="contact-modal__textarea" rows="4" placeholder={t(locale, 'contact.caseDescriptionPlaceholder')} required></textarea>
+        <span class="contact-modal__error"></span>
+      </div>
+
+      <!-- Topic (idea, request) -->
+      <div class="contact-modal__field" data-show-for="idea request">
+        <label class="contact-modal__label">
+          {t(locale, 'contact.topic')}
+          <span class="contact-modal__opt" data-opt-for="idea">{t(locale, 'contact.optional')}</span>
+          <span class="contact-modal__req" data-req-for="request">*</span>
+        </label>
+        <input type="text" name="topic" class="contact-modal__input" placeholder={t(locale, 'contact.topicPlaceholder')} />
+        <span class="contact-modal__error"></span>
+      </div>
+
+      <!-- Content Type (request) -->
+      <div class="contact-modal__field" data-show-for="request">
+        <label class="contact-modal__label">
+          {t(locale, 'contact.contentType')} <span class="contact-modal__req">*</span>
+        </label>
+        <select name="contentType" class="contact-modal__input contact-modal__select" required>
+          <option value="">{t(locale, 'contact.contentTypePlaceholder')}</option>
+          <option value="quickWin">{t(locale, 'contact.contentTypes.quickWin')}</option>
+          <option value="prompt">{t(locale, 'contact.contentTypes.prompt')}</option>
+          <option value="article">{t(locale, 'contact.contentTypes.article')}</option>
+          <option value="framework">{t(locale, 'contact.contentTypes.framework')}</option>
+          <option value="caseStudy">{t(locale, 'contact.contentTypes.caseStudy')}</option>
+          <option value="other">{t(locale, 'contact.contentTypes.other')}</option>
+        </select>
+        <span class="contact-modal__error"></span>
+      </div>
+
+      <!-- Submit -->
+      <button type="submit" class="btn btn--primary contact-modal__submit" id="contact-submit">
+        {t(locale, 'contact.submit')}
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- Contact Toast -->
+<div class="contact-toast" id="contact-toast" aria-live="polite"></div>
+
+<script>
+(function() {
+  const overlay = document.getElementById('contact-modal-overlay');
+  if (!overlay) return;
+
+  // Read i18n strings from data attributes
+  const locale = overlay.dataset.locale;
+  const successText = overlay.dataset.success;
+  const errorText = overlay.dataset.error;
+  const submittingText = overlay.dataset.submitting;
+  const submitText = overlay.dataset.submit;
+  const requiredText = overlay.dataset.required;
+  const emailText = overlay.dataset.emailError;
+
+  const modal = overlay.querySelector('.contact-modal');
+  const closeBtn = document.getElementById('contact-modal-close');
+  const form = document.getElementById('contact-form') as HTMLFormElement;
+  const submitBtn = document.getElementById('contact-submit') as HTMLButtonElement;
+  const toast = document.getElementById('contact-toast');
+  const typeButtons = document.querySelectorAll('.contact-modal__type');
+
+  let currentType = 'contact';
+  let lastTrigger: HTMLElement | null = null;
+
+  // === Type switching ===
+  function switchType(type: string) {
+    currentType = type;
+    typeButtons.forEach(btn => {
+      btn.classList.toggle('is-active', (btn as HTMLElement).dataset.type === type);
+    });
+    // Show/hide fields
+    form.querySelectorAll('.contact-modal__field[data-show-for]').forEach(field => {
+      const el = field as HTMLElement;
+      const types = el.dataset.showFor!.split(' ');
+      const visible = types.includes(type);
+      el.style.display = visible ? '' : 'none';
+      // Disable hidden required inputs
+      el.querySelectorAll('[required]').forEach(input => {
+        const inp = input as HTMLElement;
+        if (!visible) {
+          inp.removeAttribute('required');
+          inp.dataset.wasRequired = 'true';
+        } else if (inp.dataset.wasRequired) {
+          inp.setAttribute('required', '');
+        }
+      });
+    });
+    // Handle topic field: required for request, optional for idea
+    const topicReq = form.querySelector('[data-req-for="request"]') as HTMLElement | null;
+    const topicOpt = form.querySelector('[data-opt-for="idea"]') as HTMLElement | null;
+    if (topicReq) topicReq.style.display = type === 'request' ? '' : 'none';
+    if (topicOpt) topicOpt.style.display = type === 'idea' ? '' : 'none';
+    const topicInput = form.querySelector('[name="topic"]');
+    if (topicInput) {
+      if (type === 'request') {
+        topicInput.setAttribute('required', '');
+      } else {
+        topicInput.removeAttribute('required');
+      }
+    }
+    // Clear errors
+    form.querySelectorAll('.contact-modal__error').forEach(el => el.textContent = '');
+    form.querySelectorAll('.contact-modal__input, .contact-modal__textarea, .contact-modal__select').forEach(el => el.classList.remove('is-invalid'));
+  }
+
+  typeButtons.forEach(btn => {
+    btn.addEventListener('click', () => switchType((btn as HTMLElement).dataset.type!));
+  });
+
+  // === Open / Close ===
+  function openContactModal(trigger: HTMLElement) {
+    lastTrigger = trigger;
+    overlay.classList.add('is-open');
+    overlay.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    closeBtn?.focus();
+    modal?.addEventListener('keydown', trapFocus);
+    switchType('contact');
+    form.reset();
+  }
+
+  function closeContactModal() {
+    overlay.classList.remove('is-open');
+    overlay.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    modal?.removeEventListener('keydown', trapFocus);
+    if (lastTrigger) {
+      lastTrigger.focus();
+      lastTrigger = null;
+    }
+  }
+
+  function trapFocus(e: Event) {
+    const ke = e as KeyboardEvent;
+    if (ke.key !== 'Tab') return;
+    const focusable = modal!.querySelectorAll('button, input, textarea, select');
+    const visible = [...focusable].filter(el => (el as HTMLElement).offsetParent !== null) as HTMLElement[];
+    const first = visible[0];
+    const last = visible[visible.length - 1];
+    if (ke.shiftKey && document.activeElement === first) {
+      ke.preventDefault();
+      last.focus();
+    } else if (!ke.shiftKey && document.activeElement === last) {
+      ke.preventDefault();
+      first.focus();
+    }
+  }
+
+  // Triggers
+  document.querySelectorAll('.contact-trigger').forEach(trigger => {
+    trigger.addEventListener('click', (e) => {
+      e.preventDefault();
+      openContactModal(trigger as HTMLElement);
+    });
+  });
+
+  closeBtn?.addEventListener('click', closeContactModal);
+
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) closeContactModal();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && overlay.classList.contains('is-open')) {
+      closeContactModal();
+    }
+  });
+
+  // === Validation ===
+  function validate() {
+    let valid = true;
+    form.querySelectorAll('.contact-modal__error').forEach(el => el.textContent = '');
+    form.querySelectorAll('.contact-modal__input, .contact-modal__textarea, .contact-modal__select').forEach(el => el.classList.remove('is-invalid'));
+
+    const visibleFields = form.querySelectorAll('.contact-modal__field');
+    visibleFields.forEach(field => {
+      if ((field as HTMLElement).style.display === 'none') return;
+      const input = field.querySelector('[required]') as HTMLInputElement | null;
+      if (!input) return;
+      const errorEl = field.querySelector('.contact-modal__error');
+      if (!input.value.trim()) {
+        input.classList.add('is-invalid');
+        if (errorEl) errorEl.textContent = requiredText!;
+        valid = false;
+      } else if (input.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value)) {
+        input.classList.add('is-invalid');
+        if (errorEl) errorEl.textContent = emailText!;
+        valid = false;
+      }
+    });
+    return valid;
+  }
+
+  // === Submit ===
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!validate()) return;
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = submittingText!;
+
+    const formData = new FormData(form);
+    const data = {
+      type: currentType,
+      locale: locale,
+      name: formData.get('name'),
+      email: formData.get('email'),
+      message: formData.get('message') || undefined,
+      insuranceSector: formData.get('insuranceSector') || undefined,
+      jurisdiction: formData.get('jurisdiction') || undefined,
+      caseDescription: formData.get('caseDescription') || undefined,
+      topic: formData.get('topic') || undefined,
+      contentType: formData.get('contentType') || undefined,
+    };
+
+    try {
+      const { submitForm } = await import('@/lib/submissions');
+      await submitForm(data);
+      showToast(successText!, 'success');
+      form.reset();
+      setTimeout(closeContactModal, 1500);
+    } catch (err) {
+      console.error('[ContactModal] submit failed:', err);
+      showToast(errorText!, 'error');
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = submitText!;
+    }
+  });
+
+  function showToast(msg: string, type: string) {
+    if (!toast) return;
+    toast.textContent = msg;
+    toast.className = 'contact-toast is-visible' + (type === 'error' ? ' is-error' : '');
+    setTimeout(() => {
+      toast.classList.remove('is-visible');
+    }, 3000);
+  }
+})();
+</script>

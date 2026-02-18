@@ -1,0 +1,428 @@
+/* =============================================
+   Modern Theme — Clean, Contemporary Insurance
+   Scoped entirely to [data-theme="modern"]
+   ============================================= */
+
+/* === Custom Property Overrides === */
+[data-theme="modern"] {
+  /* Typography */
+  --font-heading: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-accent: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Surfaces — cooler, flatter */
+  --color-warm-neutral: #F5F5F3;
+  --surface-parchment: #F5F5F3;
+  --surface-card: #ffffff;
+  --surface-elevated: #FAFAF9;
+
+  /* Text — crisper contrast */
+  --text-primary: #111111;
+  --text-secondary: #555555;
+  --text-muted: #888888;
+
+  /* Borders — neutral gray */
+  --border-light: #E5E5E5;
+  --border-default: #D4D4D4;
+  --border-dark: #A3A3A3;
+
+  /* Radii — sharper */
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 6px;
+  --radius-xl: 8px;
+  --radius-2xl: 12px;
+
+  /* Shadows — flatter */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 2px 4px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 4px 8px rgba(0, 0, 0, 0.06);
+  --shadow-xl: 0 8px 16px rgba(0, 0, 0, 0.06);
+  --shadow-glow: none;
+
+  /* Transitions — faster, no spring */
+  --transition-fast: 120ms ease-out;
+  --transition-base: 200ms ease-out;
+  --transition-slow: 300ms ease-out;
+  --transition-spring: 300ms ease-out;
+
+  /* Container — tighter */
+  --container-xl: 1080px;
+}
+
+/* === Headings === */
+[data-theme="modern"] h1,
+[data-theme="modern"] h2,
+[data-theme="modern"] h3,
+[data-theme="modern"] h4 {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  color: #111111;
+  letter-spacing: -0.02em;
+}
+
+/* Headings on dark backgrounds must stay white */
+[data-theme="modern"] .hero h1,
+[data-theme="modern"] .hero h2,
+[data-theme="modern"] .hero h3,
+[data-theme="modern"] .hero h4,
+[data-theme="modern"] .section--primary h1,
+[data-theme="modern"] .section--primary h2,
+[data-theme="modern"] .section--primary h3,
+[data-theme="modern"] .section--primary h4 {
+  color: #ffffff;
+}
+
+/* === Blockquotes === */
+[data-theme="modern"] blockquote {
+  background: transparent;
+  border-radius: 0;
+  border-left: 3px solid var(--color-primary);
+}
+
+/* === Cards === */
+[data-theme="modern"] .card {
+  border-radius: var(--radius-lg);
+  transition: border-color var(--transition-base);
+}
+
+[data-theme="modern"] .card:hover {
+  box-shadow: var(--shadow-md);
+  transform: none;
+  border-color: var(--border-dark);
+}
+
+[data-theme="modern"] .card--flat {
+  background: var(--surface-parchment);
+}
+
+[data-theme="modern"] .card--flat:hover {
+  border-color: transparent;
+}
+
+/* === Buttons === */
+[data-theme="modern"] .btn {
+  border-radius: 0;
+  border-width: 1.5px;
+  font-size: var(--text-sm);
+  letter-spacing: 0.02em;
+}
+
+/* === Badges — slight rounding instead of pill === */
+[data-theme="modern"] .badge {
+  border-radius: 3px;
+}
+
+/* === Tags — slight rounding === */
+[data-theme="modern"] .tag {
+  border-radius: 3px;
+}
+
+/* === Filter Chips === */
+[data-theme="modern"] .filter-chip {
+  background: transparent;
+  border: 1.5px solid var(--border-default);
+  border-radius: 2px;
+  color: var(--text-secondary);
+}
+
+[data-theme="modern"] .filter-chip:hover {
+  background: rgba(27, 42, 74, 0.05);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+[data-theme="modern"] .filter-chip.is-active {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #ffffff;
+}
+
+/* === Sections — more breathing room === */
+[data-theme="modern"] .section {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+
+/* === Grid gaps — wider === */
+[data-theme="modern"] .grid {
+  gap: 2rem;
+}
+
+/* === Animations — subtler === */
+[data-theme="modern"] .reveal {
+  transform: translateY(12px);
+  transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+}
+
+[data-theme="modern"] .reveal-stagger > * {
+  transform: translateY(12px);
+  transition: opacity 0.35s ease-out, transform 0.35s ease-out;
+}
+
+[data-theme="modern"] .slide-up {
+  animation-duration: 0.4s;
+  animation-timing-function: ease-out;
+}
+
+/* === Accordion === */
+[data-theme="modern"] .accordion {
+  border-radius: var(--radius-md);
+}
+
+/* === Callouts === */
+[data-theme="modern"] .callout {
+  border-radius: var(--radius-md);
+}
+
+/* === Hero section — subtle tuning === */
+[data-theme="modern"] .hero {
+  padding-top: 6rem;
+  padding-bottom: 5rem;
+}
+
+/* === Navigation === */
+[data-theme="modern"] .dropdown__menu {
+  border-radius: var(--radius-md);
+}
+
+/* === Sources panel === */
+[data-theme="modern"] .sources-panel {
+  border-radius: 0;
+}
+
+/* === Search box === */
+[data-theme="modern"] .search-box {
+  border-radius: var(--radius-md);
+}
+
+/* === Share Modal === */
+[data-theme="modern"] .share-modal {
+  border-radius: 4px;
+}
+
+[data-theme="modern"] .share-platform {
+  border-radius: 2px;
+}
+
+[data-theme="modern"] .share-modal__preview {
+  border-radius: 2px;
+}
+
+[data-theme="modern"] .share-modal__copy-link {
+  border-radius: 2px;
+}
+
+/* === Prompt Builder === */
+[data-theme="modern"] .prompt-builder__option {
+  border-radius: 3px;
+  border-width: 1.5px;
+}
+
+[data-theme="modern"] .prompt-builder__option.is-selected {
+  box-shadow: 0 0 0 2px rgba(0, 180, 216, 0.12);
+}
+
+[data-theme="modern"] .prompt-builder__step-dot {
+  border-width: 1.5px;
+}
+
+[data-theme="modern"] .prompt-builder__step-dot.is-active {
+  box-shadow: none;
+}
+
+[data-theme="modern"] .prompt-builder__step-dot.is-completed:hover {
+  box-shadow: none;
+}
+
+[data-theme="modern"] .prompt-builder__output {
+  border-radius: 4px;
+}
+
+[data-theme="modern"] .prompt-builder__input,
+[data-theme="modern"] .prompt-builder__textarea {
+  border-radius: 3px;
+}
+
+[data-theme="modern"] .prompt-builder__input:focus,
+[data-theme="modern"] .prompt-builder__textarea:focus {
+  box-shadow: 0 0 0 2px rgba(0, 180, 216, 0.12);
+}
+
+[data-theme="modern"] .prompt-builder__checkbox {
+  border-radius: 3px;
+  border-width: 1.5px;
+}
+
+[data-theme="modern"] .prompt-builder__checkbox-box {
+  border-radius: 2px;
+}
+
+[data-theme="modern"] .prompt-builder__edit-steps {
+  border-radius: 4px;
+}
+
+[data-theme="modern"] .prompt-builder__edit-step-btn {
+  border-radius: 2px;
+}
+
+/* === AI Readiness Assessment === */
+[data-theme="modern"] .ai-readiness__progress-num {
+  border-width: 1.5px;
+}
+
+[data-theme="modern"] .ai-readiness__progress-step.is-active .ai-readiness__progress-num {
+  box-shadow: none;
+}
+
+[data-theme="modern"] .ai-readiness__scale-btn {
+  border-radius: 3px;
+  border-width: 1.5px;
+}
+
+[data-theme="modern"] .ai-readiness__scale-btn.is-selected {
+  box-shadow: 0 0 0 2px rgba(0, 180, 216, 0.12);
+}
+
+[data-theme="modern"] .ai-readiness__dimension-bar {
+  border-radius: 2px;
+}
+
+[data-theme="modern"] .ai-readiness__dimension-fill {
+  border-radius: 2px;
+}
+
+[data-theme="modern"] .ai-readiness__level-tag {
+  border-radius: 3px;
+}
+
+[data-theme="modern"] .ai-readiness__rec-card {
+  border-radius: var(--radius-md);
+}
+
+[data-theme="modern"] .ai-readiness__insights-card {
+  border-radius: var(--radius-md);
+}
+
+/* === AI Help Calculator === */
+[data-theme="modern"] .ai-calc__progress-bar {
+  border-radius: 2px;
+}
+
+[data-theme="modern"] .ai-calc__progress-fill {
+  border-radius: 2px;
+}
+
+[data-theme="modern"] .ai-calc__option {
+  border-radius: 4px;
+  border-width: 1.5px;
+}
+
+[data-theme="modern"] .ai-calc__option:hover {
+  transform: none;
+  box-shadow: var(--shadow-sm);
+}
+
+[data-theme="modern"] .ai-calc__option.is-selected {
+  box-shadow: 0 0 0 2px rgba(0, 180, 216, 0.12);
+}
+
+[data-theme="modern"] .ai-calc__score-section,
+[data-theme="modern"] .ai-calc__risk-section,
+[data-theme="modern"] .ai-calc__rec-section {
+  border-radius: 4px;
+}
+
+[data-theme="modern"] .ai-calc__score-track {
+  border-radius: 2px;
+}
+
+[data-theme="modern"] .ai-calc__score-marker {
+  border-width: 2px;
+  box-shadow: var(--shadow-sm);
+}
+
+[data-theme="modern"] .ai-calc__prompt {
+  border-radius: 4px;
+}
+
+[data-theme="modern"] .ai-calc__link {
+  border-radius: 2px;
+}
+
+/* === AI Roadmap Builder === */
+[data-theme="modern"] .ai-roadmap__step-dot {
+  border-width: 1.5px;
+}
+
+[data-theme="modern"] .ai-roadmap__step-dot.is-active {
+  box-shadow: none;
+}
+
+[data-theme="modern"] .ai-roadmap__step-dot.is-completed:hover {
+  box-shadow: none;
+}
+
+[data-theme="modern"] .ai-roadmap__option {
+  border-radius: 3px;
+  border-width: 1.5px;
+}
+
+[data-theme="modern"] .ai-roadmap__option:hover {
+  box-shadow: var(--shadow-sm);
+}
+
+[data-theme="modern"] .ai-roadmap__option.is-selected {
+  box-shadow: 0 0 0 2px rgba(0, 180, 216, 0.12);
+}
+
+[data-theme="modern"] .ai-roadmap__checkbox {
+  border-radius: 3px;
+  border-width: 1.5px;
+}
+
+[data-theme="modern"] .ai-roadmap__checkbox-box {
+  border-radius: 2px;
+}
+
+[data-theme="modern"] .ai-roadmap__stage {
+  border-radius: 4px;
+}
+
+[data-theme="modern"] .ai-roadmap__stage:hover {
+  box-shadow: var(--shadow-sm);
+  transform: none;
+}
+
+[data-theme="modern"] .ai-roadmap__stage-num {
+  border-radius: 3px;
+}
+
+[data-theme="modern"] .ai-roadmap__checkpoint {
+  border-radius: 3px;
+}
+
+/* === Contact Modal === */
+[data-theme="modern"] .contact-modal {
+  border-radius: 4px;
+}
+
+[data-theme="modern"] .contact-modal__type {
+  border-radius: 2px;
+}
+
+[data-theme="modern"] .contact-modal__input,
+[data-theme="modern"] .contact-modal__textarea,
+[data-theme="modern"] .contact-modal__select {
+  border-radius: 3px;
+}
+
+[data-theme="modern"] .contact-modal__input:focus,
+[data-theme="modern"] .contact-modal__textarea:focus,
+[data-theme="modern"] .contact-modal__select:focus {
+  box-shadow: 0 0 0 2px rgba(0, 180, 216, 0.12);
+}
+
+/* === Like Button === */
+[data-theme="modern"] .like-btn {
+  border-radius: 3px;
+}

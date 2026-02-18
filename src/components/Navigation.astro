@@ -1,0 +1,185 @@
+---
+import LanguageSelector from './LanguageSelector.astro';
+import Icon from './Icon.astro';
+import { t, getLocalePath, type Locale } from '../i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const p = (path: string) => getLocalePath(locale, path);
+---
+
+<header class="site-header">
+  <div class="container">
+    <!-- Logo -->
+    <a href={p('/')} class="logo" style="text-decoration: none; display: block;">
+      <span style="font-family: var(--font-heading); font-size: var(--text-xl); font-weight: var(--font-extrabold); color: var(--color-primary);">
+        Insureversia<span style="color: var(--color-secondary);">.</span>
+      </span>
+    </a>
+
+    <!-- Desktop Nav -->
+    <nav class="nav nav--desktop" aria-label="Main navigation">
+      <!-- Explore -->
+      <div class="dropdown">
+        <a href={p('/explore/new-frontiers/')} class="nav__link">
+          {t(locale, 'nav.explore')}
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9" /></svg>
+        </a>
+        <div class="dropdown__menu">
+          <a href={p('/explore/new-frontiers/')} class="dropdown__item">{t(locale, 'nav.newFrontiers')}</a>
+          <a href={p('/explore/ai-impact/')} class="dropdown__item">{t(locale, 'nav.aiImpact')}</a>
+          <a href={p('/explore/challenges/')} class="dropdown__item">{t(locale, 'nav.challenges')}</a>
+          <a href={p('/practice/applications/')} class="dropdown__item">{t(locale, 'nav.applications')}</a>
+        </div>
+      </div>
+
+      <!-- Learn -->
+      <div class="dropdown">
+        <a href={p('/learn/ai-101/')} class="nav__link">
+          {t(locale, 'nav.learn')}
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9" /></svg>
+        </a>
+        <div class="dropdown__menu">
+          <a href={p('/learn/ai-101/')} class="dropdown__item">{t(locale, 'nav.ai101')}</a>
+          <a href={p('/learn/what-to-do/')} class="dropdown__item">{t(locale, 'nav.whatToDo')}</a>
+          <a href={p('/learn/what-not-to-do/')} class="dropdown__item">{t(locale, 'nav.whatNotToDo')}</a>
+          <a href={p('/learn/prompt-engineering/')} class="dropdown__item">{t(locale, 'nav.promptEngineering')}</a>
+          <a href={p('/learn/program/')} class="dropdown__item">{t(locale, 'nav.learningProgram')}</a>
+          <a href={p('/learn/program/case-studies/')} class="dropdown__item">{t(locale, 'nav.caseStudies')}</a>
+        </div>
+      </div>
+
+      <!-- Practice -->
+      <div class="dropdown">
+        <a href={p('/practice/quick-wins/')} class="nav__link">
+          {t(locale, 'nav.practice')}
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9" /></svg>
+        </a>
+        <div class="dropdown__menu">
+          <a href={p('/practice/quick-wins/')} class="dropdown__item">{t(locale, 'nav.quickWins')}</a>
+          <a href={p('/practice/prompt-library/')} class="dropdown__item">{t(locale, 'nav.promptLibrary')}</a>
+          <a href={p('/practice/prompt-builder/')} class="dropdown__item">{t(locale, 'nav.promptBuilder')}</a>
+          <a href={p('/practice/ai-readiness/')} class="dropdown__item">{t(locale, 'nav.aiReadiness')}</a>
+          <a href={p('/practice/ai-help-calculator/')} class="dropdown__item">{t(locale, 'nav.aiCalculator')}</a>
+          <a href={p('/practice/ai-roadmap/')} class="dropdown__item">{t(locale, 'nav.aiRoadmap')}</a>
+          <a href={p('/practice/local-ai/')} class="dropdown__item">{t(locale, 'nav.localAi')}</a>
+        </div>
+      </div>
+
+      <!-- Resources -->
+      <div class="dropdown">
+        <a href={p('/resources/faq/')} class="nav__link">
+          {t(locale, 'nav.resources')}
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9" /></svg>
+        </a>
+        <div class="dropdown__menu">
+          <a href={p('/resources/faq/')} class="dropdown__item">{t(locale, 'nav.faq')}</a>
+          <a href={p('/resources/glossary/')} class="dropdown__item">{t(locale, 'nav.glossary')}</a>
+          <a href={p('/resources/success-stories/')} class="dropdown__item">{t(locale, 'nav.successStories')}</a>
+        </div>
+      </div>
+
+      <a href={p('/about/')} class="nav__link">{t(locale, 'nav.about')}</a>
+    </nav>
+
+    <!-- Right Actions -->
+    <div class="flex gap-2" style="align-items: center;">
+      <!-- Search Button -->
+      <button class="btn btn--icon" id="search-btn" aria-label={t(locale, 'nav.search')} style="background:none;border:none;color:var(--color-primary);cursor:pointer;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" />
+        </svg>
+      </button>
+
+      <!-- Contact Button -->
+      <button class="btn btn--icon contact-trigger" aria-label={t(locale, 'contact.trigger')} style="background:none;border:none;color:var(--color-primary);cursor:pointer;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      </button>
+
+      <!-- Share Button -->
+      <button class="btn btn--icon share-trigger" aria-label={t(locale, 'share.trigger')} style="background:none;border:none;color:var(--color-primary);cursor:pointer;">
+        <Icon name="share-2" size={20} />
+      </button>
+
+      <LanguageSelector locale={locale} />
+
+      <!-- Mobile Menu Toggle -->
+      <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="18" x2="21" y2="18" />
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile Navigation -->
+<nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation">
+  <div class="mobile-nav__header">
+    <span style="font-family: var(--font-heading); font-size: var(--text-xl); font-weight: var(--font-extrabold); color: var(--color-primary);">
+      Insureversia<span style="color: var(--color-secondary);">.</span>
+    </span>
+    <button class="btn btn--icon" id="mobile-nav-close" aria-label="Close menu" style="background:none;border:none;cursor:pointer;color:var(--color-primary);">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+      </svg>
+    </button>
+  </div>
+
+  <a href={p('/')} class="mobile-nav__link">{t(locale, 'nav.home')}</a>
+
+  <div class="mobile-nav__link">{t(locale, 'nav.explore')}</div>
+  <div class="mobile-nav__sub">
+    <a href={p('/explore/new-frontiers/')} class="mobile-nav__link">{t(locale, 'nav.newFrontiers')}</a>
+    <a href={p('/explore/ai-impact/')} class="mobile-nav__link">{t(locale, 'nav.aiImpact')}</a>
+    <a href={p('/explore/challenges/')} class="mobile-nav__link">{t(locale, 'nav.challenges')}</a>
+    <a href={p('/practice/applications/')} class="mobile-nav__link">{t(locale, 'nav.applications')}</a>
+  </div>
+
+  <div class="mobile-nav__link">{t(locale, 'nav.learn')}</div>
+  <div class="mobile-nav__sub">
+    <a href={p('/learn/ai-101/')} class="mobile-nav__link">{t(locale, 'nav.ai101')}</a>
+    <a href={p('/learn/what-to-do/')} class="mobile-nav__link">{t(locale, 'nav.whatToDo')}</a>
+    <a href={p('/learn/what-not-to-do/')} class="mobile-nav__link">{t(locale, 'nav.whatNotToDo')}</a>
+    <a href={p('/learn/prompt-engineering/')} class="mobile-nav__link">{t(locale, 'nav.promptEngineering')}</a>
+    <a href={p('/learn/program/')} class="mobile-nav__link">{t(locale, 'nav.learningProgram')}</a>
+    <a href={p('/learn/program/case-studies/')} class="mobile-nav__link">{t(locale, 'nav.caseStudies')}</a>
+  </div>
+
+  <div class="mobile-nav__link">{t(locale, 'nav.practice')}</div>
+  <div class="mobile-nav__sub">
+    <a href={p('/practice/quick-wins/')} class="mobile-nav__link">{t(locale, 'nav.quickWins')}</a>
+    <a href={p('/practice/prompt-library/')} class="mobile-nav__link">{t(locale, 'nav.promptLibrary')}</a>
+    <a href={p('/practice/prompt-builder/')} class="mobile-nav__link">{t(locale, 'nav.promptBuilder')}</a>
+    <a href={p('/practice/ai-readiness/')} class="mobile-nav__link">{t(locale, 'nav.aiReadiness')}</a>
+    <a href={p('/practice/ai-help-calculator/')} class="mobile-nav__link">{t(locale, 'nav.aiCalculator')}</a>
+    <a href={p('/practice/ai-roadmap/')} class="mobile-nav__link">{t(locale, 'nav.aiRoadmap')}</a>
+    <a href={p('/practice/local-ai/')} class="mobile-nav__link">{t(locale, 'nav.localAi')}</a>
+  </div>
+
+  <div class="mobile-nav__link">{t(locale, 'nav.resources')}</div>
+  <div class="mobile-nav__sub">
+    <a href={p('/resources/faq/')} class="mobile-nav__link">{t(locale, 'nav.faq')}</a>
+    <a href={p('/resources/glossary/')} class="mobile-nav__link">{t(locale, 'nav.glossary')}</a>
+    <a href={p('/resources/success-stories/')} class="mobile-nav__link">{t(locale, 'nav.successStories')}</a>
+  </div>
+
+  <a href={p('/about/')} class="mobile-nav__link">{t(locale, 'nav.about')}</a>
+</nav>
+
+<script>
+  const mobileBtn = document.getElementById('mobile-menu-btn');
+  const mobileNav = document.getElementById('mobile-nav');
+  const mobileClose = document.getElementById('mobile-nav-close');
+
+  mobileBtn?.addEventListener('click', () => mobileNav?.classList.add('is-open'));
+  mobileClose?.addEventListener('click', () => mobileNav?.classList.remove('is-open'));
+
+  document.getElementById('search-btn')?.addEventListener('click', () => {
+    document.getElementById('search-overlay')?.classList.add('is-open');
+    (document.getElementById('search-input') as HTMLInputElement)?.focus();
+  });
+</script>

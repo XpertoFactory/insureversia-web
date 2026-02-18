@@ -1,0 +1,92 @@
+---
+import DifficultyBadge from './DifficultyBadge.astro';
+import InsuranceSectorTag from './InsuranceSectorTag.astro';
+import type { Locale } from '../i18n';
+
+interface Props {
+  title: string;
+  description: string;
+  time: number;
+  difficulty: 'beginner' | 'intermediate' | 'advanced';
+  insuranceSector: string;
+  aiTool: string;
+  prompt?: string;
+  tips?: string[];
+  cautions?: string[];
+  slug?: string;
+  locale: Locale;
+}
+
+const { title, description, time, difficulty, insuranceSector, aiTool, prompt, tips, cautions, slug, locale } = Astro.props;
+const minuteLabel = locale === 'es' ? 'min' : 'min';
+const learnMoreLabel = locale === 'es' ? 'Ver más' : 'Learn more';
+const collapseLabel = locale === 'es' ? 'Ver menos' : 'Show less';
+const copyLabel = locale === 'es' ? 'Copiar Prompt' : 'Copy Prompt';
+const copiedLabel = locale === 'es' ? '¡Copiado!' : 'Copied!';
+const tipsLabel = locale === 'es' ? 'Consejos' : 'Tips';
+const cautionsLabel = locale === 'es' ? 'Precauciones' : 'Cautions';
+---
+
+<article class="card qw-card">
+  <div class="card__meta">
+    <DifficultyBadge level={difficulty} locale={locale} />
+    <InsuranceSectorTag sector={insuranceSector} />
+    <span class="tag tag--category">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
+      {time} {minuteLabel}
+    </span>
+  </div>
+  <h3 class="card__title">{title}</h3>
+  <p class="card__body line-clamp-3 qw-desc">{description}</p>
+  <div class="card__footer" style="display: flex; align-items: center; justify-content: space-between;">
+    <span class="text-xs text-muted">{aiTool}</span>
+    {prompt ? (
+      <button class="btn btn--primary btn--sm qw-toggle" data-label-more={`${learnMoreLabel} →`} data-label-less={`← ${collapseLabel}`}>{learnMoreLabel} →</button>
+    ) : slug ? (
+      <a href={slug} class="btn btn--primary btn--sm">{learnMoreLabel} →</a>
+    ) : null}
+  </div>
+
+  {/* Expandable detail section (only when prompt is provided) */}
+  {prompt && (
+    <div class="qw-detail" style="display: none; margin-top: var(--space-6); padding-top: var(--space-6); border-top: 1px solid var(--border-light);">
+      {/* Prompt block */}
+      <div style="margin-bottom: var(--space-5);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-2);">
+          <h4 style="margin: 0; font-size: var(--text-sm); text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted);">Prompt</h4>
+          <button class="btn btn--sm qw-copy" data-prompt={prompt} data-label-copy={copyLabel} data-label-copied={copiedLabel} style="font-size: var(--text-xs);">{copyLabel}</button>
+        </div>
+        <pre style="background: var(--surface-parchment); color: var(--text-primary); border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: var(--space-4); white-space: pre-wrap; word-break: break-word; font-size: var(--text-sm); line-height: var(--leading-relaxed); margin: 0;">{prompt}</pre>
+      </div>
+
+      {/* Tips */}
+      {tips && tips.length > 0 && (
+        <div style="margin-bottom: var(--space-5);">
+          <h4 style="margin-bottom: var(--space-2); font-size: var(--text-sm); text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-success);">{tipsLabel}</h4>
+          <ul style="padding-left: var(--space-5); margin-bottom: 0;">
+            {tips.map(tip => (
+              <li style="margin-bottom: var(--space-2); line-height: var(--leading-relaxed); font-size: var(--text-sm);">{tip}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {/* Cautions */}
+      {cautions && cautions.length > 0 && (
+        <div>
+          <h4 style="margin-bottom: var(--space-2); font-size: var(--text-sm); text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-error);">{cautionsLabel}</h4>
+          <ul style="padding-left: var(--space-5); margin-bottom: 0;">
+            {cautions.map(caution => (
+              <li style="margin-bottom: var(--space-2); line-height: var(--leading-relaxed); font-size: var(--text-sm);">{caution}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {/* Body content slot */}
+      <div style="margin-top: var(--space-5); line-height: var(--leading-relaxed);">
+        <slot />
+      </div>
+    </div>
+  )}
+</article>

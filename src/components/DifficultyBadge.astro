@@ -1,0 +1,16 @@
+---
+interface Props {
+  level: 'beginner' | 'intermediate' | 'advanced';
+  locale?: string;
+}
+
+const { level, locale = 'en' } = Astro.props;
+
+const labels: Record<string, Record<string, string>> = {
+  beginner: { en: 'Beginner', es: 'Principiante' },
+  intermediate: { en: 'Intermediate', es: 'Intermedio' },
+  advanced: { en: 'Advanced', es: 'Avanzado' },
+};
+---
+
+<span class={`badge badge--${level}`}>{labels[level][locale] || labels[level]['en']}</span>

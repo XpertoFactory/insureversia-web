@@ -1,0 +1,16 @@
+{
+  "name": "Insureversia — AI in Insurance",
+  "short_name": "Insureversia",
+  "description": "Your independent guide to AI in the insurance industry.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0F2B46",
+  "icons": [
+    {
+      "src": "/assets/logos/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

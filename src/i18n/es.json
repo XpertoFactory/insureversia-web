@@ -1,0 +1,121 @@
+{
+  "site": {
+    "title": "Insureversia — IA en Seguros",
+    "tagline": "Seguros. Reinventados. Verificados. Potenciados con IA.",
+    "description": "Tu guía independiente de IA en la industria de seguros. Prompts prácticos, orientación ética y recursos multilingües para profesionales de seguros."
+  },
+  "nav": {
+    "home": "Inicio",
+    "explore": "Explorar",
+    "learn": "Aprender",
+    "practice": "Practicar",
+    "resources": "Recursos",
+    "about": "Acerca de",
+    "search": "Buscar",
+    "newFrontiers": "Nuevas Fronteras",
+    "aiImpact": "Impacto de la IA",
+    "challenges": "Desafíos",
+    "applications": "Aplicaciones",
+    "ai101": "IA 101",
+    "whatToDo": "Qué Hacer",
+    "whatNotToDo": "Qué No Hacer",
+    "promptEngineering": "Ingeniería de Prompts",
+    "learningProgram": "Programa de Aprendizaje",
+    "caseStudies": "Casos de Estudio",
+    "quickWins": "Victorias Rápidas",
+    "promptLibrary": "Biblioteca de Prompts",
+    "promptBuilder": "Constructor de Prompts",
+    "aiReadiness": "Preparación para IA",
+    "aiCalculator": "Calculadora de IA",
+    "aiRoadmap": "Hoja de Ruta de IA",
+    "localAi": "IA Local",
+    "faq": "Preguntas Frecuentes",
+    "glossary": "Glosario",
+    "successStories": "Casos de Éxito"
+  },
+  "hero": {
+    "headline": "La IA Está Transformando los Seguros. ¿Estás Listo?",
+    "subline": "Tu guía práctica e independiente para integrar la inteligencia artificial en las operaciones de seguros — de manera responsable, eficiente y con confianza.",
+    "ctaPrimary": "Comenzar a Aprender",
+    "ctaSecondary": "Probar una Victoria Rápida"
+  },
+  "footer": {
+    "tagline": "Tu guía independiente de IA en la industria de seguros.",
+    "explore": "Explorar",
+    "learn": "Aprender",
+    "practice": "Practicar",
+    "resources": "Recursos",
+    "newsletter": "Boletín",
+    "newsletterDesc": "Recibe actualizaciones sobre IA en seguros, nuevas herramientas y mejores prácticas.",
+    "emailPlaceholder": "tu@email.com",
+    "subscribe": "Suscribirse",
+    "copyright": "Insureversia. Curado por Carlos Miranda Levy.",
+    "disclaimer": "Insureversia es un recurso educativo. El contenido no constituye asesoría profesional de seguros."
+  },
+  "search": {
+    "placeholder": "Buscar en Insureversia...",
+    "shortcut": "Ctrl+K",
+    "noResults": "No se encontraron resultados"
+  },
+  "sources": {
+    "title": "Fuentes",
+    "close": "Cerrar"
+  },
+  "share": {
+    "trigger": "Compartir",
+    "title": "Compartir esta página",
+    "copyLink": "Copiar enlace",
+    "copied": "¡Copiado!",
+    "nativeShare": "Compartir...",
+    "platforms": {
+      "twitter": "X (Twitter)",
+      "facebook": "Facebook",
+      "linkedin": "LinkedIn",
+      "whatsapp": "WhatsApp",
+      "email": "Correo"
+    }
+  },
+  "contact": {
+    "trigger": "Contacto",
+    "title": "Contáctanos",
+    "subtitle": "Elige cómo quieres comunicarte.",
+    "typeContact": "Contacto",
+    "typeCase": "Enviar un Caso",
+    "typeIdea": "Compartir una Idea",
+    "typeRequest": "Solicitar Contenido",
+    "name": "Nombre",
+    "namePlaceholder": "Tu nombre",
+    "email": "Correo",
+    "emailPlaceholder": "tu@email.com",
+    "message": "Mensaje",
+    "messagePlaceholder": "¿Cómo podemos ayudarte?",
+    "insuranceSector": "Sector de Seguros",
+    "insuranceSectorPlaceholder": "ej., Seguros de Salud, Reclamaciones...",
+    "jurisdiction": "Jurisdicción",
+    "jurisdictionPlaceholder": "ej., Estados Unidos, UE, Colombia...",
+    "submit": "Enviar",
+    "submitting": "Enviando...",
+    "success": "¡Gracias! Tu mensaje ha sido enviado.",
+    "error": "Algo salió mal. Por favor intenta de nuevo.",
+    "validationRequired": "Este campo es obligatorio.",
+    "validationEmail": "Por favor ingresa un correo válido."
+  },
+  "difficulty": {
+    "beginner": "Principiante",
+    "intermediate": "Intermedio",
+    "advanced": "Avanzado"
+  },
+  "sections": {
+    "insuranceSectors": "Sectores de Seguros",
+    "insuranceSectorsDesc": "Descubre cómo la IA está transformando cada sector de la industria de seguros.",
+    "quickWins": "Victorias Rápidas",
+    "quickWinsDesc": "Prompts prácticos que puedes probar hoy mismo.",
+    "viewAll": "Ver Todos",
+    "complianceEdge": "La Ventaja del Cumplimiento",
+    "complianceEdgeDesc": "La IA ofrece enormes oportunidades en seguros — pero el cumplimiento normativo y la ética no son opcionales."
+  },
+  "likes": {
+    "like": "Me gusta",
+    "liked": "Te gustó"
+  }
+}

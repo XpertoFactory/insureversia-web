@@ -1,0 +1,372 @@
+---
+import Navigation from '../components/Navigation.astro';
+import Footer from '../components/Footer.astro';
+import ShareModal from '../components/ShareModal.astro';
+import ContactModal from '../components/ContactModal.astro';
+import { getLocaleFromUrl, getAlternateLocales, getPathForLocale, t, type Locale } from '../i18n';
+
+import '../styles/fonts.css';
+import '../styles/variables.css';
+import '../styles/layout.css';
+import '../styles/typography.css';
+import '../styles/components.css';
+import '../styles/utilities.css';
+import '../styles/animations.css';
+import '../styles/fonts-modern.css';
+import '../styles/theme-modern.css';
+import '../styles/dark-mode.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  locale?: Locale;
+  sources?: any[];
+  ogImage?: string;
+  ogType?: string;
+  keywords?: string;
+  canonicalUrl?: string;
+  noindex?: boolean;
+}
+
+const currentLocale = Astro.props.locale || getLocaleFromUrl(Astro.url);
+const {
+  title = t(currentLocale, 'site.title'),
+  description = t(currentLocale, 'site.description'),
+  sources = [],
+  ogImage = '/assets/images/insureversia-site-image.png',
+  ogType = 'website',
+  keywords = '',
+  canonicalUrl,
+  noindex = false,
+} = Astro.props;
+
+const fullTitle = title === t(currentLocale, 'site.title') ? title : `${title} | ${t(currentLocale, 'site.title')}`;
+const siteUrl = 'https://insureversia.com';
+const currentPath = Astro.url.pathname;
+const canonical = canonicalUrl || `${siteUrl}${currentPath}`;
+const ogImageUrl = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`;
+const alternateLocales = getAlternateLocales(currentLocale);
+const ogLocaleMap: Record<string, string> = { en: 'en_US', es: 'es_ES' };
+const ogLocale = ogLocaleMap[currentLocale] || 'en_US';
+---
+
+<!DOCTYPE html>
+<html lang={currentLocale}>
+<head>
+  <!-- Google Analytics (GA4) — replace with your ID -->
+  <!--
+  <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script is:inline>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
+  -->
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content={description} />
+  <meta name="generator" content={Astro.generator} />
+  {keywords && <meta name="keywords" content={keywords} />}
+  {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+  <!-- Canonical & Alternate Languages -->
+  <link rel="canonical" href={canonical} />
+  <link rel="alternate" hreflang={currentLocale} href={canonical} />
+  {alternateLocales.map(alt => (
+    <link rel="alternate" hreflang={alt} href={`${siteUrl}${getPathForLocale(Astro.url, alt)}`} />
+  ))}
+  <link rel="alternate" hreflang="x-default" href={`${siteUrl}${getPathForLocale(Astro.url, 'en')}`} />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content={fullTitle} />
+  <meta property="og:description" content={description} />
+  <meta property="og:type" content={ogType} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:image" content={ogImageUrl} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:alt" content={fullTitle} />
+  <meta property="og:locale" content={ogLocale} />
+  {alternateLocales.map(alt => (
+    <meta property="og:locale:alternate" content={ogLocaleMap[alt] || 'en_US'} />
+  ))}
+  <meta property="og:site_name" content="Insureversia" />
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={fullTitle} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={ogImageUrl} />
+  <meta name="twitter:image:alt" content={fullTitle} />
+
+  <!-- Additional Social / SEO Meta -->
+  <meta property="article:author" content="Insureversia" />
+  <meta name="author" content="Insureversia — curated by Carlos Miranda Levy" />
+  <meta name="theme-color" content="#0F2B46" />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="application-name" content="Insureversia" />
+  <meta name="apple-mobile-web-app-title" content="Insureversia" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Insureversia",
+    "alternateName": "Insureversia — AI in Insurance",
+    "url": siteUrl,
+    "description": t(currentLocale, 'site.description'),
+    "inLanguage": [currentLocale, ...alternateLocales],
+    "creator": {
+      "@type": "Person",
+      "name": "Carlos Miranda Levy",
+      "url": "https://thesocialentrepreneur.com",
+      "jobTitle": "Chief Innovation Officer",
+      "sameAs": [
+        "https://thesocialentrepreneur.com",
+        "https://100.cemi.ai"
+      ]
+    },
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": `${siteUrl}/search?q={search_term_string}`,
+      "query-input": "required name=search_term_string"
+    }
+  })} />
+
+  <title>{fullTitle}</title>
+
+  <!-- Theme + mode: apply saved preferences before first paint -->
+  <script is:inline>
+    (function(){
+      var t=localStorage.getItem('insureversia-theme');
+      if(t==='modern')document.documentElement.dataset.theme='modern';
+      var m=localStorage.getItem('insureversia-mode');
+      if(m==='dark')document.documentElement.dataset.mode='dark';
+      else if(m==='light'){/* explicit light, no attribute */}
+      else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches)document.documentElement.dataset.mode='dark';
+    })();
+  </script>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/assets/logos/favicon.svg" />
+  <link rel="manifest" href="/site.webmanifest" />
+</head>
+<body>
+  <Navigation locale={currentLocale} />
+
+  <main data-pagefind-body>
+    <slot />
+  </main>
+
+  <Footer locale={currentLocale} />
+
+  <!-- Sources Panel -->
+  {sources.length > 0 && (
+    <div class="sources-float" id="sources-float">
+      <button class="sources-float__btn" aria-label={t(currentLocale, 'sources.title')} id="sources-toggle">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+        </svg>
+        <span class="sources-float__badge">{sources.length}</span>
+      </button>
+    </div>
+
+    <div class="sources-panel__overlay" id="sources-overlay"></div>
+    <aside class="sources-panel" id="sources-panel" role="complementary" aria-label={t(currentLocale, 'sources.title')}>
+      <div class="sources-panel__header">
+        <h2 style="font-size: var(--text-xl); margin: 0;">{t(currentLocale, 'sources.title')}</h2>
+        <button class="btn btn--sm btn--icon" id="sources-close" aria-label={t(currentLocale, 'sources.close')}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+      <div class="sources-panel__body">
+        {sources.map((source: any) => (
+          <div style="margin-bottom: var(--space-4); padding-bottom: var(--space-4); border-bottom: 1px solid var(--border-light);">
+            <div class="badge badge--beginner" style="margin-bottom: var(--space-2);">{source.type}</div>
+            <p style="font-weight: var(--font-semibold); margin-bottom: var(--space-1);">{source.title}</p>
+            <p class="text-sm text-muted" style="margin-bottom: var(--space-1);">{source.author} — {source.date}</p>
+            {source.url && <a href={source.url} target="_blank" rel="noopener" class="text-sm">View source →</a>}
+          </div>
+        ))}
+      </div>
+    </aside>
+  )}
+
+  <!-- Share Modal -->
+  <ShareModal locale={currentLocale} />
+
+  <!-- Contact Modal -->
+  <ContactModal locale={currentLocale} />
+
+  <!-- Search Overlay (Pagefind-powered) -->
+  <div class="search-overlay" id="search-overlay">
+    <div class="search-box">
+      <div class="search-box__input-wrap">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" />
+        </svg>
+        <input type="text" class="search-box__input" id="search-input" placeholder={t(currentLocale, 'search.placeholder')} autocomplete="off" />
+        <span class="search-box__shortcut">{t(currentLocale, 'search.shortcut')}</span>
+      </div>
+      <div class="search-box__results" id="search-results">
+        <p class="text-center text-muted" style="padding: var(--space-8);" id="search-empty">{t(currentLocale, 'search.noResults')}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script define:vars={{ currentLocale }}>
+    // === Scroll Reveal ===
+    const revealCallback = (entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+        }
+      });
+    };
+    const revealObserver = new IntersectionObserver(revealCallback, { threshold: 0.1 });
+    const staggerObserver = new IntersectionObserver(revealCallback, { threshold: 0, rootMargin: '0px 0px 100px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+    document.querySelectorAll('.reveal-stagger').forEach(el => staggerObserver.observe(el));
+
+    // === Accordion ===
+    document.querySelectorAll('.accordion__trigger').forEach(trigger => {
+      trigger.addEventListener('click', () => {
+        const item = trigger.closest('.accordion__item');
+        if (!item) return;
+        const isOpen = item.classList.contains('is-open');
+        const accordion = item.closest('.accordion');
+        if (accordion) {
+          accordion.querySelectorAll('.accordion__item.is-open').forEach(openItem => {
+            openItem.classList.remove('is-open');
+          });
+        }
+        if (!isOpen) item.classList.add('is-open');
+      });
+    });
+
+    // === Search Overlay ===
+    const searchOverlay = document.getElementById('search-overlay');
+    const searchInput = document.getElementById('search-input');
+    const searchResults = document.getElementById('search-results');
+    const searchEmpty = document.getElementById('search-empty');
+
+    function openSearch() {
+      searchOverlay?.classList.add('is-open');
+      searchInput?.focus();
+    }
+
+    function closeSearch() {
+      searchOverlay?.classList.remove('is-open');
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+        e.preventDefault();
+        if (searchOverlay?.classList.contains('is-open')) {
+          closeSearch();
+        } else {
+          openSearch();
+        }
+      }
+      if (e.key === 'Escape') {
+        closeSearch();
+        document.getElementById('sources-panel')?.classList.remove('is-open');
+        document.getElementById('sources-overlay')?.classList.remove('is-visible');
+      }
+    });
+
+    searchOverlay?.addEventListener('click', (e) => {
+      if (e.target === searchOverlay) closeSearch();
+    });
+
+    // === Pagefind Search ===
+    let pagefind = null;
+
+    async function initPagefind() {
+      try {
+        pagefind = await import('/pagefind/pagefind.js');
+        await pagefind.init();
+      } catch (e) {
+        // Pagefind not available (dev mode) — silent fail
+      }
+    }
+
+    initPagefind();
+
+    let searchTimeout = null;
+    searchInput?.addEventListener('input', (e) => {
+      const query = e.target.value.trim();
+      clearTimeout(searchTimeout);
+      if (!query) {
+        if (searchResults) searchResults.innerHTML = '';
+        if (searchEmpty) {
+          searchResults?.appendChild(searchEmpty);
+          searchEmpty.style.display = '';
+        }
+        return;
+      }
+      searchTimeout = setTimeout(async () => {
+        if (!pagefind) {
+          if (searchResults) {
+            searchResults.innerHTML = `<p class="text-center text-muted" style="padding: var(--space-8);">Search is available in production builds.</p>`;
+          }
+          return;
+        }
+        const search = await pagefind.search(query);
+        if (!search.results.length) {
+          if (searchResults) {
+            searchResults.innerHTML = `<p class="text-center text-muted" style="padding: var(--space-8);">${currentLocale === 'es' ? 'No se encontraron resultados' : 'No results found'}</p>`;
+          }
+          return;
+        }
+        const resultsHtml = [];
+        const top = search.results.slice(0, 8);
+        for (const result of top) {
+          const data = await result.data();
+          resultsHtml.push(`
+            <a href="${data.url}" style="display:block;padding:var(--space-3) var(--space-4);border-radius:var(--radius-md);text-decoration:none;color:var(--text-primary);transition:background 150ms ease;">
+              <div style="font-weight:600;margin-bottom:var(--space-1);">${data.meta?.title || data.url}</div>
+              <div style="font-size:var(--text-sm);color:var(--text-muted);line-height:1.4;">${data.excerpt || ''}</div>
+            </a>
+          `);
+        }
+        if (searchResults) {
+          searchResults.innerHTML = resultsHtml.join('');
+          searchResults.querySelectorAll('a').forEach(a => {
+            a.addEventListener('mouseenter', () => a.style.background = 'var(--surface-parchment)');
+            a.addEventListener('mouseleave', () => a.style.background = '');
+          });
+        }
+      }, 200);
+    });
+
+    // === Sources Panel ===
+    document.getElementById('sources-toggle')?.addEventListener('click', () => {
+      document.getElementById('sources-panel')?.classList.add('is-open');
+      document.getElementById('sources-overlay')?.classList.add('is-visible');
+    });
+
+    document.getElementById('sources-close')?.addEventListener('click', () => {
+      document.getElementById('sources-panel')?.classList.remove('is-open');
+      document.getElementById('sources-overlay')?.classList.remove('is-visible');
+    });
+
+    document.getElementById('sources-overlay')?.addEventListener('click', () => {
+      document.getElementById('sources-panel')?.classList.remove('is-open');
+      document.getElementById('sources-overlay')?.classList.remove('is-visible');
+    });
+
+    // === Search button in nav ===
+    document.getElementById('search-btn')?.addEventListener('click', openSearch);
+  </script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+---
+import { getAlternateLocales, getPathForLocale, type Locale } from '../i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const alternates = getAlternateLocales(locale);
+const flags: Record<string, string> = { en: '🇺🇸', es: '🇪🇸' };
+const labels: Record<string, string> = { en: 'EN', es: 'ES' };
+---
+
+<div class="lang-selector">
+  <button class="lang-selector__btn" id="lang-btn" aria-label="Change language" aria-expanded="false">
+    <span>{flags[locale]}</span>
+    <span style="text-transform: uppercase; font-weight: var(--font-semibold);">{labels[locale]}</span>
+    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9" /></svg>
+  </button>
+  <div class="lang-selector__menu" id="lang-menu">
+    {alternates.map(alt => (
+      <a href={getPathForLocale(Astro.url, alt)} class="lang-selector__item">
+        <span>{flags[alt]}</span>
+        <span>{labels[alt]}</span>
+      </a>
+    ))}
+  </div>
+</div>
+
+<style>
+  .lang-selector {
+    position: relative;
+  }
+  .lang-selector__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: var(--space-1) var(--space-3);
+    font-size: var(--text-xs);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-full);
+    background: transparent;
+    cursor: pointer;
+    color: var(--text-primary);
+    transition: all 150ms ease;
+    font-family: var(--font-body);
+  }
+  .lang-selector__btn:hover {
+    border-color: var(--color-secondary);
+  }
+  .lang-selector__menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    margin-top: 4px;
+    background: var(--surface-card);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    z-index: var(--z-dropdown);
+    min-width: 80px;
+    overflow: hidden;
+  }
+  .lang-selector__menu.is-open {
+    display: block;
+  }
+  .lang-selector__item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+    text-decoration: none;
+    color: var(--text-primary);
+    transition: background 150ms ease;
+  }
+  .lang-selector__item:hover {
+    background: var(--surface-parchment);
+    color: var(--text-primary);
+  }
+</style>
+
+<script>
+  const langBtn = document.getElementById('lang-btn');
+  const langMenu = document.getElementById('lang-menu');
+
+  langBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isOpen = langMenu?.classList.contains('is-open');
+    langMenu?.classList.toggle('is-open');
+    langBtn.setAttribute('aria-expanded', String(!isOpen));
+  });
+
+  document.addEventListener('click', () => {
+    langMenu?.classList.remove('is-open');
+    langBtn?.setAttribute('aria-expanded', 'false');
+  });
+</script>
