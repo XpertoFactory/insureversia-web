@@ -14,6 +14,10 @@ All notable changes to the Insureversia website will be documented in this file.
   - `what-to-do/es/` — 10 files: verify output, accelerate research, establish AI policy, disclose AI use, first-draft generation, document review, prompt library, stay current, train your team, experiment low-risk
   - `what-not-to-do/es/` — 10 files: don't submit unread, don't paste confidential data, don't assume jurisdiction, don't replace judgment, don't hide AI use, don't treat as verified, don't use for emotional intelligence, don't ignore regulations, don't let AI write everything, don't assume limitations permanent
   - `faq/es/` — 20 files across 5 categories (skeptical, curious, using, leading, deciding)
+- **Firebase configuration** (`.env`): Client config for Firestore, Auth, and Analytics
+- **Google Analytics 4**: Enabled GA4 (`G-YZG6M16837`) in BaseLayout — active on all 28 pages
+- **Curator photo**: Replaced placeholder on `/about/team/` with actual profile image
+- **Site plan**: Comprehensive 721-line project reference at `resources/site-plan.md`
 
 ---
 
