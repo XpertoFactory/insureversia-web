@@ -31,8 +31,26 @@ const dim = sizes[size];
     `}
   />
   {withSpeech && speech && (
-    <div style="background: var(--surface-parchment); padding: var(--space-3) var(--space-4); border-radius: var(--radius-lg); border-bottom-left-radius: var(--radius-sm); position: relative; font-family: var(--font-accent); font-style: italic; color: var(--color-primary); font-size: var(--text-base);">
+    <div class="insureversia-avatar__speech">
       {speech}
     </div>
   )}
 </div>
+
+<style>
+  .insureversia-avatar__speech {
+    background: var(--surface-parchment);
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-lg);
+    border-bottom-left-radius: var(--radius-sm);
+    position: relative;
+    font-family: var(--font-accent);
+    font-style: italic;
+    color: var(--color-primary);
+    font-size: var(--text-base);
+  }
+
+  [data-mode="dark"] .insureversia-avatar__speech {
+    color: var(--text-secondary);
+  }
+</style>
