@@ -2,6 +2,25 @@
 
 All notable changes to the Insureversia website will be documented in this file.
 
+## [0.6.3] - 2026-02-19
+
+### Added
+
+- **CLAUDE.md**: Project instructions for Claude Code — tech stack, conventions, structure, workflow rules
+- **README.md**: Project README with site overview, tech stack, structure, personas, brand, and getting started
+
+### Changed
+
+- **Logo images in nav/footer**: Replaced text logos with actual PNG image logos (light + dark variants)
+- **Logo dark mode**: Added `.logo-light`/`.logo-dark` CSS toggle in `layout.css`
+- **Rounded corner logos**: Applied elegant rounded corners with transparent background to `insureversia-logo-horizontal-white.png`, `insureversia-just-logo-white.png`, and `apple-touch-icon.png`
+
+### Fixed
+
+- **Bruno persona dark mode**: Lightened navy `#0F2B46` to slate-blue `#5B8DB8` for archetype badge, card border, and quote border in dark mode for contrast
+
+---
+
 ## [0.6.2] - 2026-02-19
 
 ### Added
