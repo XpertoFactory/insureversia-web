@@ -2,6 +2,15 @@
 
 All notable changes to the Insureversia website will be documented in this file.
 
+## [0.6.5] - 2026-02-19
+
+### Changed
+
+- **Persona profile photos**: Replaced placeholder SVGs with real AI-generated portrait PNGs for Vera, Bruno, and Zaira on both EN and ES team pages
+- Removed old placeholder SVG files from `public/assets/images/personas/`
+
+---
+
 ## [0.6.4] - 2026-02-19
 
 ### Added

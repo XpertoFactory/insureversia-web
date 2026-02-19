@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" width="600" height="800">
-  <rect width="600" height="800" fill="#f8f6f0"/>
-  <circle cx="300" cy="320" r="180" fill="#0F2B46" opacity="0.1"/>
-  <circle cx="300" cy="320" r="120" fill="#0F2B46" opacity="0.2"/>
-  <circle cx="300" cy="320" r="60" fill="#0F2B46" opacity="0.35"/>
-  <text x="300" y="540" text-anchor="middle" font-family="system-ui, sans-serif" font-size="24" font-weight="600" fill="#0F2B46">Bruno Vasquez-Herrera</text>
-  <text x="300" y="575" text-anchor="middle" font-family="system-ui, sans-serif" font-size="16" fill="#0F2B46" opacity="0.7">The Guardian</text>
-</svg>
