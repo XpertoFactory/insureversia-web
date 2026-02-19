@@ -18,7 +18,7 @@ Insureversia helps insurance professionals — underwriters, claims adjusters, b
 | **Resources** | 5 | FAQ, Glossary, Success Stories, Tool Directory, Jurisdiction Guide |
 | **About** | 4 | Hub, What is Insureversia, Site Guide, Our Team (+ 3 Personas) |
 
-**28 pages** total. Bilingual: English and Spanish.
+**56 pages** total (28 EN + 28 ES). Fully bilingual: English and Spanish.
 
 ## Tech Stack
 
@@ -45,7 +45,8 @@ src/
   content/        # Markdown collections — quick-wins, what-to-do, what-not-to-do, faq (EN + ES)
   i18n/           # Translation files (en.json, es.json) + routing
   layouts/        # BaseLayout.astro
-  pages/          # File-based routing (28 pages)
+  pages/          # File-based routing (28 EN pages)
+    es/           # Spanish mirror pages (28 ES pages)
   styles/         # Design system (10 CSS files)
 public/
   assets/         # Images, logos, fonts
