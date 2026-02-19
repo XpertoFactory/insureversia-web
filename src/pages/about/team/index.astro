@@ -403,6 +403,18 @@ const p = (path: string) => getLocalePath(locale, path);
     text-align: left;
   }
 
+  /* Dark mode: Bruno's navy is invisible — lighten to readable slate-blue */
+  :global([data-mode="dark"]) .persona-card--bruno {
+    border-top-color: #5B8DB8;
+  }
+  :global([data-mode="dark"]) .persona-card__archetype--bruno {
+    background: rgba(91, 141, 184, 0.15);
+    color: #5B8DB8;
+  }
+  :global([data-mode="dark"]) .persona-card__quote--bruno {
+    border-left-color: #5B8DB8;
+  }
+
   @media (max-width: 768px) {
     .persona-card__photo-wrap {
       width: 120px;
