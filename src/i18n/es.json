@@ -840,5 +840,36 @@
     "ctaDesc": "Entender las regulaciones es solo el primer paso. Nuestro Programa de Aprendizaje incluye módulos enfocados en cumplimiento para profesionales de seguros.",
     "ctaProgram": "Explorar Programa de Aprendizaje",
     "ctaResources": "Explorar Recursos"
+  },
+  "personas": {
+    "sectionTitle": "Conoce a Nuestros Personajes",
+    "sectionSubtitle": "Tres voces ficticias que representan el espectro real de perspectivas sobre la IA en seguros. Cada una aporta una filosofía, trayectoria profesional y perspectiva cultural distinta a la conversación.",
+    "vera": {
+      "name": "Vera Nakamura-Obi",
+      "archetype": "La Estratega",
+      "role": "Directora de Estrategia, Pacific Rim Reinsurance Group",
+      "location": "Singapur",
+      "quote": "La pregunta nunca es si adoptar la IA. La pregunta es si tienes la disciplina para adoptarla bien.",
+      "bio": "Japonesa-nigeriana, criada en Lagos, MBA de INSEAD. Vera ha pasado tres décadas navegando los mercados globales de reaseguro. Ve la IA como una herramienta estratégica — poderosa cuando se despliega con disciplina, peligrosa cuando se adopta sin ella. Su filosofía: la tecnología amplifica cualquier cultura que ya exista.",
+      "photoAlt": "Vera Nakamura-Obi — La Estratega, Directora de Estrategia"
+    },
+    "bruno": {
+      "name": "Bruno Vasquez-Herrera",
+      "archetype": "El Guardián",
+      "role": "Director Senior de Reclamaciones, Cooperativa Regional de Seguros",
+      "location": "Costa Rica",
+      "quote": "Cada reclamación tiene un rostro. Cada denegación tiene una consecuencia. Antes de automatizar esa decisión, pregúntate: ¿se la explicarías a la persona del otro lado?",
+      "bio": "Chileno-costarricense, nacido en San José. Bruno ha pasado dos décadas en reclamaciones, donde ha visto a la tecnología prometer eficiencia y a veces entregar injusticia. Cree que la IA debe ganarse la confianza a través de la transparencia, la rendición de cuentas y un enfoque implacable en las personas detrás de cada póliza.",
+      "photoAlt": "Bruno Vasquez-Herrera — El Guardián, Director Senior de Reclamaciones"
+    },
+    "zaira": {
+      "name": "Zaira Mensah-Okonkwo",
+      "archetype": "La Catalizadora",
+      "role": "Líder de Innovación InsurTech, NexGen Insurance",
+      "location": "Ciudad del Cabo",
+      "quote": "En algún lugar ahora mismo, un agricultor no puede asegurar su cosecha, una familia no puede pagar una póliza, una reclamación está atascada en una pila. La IA puede cambiar eso. La pregunta es: ¿por qué no lo hemos hecho ya?",
+      "bio": "Ghanesa-sudafricana, creció entre Acra y Ciudad del Cabo. Zaira representa la próxima generación de profesionales de seguros — impaciente con el statu quo, impulsada por la brecha entre lo que la tecnología puede hacer y lo que la industria realmente hace. Impulsa velocidad, escala e inclusión.",
+      "photoAlt": "Zaira Mensah-Okonkwo — La Catalizadora, Líder de Innovación InsurTech"
+    }
   }
 }

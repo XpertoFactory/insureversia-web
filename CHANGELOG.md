@@ -2,6 +2,21 @@
 
 All notable changes to the Insureversia website will be documented in this file.
 
+## [0.6.2] - 2026-02-19
+
+### Added
+
+- **3 Insureversia Personas**: Fictional voices representing the real spectrum of perspectives on AI in insurance
+  - **Vera Nakamura-Obi** — "The Strategist" (Gold): Japanese-Nigerian CSO in Singapore, strategic AI adoption
+  - **Bruno Vasquez-Herrera** — "The Guardian" (Navy): Chilean-Costa Rican Claims Director, human-centered caution
+  - **Zaira Mensah-Okonkwo** — "The Catalyst" (Teal): Ghanaian-South African InsurTech lead, urgency for inclusion
+- **Persona section on Team page** (`/about/team/`): 3-column card grid with color-coded archetype badges, blockquotes, and bios
+- **i18n**: Full EN and ES translations for all 3 personas (`personas` key block in both `en.json` and `es.json`)
+- **Placeholder SVG images**: Color-coded persona placeholders at `public/assets/images/personas/` (gold/navy/teal)
+- **Midjourney prompts**: 6 image generation prompts (profile + action shot per persona) at `resources/personas-image-prompts.md`
+
+---
+
 ## [0.6.1] - 2026-02-18
 
 ### Added

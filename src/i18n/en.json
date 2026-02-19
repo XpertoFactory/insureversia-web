@@ -840,5 +840,36 @@
     "ctaDesc": "Understanding regulations is just the first step. Our Learning Program includes compliance-focused modules for insurance professionals.",
     "ctaProgram": "Explore Learning Program",
     "ctaResources": "Explore Resources"
+  },
+  "personas": {
+    "sectionTitle": "Meet Our Personas",
+    "sectionSubtitle": "Three fictional voices representing the real spectrum of perspectives on AI in insurance. Each brings a distinct philosophy, professional background, and cultural lens to the conversation.",
+    "vera": {
+      "name": "Vera Nakamura-Obi",
+      "archetype": "The Strategist",
+      "role": "Chief Strategy Officer, Pacific Rim Reinsurance Group",
+      "location": "Singapore",
+      "quote": "The question is never whether to adopt AI. The question is whether you have the discipline to adopt it well.",
+      "bio": "Japanese-Nigerian, raised in Lagos, MBA from INSEAD. Vera has spent three decades navigating global reinsurance markets. She sees AI as a strategic tool — powerful when deployed with discipline, dangerous when adopted without it. Her philosophy: technology amplifies whatever culture already exists.",
+      "photoAlt": "Vera Nakamura-Obi — The Strategist, Chief Strategy Officer"
+    },
+    "bruno": {
+      "name": "Bruno Vasquez-Herrera",
+      "archetype": "The Guardian",
+      "role": "Senior Claims Director, Regional Insurance Cooperative",
+      "location": "Costa Rica",
+      "quote": "Every claim has a face. Every denial has a consequence. Before you automate that decision, ask yourself: would you explain it to the person on the other side?",
+      "bio": "Chilean-Costa Rican, born in San José. Bruno has spent two decades in claims, where he has seen technology promise efficiency and sometimes deliver injustice. He believes AI must earn trust through transparency, accountability, and a relentless focus on the humans behind every policy.",
+      "photoAlt": "Bruno Vasquez-Herrera — The Guardian, Senior Claims Director"
+    },
+    "zaira": {
+      "name": "Zaira Mensah-Okonkwo",
+      "archetype": "The Catalyst",
+      "role": "InsurTech Innovation Lead, NexGen Insurance",
+      "location": "Cape Town",
+      "quote": "Somewhere right now, a farmer cannot insure a harvest, a family cannot afford a policy, a claim is stuck in a pile. AI can change that. The question is: why haven't we already?",
+      "bio": "Ghanaian-South African, grew up between Accra and Cape Town. Zaira represents the next generation of insurance professionals — impatient with the status quo, driven by the gap between what technology can do and what the industry actually does. She pushes for speed, scale, and inclusion.",
+      "photoAlt": "Zaira Mensah-Okonkwo — The Catalyst, InsurTech Innovation Lead"
+    }
   }
 }
