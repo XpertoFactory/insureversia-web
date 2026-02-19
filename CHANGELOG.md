@@ -2,6 +2,17 @@
 
 All notable changes to the Insureversia website will be documented in this file.
 
+## [0.6.1] - 2026-02-18
+
+### Added
+
+- **Favicon set**: Generated favicon-16x16.png, favicon-32x32.png, apple-touch-icon.png (180x180, white bg), and multi-resolution favicon.ico (16+32+48) from logomark
+- **OG social image**: Generated `insureversia-site-image.png` (1200x630) with navy background and centered horizontal logo for social sharing previews
+- **BaseLayout favicon links**: Full favicon set with ICO, SVG, PNG, and Apple Touch Icon declarations
+- **Web manifest icons**: Updated `site.webmanifest` with four icon sizes (16, 32, 180, 512)
+
+---
+
 ## [0.6.0] - 2026-02-18
 
 ### Added
