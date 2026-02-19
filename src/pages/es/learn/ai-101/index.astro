@@ -1,0 +1,552 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import { t, getLocalePath } from '../../../../i18n';
+const locale = 'es';
+const p = (path: string) => getLocalePath(locale, path);
+
+const modules = [
+  {
+    number: 1,
+    title: 'What Is AI? (And What It Is Not)',
+    description: 'Demystify artificial intelligence. Learn the difference between narrow AI and general AI, understand how large language models work, and separate hype from reality.',
+    status: 'available',
+  },
+  {
+    number: 2,
+    title: 'How Large Language Models Work',
+    description: 'A non-technical explanation of transformer architecture, training data, token prediction, and why LLMs produce both brilliant insights and confident fabrications.',
+    status: 'available',
+  },
+  {
+    number: 3,
+    title: 'AI Tools for Insurance Practice',
+    description: 'A curated overview of the AI tools available to insurance professionals today — from general-purpose assistants like ChatGPT and Claude to insurance-specific platforms for underwriting, claims, and risk analysis.',
+    status: 'available',
+  },
+  {
+    number: 4,
+    title: 'Ethics & Regulatory Responsibility',
+    description: 'NAIC guidance, state regulations, EU AI Act implications, and the evolving framework for ethical AI use in insurance practice. Your professional obligations in the age of AI.',
+    status: 'available',
+  },
+  {
+    number: 5,
+    title: 'Prompt Engineering Fundamentals',
+    description: 'Learn how to communicate effectively with AI systems. The CRAFT framework, prompt patterns, and techniques that consistently produce better insurance outputs.',
+    status: 'available',
+  },
+  {
+    number: 6,
+    title: 'Building AI-Augmented Workflows',
+    description: 'Design practical workflows that integrate AI into your daily practice — from underwriting and claims to customer communication and compliance monitoring.',
+    status: 'available',
+  },
+  {
+    number: 7,
+    title: 'The Future of AI in Insurance',
+    description: 'Where is the technology heading? Emerging trends, regulatory developments, and how to position yourself and your organization for the next decade of transformation.',
+    status: 'available',
+  },
+];
+---
+
+<BaseLayout
+  title="AI 101 for Insurance Professionals"
+  description="Your structured learning path from AI fundamentals to practical insurance applications. Seven modules designed specifically for insurance professionals."
+  locale={locale}
+  keywords="AI 101 insurance, AI learning path, insurance AI fundamentals, AI for underwriters, AI for claims adjusters"
+>
+  <!-- Hero -->
+  <section class="hero" style="background: linear-gradient(135deg, rgba(15,43,70,0.88) 0%, rgba(45,55,72,0.78) 100%), url('/assets/images/hero-images/hero-image-learn.png') top/cover no-repeat;">
+    <div class="container" style="position: relative; z-index: 1;">
+      <div class="slide-up" style="max-width: 800px;">
+        <p class="text-sm font-semibold mb-4" style="color: var(--color-secondary); text-transform: uppercase; letter-spacing: 0.1em;">Learn</p>
+        <h1 style="font-size: var(--text-5xl); margin-bottom: var(--space-6);">AI 101 for Insurance Professionals</h1>
+        <p class="lead" style="margin-bottom: var(--space-6);">
+          A structured learning path designed specifically for insurance professionals. No computer science degree required — just intellectual curiosity and a willingness to understand the technology that is reshaping your industry.
+        </p>
+      </div>
+    </div>
+    <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 120px; background: linear-gradient(to top, var(--surface-page), transparent);"></div>
+  </section>
+
+  <!-- Learning Path Roadmap -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header reveal">
+        <h2>Your Learning Path</h2>
+        <p>Seven modules that take you from the fundamentals of AI to building AI-augmented insurance workflows. Each module builds on the last.</p>
+      </div>
+
+      <div style="max-width: 800px; margin: 0 auto;" class="reveal-stagger">
+        {modules.map((mod, idx) => (
+          <div style={`display: flex; gap: var(--space-5); margin-bottom: ${idx < modules.length - 1 ? 'var(--space-2)' : '0'};`}>
+            <div style="display: flex; flex-direction: column; align-items: center; flex-shrink: 0;">
+              <div class={`number-badge ${mod.status === 'available' ? 'number-badge--success' : ''}`}
+                style={mod.status !== 'available' ? 'background: var(--border-default); color: var(--text-inverse);' : ''}>
+                {mod.number}
+              </div>
+              {idx < modules.length - 1 && (
+                <div style="width: 2px; flex: 1; min-height: 2rem; background: var(--border-light); margin-top: var(--space-2);"></div>
+              )}
+            </div>
+            <div class={`card ${mod.status === 'available' ? 'card--success' : ''}`}
+              style={`flex: 1; margin-bottom: var(--space-4); ${mod.status !== 'available' ? 'opacity: 0.75;' : ''}`}>
+              <div style="display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); flex-wrap: wrap; margin-bottom: var(--space-2);">
+                <h3 style="font-size: var(--text-xl); margin-bottom: 0;">Module {mod.number}: {mod.title}</h3>
+                <span class={`badge ${mod.status === 'available' ? 'badge--beginner' : 'badge--intermediate'}`}>
+                  {mod.status === 'available' ? 'Available' : 'Coming Soon'}
+                </span>
+              </div>
+              <p class="card__body">{mod.description}</p>
+              {mod.status === 'available' && (
+                <div class="card__footer">
+                  <a href={`#module-${mod.number}`} class="btn btn--primary btn--sm">Start Module {mod.number}</a>
+                </div>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Module 1 Content -->
+  <section class="section section--parchment" id="module-1">
+    <div class="container">
+      <div style="max-width: 800px; margin: 0 auto;" class="reveal">
+        <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-6);">
+          <div class="number-badge number-badge--success">1</div>
+          <div>
+            <p class="text-sm text-muted" style="margin-bottom: 0;">Module 1</p>
+            <h2 style="margin-bottom: 0;">What Is AI? (And What It Is Not)</h2>
+          </div>
+        </div>
+
+        <div style="line-height: var(--leading-relaxed); color: var(--text-secondary);">
+          <h3 style="color: var(--text-primary);">Starting With the Right Mental Model</h3>
+          <p>
+            Before you can use AI effectively in insurance practice, you need an accurate mental model of what it actually is. The term "artificial intelligence" carries decades of science fiction baggage — sentient robots, omniscient computers, and machines that think like humans. Modern AI is none of these things. It is, however, extraordinarily powerful when properly understood.
+          </p>
+
+          <h4 style="color: var(--text-primary);">The Two Types of AI</h4>
+          <p>
+            <strong>Narrow AI (what exists today):</strong> Systems designed to perform specific tasks — recognizing speech, translating languages, analyzing images, generating text, detecting patterns in data. Every AI tool you will use as an insurance professional falls into this category. ChatGPT, Claude, and specialized insurance AI platforms are all narrow AI systems. They are remarkably good at their designed tasks but have no general understanding, no consciousness, and no goals.
+          </p>
+          <p>
+            <strong>Artificial General Intelligence (AGI) — what does not exist:</strong> A theoretical system that could perform any intellectual task a human can. Despite media hype, no one has built AGI, and credible AI researchers disagree widely on whether and when it might be achieved. You do not need to worry about AGI for your practice. Focus on understanding the narrow AI tools available today.
+          </p>
+
+          <h4 style="color: var(--text-primary);">How Large Language Models Actually Work</h4>
+          <p>
+            The AI tools most relevant to insurance practice are Large Language Models (LLMs). Here is a simplified but accurate explanation:
+          </p>
+          <ol>
+            <li><strong>Training:</strong> The model is exposed to vast amounts of text — books, websites, insurance documents, academic papers, regulatory filings, news articles. During training, it learns statistical patterns about how words and concepts relate to each other.</li>
+            <li><strong>Token Prediction:</strong> When you type a prompt, the model predicts the most likely next "token" (roughly, the next word) based on the patterns it learned. Then it predicts the next token after that, building its response one token at a time.</li>
+            <li><strong>No Real Understanding:</strong> The model does not "know" anything in the way you know things. It does not have beliefs, experiences, or access to a database of verified facts. It has statistical patterns. This is why it can produce text that sounds authoritative but is factually wrong.</li>
+          </ol>
+
+          <div class="callout callout--info">
+            <h4 class="callout__title">The Key Insight for Insurance Professionals</h4>
+            <p style="margin-bottom: 0;">An LLM is like an analyst who has read everything ever published about insurance but remembers none of it precisely, has no judgment about what is true, and always sounds confident regardless of accuracy. It is an extraordinarily useful tool — but it requires the same skepticism you would apply to any unverified source.</p>
+          </div>
+
+          <h4 style="color: var(--color-primary); margin-top: var(--space-6);">Why Insurance Professionals Should Care</h4>
+          <p>
+            The National Association of Insurance Commissioners (NAIC) has recognized that AI adoption in insurance requires professionals who understand both the technology and its implications. The NAIC's Model Bulletin on AI (2023) sets expectations for insurers using AI in underwriting, pricing, and claims. Understanding AI is no longer optional professional development — it is becoming part of what it means to be a competent insurance professional.
+          </p>
+
+          <div class="callout callout--success" style="margin-top: var(--space-6);">
+            <h4 class="callout__title" style="color: var(--color-success-dark);">Module 1 Takeaways</h4>
+            <ul style="margin-bottom: 0; padding-left: var(--space-5);">
+              <li>AI is a tool, not a thinking entity. It recognizes patterns and generates text — it does not reason, judge, or understand.</li>
+              <li>Large Language Models predict the next word based on statistical patterns from training data. They can be wrong confidently.</li>
+              <li>Regulators including the NAIC are increasingly expecting AI competence from insurance professionals.</li>
+              <li>Understanding AI's limitations is just as important as understanding its capabilities.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--space-8); padding-top: var(--space-6); border-top: 1px solid var(--border-light); text-align: center;">
+          <a href="#module-2" class="btn btn--primary">Continue to Module 2</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Module 2 Content -->
+  <section class="section" id="module-2">
+    <div class="container">
+      <div style="max-width: 800px; margin: 0 auto;" class="reveal">
+        <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-6);">
+          <div class="number-badge number-badge--success">2</div>
+          <div>
+            <p class="text-sm text-muted" style="margin-bottom: 0;">Module 2</p>
+            <h2 style="margin-bottom: 0;">How Large Language Models Work</h2>
+          </div>
+        </div>
+
+        <div style="line-height: var(--leading-relaxed); color: var(--text-secondary);">
+          <h3 style="color: var(--text-primary);">The Technology Behind the Tools</h3>
+          <p>
+            You do not need a computer science degree to use AI effectively. But understanding the basic mechanics of how Large Language Models operate will make you a dramatically better user. When you understand why a tool behaves a certain way, you can anticipate its strengths, work around its weaknesses, and avoid costly mistakes.
+          </p>
+
+          <h4 style="color: var(--text-primary);">Transformer Architecture: The Engine Under the Hood</h4>
+          <p>
+            Modern LLMs are built on a design called the <strong>transformer architecture</strong> (introduced in a 2017 Google research paper). The key innovation is an "attention mechanism" — the model can weigh which parts of your input are most relevant to generating each word of its response.
+          </p>
+          <p>
+            When you ask an AI to "analyze this insurance policy for coverage exclusions in flood-prone areas," the attention mechanism helps the model focus on the relevant parts: "insurance policy," "coverage exclusions," and "flood-prone areas." It does not just process your words left to right — it considers the relationships between all the words simultaneously.
+          </p>
+
+          <h4 style="color: var(--text-primary);">Training Data: What the Model Has "Read"</h4>
+          <p>
+            LLMs are trained on massive text datasets — often hundreds of billions of words from books, websites, academic papers, and publicly available documents. This training data includes insurance industry publications, regulatory documents, and industry standards. However, <strong>the training data has a cutoff date</strong>, meaning the model does not know about events, regulations, or market developments after its training period.
+          </p>
+
+          <h4 style="color: var(--text-primary);">The Hallucination Problem</h4>
+          <p>
+            Because LLMs generate text by predicting probable sequences, they can produce outputs that look completely plausible but are entirely fabricated. In insurance, this is dangerous: an AI might cite a regulation that does not exist, reference a policy provision that was never written, or generate actuarial data from thin air. The model has no mechanism for distinguishing between what it "knows" to be true and what it is generating statistically.
+          </p>
+
+          <div class="callout callout--warning">
+            <h4 class="callout__title">Critical for Insurance</h4>
+            <p style="margin-bottom: 0;">In 2023, a New York attorney was sanctioned for submitting a brief containing AI-fabricated case citations. The same risk applies to insurance professionals who submit AI-generated regulatory references, policy language, or claims analyses without verification. <strong>Always verify AI output against primary sources.</strong></p>
+          </div>
+
+          <h4 style="color: var(--text-primary);">Context Windows and Memory</h4>
+          <p>
+            LLMs have a "context window" — the maximum amount of text they can consider at once. Modern models can handle 100,000+ tokens (roughly 75,000 words). This is large enough to analyze a complete insurance policy, a claims file, or a regulatory document. However, performance can degrade with very long inputs — the model may lose track of details buried in the middle of a long document.
+          </p>
+
+          <div class="callout callout--success" style="margin-top: var(--space-6);">
+            <h4 class="callout__title" style="color: var(--color-success-dark);">Module 2 Takeaways</h4>
+            <ul style="margin-bottom: 0; padding-left: var(--space-5);">
+              <li>LLMs use attention mechanisms to understand relationships between words — they do not just read left to right.</li>
+              <li>Training data has a cutoff date. The model may not know about recent regulatory changes or market events.</li>
+              <li>Hallucinations are a fundamental feature, not a bug. Always verify AI-generated insurance content.</li>
+              <li>Context windows determine how much text the model can analyze at once — large enough for most insurance documents.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--space-8); padding-top: var(--space-6); border-top: 1px solid var(--border-light); text-align: center;">
+          <a href="#module-3" class="btn btn--primary">Continue to Module 3</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Module 3 Content -->
+  <section class="section section--parchment" id="module-3">
+    <div class="container">
+      <div style="max-width: 800px; margin: 0 auto;" class="reveal">
+        <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-6);">
+          <div class="number-badge number-badge--success">3</div>
+          <div>
+            <p class="text-sm text-muted" style="margin-bottom: 0;">Module 3</p>
+            <h2 style="margin-bottom: 0;">AI Tools for Insurance Practice</h2>
+          </div>
+        </div>
+
+        <div style="line-height: var(--leading-relaxed); color: var(--text-secondary);">
+          <h3 style="color: var(--text-primary);">The Current Landscape</h3>
+          <p>
+            The AI tools available to insurance professionals fall into two broad categories: <strong>general-purpose AI assistants</strong> that can be applied to insurance tasks, and <strong>insurance-specific AI platforms</strong> built for industry workflows.
+          </p>
+
+          <h4 style="color: var(--text-primary);">General-Purpose AI Assistants</h4>
+          <p>
+            <strong>ChatGPT (OpenAI):</strong> The most widely known LLM. Excellent for drafting communications, summarizing documents, brainstorming, and general analysis. The free tier is capable; GPT-4 (paid) offers significantly better reasoning for complex insurance tasks.
+          </p>
+          <p>
+            <strong>Claude (Anthropic):</strong> Known for nuanced analysis and careful reasoning. Particularly strong for policy review, regulatory analysis, and tasks requiring detailed attention. Handles very long documents well.
+          </p>
+          <p>
+            <strong>Gemini (Google):</strong> Google's multimodal AI. Strong integration with Google Workspace. Useful for research and analysis tasks, with access to current web information.
+          </p>
+          <p>
+            <strong>Microsoft Copilot:</strong> Integrated into Microsoft 365. Useful for insurance professionals already in the Microsoft ecosystem — drafting in Word, analyzing data in Excel, summarizing in Outlook.
+          </p>
+
+          <h4 style="color: var(--text-primary);">Insurance-Specific AI Platforms</h4>
+          <p>
+            <strong>Underwriting AI:</strong> Platforms like Cytora, Akur8, and Hyperexponential use AI for risk assessment, pricing optimization, and automated underwriting triage.
+          </p>
+          <p>
+            <strong>Claims AI:</strong> Tools like Shift Technology, FRISS, and Tractable apply AI to claims processing — fraud detection, damage assessment from photos, and automated claims triage.
+          </p>
+          <p>
+            <strong>Document Intelligence:</strong> Solutions like Indico Data, Eigen Technologies, and Chisel AI extract structured data from insurance documents — applications, policies, endorsements, and claims files.
+          </p>
+
+          <div class="callout callout--info">
+            <h4 class="callout__title">Insureversia's Recommendation</h4>
+            <p style="margin-bottom: 0;">Start with a general-purpose AI assistant (ChatGPT or Claude) to build your foundational skills. These tools cost $0-20/month and can immediately improve your productivity. Explore our <a href="/resources/tool-directory/">Tool Directory</a> for detailed, independent assessments of both general and insurance-specific tools.</p>
+          </div>
+
+          <div class="callout callout--success" style="margin-top: var(--space-6);">
+            <h4 class="callout__title" style="color: var(--color-success-dark);">Module 3 Takeaways</h4>
+            <ul style="margin-bottom: 0; padding-left: var(--space-5);">
+              <li>General-purpose AI (ChatGPT, Claude) is your best starting point — versatile, affordable, and immediately useful.</li>
+              <li>Insurance-specific AI platforms excel at specialized tasks but require more investment and integration.</li>
+              <li>Always evaluate tools against confidentiality requirements before using them with policyholder data.</li>
+              <li>The tool landscape changes rapidly. Revisit your options quarterly.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--space-8); padding-top: var(--space-6); border-top: 1px solid var(--border-light); text-align: center;">
+          <a href="#module-4" class="btn btn--primary">Continue to Module 4</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Module 4 Content -->
+  <section class="section" id="module-4">
+    <div class="container">
+      <div style="max-width: 800px; margin: 0 auto;" class="reveal">
+        <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-6);">
+          <div class="number-badge number-badge--success">4</div>
+          <div>
+            <p class="text-sm text-muted" style="margin-bottom: 0;">Module 4</p>
+            <h2 style="margin-bottom: 0;">Ethics & Regulatory Responsibility</h2>
+          </div>
+        </div>
+
+        <div style="line-height: var(--leading-relaxed); color: var(--text-secondary);">
+          <h3 style="color: var(--text-primary);">The Regulatory Landscape</h3>
+          <p>
+            Unlike many industries where AI adoption outpaced regulation, insurance has a relatively robust (if fragmented) regulatory framework. Insurance is one of the most regulated industries in the world, and AI use is increasingly falling under existing and new regulatory scrutiny.
+          </p>
+
+          <h4 style="color: var(--text-primary);">Key Regulatory Frameworks</h4>
+          <p>
+            <strong>NAIC Model Bulletin on AI (2023):</strong> The National Association of Insurance Commissioners issued a model bulletin requiring insurers to ensure that AI systems do not result in unfair discrimination. This applies to underwriting, pricing, claims, and marketing decisions.
+          </p>
+          <p>
+            <strong>Colorado SB 21-169:</strong> Colorado became the first U.S. state to enact comprehensive legislation specifically addressing algorithmic discrimination in insurance. Insurers must test AI models for unfair bias and submit governance frameworks.
+          </p>
+          <p>
+            <strong>EU AI Act (2024):</strong> The European Union's comprehensive AI regulation classifies certain insurance AI applications (credit scoring, risk assessment) as "high-risk," requiring transparency, human oversight, and documented testing.
+          </p>
+          <p>
+            <strong>State-Level Regulations:</strong> Multiple U.S. states are adopting or adapting the NAIC model bulletin. New York, Connecticut, and California have been particularly active in setting expectations for AI governance in insurance.
+          </p>
+
+          <h4 style="color: var(--text-primary);">Core Ethical Principles</h4>
+          <p><strong>Fairness and Non-Discrimination:</strong> AI models must not produce discriminatory outcomes in underwriting, pricing, or claims decisions — even unintentionally through proxy variables.</p>
+          <p><strong>Transparency:</strong> Policyholders and regulators should be able to understand how AI-driven decisions are made. "Black box" models are increasingly unacceptable.</p>
+          <p><strong>Data Privacy:</strong> Policyholder data used in AI systems must comply with privacy regulations (GDPR, CCPA, state insurance privacy laws).</p>
+          <p><strong>Accountability:</strong> Humans must remain accountable for AI-informed decisions. You cannot delegate professional responsibility to an algorithm.</p>
+
+          <div class="callout callout--warning">
+            <h4 class="callout__title">The Accountability Principle</h4>
+            <p style="margin-bottom: 0;">"The AI made that decision" is never an acceptable explanation to a regulator, a policyholder, or a court. Insurance professionals remain personally and organizationally accountable for decisions made with AI assistance. AI is a tool you use — the decisions are still yours.</p>
+          </div>
+
+          <div class="callout callout--success" style="margin-top: var(--space-6);">
+            <h4 class="callout__title" style="color: var(--color-success-dark);">Module 4 Takeaways</h4>
+            <ul style="margin-bottom: 0; padding-left: var(--space-5);">
+              <li>The NAIC Model Bulletin sets the national baseline — know it, even if your state hasn't adopted it yet.</li>
+              <li>Colorado's SB 21-169 is the leading edge of U.S. state regulation. More states will follow.</li>
+              <li>The EU AI Act affects any insurer operating in or serving EU markets.</li>
+              <li>Fairness, transparency, privacy, and accountability are the four pillars of ethical AI in insurance.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--space-8); padding-top: var(--space-6); border-top: 1px solid var(--border-light); text-align: center;">
+          <a href="#module-5" class="btn btn--primary">Continue to Module 5</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Module 5 Content -->
+  <section class="section section--parchment" id="module-5">
+    <div class="container">
+      <div style="max-width: 800px; margin: 0 auto;" class="reveal">
+        <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-6);">
+          <div class="number-badge number-badge--success">5</div>
+          <div>
+            <p class="text-sm text-muted" style="margin-bottom: 0;">Module 5</p>
+            <h2 style="margin-bottom: 0;">Prompt Engineering Fundamentals</h2>
+          </div>
+        </div>
+
+        <div style="line-height: var(--leading-relaxed); color: var(--text-secondary);">
+          <h3 style="color: var(--text-primary);">The Art of Communicating with AI</h3>
+          <p>
+            The quality of AI output depends directly on the quality of your input. "Prompt engineering" is the practice of writing clear, structured instructions that guide AI to produce useful results. For insurance professionals, this is the single most important practical skill.
+          </p>
+
+          <h4 style="color: var(--text-primary);">The CRAFT Framework</h4>
+          <p>We recommend the CRAFT framework for structuring your prompts:</p>
+          <ul>
+            <li><strong>Context:</strong> What is the situation? ("I am reviewing a commercial property policy for a mid-size manufacturing client...")</li>
+            <li><strong>Role:</strong> What role should the AI assume? ("Act as an experienced insurance underwriter...")</li>
+            <li><strong>Action:</strong> What do you want it to do? ("Identify potential coverage gaps...")</li>
+            <li><strong>Format:</strong> How should the output be structured? ("Provide a numbered list with severity ratings...")</li>
+            <li><strong>Tone:</strong> What communication style? ("Write in clear, professional language suitable for a client-facing report...")</li>
+          </ul>
+
+          <div class="callout callout--info">
+            <h4 class="callout__title">CRAFT in Action: An Insurance Example</h4>
+            <p style="margin-bottom: 0;">"You are an experienced insurance claims analyst reviewing a property damage claim. The claim involves water damage to a commercial building from a burst pipe during a winter freeze. The policy includes both building coverage and business interruption coverage. Analyze the claim file I will provide and produce: (1) a summary of covered vs. potentially excluded damages, (2) key questions for the adjuster to investigate, and (3) a preliminary reserve recommendation with reasoning. Write in a concise, professional tone suitable for an internal claims memo."</p>
+          </div>
+
+          <p style="margin-top: var(--space-4);">
+            For a deeper dive into prompt engineering with insurance-specific examples and patterns, visit our dedicated <a href={p('/learn/prompt-engineering/')}>Prompt Engineering for Insurers</a> guide.
+          </p>
+
+          <div class="callout callout--success" style="margin-top: var(--space-6);">
+            <h4 class="callout__title" style="color: var(--color-success-dark);">Module 5 Takeaways</h4>
+            <ul style="margin-bottom: 0; padding-left: var(--space-5);">
+              <li>Prompt quality directly determines output quality. Invest time in crafting clear prompts.</li>
+              <li>The CRAFT framework (Context, Role, Action, Format, Tone) provides a reliable structure for any insurance prompt.</li>
+              <li>Specificity matters: "Analyze this claims file for coverage issues" is far better than "Help with this claim."</li>
+              <li>Iterate: Your first prompt rarely produces the best result. Refine based on what you get back.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--space-8); padding-top: var(--space-6); border-top: 1px solid var(--border-light); text-align: center;">
+          <a href="#module-6" class="btn btn--primary">Continue to Module 6</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Module 6 Content -->
+  <section class="section" id="module-6">
+    <div class="container">
+      <div style="max-width: 800px; margin: 0 auto;" class="reveal">
+        <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-6);">
+          <div class="number-badge number-badge--success">6</div>
+          <div>
+            <p class="text-sm text-muted" style="margin-bottom: 0;">Module 6</p>
+            <h2 style="margin-bottom: 0;">Building AI-Augmented Workflows</h2>
+          </div>
+        </div>
+
+        <div style="line-height: var(--leading-relaxed); color: var(--text-secondary);">
+          <h3 style="color: var(--text-primary);">From Tool to Workflow</h3>
+          <p>
+            Knowing how to write a good prompt is step one. The real productivity gains come when you integrate AI into your daily workflows — creating systematic processes where AI handles the tasks it does well while you focus on the judgment, relationships, and strategic thinking that require human expertise.
+          </p>
+
+          <h4 style="color: var(--text-primary);">Workflow Pattern 1: Underwriting Analysis</h4>
+          <ol>
+            <li>Feed the submission documents to AI for data extraction and initial risk summary.</li>
+            <li>Use AI to identify comparable risks and flag unusual exposures.</li>
+            <li>Apply your professional judgment to the AI-generated analysis.</li>
+            <li>Draft the underwriting memo using AI, then review and refine.</li>
+          </ol>
+
+          <h4 style="color: var(--text-primary);">Workflow Pattern 2: Claims Processing</h4>
+          <ol>
+            <li>Use AI to extract key facts from the claim report and supporting documents.</li>
+            <li>Have AI compare the claim against policy terms and identify coverage questions.</li>
+            <li>Generate a preliminary coverage analysis for your review.</li>
+            <li>Draft the coverage determination letter with AI assistance, then review for accuracy.</li>
+          </ol>
+
+          <h4 style="color: var(--text-primary);">Workflow Pattern 3: Regulatory Compliance</h4>
+          <ol>
+            <li>Use AI to monitor and summarize regulatory updates relevant to your lines of business.</li>
+            <li>Have AI compare new regulations against your current compliance procedures.</li>
+            <li>Generate gap analysis reports for compliance review.</li>
+            <li>Draft updated compliance procedures with AI, review with your compliance team.</li>
+          </ol>
+
+          <div class="callout callout--info">
+            <h4 class="callout__title">The 80/20 Rule of AI Workflows</h4>
+            <p style="margin-bottom: 0;">AI can typically handle 80% of the routine, data-intensive work in a process — extraction, summarization, first-draft generation, pattern identification. The remaining 20% — professional judgment, relationship management, strategic decisions, nuanced interpretation — is where your expertise is irreplaceable. Design your workflows around this principle.</p>
+          </div>
+
+          <div class="callout callout--success" style="margin-top: var(--space-6);">
+            <h4 class="callout__title" style="color: var(--color-success-dark);">Module 6 Takeaways</h4>
+            <ul style="margin-bottom: 0; padding-left: var(--space-5);">
+              <li>The biggest gains come from systematic AI integration, not one-off prompts.</li>
+              <li>Design workflows where AI handles data work and you handle judgment work.</li>
+              <li>Start with one workflow. Perfect it. Then expand to the next.</li>
+              <li>Document your workflows so your team can replicate your success.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--space-8); padding-top: var(--space-6); border-top: 1px solid var(--border-light); text-align: center;">
+          <a href="#module-7" class="btn btn--primary">Continue to Module 7</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Module 7 Content -->
+  <section class="section section--parchment" id="module-7">
+    <div class="container">
+      <div style="max-width: 800px; margin: 0 auto;" class="reveal">
+        <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-6);">
+          <div class="number-badge number-badge--success">7</div>
+          <div>
+            <p class="text-sm text-muted" style="margin-bottom: 0;">Module 7</p>
+            <h2 style="margin-bottom: 0;">The Future of AI in Insurance</h2>
+          </div>
+        </div>
+
+        <div style="line-height: var(--leading-relaxed); color: var(--text-secondary);">
+          <h3 style="color: var(--text-primary);">What's Coming Next</h3>
+          <p>
+            The AI tools available today are the least capable they will ever be. Every month brings new capabilities, new tools, and new applications. Understanding the trajectory helps you prepare rather than react.
+          </p>
+
+          <h4 style="color: var(--text-primary);">Near-Term Developments (1-3 Years)</h4>
+          <p><strong>Agentic AI:</strong> AI systems that can autonomously execute multi-step tasks — gathering data, running analyses, generating reports, and even initiating workflows. In insurance, this means AI that can process a claim from first notice to coverage determination draft with minimal human intervention.</p>
+          <p><strong>Multimodal Intelligence:</strong> AI that seamlessly processes text, images, video, and audio. For insurance, this means automated damage assessment from photos, voice-based claims reporting with real-time analysis, and video inspection capabilities.</p>
+          <p><strong>Real-Time Risk Assessment:</strong> Continuous risk monitoring using IoT data, satellite imagery, and real-time data feeds. Parametric insurance products triggered automatically by measurable events.</p>
+
+          <h4 style="color: var(--text-primary);">Medium-Term Shifts (3-5 Years)</h4>
+          <p><strong>Hyper-Personalized Insurance:</strong> AI-driven dynamic pricing and coverage that adapts in real time to individual risk profiles. Usage-based insurance becomes the norm, not the exception.</p>
+          <p><strong>Regulatory AI:</strong> AI systems that monitor regulatory changes, assess compliance, and flag potential issues before they become violations — across multiple jurisdictions simultaneously.</p>
+          <p><strong>AI-Native Insurance Products:</strong> Entirely new insurance products designed from the ground up around AI capabilities — embedded insurance, micro-policies, and automated risk pools.</p>
+
+          <h4 style="color: var(--text-primary);">The Human Element</h4>
+          <p>
+            Despite these advances, the insurance industry will continue to need human expertise for complex underwriting decisions, relationship management, ethical judgment, strategic planning, and the empathy required for claims handling during difficult moments. The professionals who thrive will be those who combine deep insurance knowledge with AI fluency.
+          </p>
+
+          <div class="callout callout--success" style="margin-top: var(--space-6);">
+            <h4 class="callout__title" style="color: var(--color-success-dark);">Module 7 Takeaways</h4>
+            <ul style="margin-bottom: 0; padding-left: var(--space-5);">
+              <li>AI capabilities are advancing exponentially. What seems impossible today may be routine in two years.</li>
+              <li>Agentic AI, multimodal intelligence, and real-time risk assessment are the near-term priorities.</li>
+              <li>The winning strategy is continuous learning and adaptation, not waiting for the "right" moment to start.</li>
+              <li>Human expertise + AI fluency = the insurance professional of the future. Start building both today.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--space-8); padding-top: var(--space-6); border-top: 1px solid var(--border-light); text-align: center;">
+          <p style="font-size: var(--text-lg); font-weight: var(--font-semibold); color: var(--color-primary); margin-bottom: var(--space-4);">
+            You've completed AI 101. What's next?
+          </p>
+          <div class="flex gap-4 flex--wrap" style="justify-content: center;">
+            <a href={p('/learn/what-to-do/')} class="btn btn--primary">What to Do with AI</a>
+            <a href={p('/practice/quick-wins/')} class="btn btn--secondary">Try a Quick Win</a>
+            <a href={p('/learn/prompt-engineering/')} class="btn btn--ghost">Master Prompt Engineering</a>
+          </div>
+          <p style="margin-top: var(--space-4); font-size: var(--text-sm); color: var(--text-muted);">
+            {t(locale, 'learningProgram.programCta')}
+            <a href={p('/learn/program/')} style="font-weight: var(--font-semibold);">
+              {t(locale, 'learningProgram.programCtaLink')} &rarr;
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

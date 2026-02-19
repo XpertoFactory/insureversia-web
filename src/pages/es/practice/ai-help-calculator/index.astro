@@ -1,0 +1,38 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import AiHelpCalculator from '../../../../components/AiHelpCalculator.astro';
+import { t, getLocalePath } from '../../../../i18n';
+const locale = 'es';
+const p = (path: string) => getLocalePath(locale, path);
+---
+<BaseLayout title={t(locale, 'aiCalculator.title')} description={t(locale, 'aiCalculator.subtitle')} locale={locale}>
+  <section class="hero" style="background: linear-gradient(135deg, rgba(27,42,74,0.82) 0%, rgba(45,55,72,0.78) 100%), url('/assets/images/hero-images/hero-image-practice.png') top/cover no-repeat;">
+    <div class="container" style="position: relative; z-index: 1;">
+      <div class="slide-up" style="max-width: 800px;">
+        <p class="text-sm font-semibold mb-4" style="color: var(--color-secondary); text-transform: uppercase; letter-spacing: 0.1em;">{t(locale, 'aiCalculator.heroLabel')}</p>
+        <h1 style="font-size: var(--text-5xl); margin-bottom: var(--space-6);">{t(locale, 'aiCalculator.title')}</h1>
+        <p class="lead" style="margin-bottom: var(--space-6);">{t(locale, 'aiCalculator.heroDesc')}</p>
+      </div>
+    </div>
+    <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 120px; background: linear-gradient(to top, var(--surface-page), transparent);"></div>
+  </section>
+  <section class="section">
+    <div class="container">
+      <div class="reveal" style="max-width: 800px; margin: 0 auto;">
+        <AiHelpCalculator locale={locale} />
+      </div>
+    </div>
+  </section>
+  <section class="section section--parchment">
+    <div class="container text-center">
+      <div class="reveal" style="max-width: 600px; margin: 0 auto;">
+        <h2>{t(locale, 'aiCalculator.ctaTitle')}</h2>
+        <p style="font-size: var(--text-lg); color: var(--text-secondary); margin-bottom: var(--space-6);">{t(locale, 'aiCalculator.ctaDesc')}</p>
+        <div class="flex gap-4 flex--wrap" style="justify-content: center;">
+          <a href={p('/practice/quick-wins/')} class="btn btn--primary">{t(locale, 'aiCalculator.ctaQuickWins')}</a>
+          <a href={p('/practice/prompt-library/')} class="btn btn--secondary">{t(locale, 'aiCalculator.ctaPromptLib')}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

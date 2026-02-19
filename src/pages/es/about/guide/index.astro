@@ -1,0 +1,406 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import Icon from '../../../../components/Icon.astro';
+import { t, getLocalePath } from '../../../../i18n';
+const locale = 'es';
+const p = (path: string) => getLocalePath(locale, path);
+---
+
+<BaseLayout
+  title="Site Guide — Your Guided Tour of Insureversia"
+  description="Explore all pages across every section. A complete guided tour of everything Insureversia offers for insurance professionals navigating AI."
+  locale={locale}
+  keywords="Insureversia site guide, insurance AI resources, site map, guided tour"
+>
+  <!-- Back link + Mini Hero -->
+  <section class="section" style="padding-bottom: 0;">
+    <div class="container">
+      <a href={p('/about/')} class="back-link">&larr; Back to About</a>
+      <div class="mini-hero">
+        <h1>{t(locale, 'about.guideTitle')}</h1>
+        <p class="lead">Your guided tour of everything Insureversia offers — designed to help insurance professionals navigate AI with confidence.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- What You Will Find Here -->
+  <section class="section">
+    <div class="container">
+      <div class="reveal" style="max-width: 800px; margin: 0 auto;">
+        <h2 style="margin-bottom: var(--space-6); text-align: center;">{t(locale, 'about.whatYouWillFind')}</h2>
+        <div class="grid grid--2" style="gap: var(--space-4);">
+          <div class="callout callout--info" style="margin: 0;">
+            <h4 class="callout__title">Explore</h4>
+            <p style="color: var(--text-secondary); margin-bottom: 0;">Discover new frontiers in insurance AI, understand how AI impacts your sector, and navigate the challenges and risks with clear eyes.</p>
+          </div>
+          <div class="callout callout--success" style="margin: 0;">
+            <h4 class="callout__title">Learn</h4>
+            <p style="color: var(--text-secondary); margin-bottom: 0;">From AI 101 fundamentals to advanced prompt engineering, build your knowledge with structured learning paths designed for insurance professionals.</p>
+          </div>
+          <div class="callout callout--warning" style="margin: 0;">
+            <h4 class="callout__title">Practice</h4>
+            <p style="color: var(--text-secondary); margin-bottom: 0;">Quick Wins, practical applications, and interactive tools give you hands-on experience with AI in insurance workflows.</p>
+          </div>
+          <div class="callout callout--info" style="margin: 0;">
+            <h4 class="callout__title">Resources</h4>
+            <p style="color: var(--text-secondary); margin-bottom: 0;">FAQ, glossary, tool directory, and reference materials to support your ongoing AI education.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats bar -->
+  <section class="section" style="padding-top: var(--space-4); padding-bottom: 0;">
+    <div class="container">
+      <div class="stats-bar">
+        <div class="stats-bar__items">
+          <span class="stats-bar__stat"><strong>6</strong> sections</span>
+          <span class="stats-bar__divider"></span>
+          <span class="stats-bar__stat"><strong>2</strong> languages</span>
+        </div>
+        <button class="btn btn--secondary btn--sm" id="open-sitemap">
+          <Icon name="clipboard-list" size={16} /> {t(locale, 'about.openSiteMap')}
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Guided Tour -->
+  <section class="section">
+    <div class="container" style="max-width: 900px;">
+
+      <!-- HOME -->
+      <div class="tour-section tour-section--home">
+        <div class="tour-section__header">
+          <div class="tour-section__title"><Icon name="home" size={20} /> Home</div>
+          <span class="tour-section__count">1 page</span>
+        </div>
+        <p class="tour-section__intro">Your starting point — orientation, quick links, and a direct path into every section.</p>
+        <div class="tour-section__pages">
+          <a href={p('/')} class="tour-page">
+            <span class="tour-page__name">Home</span>
+            <span class="tour-page__desc">Orientation, tagline, and direct entry into all sections.</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- ABOUT -->
+      <div class="tour-section tour-section--about">
+        <div class="tour-section__header">
+          <div class="tour-section__title"><Icon name="users" size={20} /> About</div>
+          <span class="tour-section__count">4 pages</span>
+        </div>
+        <p class="tour-section__intro">Learn what Insureversia is, what drives this project, and how the site is organized.</p>
+        <div class="tour-section__pages">
+          <a href={p('/about/')} class="tour-page">
+            <span class="tour-page__name">About Insureversia</span>
+            <span class="tour-page__desc">Hub page for the About section.</span>
+          </a>
+          <a href={p('/about/insureversia/')} class="tour-page">
+            <span class="tour-page__name">What is Insureversia?</span>
+            <span class="tour-page__desc">Identity, mission, core thesis, and principles.</span>
+            <span class="tour-page__badge">Start here</span>
+          </a>
+          <div class="tour-page tour-page--current" aria-current="page">
+            <span class="tour-page__name">Site Guide</span>
+            <span class="tour-page__desc">You are here.</span>
+          </div>
+          <a href={p('/about/team/')} class="tour-page">
+            <span class="tour-page__name">Our Team</span>
+            <span class="tour-page__desc">CEMI.ai and the curator.</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- EXPLORE -->
+      <div class="tour-section tour-section--explore">
+        <div class="tour-section__header">
+          <div class="tour-section__title"><Icon name="globe" size={20} /> Explore</div>
+          <span class="tour-section__count">3 pages</span>
+        </div>
+        <p class="tour-section__intro">Discover how AI is reshaping insurance — new frontiers, real impacts, and the challenges ahead.</p>
+        <div class="tour-section__pages">
+          <a href={p('/explore/new-frontiers/')} class="tour-page">
+            <span class="tour-page__name">New Frontiers</span>
+            <span class="tour-page__desc">Ten emerging AI frontiers in the insurance industry.</span>
+            <span class="tour-page__badge">Start here</span>
+          </a>
+          <a href={p('/explore/ai-impact/')} class="tour-page">
+            <span class="tour-page__name">AI Impact</span>
+            <span class="tour-page__desc">How AI transforms underwriting, claims, and risk management.</span>
+          </a>
+          <a href={p('/explore/challenges/')} class="tour-page">
+            <span class="tour-page__name">Challenges & Risks</span>
+            <span class="tour-page__desc">Bias, privacy, transparency, and regulatory gaps.</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- LEARN -->
+      <div class="tour-section tour-section--learn">
+        <div class="tour-section__header">
+          <div class="tour-section__title"><Icon name="book-open" size={20} /> Learn</div>
+        </div>
+        <p class="tour-section__intro">Build your knowledge from foundations to advanced skills with structured learning paths designed for insurance professionals.</p>
+        <div class="tour-section__pages">
+          <a href={p('/learn/ai-101/')} class="tour-page">
+            <span class="tour-page__name">AI 101</span>
+            <span class="tour-page__desc">Foundational module on AI for insurance.</span>
+            <span class="tour-page__badge">Start here</span>
+          </a>
+          <a href={p('/learn/what-to-do/')} class="tour-page">
+            <span class="tour-page__name">What to Do with AI</span>
+            <span class="tour-page__desc">Best practices for AI integration.</span>
+          </a>
+          <a href={p('/learn/what-not-to-do/')} class="tour-page">
+            <span class="tour-page__name">What Not to Do</span>
+            <span class="tour-page__desc">Failure modes with AI in insurance.</span>
+          </a>
+          <a href={p('/learn/prompt-engineering/')} class="tour-page">
+            <span class="tour-page__name">Prompt Engineering</span>
+            <span class="tour-page__desc">Writing effective insurance AI prompts.</span>
+          </a>
+          <a href={p('/learn/program/')} class="tour-page">
+            <span class="tour-page__name">Learning Program</span>
+            <span class="tour-page__desc">Structured AI curriculum.</span>
+          </a>
+          <a href={p('/learn/program/case-studies/')} class="tour-page">
+            <span class="tour-page__name">Case Studies</span>
+            <span class="tour-page__desc">Case study library with role simulation.</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- PRACTICE -->
+      <div class="tour-section tour-section--practice">
+        <div class="tour-section__header">
+          <div class="tour-section__title"><Icon name="zap" size={20} /> Practice</div>
+        </div>
+        <p class="tour-section__intro">Get hands-on with AI in your insurance workflow — prompts, tools, assessments, and interactive builders.</p>
+        <div class="tour-section__pages">
+          <a href={p('/practice/quick-wins/')} class="tour-page">
+            <span class="tour-page__name">Quick Wins</span>
+            <span class="tour-page__desc">Low-risk AI applications for today.</span>
+            <span class="tour-page__badge">Start here</span>
+          </a>
+          <a href={p('/practice/prompt-library/')} class="tour-page">
+            <span class="tour-page__name">Prompt Library</span>
+            <span class="tour-page__desc">Curated prompts by insurance task.</span>
+          </a>
+          <a href={p('/practice/prompt-builder/')} class="tour-page">
+            <span class="tour-page__name">Prompt Builder</span>
+            <span class="tour-page__desc">Interactive prompt construction tool.</span>
+          </a>
+          <a href={p('/practice/ai-readiness/')} class="tour-page">
+            <span class="tour-page__name">AI Readiness</span>
+            <span class="tour-page__desc">Readiness assessment quiz.</span>
+          </a>
+          <a href={p('/practice/ai-help-calculator/')} class="tour-page">
+            <span class="tour-page__name">AI Help Calculator</span>
+            <span class="tour-page__desc">Task suitability estimator.</span>
+          </a>
+          <a href={p('/practice/ai-roadmap/')} class="tour-page">
+            <span class="tour-page__name">AI Adoption Roadmap</span>
+            <span class="tour-page__desc">Personalized adoption plan builder.</span>
+          </a>
+          <a href={p('/practice/local-ai/')} class="tour-page">
+            <span class="tour-page__name">Install Local AI</span>
+            <span class="tour-page__desc">Privacy-first local AI setup.</span>
+          </a>
+          <a href={p('/practice/ethics-simulator/')} class="tour-page">
+            <span class="tour-page__name">Ethics Simulator</span>
+            <span class="tour-page__desc">Interactive ethical dilemma scenarios.</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- RESOURCES -->
+      <div class="tour-section tour-section--resources">
+        <div class="tour-section__header">
+          <div class="tour-section__title"><Icon name="folder-open" size={20} /> Resources</div>
+        </div>
+        <p class="tour-section__intro">Reference materials, tools, and curated collections to support your ongoing AI education.</p>
+        <div class="tour-section__pages">
+          <a href={p('/resources/faq/')} class="tour-page">
+            <span class="tour-page__name">FAQ</span>
+            <span class="tour-page__desc">Common questions in plain language.</span>
+            <span class="tour-page__badge">Start here</span>
+          </a>
+          <a href={p('/resources/glossary/')} class="tour-page">
+            <span class="tour-page__name">Glossary</span>
+            <span class="tour-page__desc">AI and insurance terms.</span>
+          </a>
+          <a href={p('/resources/success-stories/')} class="tour-page">
+            <span class="tour-page__name">Success Stories</span>
+            <span class="tour-page__desc">Documented AI value in insurance.</span>
+          </a>
+          <a href={p('/resources/tool-directory/')} class="tour-page">
+            <span class="tour-page__name">Tool Directory</span>
+            <span class="tour-page__desc">AI tools evaluated for insurance use.</span>
+          </a>
+          <a href={p('/resources/jurisdiction-guide/')} class="tour-page">
+            <span class="tour-page__name">Jurisdiction Guide</span>
+            <span class="tour-page__desc">Per-jurisdiction AI regulation for insurers.</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section">
+    <div class="container">
+      <div class="reveal" style="text-align: center;">
+        <h2 style="margin-bottom: var(--space-4);">Start Your AI Journey</h2>
+        <div style="display: flex; gap: var(--space-4); flex-wrap: wrap; justify-content: center;">
+          <a href={p('/learn/ai-101/')} class="btn btn--primary">AI 101</a>
+          <a href={p('/practice/quick-wins/')} class="btn btn--secondary">Quick Wins</a>
+          <a href={p('/resources/faq/')} class="btn btn--ghost">FAQ</a>
+        </div>
+        <p style="margin-top: var(--space-4); font-size: var(--text-sm); color: var(--text-muted);">
+          {t(locale, 'learningProgram.programCta')}
+          <a href={p('/learn/program/')} style="font-weight: var(--font-semibold);">
+            {t(locale, 'learningProgram.programCtaLink')} &rarr;
+          </a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sitemap Modal -->
+  <div class="sitemap-overlay" id="sitemap-overlay">
+    <div class="sitemap-modal" role="dialog" aria-modal="true" aria-label="Full Sitemap">
+      <div class="sitemap-modal__header">
+        <h2 class="sitemap-modal__title">{t(locale, 'about.siteMapTitle')}</h2>
+        <button class="sitemap-modal__close" id="close-sitemap" aria-label={t(locale, 'about.closeSiteMap')}>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="sitemap-modal__body">
+        <div class="sitemap-col">
+          <h3 class="sitemap-section sitemap-section--home">Home</h3>
+          <a href={p('/')} class="sitemap-link">Home</a>
+
+          <h3 class="sitemap-section sitemap-section--about">About</h3>
+          <a href={p('/about/')} class="sitemap-link">About Insureversia</a>
+          <a href={p('/about/insureversia/')} class="sitemap-link">What is Insureversia?</a>
+          <a href={p('/about/guide/')} class="sitemap-link sitemap-link--current">Site Guide</a>
+          <a href={p('/about/team/')} class="sitemap-link">Our Team</a>
+
+          <h3 class="sitemap-section sitemap-section--explore">Explore</h3>
+          <a href={p('/explore/new-frontiers/')} class="sitemap-link">New Frontiers</a>
+          <a href={p('/explore/ai-impact/')} class="sitemap-link">AI Impact</a>
+          <a href={p('/explore/challenges/')} class="sitemap-link">Challenges & Risks</a>
+        </div>
+        <div class="sitemap-col">
+          <h3 class="sitemap-section sitemap-section--learn">Learn</h3>
+          <a href={p('/learn/ai-101/')} class="sitemap-link">AI 101</a>
+          <a href={p('/learn/what-to-do/')} class="sitemap-link">What to Do with AI</a>
+          <a href={p('/learn/what-not-to-do/')} class="sitemap-link">What Not to Do</a>
+          <a href={p('/learn/prompt-engineering/')} class="sitemap-link">Prompt Engineering</a>
+          <a href={p('/learn/program/')} class="sitemap-link">Learning Program</a>
+          <a href={p('/learn/program/case-studies/')} class="sitemap-link">Case Studies</a>
+
+          <h3 class="sitemap-section sitemap-section--practice">Practice</h3>
+          <a href={p('/practice/quick-wins/')} class="sitemap-link">Quick Wins</a>
+          <a href={p('/practice/prompt-library/')} class="sitemap-link">Prompt Library</a>
+          <a href={p('/practice/prompt-builder/')} class="sitemap-link">Prompt Builder</a>
+          <a href={p('/practice/ai-readiness/')} class="sitemap-link">AI Readiness</a>
+          <a href={p('/practice/ai-help-calculator/')} class="sitemap-link">AI Help Calculator</a>
+          <a href={p('/practice/ai-roadmap/')} class="sitemap-link">AI Adoption Roadmap</a>
+          <a href={p('/practice/local-ai/')} class="sitemap-link">Install Local AI</a>
+          <a href={p('/practice/ethics-simulator/')} class="sitemap-link">Ethics Simulator</a>
+
+          <h3 class="sitemap-section sitemap-section--resources">Resources</h3>
+          <a href={p('/resources/faq/')} class="sitemap-link">FAQ</a>
+          <a href={p('/resources/glossary/')} class="sitemap-link">Glossary</a>
+          <a href={p('/resources/success-stories/')} class="sitemap-link">Success Stories</a>
+          <a href={p('/resources/tool-directory/')} class="sitemap-link">Tool Directory</a>
+          <a href={p('/resources/jurisdiction-guide/')} class="sitemap-link">Jurisdiction Guide</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .back-link { display: inline-block; margin-bottom: var(--space-4); color: var(--color-primary); text-decoration: none; font-size: var(--text-sm); font-weight: var(--font-semibold); }
+  .back-link:hover { text-decoration: underline; }
+  .mini-hero { max-width: 800px; padding: var(--space-8) 0 var(--space-4); }
+  .mini-hero h1 { font-size: var(--text-4xl); margin-bottom: var(--space-4); background: linear-gradient(135deg, var(--color-primary), var(--color-secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .mini-hero .lead { color: var(--text-secondary); font-size: var(--text-lg); line-height: 1.6; }
+  .stats-bar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-4); padding: var(--space-4) var(--space-6); background: var(--surface-secondary); border-radius: var(--radius-lg); border: 1px solid var(--border-color); }
+  .stats-bar__items { display: flex; align-items: center; gap: var(--space-4); flex-wrap: wrap; }
+  .stats-bar__stat { font-size: var(--text-sm); color: var(--text-secondary); }
+  .stats-bar__stat strong { color: var(--color-primary); font-size: var(--text-lg); }
+  .stats-bar__divider { width: 1px; height: 20px; background: var(--border-color); }
+  .tour-section { margin-bottom: var(--space-8); border-radius: var(--radius-lg); border: 1px solid var(--border-color); overflow: hidden; }
+  .tour-section__header { display: flex; align-items: center; justify-content: space-between; padding: var(--space-4) var(--space-5); font-weight: var(--font-bold); }
+  .tour-section__title { display: flex; align-items: center; gap: var(--space-2); font-size: var(--text-lg); color: #fff; }
+  .tour-section__count { font-size: var(--text-sm); color: rgba(255,255,255,0.8); font-weight: var(--font-medium); }
+  .tour-section__intro { padding: var(--space-4) var(--space-5) var(--space-2); color: var(--text-secondary); font-size: var(--text-sm); line-height: 1.5; margin: 0; }
+  .tour-section__pages { padding: var(--space-2) var(--space-5) var(--space-5); }
+  .tour-section--home .tour-section__header { background: var(--color-primary); }
+  .tour-section--about .tour-section__header { background: #6366f1; }
+  .tour-section--explore .tour-section__header { background: #0891b2; }
+  .tour-section--learn .tour-section__header { background: #059669; }
+  .tour-section--practice .tour-section__header { background: #d97706; }
+  .tour-section--resources .tour-section__header { background: #7c3aed; }
+  .tour-page { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-2); padding: var(--space-3); border-radius: var(--radius-md); text-decoration: none; color: inherit; transition: background 0.15s; }
+  a.tour-page:hover { background: var(--surface-secondary); }
+  .tour-page + .tour-page { border-top: 1px solid var(--border-color); }
+  .tour-page--current { opacity: 0.5; pointer-events: none; }
+  .tour-page__name { font-weight: var(--font-semibold); color: var(--color-primary); white-space: nowrap; }
+  a.tour-page:hover .tour-page__name { text-decoration: underline; }
+  .tour-page__desc { font-size: var(--text-sm); color: var(--text-secondary); flex: 1; min-width: 200px; }
+  .tour-page__badge { font-size: var(--text-xs); font-weight: var(--font-semibold); padding: 2px 8px; border-radius: var(--radius-full); background: #059669; color: #fff; white-space: nowrap; }
+  .sitemap-overlay { position: fixed; inset: 0; z-index: 1000; background: rgba(0,0,0,0.9); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.2s; padding: var(--space-4); }
+  .sitemap-overlay.is-open { opacity: 1; pointer-events: auto; }
+  .sitemap-modal { background: #fff; color: #1e293b; border-radius: var(--radius-xl); box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); max-width: 800px; width: 100%; max-height: 85vh; display: flex; flex-direction: column; transform: translateY(16px) scale(0.97); transition: transform 0.2s; }
+  .sitemap-overlay.is-open .sitemap-modal { transform: translateY(0) scale(1); }
+  .sitemap-modal__header { display: flex; align-items: center; justify-content: space-between; padding: var(--space-5) var(--space-6); border-bottom: 1px solid #e2e8f0; flex-shrink: 0; }
+  .sitemap-modal__title { font-size: var(--text-xl); margin: 0; color: #1e293b; }
+  .sitemap-modal__close { background: none; border: none; cursor: pointer; color: #64748b; padding: var(--space-1); border-radius: var(--radius-md); transition: color 0.15s, background 0.15s; }
+  .sitemap-modal__close:hover { color: #1e293b; background: #f1f5f9; }
+  .sitemap-modal__body { padding: var(--space-5) var(--space-6); overflow-y: auto; display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4) var(--space-8); }
+  @media (max-width: 600px) { .sitemap-modal__body { grid-template-columns: 1fr; } }
+  .sitemap-section { font-size: var(--text-sm); font-weight: var(--font-bold); text-transform: uppercase; letter-spacing: 0.05em; margin: var(--space-4) 0 var(--space-2); padding-bottom: var(--space-1); border-bottom: 2px solid #e2e8f0; }
+  .sitemap-section:first-child { margin-top: 0; }
+  .sitemap-section--home { border-color: var(--color-primary); color: var(--color-primary); }
+  .sitemap-section--about { border-color: #6366f1; color: #6366f1; }
+  .sitemap-section--explore { border-color: #0891b2; color: #0891b2; }
+  .sitemap-section--learn { border-color: #059669; color: #059669; }
+  .sitemap-section--practice { border-color: #d97706; color: #d97706; }
+  .sitemap-section--resources { border-color: #7c3aed; color: #7c3aed; }
+  .sitemap-link { display: block; padding: var(--space-1) 0; color: #334155; text-decoration: none; font-size: var(--text-sm); transition: color 0.15s; }
+  .sitemap-link:hover { color: var(--color-primary); text-decoration: underline; }
+  .sitemap-link--current { color: #94a3b8; pointer-events: none; font-style: italic; }
+</style>
+
+<script>
+  const overlay = document.getElementById('sitemap-overlay');
+  const openBtn = document.getElementById('open-sitemap');
+  const closeBtn = document.getElementById('close-sitemap');
+
+  function openModal() {
+    overlay?.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+    closeBtn?.focus();
+  }
+  function closeModal() {
+    overlay?.classList.remove('is-open');
+    document.body.style.overflow = '';
+    openBtn?.focus();
+  }
+
+  openBtn?.addEventListener('click', openModal);
+  closeBtn?.addEventListener('click', closeModal);
+  overlay?.addEventListener('click', (e) => {
+    if (e.target === overlay) closeModal();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && overlay?.classList.contains('is-open')) closeModal();
+  });
+</script>

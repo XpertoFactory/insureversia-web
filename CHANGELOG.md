@@ -8,6 +8,7 @@ All notable changes to the Insureversia website will be documented in this file.
 
 - **CLAUDE.md**: Project instructions for Claude Code — tech stack, conventions, structure, workflow rules
 - **README.md**: Project README with site overview, tech stack, structure, personas, brand, and getting started
+- **Spanish pages** (`src/pages/es/`): 28 mirror pages for full `/es/` routing — site now builds 56 pages across 2 languages
 
 ### Changed
 

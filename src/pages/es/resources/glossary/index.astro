@@ -1,0 +1,276 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import { t, getLocalePath } from '../../../../i18n';
+const locale = 'es';
+const p = (path: string) => getLocalePath(locale, path);
+
+const terms = [
+  {
+    term: 'Agentic AI',
+    definition: 'AI systems capable of autonomous decision-making and action-taking, often orchestrating multiple tools or sub-agents to accomplish complex goals with minimal human intervention. In insurance, agentic AI could autonomously handle end-to-end claims processing or underwriting workflows, raising important questions about accountability and oversight.',
+  },
+  {
+    term: 'Algorithmic Pricing',
+    definition: 'The use of algorithms and AI models to determine insurance premiums based on a wide range of data inputs, often in real time. Unlike traditional rating tables, algorithmic pricing can incorporate non-traditional data sources such as telematics, IoT sensors, and behavioral data. Regulators increasingly scrutinize these models for transparency and potential unfair discrimination.',
+  },
+  {
+    term: 'Artificial Intelligence',
+    definition: 'The broad field of computer science focused on creating systems capable of performing tasks that typically require human intelligence, such as learning, reasoning, problem-solving, and pattern recognition. In insurance, AI encompasses everything from simple rule-based automation to sophisticated machine learning models used in underwriting, claims, and customer service.',
+  },
+  {
+    term: 'Automated Underwriting',
+    definition: 'The use of AI and machine learning models to evaluate insurance applications, assess risk, and make coverage decisions with minimal or no human intervention. Automated underwriting can process applications in seconds rather than days, but requires careful validation to ensure fairness, accuracy, and regulatory compliance.',
+  },
+  {
+    term: 'AI Claims Processing',
+    definition: 'The application of artificial intelligence to automate and enhance the claims handling workflow, from first notice of loss through settlement. AI claims processing may include automated damage assessment via computer vision, NLP-based document extraction, fraud detection, and straight-through processing for qualifying claims.',
+  },
+  {
+    term: 'Bias (Algorithmic)',
+    definition: 'Systematic and unfair discrimination that can occur when AI models produce results that are prejudiced due to flawed assumptions in the training data or the algorithm design. In insurance, algorithmic bias can lead to unfair pricing, discriminatory underwriting decisions, or inequitable claims handling, particularly affecting protected classes.',
+  },
+  {
+    term: 'Cat Modeling',
+    definition: 'Catastrophe modeling uses computer simulations to estimate potential losses from catastrophic events such as hurricanes, earthquakes, floods, and wildfires. Modern cat models increasingly incorporate AI and machine learning to improve accuracy, integrate real-time data, and model emerging risks like climate change impacts on loss frequency and severity.',
+  },
+  {
+    term: 'Computer Vision',
+    definition: 'A field of AI that enables computers to interpret and analyze visual information from images and videos. In insurance, computer vision is used for automated damage assessment in auto and property claims, aerial imagery analysis for risk evaluation, and document processing through optical character recognition (OCR).',
+  },
+  {
+    term: 'Deep Learning',
+    definition: 'A subset of machine learning that uses artificial neural networks with multiple layers to model complex patterns in large datasets. Deep learning excels at tasks like image recognition, natural language understanding, and pattern detection. In insurance, it powers applications ranging from automated damage assessment to sophisticated fraud detection systems.',
+  },
+  {
+    term: 'Embedded Insurance',
+    definition: 'Insurance products that are integrated directly into the purchase journey of non-insurance products and services, often at the point of sale. AI enables embedded insurance by automating real-time risk assessment, instant policy issuance, and seamless claims handling within partner platforms such as e-commerce, travel booking, or ride-sharing applications.',
+  },
+  {
+    term: 'Explainable AI (XAI)',
+    definition: 'AI systems and techniques designed to make their decision-making processes transparent and understandable to humans. In insurance, explainability is critical for regulatory compliance, as insurers must often justify underwriting and claims decisions to regulators, policyholders, and courts. XAI bridges the gap between model accuracy and accountability.',
+  },
+  {
+    term: 'Fine-Tuning',
+    definition: 'The process of taking a pre-trained AI model and further training it on a specific, smaller dataset to adapt it for a particular task or domain. Insurance companies may fine-tune large language models on proprietary policy language, claims data, or regulatory documents to improve accuracy and relevance for insurance-specific applications.',
+  },
+  {
+    term: 'Fraud Detection (AI-based)',
+    definition: 'The use of machine learning, graph analytics, and pattern recognition to identify potentially fraudulent insurance claims, applications, or activities. AI-based fraud detection can analyze thousands of variables simultaneously, detect anomalies invisible to human reviewers, and flag suspicious patterns in real time during claims intake.',
+  },
+  {
+    term: 'Generative AI',
+    definition: 'AI systems capable of creating new content, including text, images, code, and structured data, based on patterns learned from training data. In insurance, generative AI is used for drafting policy documents, generating customer communications, creating training materials, summarizing complex claims files, and assisting with regulatory filings.',
+  },
+  {
+    term: 'Hallucination',
+    definition: 'A phenomenon where AI models, particularly large language models, generate plausible-sounding but factually incorrect or fabricated information. In insurance, hallucinations pose significant risks when AI generates fictional policy terms, incorrect regulatory citations, or fabricated case law. Every AI output in insurance must be verified against authoritative sources.',
+  },
+  {
+    term: 'Insurtech',
+    definition: 'A category of technology-driven companies and innovations that seek to improve efficiency, reduce costs, and enhance the customer experience in the insurance industry. Insurtechs leverage AI, data analytics, mobile technology, and digital platforms to disrupt traditional insurance models across underwriting, distribution, claims, and customer engagement.',
+  },
+  {
+    term: 'Large Language Model (LLM)',
+    definition: 'A type of AI model trained on vast amounts of text data that can understand, generate, and reason about natural language. Examples include GPT-4, Claude, and Gemini. In insurance, LLMs are used for document analysis, policy summarization, customer service automation, regulatory research, and as general-purpose AI assistants for insurance professionals.',
+  },
+  {
+    term: 'Loss Ratio',
+    definition: 'A fundamental insurance metric calculated as incurred losses plus loss adjustment expenses divided by earned premiums. The loss ratio measures the percentage of premiums paid out in claims. AI and predictive analytics help insurers optimize loss ratios by improving risk selection, pricing accuracy, claims efficiency, and fraud detection.',
+  },
+  {
+    term: 'Machine Learning',
+    definition: 'A subset of artificial intelligence where systems learn patterns from data and improve their performance over time without being explicitly programmed for each task. In insurance, machine learning is applied to risk scoring, claims triage, pricing optimization, fraud detection, and customer segmentation, among many other applications.',
+  },
+  {
+    term: 'Natural Language Processing (NLP)',
+    definition: 'A branch of AI focused on enabling computers to understand, interpret, and generate human language. In insurance, NLP is used to extract information from unstructured documents such as medical records, police reports, and policy forms; analyze customer sentiment; automate correspondence; and power chatbots for customer service.',
+  },
+  {
+    term: 'Neural Network',
+    definition: 'A computing architecture inspired by the structure of biological neural networks in the human brain, consisting of interconnected nodes organized in layers. Neural networks are the foundation of deep learning and power many modern AI applications in insurance, from image-based damage assessment to complex risk modeling and pricing optimization.',
+  },
+  {
+    term: 'Parametric Insurance',
+    definition: 'An insurance product that pays out a pre-defined amount when a specific triggering event occurs, such as an earthquake exceeding a certain magnitude or rainfall surpassing a threshold, rather than indemnifying actual losses. AI and IoT sensors enable faster trigger verification and more sophisticated parametric product design.',
+  },
+  {
+    term: 'Predictive Analytics',
+    definition: 'The use of statistical techniques, machine learning, and data mining to analyze historical data and make predictions about future outcomes. In insurance, predictive analytics is used for loss forecasting, customer churn prediction, claims severity estimation, and identifying emerging risks before they materialize in loss experience.',
+  },
+  {
+    term: 'Prompt Engineering',
+    definition: 'The practice of designing and refining inputs (prompts) to AI models, particularly large language models, to obtain accurate, relevant, and useful outputs. For insurance professionals, prompt engineering is a critical skill that enables effective use of AI tools for tasks like policy analysis, risk assessment, and regulatory research.',
+  },
+  {
+    term: 'RegTech',
+    definition: 'Technology solutions designed to help organizations comply with regulatory requirements more efficiently and effectively. In insurance, RegTech powered by AI automates regulatory change monitoring, compliance reporting, rate filing review, bias auditing, and cross-jurisdictional regulatory analysis, reducing compliance costs and risk.',
+  },
+  {
+    term: 'Retrieval-Augmented Generation (RAG)',
+    definition: 'An AI architecture that combines a large language model with an external knowledge base, allowing the model to retrieve relevant documents and use them to generate more accurate, grounded responses. In insurance, RAG systems can ground AI responses in specific policy wordings, regulatory texts, or internal knowledge bases, reducing hallucinations.',
+  },
+  {
+    term: 'Risk Scoring',
+    definition: 'The process of assigning numerical values to quantify the level of risk associated with an insurance applicant, policyholder, or claim. AI-powered risk scoring models can analyze hundreds of variables simultaneously, incorporating traditional and alternative data sources to produce more granular and accurate risk assessments than traditional approaches.',
+  },
+  {
+    term: 'Subrogation',
+    definition: 'The right of an insurer to pursue a third party that caused a loss to the insured in order to recover the amount of the claim paid. AI is increasingly used to identify subrogation opportunities by analyzing claims data, detecting patterns indicating third-party liability, and prioritizing recovery efforts based on predicted recovery amounts and likelihood of success.',
+  },
+  {
+    term: 'Telematics',
+    definition: 'Technology that combines telecommunications and informatics to transmit data over long distances, commonly used in insurance to monitor driving behavior through devices or smartphone apps. Telematics data, analyzed by AI, enables usage-based insurance pricing, driver coaching, accident reconstruction, and more accurate risk assessment for auto insurance.',
+  },
+  {
+    term: 'Token',
+    definition: 'The basic unit of text processed by large language models. A token can be a word, part of a word, or a punctuation mark. Understanding tokens matters for insurance professionals because AI pricing is often based on token usage, and model context windows (the amount of text an AI can process at once) are measured in tokens.',
+  },
+  {
+    term: 'Training Data',
+    definition: 'The dataset used to teach an AI model to recognize patterns and make predictions. The quality, representativeness, and scope of training data fundamentally determine model performance. In insurance, biased or incomplete training data can lead to unfair underwriting decisions, inaccurate pricing, and discriminatory outcomes that violate regulatory requirements.',
+  },
+  {
+    term: 'Usage-Based Insurance (UBI)',
+    definition: 'An insurance pricing model where premiums are calculated based on actual usage patterns rather than traditional demographic and historical factors. UBI commonly uses telematics data in auto insurance to price policies based on miles driven, driving behavior, and time-of-day patterns. AI enables real-time analysis of this data for dynamic pricing and risk assessment.',
+  },
+];
+
+// Sort terms alphabetically
+terms.sort((a, b) => a.term.localeCompare(b.term));
+
+// Get unique first letters
+const letters = [...new Set(terms.map(t => t.term[0].toUpperCase()))].sort();
+
+// Group terms by first letter
+const groupedTerms: Record<string, typeof terms> = {};
+for (const letter of letters) {
+  groupedTerms[letter] = terms.filter(t => t.term[0].toUpperCase() === letter);
+}
+---
+
+<BaseLayout
+  title="Glossary — AI & Insurance Terms"
+  description="A comprehensive glossary of AI and insurance terms for insurance professionals. From algorithmic bias to usage-based insurance, understand the vocabulary shaping the future of insurance."
+  locale={locale}
+  keywords="AI glossary insurance, insurance AI terms, machine learning insurance, insurtech glossary, AI terminology"
+>
+  <!-- Hero -->
+  <section class="hero" style="background: linear-gradient(135deg, rgba(15,43,70,0.88) 0%, rgba(0,180,216,0.15) 100%), url('/assets/images/hero-images/hero-image-resources.png') top/cover no-repeat;">
+    <div class="container" style="position: relative; z-index: 1;">
+      <div class="slide-up" style="max-width: 800px;">
+        <p class="text-sm font-semibold mb-4" style="color: var(--color-secondary); text-transform: uppercase; letter-spacing: 0.1em;">Resources</p>
+        <h1 style="font-size: var(--text-5xl); margin-bottom: var(--space-6);">Glossary</h1>
+        <p class="lead" style="margin-bottom: var(--space-6);">
+          The essential vocabulary of AI in insurance. {terms.length} terms defined clearly and professionally — from foundational AI concepts to insurance-specific applications.
+        </p>
+      </div>
+    </div>
+    <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 120px; background: linear-gradient(to top, var(--surface-page), transparent);"></div>
+  </section>
+
+  <!-- Alphabet Navigation -->
+  <section class="section--sm" style="position: sticky; top: 60px; z-index: 10; background: var(--surface-page); border-bottom: 1px solid var(--border-light); padding: var(--space-4) 0;">
+    <div class="container">
+      <nav aria-label="Alphabet navigation" style="display: flex; flex-wrap: wrap; gap: var(--space-2); justify-content: center;">
+        {letters.map((letter) => (
+          <a
+            href={`#letter-${letter}`}
+            class="glossary-letter-btn"
+            style={`
+              display: inline-flex;
+              align-items: center;
+              justify-content: center;
+              width: 40px;
+              height: 40px;
+              border-radius: var(--radius-md);
+              font-family: var(--font-heading);
+              font-size: var(--text-lg);
+              font-weight: var(--font-bold);
+              color: var(--color-primary);
+              background: var(--surface-parchment);
+              border: 1px solid var(--border-light);
+              text-decoration: none;
+              transition: all 150ms ease;
+            `}
+          >
+            {letter}
+          </a>
+        ))}
+      </nav>
+    </div>
+  </section>
+
+  <!-- Terms -->
+  <section class="section">
+    <div class="container" style="max-width: 960px; margin: 0 auto;">
+      {letters.map((letter) => (
+        <div id={`letter-${letter}`} style="scroll-margin-top: 140px; margin-bottom: var(--space-12);">
+          <div style="display: flex; align-items: center; gap: var(--space-4); margin-bottom: var(--space-6);">
+            <span style={`
+              display: inline-flex;
+              align-items: center;
+              justify-content: center;
+              width: 56px;
+              height: 56px;
+              border-radius: var(--radius-lg);
+              background: var(--color-primary);
+              color: var(--text-inverse);
+              font-family: var(--font-heading);
+              font-size: var(--text-3xl);
+              font-weight: var(--font-bold);
+              flex-shrink: 0;
+            `}>
+              {letter}
+            </span>
+            <div style="flex: 1; height: 1px; background: var(--border-light);"></div>
+            <span style="font-size: var(--text-sm); color: var(--text-muted);">
+              {groupedTerms[letter].length} {groupedTerms[letter].length === 1 ? 'term' : 'terms'}
+            </span>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: var(--space-4);">
+            {groupedTerms[letter].map((item) => (
+              <div class="card reveal" style="padding: var(--space-6);">
+                <h3 style="font-size: var(--text-xl); color: var(--color-primary); margin-bottom: var(--space-3); font-family: var(--font-heading);">
+                  {item.term}
+                </h3>
+                <p style="color: var(--text-secondary); line-height: var(--leading-relaxed); margin-bottom: 0;">
+                  {item.definition}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="section section--primary" style="background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark, #0a1d33) 100%); color: var(--text-inverse);">
+    <div class="container text-center">
+      <div class="reveal" style="max-width: 640px; margin: 0 auto;">
+        <h2 style="color: var(--text-inverse); margin-bottom: var(--space-4);">Want to Go Deeper?</h2>
+        <p style="font-size: var(--text-lg); opacity: 0.9; margin-bottom: var(--space-8);">
+          Understanding the vocabulary is the first step. Explore our Learning Program for structured, hands-on AI education tailored to insurance professionals, or start with AI 101.
+        </p>
+        <div class="flex gap-4 flex--wrap" style="justify-content: center;">
+          <a href={p('/learn/program/')} class="btn btn--primary" style="background: var(--color-secondary); color: var(--color-primary);">
+            Explore Learning Program
+          </a>
+          <a href={p('/learn/ai-101/')} class="btn btn--secondary" style="border-color: rgba(255,255,255,0.4); color: var(--text-inverse);">
+            Start with AI 101
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .glossary-letter-btn:hover {
+    background: var(--color-primary) !important;
+    color: var(--text-inverse) !important;
+    border-color: var(--color-primary) !important;
+    transform: translateY(-1px);
+  }
+</style>

@@ -1,0 +1,159 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import QuickWinCard from '../../components/QuickWinCard.astro';
+import Icon from '../../components/Icon.astro';
+import { getCollection } from 'astro:content';
+import { t, getLocalePath } from '../../i18n';
+
+const locale = 'es';
+const p = (path: string) => getLocalePath(locale, path);
+const quickWins = (await getCollection('quick-wins'))
+  .filter(qw => qw.id.startsWith('en/'))
+  .sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99))
+  .slice(0, 3);
+
+const insuranceSectors = [
+  { key: 'prospecting', icon: 'search', desc: 'Quote generation, risk assessment, automated underwriting, predictive analytics' },
+  { key: 'riskManagement', icon: 'shield', desc: 'Risk modeling, portfolio analysis, catastrophe prediction, exposure management' },
+  { key: 'compliance', icon: 'clipboard-list', desc: 'Regulatory monitoring, policy compliance checking, audit automation' },
+  { key: 'claims', icon: 'file-text', desc: 'Claims triage, fraud detection, automated assessment, settlement optimization' },
+  { key: 'customerService', icon: 'message-circle', desc: 'Chatbots, personalized recommendations, policy explanations, renewal management' },
+  { key: 'marketing', icon: 'bar-chart', desc: 'Customer segmentation, lead scoring, content personalization, market analysis' },
+];
+---
+
+<BaseLayout
+  locale={locale}
+  title="Insureversia — AI in Insurance"
+  description="Your independent guide to AI in the insurance industry. Practical prompts, ethical guidance, and multilingual resources for insurance professionals navigating artificial intelligence."
+  keywords="AI in insurance, artificial intelligence insurance, AI for insurers, insurance AI tools, prompt engineering insurance, insurtech"
+>
+  <!-- Hero Section -->
+  <section class="hero" style="background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 50%, var(--color-dark-surface) 100%); position: relative; min-height: 75vh; display: flex; align-items: center;">
+    <div style="position: absolute; inset: 0; background: radial-gradient(ellipse at 70% 50%, rgba(0,180,216,0.08) 0%, transparent 60%);"></div>
+    <div class="container" style="position: relative; z-index: 1;">
+      <div class="slide-up" style="max-width: 650px;">
+        <p style="font-size: var(--text-sm); font-weight: var(--font-semibold); text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-secondary); margin-bottom: var(--space-4);">
+          AI in Insurance
+        </p>
+        <h1 style="font-size: var(--text-5xl); margin-bottom: var(--space-6);">
+          {t(locale, 'hero.headline')}
+        </h1>
+        <p class="lead" style="margin-bottom: var(--space-8);">
+          {t(locale, 'hero.subline')}
+        </p>
+        <div class="flex gap-4 flex--wrap">
+          <a href={p('/learn/ai-101/')} class="btn btn--primary btn--lg">{t(locale, 'hero.ctaPrimary')}</a>
+          <a href={p('/practice/quick-wins/')} class="btn btn--ghost btn--lg">{t(locale, 'hero.ctaSecondary')}</a>
+        </div>
+      </div>
+    </div>
+    <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 120px; background: linear-gradient(to top, var(--surface-page), transparent);"></div>
+  </section>
+
+  <!-- Insurance Sectors Section -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header reveal">
+        <h2>{t(locale, 'sections.insuranceSectors')}</h2>
+        <p>{t(locale, 'sections.insuranceSectorsDesc')}</p>
+      </div>
+      <div class="grid grid--3 reveal-stagger">
+        {insuranceSectors.map(sector => (
+          <div class="card card--flat">
+            <div style="margin-bottom: var(--space-3); color: var(--color-primary);"><Icon name={sector.icon} size={32} /></div>
+            <h3 class="card__title" style="font-size: var(--text-lg);">
+              {t(locale, `insuranceSectors.${sector.key}`)}
+            </h3>
+            <p class="card__body text-sm">{sector.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick Wins Preview -->
+  <section class="section section--parchment">
+    <div class="container">
+      <div class="section-header reveal">
+        <h2>{t(locale, 'sections.quickWins')}</h2>
+        <p>{t(locale, 'sections.quickWinsDesc')}</p>
+      </div>
+      <div class="grid grid--3 reveal-stagger">
+        {quickWins.map(qw => (
+          <QuickWinCard
+            title={qw.data.title}
+            description={qw.data.description}
+            time={qw.data.time}
+            difficulty={qw.data.difficulty}
+            insuranceSector={qw.data.insuranceSector}
+            aiTool={qw.data.aiTool}
+            slug={`/practice/quick-wins/`}
+            locale={locale}
+          />
+        ))}
+      </div>
+      <div class="text-center mt-8">
+        <a href={p('/practice/quick-wins/')} class="btn btn--secondary">
+          {t(locale, 'sections.viewAll')} {t(locale, 'sections.quickWins')} →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- The Compliance Edge -->
+  <section class="section">
+    <div class="container">
+      <div class="reveal" style="max-width: 800px; margin: 0 auto;">
+        <div class="card card--accent" style="padding: var(--space-8);">
+          <div class="flex gap-4" style="align-items: flex-start;">
+            <div style="flex-shrink: 0; color: var(--color-accent);"><Icon name="shield-alert" size={40} /></div>
+            <div>
+              <h2 style="font-size: var(--text-3xl); margin-bottom: var(--space-4);">
+                {t(locale, 'sections.complianceEdge')}
+              </h2>
+              <p style="font-size: var(--text-lg); color: var(--text-secondary); margin-bottom: var(--space-4);">
+                {t(locale, 'sections.complianceEdgeDesc')}
+              </p>
+              <p style="margin-bottom: var(--space-6);">
+                Can AI determine insurance premiums fairly? In 2024, the NAIC issued model guidance requiring insurers to test AI systems for unfair discrimination. Regulators worldwide are establishing frameworks for algorithmic accountability in insurance. Understanding the compliance landscape isn't optional — it's a business imperative.
+              </p>
+              <div class="flex gap-4 flex--wrap">
+                <a href={p('/explore/challenges/')} class="btn btn--primary btn--sm">Challenges & Risks →</a>
+                <a href={p('/learn/what-not-to-do/')} class="btn btn--secondary btn--sm">What Not to Do →</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Learning Program CTA -->
+  <section class="section section--primary">
+    <div class="container text-center">
+      <div class="reveal" style="max-width: 500px; margin: 0 auto;">
+        <h2 style="color: var(--text-inverse); margin-bottom: var(--space-4);">
+          {t(locale, 'footer.newsletter')}
+        </h2>
+        <p style="color: rgba(255,255,255,0.8); margin-bottom: var(--space-6);">
+          {t(locale, 'footer.newsletterDesc')}
+        </p>
+        <form class="flex gap-2" style="max-width: 400px; margin: 0 auto;" onsubmit="return false;">
+          <input
+            type="email"
+            placeholder={t(locale, 'footer.emailPlaceholder')}
+            style="flex: 1; padding: var(--space-3) var(--space-4); border: none; border-radius: var(--radius-md); font-size: var(--text-base);"
+          />
+          <button type="submit" class="btn btn--primary">{t(locale, 'footer.subscribe')}</button>
+        </form>
+        <p style="margin-top: var(--space-4); font-size: var(--text-sm); color: var(--text-muted);">
+          Ready for structured learning?
+          <a href={p('/learn/program/')} style="font-weight: var(--font-semibold);">
+            Explore the Learning Program &rarr;
+          </a>
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

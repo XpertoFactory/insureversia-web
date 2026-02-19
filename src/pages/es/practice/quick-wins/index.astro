@@ -1,0 +1,233 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import QuickWinCard from '../../../../components/QuickWinCard.astro';
+import { getCollection } from 'astro:content';
+import { t, getLocalePath } from '../../../../i18n';
+const locale = 'es';
+const p = (path: string) => getLocalePath(locale, path);
+
+const allQuickWinsRaw = (await getCollection('quick-wins'))
+  .filter(qw => qw.id.startsWith('en/'))
+  .sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
+
+const allQuickWins = await Promise.all(
+  allQuickWinsRaw.map(async (entry) => {
+    const { Content } = await entry.render();
+    return { ...entry, Content };
+  })
+);
+
+const difficulties = ['all', 'beginner', 'intermediate', 'advanced'];
+const insuranceSectors = ['All Sectors', ...new Set(allQuickWins.map(qw => qw.data.insuranceSector))];
+---
+
+<BaseLayout
+  title="Quick Wins"
+  description="Step-by-step AI exercises for insurance professionals. Each Quick Win takes minutes to complete and teaches a practical AI skill."
+  locale={locale}
+>
+  <!-- Hero -->
+  <section class="hero" style="background: linear-gradient(135deg, rgba(27,42,74,0.82) 0%, rgba(45,55,72,0.78) 100%), url('/assets/images/hero-images/hero-image-quickwins.png') top/cover no-repeat;">
+    <div class="container" style="position: relative; z-index: 1;">
+      <div class="slide-up" style="max-width: 800px;">
+        <p class="text-sm font-semibold mb-4" style="color: var(--color-secondary); text-transform: uppercase; letter-spacing: 0.1em;">Practice</p>
+        <h1 style="font-size: var(--text-5xl); margin-bottom: var(--space-6);">Quick Wins</h1>
+        <p class="lead" style="margin-bottom: var(--space-6);">
+          Practical, step-by-step AI exercises designed for insurance professionals. Each Quick Win includes a tested prompt, clear instructions, tips for better results, and cautions to keep you safe. Most take less than 10 minutes.
+        </p>
+      </div>
+    </div>
+    <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 120px; background: linear-gradient(to top, var(--surface-page), transparent);"></div>
+  </section>
+
+  <!-- Filters -->
+  <section class="section--sm">
+    <div class="container">
+      <div class="reveal" style="max-width: 900px; margin: 0 auto;">
+        <div style="display: flex; flex-direction: column; gap: var(--space-4); align-items: center; margin-bottom: var(--space-4);">
+          <div style="text-align: center;">
+            <label class="text-sm font-semibold text-muted" style="display: block; margin-bottom: var(--space-2);">Difficulty</label>
+            <div class="filter-group" style="justify-content: center;">
+              {difficulties.map((d) => (
+                <button
+                  class={`filter-chip ${d === 'all' ? 'is-active' : ''}`}
+                  data-filter-difficulty={d}
+                >
+                  {d === 'all' ? 'All' : d.charAt(0).toUpperCase() + d.slice(1)}
+                </button>
+              ))}
+            </div>
+          </div>
+          <div style="text-align: center;">
+            <label class="text-sm font-semibold text-muted" style="display: block; margin-bottom: var(--space-2);">Insurance Sector</label>
+            <div class="filter-group" style="justify-content: center;">
+              {insuranceSectors.map((sector, idx) => (
+                <button
+                  class={`filter-chip ${idx === 0 ? 'is-active' : ''}`}
+                  data-filter-area={sector}
+                >
+                  {sector}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+        <p class="text-center text-sm text-muted" id="result-count">
+          Showing {allQuickWins.length} Quick Win{allQuickWins.length !== 1 ? 's' : ''}
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick Win Cards Grid -->
+  <section class="section">
+    <div class="container">
+      {allQuickWins.length > 0 ? (
+        <div class="grid grid--3 reveal-stagger" id="quick-wins-grid">
+          {allQuickWins.map(qw => (
+            <div
+              class="quick-win-item"
+              data-difficulty={qw.data.difficulty}
+              data-area={qw.data.insuranceSector}
+            >
+              <QuickWinCard
+                title={qw.data.title}
+                description={qw.data.description}
+                time={qw.data.time}
+                difficulty={qw.data.difficulty}
+                insuranceSector={qw.data.insuranceSector}
+                aiTool={qw.data.aiTool}
+                prompt={qw.data.prompt}
+                tips={qw.data.tips}
+                cautions={qw.data.cautions}
+                contentId={qw.id}
+                locale={locale}
+              ><qw.Content /></QuickWinCard>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div class="text-center" style="padding: var(--space-16) 0;">
+          <p class="text-lg text-muted">Quick Wins are coming soon. Check back shortly.</p>
+        </div>
+      )}
+
+      {allQuickWins.length > 0 && (
+        <div class="text-center mt-8 reveal">
+          <div class="callout callout--info" style="display: inline-block; text-align: left; max-width: 600px;">
+            <h4 class="callout__title">How to Use Quick Wins</h4>
+            <ol style="padding-left: var(--space-5); margin-bottom: 0;">
+              <li style="margin-bottom: var(--space-2);">Choose a Quick Win that matches your insurance sector and experience level.</li>
+              <li style="margin-bottom: var(--space-2);">Read the full exercise, including the cautions.</li>
+              <li style="margin-bottom: var(--space-2);">Copy the provided prompt into your preferred AI tool.</li>
+              <li style="margin-bottom: var(--space-2);">Modify the prompt for your specific needs.</li>
+              <li style="margin-bottom: 0;">Always verify the AI output against primary sources before relying on it.</li>
+            </ol>
+          </div>
+        </div>
+      )}
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section section--parchment">
+    <div class="container text-center">
+      <div class="reveal" style="max-width: 600px; margin: 0 auto;">
+        <h2 style="margin-bottom: var(--space-4);">Want to Go Deeper?</h2>
+        <p style="font-size: var(--text-lg); color: var(--text-secondary); margin-bottom: var(--space-6);">
+          Quick Wins are your starting point. To build a comprehensive understanding of AI in insurance practice, explore our structured learning paths and prompt engineering guides.
+        </p>
+        <div class="flex gap-4 flex--wrap" style="justify-content: center;">
+          <a href="/learn/ai-101/" class="btn btn--primary">Start AI 101</a>
+          <a href="/learn/prompt-engineering/" class="btn btn--secondary">Learn Prompt Engineering</a>
+        </div>
+        <p style="margin-top: var(--space-4); font-size: var(--text-sm); color: var(--text-muted);">
+          {t(locale, 'learningProgram.programCta')}
+          <a href={p('/learn/program/')} style="font-weight: var(--font-semibold);">
+            {t(locale, 'learningProgram.programCtaLink')} &rarr;
+          </a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Simple client-side filtering
+    document.addEventListener('DOMContentLoaded', () => {
+      let activeDifficulty = 'all';
+      let activeArea = 'All Sectors';
+
+      function filterCards() {
+        const items = document.querySelectorAll('.quick-win-item');
+        let count = 0;
+        items.forEach((item) => {
+          const el = item as HTMLElement;
+          const diffMatch = activeDifficulty === 'all' || el.dataset.difficulty === activeDifficulty;
+          const areaMatch = activeArea === 'All Sectors' || el.dataset.area === activeArea;
+          if (diffMatch && areaMatch) {
+            el.style.display = '';
+            count++;
+          } else {
+            el.style.display = 'none';
+          }
+        });
+        const counter = document.getElementById('result-count');
+        if (counter) counter.textContent = `Showing ${count} Quick Win${count !== 1 ? 's' : ''}`;
+      }
+
+      document.querySelectorAll('[data-filter-difficulty]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('[data-filter-difficulty]').forEach(b => b.classList.remove('is-active'));
+          btn.classList.add('is-active');
+          activeDifficulty = (btn as HTMLElement).dataset.filterDifficulty || 'all';
+          filterCards();
+        });
+      });
+
+      document.querySelectorAll('[data-filter-area]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('[data-filter-area]').forEach(b => b.classList.remove('is-active'));
+          btn.classList.add('is-active');
+          activeArea = (btn as HTMLElement).dataset.filterArea || 'All Sectors';
+          filterCards();
+        });
+      });
+
+      filterCards();
+
+      // Toggle expand/collapse for Quick Win cards
+      document.querySelectorAll('.qw-toggle').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const card = btn.closest('.qw-card');
+          const detail = card?.querySelector('.qw-detail') as HTMLElement | null;
+          const desc = card?.querySelector('.qw-desc') as HTMLElement | null;
+          if (!detail) return;
+          const isOpen = detail.style.display !== 'none';
+          detail.style.display = isOpen ? 'none' : 'block';
+          if (desc) {
+            if (isOpen) {
+              desc.classList.add('line-clamp-3');
+            } else {
+              desc.classList.remove('line-clamp-3');
+            }
+          }
+          const el = btn as HTMLElement;
+          btn.textContent = isOpen ? el.dataset.labelMore || 'Learn more →' : el.dataset.labelLess || '← Show less';
+        });
+      });
+
+      // Copy prompt to clipboard
+      document.querySelectorAll('.qw-copy').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const el = btn as HTMLElement;
+          const prompt = el.dataset.prompt || '';
+          navigator.clipboard.writeText(prompt).then(() => {
+            const original = btn.textContent;
+            btn.textContent = el.dataset.labelCopied || 'Copied!';
+            setTimeout(() => { btn.textContent = el.dataset.labelCopy || original || 'Copy'; }, 2000);
+          });
+        });
+      });
+    });
+  </script>
+</BaseLayout>
