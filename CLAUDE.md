@@ -10,7 +10,7 @@ Insureversia is an independent educational platform about AI in the insurance in
 - **UI Components:** Svelte 5 (interactive widgets)
 - **Styling:** Vanilla CSS design system (10 files in `src/styles/`)
 - **i18n:** Custom system (`src/i18n/index.ts`) — English + Spanish only
-- **Backend:** Firebase (Firestore, Auth, Analytics via GA4)
+- **Backend:** Firebase (Firestore, Auth, Analytics via GA4, AI Logic / Gemini)
 - **Search:** Pagefind (runs post-build)
 - **Deploy:** GitHub Pages via `.github/workflows/deploy.yml`
 
@@ -27,9 +27,11 @@ npm run preview   # Preview production build
 ```
 src/
   components/     # Astro + Svelte components
+    AskInsureversia/  # AI chat assistant (ChatWidget.svelte + AskInsureversia.astro)
   content/        # Markdown content collections (quick-wins, what-to-do, what-not-to-do, faq)
   i18n/           # en.json, es.json, index.ts
   layouts/        # BaseLayout.astro
+  lib/            # Shared utilities (firebase.ts, chat.ts, chat-persona.ts, chat-suggestions.ts)
   pages/          # File-based routing (28 EN pages)
   pages/es/       # Spanish mirror pages (28 ES pages)
   styles/         # Design system CSS
@@ -44,9 +46,11 @@ resources/        # Internal docs, image prompts, site plan (not deployed)
 - **Content collections:** Markdown files in `src/content/{collection}/{locale}/`. Schemas defined in `src/content/config.ts`.
 - **CSS:** No CSS framework. Design tokens in `variables.css`. Dark mode via `[data-mode="dark"]`. Theme toggle: Classic/Modern via `[data-theme="modern"]`.
 - **Brand colors:** Navy `#0F2B46`, Gold `#C9A84C`, Teal `#00B4D8`
-- **localStorage keys:** `insureversia-theme`, `insureversia-mode`, `insureversia-uid`
+- **localStorage keys:** `insureversia-theme`, `insureversia-mode`, `insureversia-uid`, `insureversia-chat-usage`
+- **sessionStorage keys:** `insureversia-chat-messages`
 - **Naming:** `insuranceSector` (not practiceArea), `insureversiasTake` (not lawrasTake)
 - **Personas:** 3 fictional voices — Vera (Gold/Strategist), Bruno (Navy/Guardian), Zaira (Teal/Catalyst)
+- **Ask Insureversia:** AI chat assistant using Firebase AI SDK (Gemini). System prompt in `chat-persona.ts`, suggestions in `chat-suggestions.ts`. 5 messages/day limit. Requires AI Logic enabled in Firebase Console.
 
 ## Workflow Rules
 

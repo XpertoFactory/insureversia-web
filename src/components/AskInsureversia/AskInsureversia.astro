@@ -1,0 +1,48 @@
+---
+/**
+ * AskInsureversia — Thin Astro wrapper that passes locale, i18n, and page context
+ * to the Svelte ChatWidget. Uses client:idle for deferred, non-blocking hydration.
+ */
+import ChatWidget from './ChatWidget.svelte';
+import { t, type Locale } from '../../i18n';
+import { getSuggestions } from '../../lib/chat-suggestions';
+
+interface Props {
+  locale: Locale;
+  pageContext: string;
+  pageTitle?: string;
+}
+
+const { locale, pageContext, pageTitle = '' } = Astro.props;
+
+const i18n = {
+  title: t(locale, 'askInsureversia.title'),
+  placeholder: t(locale, 'askInsureversia.placeholder'),
+  send: t(locale, 'askInsureversia.send'),
+  close: t(locale, 'askInsureversia.close'),
+  minimize: t(locale, 'askInsureversia.minimize'),
+  greeting: t(locale, 'askInsureversia.greeting'),
+  suggestedLabel: t(locale, 'askInsureversia.suggestedLabel'),
+  typing: t(locale, 'askInsureversia.typing'),
+  usageCount: t(locale, 'askInsureversia.usageCount'),
+  limitReached: t(locale, 'askInsureversia.limitReached'),
+  limitReachedSub: t(locale, 'askInsureversia.limitReachedSub'),
+  errorGeneric: t(locale, 'askInsureversia.errorGeneric'),
+  errorNetwork: t(locale, 'askInsureversia.errorNetwork'),
+  disclaimer: t(locale, 'askInsureversia.disclaimer'),
+  newChat: t(locale, 'askInsureversia.newChat'),
+  copyMessage: t(locale, 'askInsureversia.copyMessage'),
+  copied: t(locale, 'askInsureversia.copied'),
+};
+
+const suggestions = getSuggestions(locale, pageContext);
+---
+
+<ChatWidget
+  client:idle
+  locale={locale}
+  i18n={i18n}
+  pageContext={pageContext}
+  pageTitle={pageTitle}
+  suggestions={suggestions}
+/>

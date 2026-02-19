@@ -841,6 +841,25 @@
     "ctaProgram": "Explore Learning Program",
     "ctaResources": "Explore Resources"
   },
+  "askInsureversia": {
+    "title": "Ask Insureversia",
+    "placeholder": "Ask me anything about AI in insurance...",
+    "send": "Send",
+    "close": "Close chat",
+    "minimize": "Minimize chat",
+    "greeting": "Hi! I'm your Insureversia guide to AI in insurance. Ask me anything — from underwriting automation to ethical AI practices!",
+    "suggestedLabel": "Try asking:",
+    "typing": "Insureversia is thinking...",
+    "usageCount": "{used} of {limit} messages used today",
+    "limitReached": "Daily limit reached",
+    "limitReachedSub": "You've used your 5 free messages for today. Come back tomorrow!",
+    "errorGeneric": "Something went wrong. Please try again.",
+    "errorNetwork": "Connection error. Check your internet and try again.",
+    "disclaimer": "AI-generated. Not insurance advice.",
+    "newChat": "New chat",
+    "copyMessage": "Copy",
+    "copied": "Copied!"
+  },
   "personas": {
     "sectionTitle": "Meet Our Personas",
     "sectionSubtitle": "Three fictional voices representing the real spectrum of perspectives on AI in insurance. Each brings a distinct philosophy, professional background, and cultural lens to the conversation.",

@@ -1,6 +1,7 @@
 ---
 import Navigation from '../components/Navigation.astro';
 import Footer from '../components/Footer.astro';
+import AskInsureversia from '../components/AskInsureversia/AskInsureversia.astro';
 import ShareModal from '../components/ShareModal.astro';
 import ContactModal from '../components/ContactModal.astro';
 import { getLocaleFromUrl, getAlternateLocales, getPathForLocale, t, type Locale } from '../i18n';
@@ -166,6 +167,9 @@ const ogLocale = ogLocaleMap[currentLocale] || 'en_US';
   </main>
 
   <Footer locale={currentLocale} />
+
+  <!-- Ask Insureversia Chat Widget -->
+  <AskInsureversia locale={currentLocale} pageContext={currentPath} pageTitle={title} />
 
   <!-- Sources Panel -->
   {sources.length > 0 && (

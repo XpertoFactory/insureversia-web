@@ -40,6 +40,10 @@ export async function getDb(): Promise<Firestore> {
   return db;
 }
 
+export async function getApp(): Promise<FirebaseApp> {
+  return initApp();
+}
+
 export async function getAuth(): Promise<Auth> {
   if (auth) return auth;
   const firebaseApp = await initApp();

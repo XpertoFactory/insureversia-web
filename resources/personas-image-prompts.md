@@ -9,13 +9,13 @@ Consistent style across all prompts: editorial portrait photography, warm profes
 ### Profile (3:4)
 
 ```
-Editorial portrait of a late-50s Japanese-Nigerian woman, silver-streaked hair pulled back elegantly, wearing a tailored charcoal blazer with a gold silk scarf, composed authority, warm intelligent eyes, subtle confident smile, neutral warm-toned studio background, editorial portrait photography, warm professional lighting, shallow depth of field, authentic and warm --ar 3:4 --style raw --v 6.1
+Editorial portrait of a late-50s Japanese-Nigerian woman, silver-streaked hair pulled back elegantly, wearing a tailored charcoal blazer with a gold silk scarf, composed authority, warm intelligent eyes, subtle confident smile, neutral warm-toned studio background, editorial portrait photography, warm professional lighting, shallow depth of field, authentic and warm --ar 9:16 --style raw
 ```
 
 ### In Action (3:2)
 
 ```
-A late-50s Japanese-Nigerian woman in a charcoal blazer leading a strategy meeting in a modern Singapore boardroom, floor-to-ceiling windows with Marina Bay skyline visible, standing at the head of the table gesturing toward a presentation screen, colleagues attentively listening, warm golden hour light streaming in, editorial photography, shallow depth of field, authentic and warm --ar 3:2 --style raw --v 6.1
+A late-50s Japanese-Nigerian woman in a charcoal blazer leading a strategy meeting in a modern Singapore boardroom, floor-to-ceiling windows with Marina Bay skyline visible, standing at the head of the table gesturing toward a presentation screen, colleagues attentively listening, warm golden hour light streaming in, editorial photography, shallow depth of field, authentic and warm --ar 9:16 --style raw
 ```
 
 ---

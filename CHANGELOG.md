@@ -2,6 +2,29 @@
 
 All notable changes to the Insureversia website will be documented in this file.
 
+## [0.6.4] - 2026-02-19
+
+### Added
+
+- **Ask Insureversia** — Interactive AI chat assistant (Phase 1)
+  - Floating action button (FAB) on all pages with Insureversia logo
+  - Full chat panel with streaming Gemini responses via Firebase AI SDK
+  - Page-context-aware suggested questions (12 page sets, EN + ES)
+  - Insurance-domain system prompt with guardrails and educational disclaimers
+  - 5 messages/day rate limiting (localStorage-based)
+  - Dark mode support, mobile full-screen, copy button, new chat
+  - Session persistence via sessionStorage
+  - Bilingual UI (English + Spanish) with 18 i18n keys per language
+- **New files:** `src/lib/chat.ts`, `src/lib/chat-persona.ts`, `src/lib/chat-suggestions.ts`, `src/components/AskInsureversia/AskInsureversia.astro`, `src/components/AskInsureversia/ChatWidget.svelte`
+- **Modified:** `src/lib/firebase.ts` (added `getApp()` export), `src/layouts/BaseLayout.astro`, `src/i18n/en.json`, `src/i18n/es.json`
+
+### Prerequisites
+
+- Firebase Console: Enable **AI Logic** (Gemini Developer API) in the `insureversia-web` project
+- Install `firebase` npm package with AI support (`firebase/ai` module)
+
+---
+
 ## [0.6.3] - 2026-02-19
 
 ### Added

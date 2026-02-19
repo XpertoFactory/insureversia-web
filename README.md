@@ -20,11 +20,19 @@ Insureversia helps insurance professionals — underwriters, claims adjusters, b
 
 **56 pages** total (28 EN + 28 ES). Fully bilingual: English and Spanish.
 
+### Ask Insureversia (AI Chat Assistant)
+
+An embedded AI chat widget powered by Gemini via Firebase AI SDK. Available on every page:
+- Page-context-aware suggested questions
+- Streaming responses with insurance-domain system prompt
+- 5 messages/day free tier, dark mode, mobile full-screen
+- Bilingual (EN + ES)
+
 ## Tech Stack
 
 - [Astro 5](https://astro.build) — Static site generator
 - [Svelte 5](https://svelte.dev) — Interactive components
-- [Firebase](https://firebase.google.com) — Firestore, Auth, Analytics (GA4)
+- [Firebase](https://firebase.google.com) — Firestore, Auth, Analytics (GA4), AI Logic (Gemini)
 - [Pagefind](https://pagefind.app) — Client-side search
 - Vanilla CSS design system with dark mode and Classic/Modern theme toggle
 
@@ -41,10 +49,12 @@ npm run preview   # Preview production build
 
 ```
 src/
-  components/     # Astro + Svelte components (15 components)
+  components/     # Astro + Svelte components
+    AskInsureversia/  # AI chat assistant widget
   content/        # Markdown collections — quick-wins, what-to-do, what-not-to-do, faq (EN + ES)
   i18n/           # Translation files (en.json, es.json) + routing
   layouts/        # BaseLayout.astro
+  lib/            # Shared utilities (firebase, chat, chat-persona, chat-suggestions)
   pages/          # File-based routing (28 EN pages)
     es/           # Spanish mirror pages (28 ES pages)
   styles/         # Design system (10 CSS files)

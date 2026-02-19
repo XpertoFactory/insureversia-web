@@ -841,6 +841,25 @@
     "ctaProgram": "Explorar Programa de Aprendizaje",
     "ctaResources": "Explorar Recursos"
   },
+  "askInsureversia": {
+    "title": "Pregunta a Insureversia",
+    "placeholder": "Pregúntame cualquier cosa sobre IA en seguros...",
+    "send": "Enviar",
+    "close": "Cerrar chat",
+    "minimize": "Minimizar chat",
+    "greeting": "¡Hola! Soy tu guía Insureversia para la IA en seguros. ¡Pregúntame lo que quieras — desde automatización de suscripción hasta prácticas éticas de IA!",
+    "suggestedLabel": "Prueba preguntar:",
+    "typing": "Insureversia está pensando...",
+    "usageCount": "{used} de {limit} mensajes usados hoy",
+    "limitReached": "Límite diario alcanzado",
+    "limitReachedSub": "Has usado tus 5 mensajes gratuitos de hoy. ¡Vuelve mañana!",
+    "errorGeneric": "Algo salió mal. Por favor, inténtalo de nuevo.",
+    "errorNetwork": "Error de conexión. Verifica tu internet e inténtalo de nuevo.",
+    "disclaimer": "Generado por IA. No es asesoría de seguros.",
+    "newChat": "Nuevo chat",
+    "copyMessage": "Copiar",
+    "copied": "¡Copiado!"
+  },
   "personas": {
     "sectionTitle": "Conoce a Nuestros Personajes",
     "sectionSubtitle": "Tres voces ficticias que representan el espectro real de perspectivas sobre la IA en seguros. Cada una aporta una filosofía, trayectoria profesional y perspectiva cultural distinta a la conversación.",
