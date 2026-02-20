@@ -699,6 +699,27 @@
   text-decoration: none;
 }
 
+.dropdown__divider {
+  height: 1px;
+  background: var(--border-color, rgba(0,0,0,0.1));
+  margin: var(--space-2) var(--space-4);
+}
+
+.dropdown__label {
+  display: block;
+  padding: var(--space-1) var(--space-4);
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
+
+.dropdown__item--external {
+  display: flex;
+  align-items: center;
+}
+
 /* === Mobile Menu === */
 .mobile-menu-btn {
   display: none;

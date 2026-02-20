@@ -2,6 +2,44 @@
 
 All notable changes to the Insureversia website will be documented in this file.
 
+## [0.6.9] - 2026-02-20
+
+### Added
+
+- **Newsletter page** — Dedicated resource page detailing the Insureversia newsletter
+  - Hero section, 3-column benefits grid (curated insights, case studies, tool reviews)
+  - "What Makes It Different" checklist, "Who It's For" audience section
+  - Subscribe CTA form wired to existing `src/lib/newsletter.ts` (Firestore `newsletters` collection)
+  - EN page: `/resources/newsletter/` + ES mirror: `/es/resources/newsletter/`
+- **Navigation**: Added "Newsletter" link to Resources dropdown (desktop), mobile nav, and footer Resources column
+- **i18n**: `nav.newsletter` key + `newsletter.*` block (~20 keys) in both `en.json` and `es.json`
+- **Site Guide**: Added Newsletter to Resources tour section and sitemap modal (EN + ES)
+- **Build**: 60 pages (30 EN + 30 ES)
+
+### Fixed
+
+- **Newsletter subscription**: Removed `getDoc()` call that violated Firestore read rules (`allow read: if false` on `newsletters/`). Now uses `setDoc()` with `merge: true` for idempotent create-or-update without needing a read
+
+### Changed
+
+- **CLAUDE.md**: Updated page counts (30 EN + 30 ES = 60), added `newsletter.ts` to lib list, added `newsletters/` to Firestore collections
+- **README.md**: Updated Resources section (5 → 6 pages), page counts (56 → 60), added `newsletter` to lib list
+
+---
+
+## [0.6.8] - 2026-02-20
+
+### Added
+
+- **Sister Sites** links in three locations:
+  - Footer first column (below brand tagline): Lawra, 100+ Things AI, Ibizai with external link icons
+  - About dropdown menu (desktop): divider + "Sister Sites" label + 3 external links
+  - Mobile navigation: dedicated "Sister Sites" section with 3 links
+- **i18n**: `nav.sisterSites`, `footer.sisterSites`, `footer.sisterLawra`, `footer.sister100Things`, `footer.sisterIbizai` keys (EN + ES)
+- **CSS**: `.dropdown__divider`, `.dropdown__label`, `.dropdown__item--external` styles
+
+---
+
 ## [0.6.7] - 2026-02-20
 
 ### Changed

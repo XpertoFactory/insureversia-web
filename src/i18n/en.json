@@ -35,13 +35,15 @@
     "aboutInsureversia": "What is Insureversia?",
     "siteGuide": "Site Guide",
     "ourTeam": "Our Team",
+    "sisterSites": "Sister Sites",
     "ethicsSimulator": "Ethics Simulator",
     "toolDirectory": "Tool Directory",
     "jurisdictionGuide": "Jurisdiction Guide",
     "search": "Search",
     "language": "Language",
     "learningProgram": "Learning Program",
-    "caseStudies": "Case Studies"
+    "caseStudies": "Case Studies",
+    "newsletter": "Newsletter"
   },
   "hero": {
     "headline": "AI Is Transforming Insurance. Are You Ready?",
@@ -123,6 +125,10 @@
     "subscribeSuccess": "You're subscribed! Welcome aboard.",
     "subscribeError": "Something went wrong. Please try again.",
     "subscribeInvalid": "Please enter a valid email address.",
+    "sisterSites": "Sister Sites",
+    "sisterLawra": "Lawra: AI in Law",
+    "sister100Things": "100+ Things AI: AI for Everyone",
+    "sisterIbizai": "Ibizai: AI in Business",
     "copyright": "Insureversia. All rights reserved.",
     "disclaimer": "This site provides educational content about AI in insurance. Nothing here constitutes insurance advice or professional recommendations."
   },
@@ -844,6 +850,28 @@
     "ctaDesc": "Understanding regulations is just the first step. Our Learning Program includes compliance-focused modules for insurance professionals.",
     "ctaProgram": "Explore Learning Program",
     "ctaResources": "Explore Resources"
+  },
+  "newsletter": {
+    "title": "The Insureversia Newsletter",
+    "description": "Weekly curated insights on AI in insurance — case studies, tool reviews, and practical recommendations for insurance professionals.",
+    "heroLabel": "Resources",
+    "subtitle": "One email per week. Curated for insurance professionals navigating AI.",
+    "benefitsTitle": "What You'll Get",
+    "benefit1Title": "Curated Weekly Insights",
+    "benefit1Desc": "A hand-picked selection of the most important AI developments in insurance — regulation changes, new tools, and industry trends — so you don't have to track everything yourself.",
+    "benefit2Title": "Real-World Case Studies",
+    "benefit2Desc": "Documented examples of how insurers, brokers, and adjusters are actually using AI — what worked, what didn't, and what you can learn from their experience.",
+    "benefit3Title": "Tool Reviews & Recommendations",
+    "benefit3Desc": "Independent, unbiased evaluations of AI tools relevant to insurance professionals — with practical guidance on when and how to use them.",
+    "differenceTitle": "What Makes It Different",
+    "diff1": "Curated by insurance professionals, not AI marketers",
+    "diff2": "Bilingual content — English and Spanish",
+    "diff3": "No spam, no sales pitches, no affiliate links",
+    "diff4": "Unsubscribe anytime — no questions asked",
+    "audienceTitle": "Who It's For",
+    "audienceDesc": "Whether you're an underwriter exploring automation, a claims adjuster evaluating AI tools, a broker looking for efficiency gains, a compliance officer tracking AI regulation, or an executive planning your AI strategy — this newsletter is built for you.",
+    "ctaTitle": "Stay Ahead of the Curve",
+    "ctaDesc": "Join insurance professionals who are already getting weekly AI insights delivered to their inbox."
   },
   "askInsureversia": {
     "title": "Ask Insureversia",

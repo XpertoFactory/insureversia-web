@@ -35,13 +35,15 @@
     "aboutInsureversia": "¿Qué es Insureversia?",
     "siteGuide": "Guía del Sitio",
     "ourTeam": "Nuestro Equipo",
+    "sisterSites": "Sitios Hermanos",
     "ethicsSimulator": "Simulador de Ética",
     "toolDirectory": "Directorio de Herramientas",
     "jurisdictionGuide": "Guía por Jurisdicción",
     "search": "Buscar",
     "language": "Idioma",
     "learningProgram": "Programa de Aprendizaje",
-    "caseStudies": "Casos de Estudio"
+    "caseStudies": "Casos de Estudio",
+    "newsletter": "Boletín"
   },
   "hero": {
     "headline": "La IA Está Transformando los Seguros. ¿Estás Listo?",
@@ -123,6 +125,10 @@
     "subscribeSuccess": "¡Te has suscrito! Bienvenido.",
     "subscribeError": "Algo salió mal. Por favor, inténtalo de nuevo.",
     "subscribeInvalid": "Por favor, ingresa un correo electrónico válido.",
+    "sisterSites": "Sitios Hermanos",
+    "sisterLawra": "Lawra: IA en Derecho",
+    "sister100Things": "100+ Things AI: IA para Todos",
+    "sisterIbizai": "Ibizai: IA en Negocios",
     "copyright": "Insureversia. Todos los derechos reservados.",
     "disclaimer": "Este sitio ofrece contenido educativo sobre IA en seguros. Nada aquí constituye asesoría de seguros ni recomendaciones profesionales."
   },
@@ -844,6 +850,28 @@
     "ctaDesc": "Entender las regulaciones es solo el primer paso. Nuestro Programa de Aprendizaje incluye módulos enfocados en cumplimiento para profesionales de seguros.",
     "ctaProgram": "Explorar Programa de Aprendizaje",
     "ctaResources": "Explorar Recursos"
+  },
+  "newsletter": {
+    "title": "El Boletín de Insureversia",
+    "description": "Información semanal curada sobre IA en seguros — casos de estudio, reseñas de herramientas y recomendaciones prácticas para profesionales de seguros.",
+    "heroLabel": "Recursos",
+    "subtitle": "Un correo por semana. Curado para profesionales de seguros que navegan la IA.",
+    "benefitsTitle": "Qué Recibirás",
+    "benefit1Title": "Información Semanal Curada",
+    "benefit1Desc": "Una selección cuidadosa de los desarrollos más importantes de IA en seguros — cambios regulatorios, nuevas herramientas y tendencias del sector — para que no tengas que rastrear todo por tu cuenta.",
+    "benefit2Title": "Casos de Estudio Reales",
+    "benefit2Desc": "Ejemplos documentados de cómo aseguradoras, corredores y ajustadores están usando la IA — qué funcionó, qué no, y qué puedes aprender de su experiencia.",
+    "benefit3Title": "Reseñas y Recomendaciones de Herramientas",
+    "benefit3Desc": "Evaluaciones independientes e imparciales de herramientas de IA relevantes para profesionales de seguros — con orientación práctica sobre cuándo y cómo usarlas.",
+    "differenceTitle": "Qué Lo Hace Diferente",
+    "diff1": "Curado por profesionales de seguros, no por vendedores de IA",
+    "diff2": "Contenido bilingüe — inglés y español",
+    "diff3": "Sin spam, sin discursos de venta, sin enlaces de afiliados",
+    "diff4": "Cancela cuando quieras — sin preguntas",
+    "audienceTitle": "Para Quién Es",
+    "audienceDesc": "Ya seas un suscriptor explorando la automatización, un ajustador evaluando herramientas de IA, un corredor buscando eficiencias, un oficial de cumplimiento rastreando regulaciones de IA, o un ejecutivo planificando tu estrategia de IA — este boletín está diseñado para ti.",
+    "ctaTitle": "Mantente a la Vanguardia",
+    "ctaDesc": "Únete a los profesionales de seguros que ya reciben información semanal sobre IA directamente en su bandeja de entrada."
   },
   "askInsureversia": {
     "title": "Pregunta a Insureversia",

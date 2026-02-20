@@ -1,0 +1,174 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { t, getLocalePath } from '../../../i18n';
+const locale = 'en';
+const p = (path: string) => getLocalePath(locale, path);
+---
+
+<BaseLayout
+  title={t(locale, 'newsletter.title')}
+  description={t(locale, 'newsletter.description')}
+  locale={locale}
+  keywords="AI insurance newsletter, insurance AI insights, weekly AI brief, insurance technology newsletter, insurtech newsletter"
+>
+  <!-- Hero -->
+  <section class="hero" style="background: linear-gradient(135deg, rgba(15,43,70,0.88) 0%, rgba(0,180,216,0.15) 100%), url('/assets/images/hero-images/hero-image-resources.png') top/cover no-repeat;">
+    <div class="container" style="position: relative; z-index: 1;">
+      <div class="slide-up" style="max-width: 800px;">
+        <p class="text-sm font-semibold mb-4" style="color: var(--color-secondary); text-transform: uppercase; letter-spacing: 0.1em;">{t(locale, 'newsletter.heroLabel')}</p>
+        <h1 style="font-size: var(--text-5xl); margin-bottom: var(--space-6);">{t(locale, 'newsletter.title')}</h1>
+        <p class="lead" style="margin-bottom: var(--space-6);">
+          {t(locale, 'newsletter.subtitle')}
+        </p>
+      </div>
+    </div>
+    <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 120px; background: linear-gradient(to top, var(--surface-page), transparent);"></div>
+  </section>
+
+  <!-- What You'll Get -->
+  <section class="section">
+    <div class="container">
+      <h2 class="text-center" style="margin-bottom: var(--space-10);">{t(locale, 'newsletter.benefitsTitle')}</h2>
+      <div class="grid grid--3 reveal-stagger" style="max-width: 1000px; margin: 0 auto;">
+        <div class="card" style="padding: var(--space-6); text-align: center;">
+          <div style="font-size: 2.5rem; margin-bottom: var(--space-4);">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--color-secondary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <h3 style="font-size: var(--text-xl); margin-bottom: var(--space-3);">{t(locale, 'newsletter.benefit1Title')}</h3>
+          <p style="color: var(--text-secondary); font-size: var(--text-sm); line-height: var(--leading-relaxed);">{t(locale, 'newsletter.benefit1Desc')}</p>
+        </div>
+        <div class="card" style="padding: var(--space-6); text-align: center;">
+          <div style="font-size: 2.5rem; margin-bottom: var(--space-4);">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--color-secondary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          </div>
+          <h3 style="font-size: var(--text-xl); margin-bottom: var(--space-3);">{t(locale, 'newsletter.benefit2Title')}</h3>
+          <p style="color: var(--text-secondary); font-size: var(--text-sm); line-height: var(--leading-relaxed);">{t(locale, 'newsletter.benefit2Desc')}</p>
+        </div>
+        <div class="card" style="padding: var(--space-6); text-align: center;">
+          <div style="font-size: 2.5rem; margin-bottom: var(--space-4);">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--color-secondary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+          </div>
+          <h3 style="font-size: var(--text-xl); margin-bottom: var(--space-3);">{t(locale, 'newsletter.benefit3Title')}</h3>
+          <p style="color: var(--text-secondary); font-size: var(--text-sm); line-height: var(--leading-relaxed);">{t(locale, 'newsletter.benefit3Desc')}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- What Makes It Different -->
+  <section class="section section--parchment">
+    <div class="container">
+      <div class="reveal" style="max-width: 700px; margin: 0 auto;">
+        <h2 class="text-center" style="margin-bottom: var(--space-8);">{t(locale, 'newsletter.differenceTitle')}</h2>
+        <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: var(--space-4);">
+          {[
+            t(locale, 'newsletter.diff1'),
+            t(locale, 'newsletter.diff2'),
+            t(locale, 'newsletter.diff3'),
+            t(locale, 'newsletter.diff4'),
+          ].map((item) => (
+            <li style="display: flex; align-items: flex-start; gap: var(--space-3); font-size: var(--text-lg); line-height: var(--leading-relaxed);">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: 2px;"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Who It's For -->
+  <section class="section">
+    <div class="container">
+      <div class="reveal" style="max-width: 700px; margin: 0 auto; text-align: center;">
+        <h2 style="margin-bottom: var(--space-6);">{t(locale, 'newsletter.audienceTitle')}</h2>
+        <p style="font-size: var(--text-lg); color: var(--text-secondary); line-height: var(--leading-relaxed);">
+          {t(locale, 'newsletter.audienceDesc')}
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Subscribe CTA -->
+  <section class="section section--parchment">
+    <div class="container text-center">
+      <div class="reveal" style="max-width: 600px; margin: 0 auto;">
+        <h2 style="margin-bottom: var(--space-4);">{t(locale, 'newsletter.ctaTitle')}</h2>
+        <p style="font-size: var(--text-lg); color: var(--text-secondary); margin-bottom: var(--space-8);">
+          {t(locale, 'newsletter.ctaDesc')}
+        </p>
+        <form
+          id="newsletter-page-form"
+          class="flex gap-2"
+          style="max-width: 480px; margin: 0 auto;"
+          data-locale={locale}
+          data-label-subscribe={t(locale, 'footer.subscribe')}
+          data-label-subscribing={t(locale, 'footer.subscribing')}
+          data-label-success={t(locale, 'footer.subscribeSuccess')}
+          data-label-error={t(locale, 'footer.subscribeError')}
+          data-label-invalid={t(locale, 'footer.subscribeInvalid')}
+        >
+          <input
+            type="email"
+            id="newsletter-page-email"
+            name="email"
+            required
+            placeholder={t(locale, 'footer.emailPlaceholder')}
+            style="flex: 1; padding: var(--space-3) var(--space-4); border: 1px solid var(--border-color); border-radius: var(--radius-md); background: var(--surface-card); color: var(--text-primary); font-size: var(--text-base);"
+          />
+          <button type="submit" id="newsletter-page-btn" class="btn btn--primary">{t(locale, 'footer.subscribe')}</button>
+        </form>
+        <p id="newsletter-page-msg" style="font-size: var(--text-sm); margin-top: var(--space-3); display: none;"></p>
+        <p style="margin-top: var(--space-6); font-size: var(--text-sm); color: var(--text-muted);">
+          {t(locale, 'learningProgram.programCta')}
+          <a href={p('/learn/program/')} style="font-weight: var(--font-semibold);">
+            {t(locale, 'learningProgram.programCtaLink')} &rarr;
+          </a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const nlForm = document.getElementById('newsletter-page-form') as HTMLFormElement | null;
+    const nlEmail = document.getElementById('newsletter-page-email') as HTMLInputElement | null;
+    const nlBtn = document.getElementById('newsletter-page-btn') as HTMLButtonElement | null;
+    const nlMsg = document.getElementById('newsletter-page-msg') as HTMLParagraphElement | null;
+
+    nlForm?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!nlEmail || !nlBtn || !nlMsg) return;
+
+      const email = nlEmail.value.trim();
+      if (!email || !nlEmail.validity.valid) {
+        nlMsg.textContent = nlForm.dataset.labelInvalid || '';
+        nlMsg.style.display = 'block';
+        nlMsg.style.color = 'var(--color-danger, #ef4444)';
+        return;
+      }
+
+      nlBtn.disabled = true;
+      nlBtn.textContent = nlForm.dataset.labelSubscribing || '...';
+      nlMsg.style.display = 'none';
+
+      try {
+        const { subscribe } = await import('../../../lib/newsletter');
+        await subscribe(email, nlForm.dataset.locale || 'en');
+
+        nlMsg.textContent = nlForm.dataset.labelSuccess || 'Subscribed!';
+        nlMsg.style.display = 'block';
+        nlMsg.style.color = 'var(--color-accent, #00B4D8)';
+        nlEmail.value = '';
+        nlBtn.textContent = nlForm.dataset.labelSubscribe || 'Subscribe';
+        nlBtn.disabled = false;
+      } catch (err) {
+        console.error('Newsletter subscribe error:', err);
+        nlMsg.textContent = nlForm.dataset.labelError || 'Error';
+        nlMsg.style.display = 'block';
+        nlMsg.style.color = 'var(--color-danger, #ef4444)';
+        nlBtn.textContent = nlForm.dataset.labelSubscribe || 'Subscribe';
+        nlBtn.disabled = false;
+      }
+    });
+  </script>
+</BaseLayout>
