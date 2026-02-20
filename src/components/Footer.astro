@@ -71,16 +71,27 @@ const year = new Date().getFullYear();
         <p style="color: rgba(255,255,255,0.7); font-size: var(--text-sm); margin-bottom: var(--space-4);">
           {t(locale, 'footer.newsletterDesc')}
         </p>
-        <form class="flex gap-2" onsubmit="return false;">
+        <form
+          id="newsletter-form"
+          class="flex gap-2"
+          data-locale={locale}
+          data-label-subscribe={t(locale, 'footer.subscribe')}
+          data-label-subscribing={t(locale, 'footer.subscribing')}
+          data-label-success={t(locale, 'footer.subscribeSuccess')}
+          data-label-error={t(locale, 'footer.subscribeError')}
+          data-label-invalid={t(locale, 'footer.subscribeInvalid')}
+        >
           <input
             type="email"
             id="newsletter-email"
             name="email"
+            required
             placeholder={t(locale, 'footer.emailPlaceholder')}
             style="flex: 1; padding: var(--space-2) var(--space-3); border: 1px solid rgba(255,255,255,0.2); border-radius: var(--radius-md); background: rgba(255,255,255,0.1); color: var(--text-inverse); font-size: var(--text-sm);"
           />
-          <button type="submit" class="btn btn--primary btn--sm">{t(locale, 'footer.subscribe')}</button>
+          <button type="submit" id="newsletter-btn" class="btn btn--primary btn--sm">{t(locale, 'footer.subscribe')}</button>
         </form>
+        <p id="newsletter-msg" style="font-size: var(--text-sm); margin-top: var(--space-2); display: none;"></p>
       </div>
     </div>
 
@@ -156,6 +167,48 @@ const year = new Date().getFullYear();
       localStorage.setItem('insureversia-theme', 'modern');
     }
     updateThemeLabel();
+  });
+
+  // === Newsletter subscription ===
+  const nlForm = document.getElementById('newsletter-form') as HTMLFormElement | null;
+  const nlEmail = document.getElementById('newsletter-email') as HTMLInputElement | null;
+  const nlBtn = document.getElementById('newsletter-btn') as HTMLButtonElement | null;
+  const nlMsg = document.getElementById('newsletter-msg') as HTMLParagraphElement | null;
+
+  nlForm?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!nlEmail || !nlBtn || !nlMsg) return;
+
+    const email = nlEmail.value.trim();
+    if (!email || !nlEmail.validity.valid) {
+      nlMsg.textContent = nlForm.dataset.labelInvalid || '';
+      nlMsg.style.display = 'block';
+      nlMsg.style.color = '#fca5a5';
+      return;
+    }
+
+    nlBtn.disabled = true;
+    nlBtn.textContent = nlForm.dataset.labelSubscribing || '...';
+    nlMsg.style.display = 'none';
+
+    try {
+      const { subscribe } = await import('../lib/newsletter');
+      await subscribe(email, nlForm.dataset.locale || 'en');
+
+      nlMsg.textContent = nlForm.dataset.labelSuccess || 'Subscribed!';
+      nlMsg.style.display = 'block';
+      nlMsg.style.color = '#86efac';
+      nlEmail.value = '';
+      nlBtn.textContent = nlForm.dataset.labelSubscribe || 'Subscribe';
+      nlBtn.disabled = false;
+    } catch (err) {
+      console.error('Newsletter subscribe error:', err);
+      nlMsg.textContent = nlForm.dataset.labelError || 'Error';
+      nlMsg.style.display = 'block';
+      nlMsg.style.color = '#fca5a5';
+      nlBtn.textContent = nlForm.dataset.labelSubscribe || 'Subscribe';
+      nlBtn.disabled = false;
+    }
   });
 
   // === Dark/Light mode toggle ===

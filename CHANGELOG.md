@@ -2,6 +2,20 @@
 
 All notable changes to the Insureversia website will be documented in this file.
 
+## [0.6.7] - 2026-02-20
+
+### Added
+
+- **Newsletter subscription**: Footer "Subscribe" button now saves to Firestore `newsletters` collection
+  - Deduplicates by email (uses email as document ID)
+  - Stores email, locale, uid, subscribedAt
+  - Success/error/validation feedback messages (EN + ES)
+- **New file**: `src/lib/newsletter.ts`
+- **Firestore rules**: Added `newsletters/` collection (authenticated create/update, no public reads)
+- **i18n**: 4 new `footer.*` keys per language (subscribing, subscribeSuccess, subscribeError, subscribeInvalid)
+
+---
+
 ## [0.6.6] - 2026-02-19
 
 ### Added

@@ -119,6 +119,10 @@
     "newsletterDesc": "Un correo por semana. Sin spam. Cancela cuando quieras.",
     "emailPlaceholder": "tu@email.com",
     "subscribe": "Suscribirse",
+    "subscribing": "Suscribiendo...",
+    "subscribeSuccess": "¡Te has suscrito! Bienvenido.",
+    "subscribeError": "Algo salió mal. Por favor, inténtalo de nuevo.",
+    "subscribeInvalid": "Por favor, ingresa un correo electrónico válido.",
     "copyright": "Insureversia. Todos los derechos reservados.",
     "disclaimer": "Este sitio ofrece contenido educativo sobre IA en seguros. Nada aquí constituye asesoría de seguros ni recomendaciones profesionales."
   },

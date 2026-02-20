@@ -119,6 +119,10 @@
     "newsletterDesc": "One email per week. No spam. Unsubscribe anytime.",
     "emailPlaceholder": "your@email.com",
     "subscribe": "Subscribe",
+    "subscribing": "Subscribing...",
+    "subscribeSuccess": "You're subscribed! Welcome aboard.",
+    "subscribeError": "Something went wrong. Please try again.",
+    "subscribeInvalid": "Please enter a valid email address.",
     "copyright": "Insureversia. All rights reserved.",
     "disclaimer": "This site provides educational content about AI in insurance. Nothing here constitutes insurance advice or professional recommendations."
   },
