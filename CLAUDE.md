@@ -31,7 +31,7 @@ src/
   content/        # Markdown content collections (quick-wins, what-to-do, what-not-to-do, faq)
   i18n/           # en.json, es.json, index.ts
   layouts/        # BaseLayout.astro
-  lib/            # Shared utilities (firebase.ts, chat.ts, chat-persona.ts, chat-suggestions.ts)
+  lib/            # Shared utilities (firebase.ts, auth.ts, tiers.ts, conversations.ts, chat.ts, chat-persona.ts, chat-suggestions.ts)
   pages/          # File-based routing (28 EN pages)
   pages/es/       # Spanish mirror pages (28 ES pages)
   styles/         # Design system CSS
@@ -49,8 +49,10 @@ resources/        # Internal docs, image prompts, site plan (not deployed)
 - **localStorage keys:** `insureversia-theme`, `insureversia-mode`, `insureversia-uid`, `insureversia-chat-usage`
 - **sessionStorage keys:** `insureversia-chat-messages`
 - **Naming:** `insuranceSector` (not practiceArea), `insureversiasTake` (not lawrasTake)
-- **Personas:** 3 fictional voices — Vera (Gold/Strategist), Bruno (Navy/Guardian), Zaira (Teal/Catalyst)
-- **Ask Insureversia:** AI chat assistant using Firebase AI SDK (Gemini). System prompt in `chat-persona.ts`, suggestions in `chat-suggestions.ts`. 5 messages/day limit. Requires AI Logic enabled in Firebase Console.
+- **Personas:** 3 fictional voices — Vera (Gold/Strategist), Bruno (Slate-Blue/Guardian), Zaira (Teal/Catalyst)
+- **Ask Insureversia:** AI chat assistant using Firebase AI SDK (Gemini). 4 personas (Insureversia default + Vera, Bruno, Zaira). System prompts in `chat-persona.ts`, suggestions in `chat-suggestions.ts`. Auth via `auth.ts` (Google + Email/Password). Tier-based limits via `tiers.ts`: anonymous 5 msgs/day (localStorage), registered 25 msgs/day (Firestore). Conversation history for registered users via `conversations.ts`.
+- **Firestore collections:** `likes/`, `submissions/`, `users/` (usage tracking), `conversations/` (chat history with `messages/` subcollection)
+- **Firebase config files:** `firebase.json` (rules + indexes), `firestore.rules`, `firestore.indexes.json`
 
 ## Workflow Rules
 

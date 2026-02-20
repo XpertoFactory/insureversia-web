@@ -19,7 +19,7 @@ export interface SubmissionData {
 export async function submitForm(data: SubmissionData): Promise<void> {
   const db = await getDb();
   const { collection, addDoc, Timestamp } = await import(
-    'firebase/firestore/lite'
+    'firebase/firestore'
   );
   const uid = await getUid();
 

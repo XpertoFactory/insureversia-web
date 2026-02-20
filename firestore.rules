@@ -19,6 +19,27 @@ service cloud.firestore {
       allow read, update, delete: if false;
     }
 
+    // Phase 2: Users — owner only
+    match /users/{uid} {
+      allow read, update: if request.auth != null && request.auth.uid == uid;
+      allow create: if request.auth != null && request.auth.uid == uid;
+    }
+
+    // Phase 2: Conversations — owner only
+    match /conversations/{convId} {
+      allow create: if request.auth != null
+                    && request.resource.data.userId == request.auth.uid;
+      allow read, update, delete: if request.auth != null
+                    && resource.data.userId == request.auth.uid;
+
+      match /messages/{msgId} {
+        allow read: if request.auth != null
+                    && get(/databases/$(database)/documents/conversations/$(convId)).data.userId == request.auth.uid;
+        allow create: if request.auth != null
+                      && get(/databases/$(database)/documents/conversations/$(convId)).data.userId == request.auth.uid;
+      }
+    }
+
     // Deny everything else
     match /{document=**} {
       allow read, write: if false;

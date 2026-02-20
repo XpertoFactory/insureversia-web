@@ -19,7 +19,7 @@ export async function getLikeStatus(
 ): Promise<{ count: number; liked: boolean }> {
   try {
     const db = await getDb();
-    const { doc, getDoc } = await import('firebase/firestore/lite');
+    const { doc, getDoc } = await import('firebase/firestore');
 
     const key = docKey(contentType, contentId);
     const likeRef = doc(db, 'likes', key);
@@ -43,7 +43,7 @@ export async function toggleLike(
 ): Promise<{ count: number; liked: boolean }> {
   const db = await getDb();
   const { doc, getDoc, setDoc, deleteDoc, increment } = await import(
-    'firebase/firestore/lite'
+    'firebase/firestore'
   );
 
   const uid = await getUid();
@@ -60,7 +60,7 @@ export async function toggleLike(
     await setDoc(likeRef, { count: increment(-1) }, { merge: true });
   } else {
     // Like
-    const { Timestamp } = await import('firebase/firestore/lite');
+    const { Timestamp } = await import('firebase/firestore');
     await setDoc(userRef, { likedAt: Timestamp.now() });
     await setDoc(likeRef, { count: increment(1) }, { merge: true });
   }

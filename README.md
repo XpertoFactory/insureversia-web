@@ -23,10 +23,13 @@ Insureversia helps insurance professionals — underwriters, claims adjusters, b
 ### Ask Insureversia (AI Chat Assistant)
 
 An embedded AI chat widget powered by Gemini via Firebase AI SDK. Available on every page:
+- **4 personas**: Insureversia (default), Vera, Bruno, Zaira — each with distinct voice and system prompt
 - Page-context-aware suggested questions
-- Streaming responses with insurance-domain system prompt
-- 5 messages/day free tier, dark mode, mobile full-screen
-- Bilingual (EN + ES)
+- Streaming responses with insurance-domain guardrails
+- **Firebase Auth**: Google sign-in, Email/Password, anonymous upgrade
+- **Tier-based limits**: anonymous 5 msgs/day (localStorage), registered 25 msgs/day (Firestore)
+- **Conversation history** for registered users (Firestore)
+- Dark mode, mobile full-screen, bilingual (EN + ES)
 
 ## Tech Stack
 
@@ -54,7 +57,7 @@ src/
   content/        # Markdown collections — quick-wins, what-to-do, what-not-to-do, faq (EN + ES)
   i18n/           # Translation files (en.json, es.json) + routing
   layouts/        # BaseLayout.astro
-  lib/            # Shared utilities (firebase, chat, chat-persona, chat-suggestions)
+  lib/            # Shared utilities (firebase, auth, tiers, conversations, chat, chat-persona, chat-suggestions)
   pages/          # File-based routing (28 EN pages)
     es/           # Spanish mirror pages (28 ES pages)
   styles/         # Design system (10 CSS files)

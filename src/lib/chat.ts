@@ -1,10 +1,11 @@
 /**
- * Chat service for Ask Insureversia — Phase 1.
+ * Chat service for Ask Insureversia — Phase 2.
  * Uses Firebase AI (Gemini) via client-side SDK.
- * Lazy-loads all Firebase/AI dependencies on first use.
+ * Supports multi-persona, tier-based limits, and conversation persistence.
  */
 
-import { buildSystemPrompt } from './chat-persona';
+import { PERSONAS, DEFAULT_PERSONA, type PersonaId } from './chat-persona';
+import type { UserTier } from './auth';
 
 // ─── Types ────────────────────────────────────────────────────────
 export interface ChatMessage {
@@ -12,77 +13,36 @@ export interface ChatMessage {
   text: string;
 }
 
-interface UsageData {
-  date: string;
-  count: number;
-}
-
 // ─── Constants ────────────────────────────────────────────────────
-const DAILY_LIMIT = 5;
-const USAGE_KEY = 'insureversia-chat-usage';
 const MODEL_NAME = 'gemini-2.5-flash';
 
 // ─── Module-level singletons (survive SPA navigation) ─────────────
 let chatSession: any = null;
 let currentLocale: string = '';
 let currentPageContext: string = '';
-
-// ─── Rate limiting (localStorage) ─────────────────────────────────
-
-function getTodayStr(): string {
-  return new Date().toISOString().slice(0, 10);
-}
-
-function getUsageData(): UsageData {
-  try {
-    const raw = localStorage.getItem(USAGE_KEY);
-    if (!raw) return { date: getTodayStr(), count: 0 };
-    const data: UsageData = JSON.parse(raw);
-    if (data.date !== getTodayStr()) {
-      return { date: getTodayStr(), count: 0 };
-    }
-    return data;
-  } catch {
-    return { date: getTodayStr(), count: 0 };
-  }
-}
-
-function saveUsageData(data: UsageData): void {
-  localStorage.setItem(USAGE_KEY, JSON.stringify(data));
-}
-
-export function canSendMessage(): boolean {
-  return getUsageData().count < DAILY_LIMIT;
-}
-
-export function getRemainingMessages(): number {
-  return Math.max(0, DAILY_LIMIT - getUsageData().count);
-}
-
-export function getUsedMessages(): number {
-  return getUsageData().count;
-}
-
-export function incrementUsage(): void {
-  const data = getUsageData();
-  data.count += 1;
-  saveUsageData(data);
-}
+let currentPersonaId: PersonaId = DEFAULT_PERSONA;
 
 // ─── Session management ──────────────────────────────────────────
 
 /**
  * Creates or reuses a Gemini chat session.
- * Lazy-loads firebase/ai on first call.
+ * Session is invalidated when locale, page context, or persona changes.
  */
 async function getOrCreateSession(
   locale: string,
   pageContext: string,
   pageTitle: string | undefined,
-  history: ChatMessage[]
+  history: ChatMessage[],
+  personaId: PersonaId = DEFAULT_PERSONA,
+  tier: UserTier = 'anonymous',
 ): Promise<any> {
   // Reuse existing session if context hasn't changed
-  if (chatSession && currentLocale === locale && currentPageContext === pageContext) {
+  if (
+    chatSession &&
+    currentLocale === locale &&
+    currentPageContext === pageContext &&
+    currentPersonaId === personaId
+  ) {
     return chatSession;
   }
 
@@ -92,14 +52,16 @@ async function getOrCreateSession(
   const app = await getApp();
   const ai = getAI(app, { backend: new GoogleAIBackend() });
 
-  const systemPrompt = buildSystemPrompt(locale, pageContext, pageTitle);
+  const persona = PERSONAS[personaId] || PERSONAS[DEFAULT_PERSONA];
+  const systemPrompt = persona.buildPrompt(locale, pageContext, pageTitle);
+  const maxTokens = persona.maxOutputTokens[tier] || persona.maxOutputTokens.anonymous;
 
   const model = getGenerativeModel(ai, {
     model: MODEL_NAME,
     systemInstruction: { parts: [{ text: systemPrompt }] },
     generationConfig: {
-      temperature: 0.7,
-      maxOutputTokens: 512,
+      temperature: persona.temperature,
+      maxOutputTokens: maxTokens,
     },
   });
 
@@ -112,6 +74,7 @@ async function getOrCreateSession(
   chatSession = model.startChat({ history: geminiHistory });
   currentLocale = locale;
   currentPageContext = pageContext;
+  currentPersonaId = personaId;
 
   return chatSession;
 }
@@ -127,24 +90,50 @@ export async function* sendMessageStream(
   locale: string,
   pageContext: string,
   pageTitle: string | undefined,
-  history: ChatMessage[]
+  history: ChatMessage[],
+  personaId: PersonaId = DEFAULT_PERSONA,
+  tier: UserTier = 'anonymous',
+  conversationId?: string,
 ): AsyncGenerator<string> {
-  const session = await getOrCreateSession(locale, pageContext, pageTitle, history);
+  const session = await getOrCreateSession(
+    locale,
+    pageContext,
+    pageTitle,
+    history,
+    personaId,
+    tier,
+  );
+
+  // Save user message to Firestore if conversation exists
+  if (conversationId) {
+    import('./conversations').then(({ addMessage }) => addMessage(conversationId, 'user', text));
+  }
+
   const result = await session.sendMessageStream(text);
+  let fullText = '';
 
   for await (const chunk of result.stream) {
     const chunkText = chunk.text();
     if (chunkText) {
+      fullText += chunkText;
       yield chunkText;
     }
+  }
+
+  // Save model response to Firestore if conversation exists
+  if (conversationId && fullText) {
+    import('./conversations').then(({ addMessage }) =>
+      addMessage(conversationId, 'model', fullText),
+    );
   }
 }
 
 /**
- * Resets the chat session (for "New Chat" action).
+ * Resets the chat session (for "New Chat" or persona switch).
  */
 export function resetSession(): void {
   chatSession = null;
   currentLocale = '';
   currentPageContext = '';
+  currentPersonaId = DEFAULT_PERSONA;
 }

@@ -2,6 +2,48 @@
 
 All notable changes to the Insureversia website will be documented in this file.
 
+## [0.6.6] - 2026-02-19
+
+### Added
+
+- **Ask Insureversia Phase 2** — Auth, Multi-Persona, and Conversation History
+  - **3 persona voices** alongside default Insureversia: Vera (The Strategist), Bruno (The Guardian), Zaira (The Catalyst)
+  - Each persona has distinct voice, temperature, system prompt, and accent color
+  - Persona chip selector below chat header with avatar and name
+  - Locked personas show lock icon for anonymous users
+  - **Firebase Auth integration**: Google sign-in and Email/Password sign-up
+  - Inline auth form in chat panel — no redirect needed
+  - Anonymous-to-registered upgrade preserves UID via `linkWithPopup`/`linkWithCredential`
+  - **Tier-based rate limiting**: anonymous 5 msgs/day (localStorage), registered 25 msgs/day (Firestore)
+  - Upgrade prompt when anonymous user hits limit or taps locked persona
+  - **Firestore conversation history** for registered users
+  - History panel with recent conversations list, resume, and delete
+  - Auto-saves messages to Firestore for registered users
+  - Sign-out reverts to anonymous mode with re-authentication
+- **New files**: `src/lib/auth.ts`, `src/lib/tiers.ts`, `src/lib/conversations.ts`
+- **i18n**: ~30 new `askInsureversia.*` keys per language (personas, auth, upgrade, history)
+- **Firestore rules**: Added `users/` and `conversations/` security rules
+
+### Changed
+
+- **Firestore SDK**: Migrated from `firebase/firestore/lite` to full `firebase/firestore` (needed for real-time listeners)
+- **`chat-persona.ts`**: Refactored from single `buildSystemPrompt()` to multi-persona `PERSONAS` map with `PersonaDef` type
+- **`chat.ts`**: Extended `sendMessageStream()` with `personaId`, `tier`, and `conversationId` parameters
+- **`ChatWidget.svelte`**: Major UI additions — persona selector, inline auth, history panel, upgrade prompts, dark mode support for all new elements
+- **`AskInsureversia.astro`**: Passes ~30 additional i18n keys to ChatWidget
+
+### Fixed
+
+- **Bruno filename typo**: Renamed `bruno-profile-hoto.png` → `bruno-profile-photo.png` and updated team page references
+
+### Prerequisites (Firebase Console — manual)
+
+- Enable Authentication → Sign-in methods: Email/Password, Google
+- Deploy updated Firestore security rules
+- Create composite index: `conversations` → `userId` ASC + `updatedAt` DESC
+
+---
+
 ## [0.6.5] - 2026-02-19
 
 ### Changed

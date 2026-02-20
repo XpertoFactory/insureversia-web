@@ -3,7 +3,7 @@
  * SDK is only loaded when a feature (likes, submissions) is first used.
  */
 import type { FirebaseApp } from 'firebase/app';
-import type { Firestore } from 'firebase/firestore/lite';
+import type { Firestore } from 'firebase/firestore';
 import type { Auth } from 'firebase/auth';
 
 let app: FirebaseApp | null = null;
@@ -35,7 +35,7 @@ async function initApp(): Promise<FirebaseApp> {
 export async function getDb(): Promise<Firestore> {
   if (db) return db;
   const firebaseApp = await initApp();
-  const { getFirestore } = await import('firebase/firestore/lite');
+  const { getFirestore } = await import('firebase/firestore');
   db = getFirestore(firebaseApp);
   return db;
 }
