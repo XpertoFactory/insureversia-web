@@ -17,6 +17,10 @@ All notable changes to the Insureversia website will be documented in this file.
 - **i18n**: `nav.curriculum` key + `curriculum.*` block (~65 keys) in both `en.json` and `es.json`
 - **Site Guide**: Added "Program Curriculum" to Learn tour section and sitemap modal (EN + ES)
 
+### Fixed
+
+- **Curriculum card layout** — Corrected element order in module cards: core modules now show `[icon][number][title]`, optional modules show `[optional pill]` above `[icon][number][title]` (EN + ES)
+
 ### Changed
 
 - **CLAUDE.md**: Updated build expectation for page count
