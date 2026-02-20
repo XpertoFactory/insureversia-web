@@ -34,9 +34,9 @@
   let dailyLimit = $derived(tier === 'registered' ? 25 : 5);
 
   // ─── DOM refs ───────────────────────────────────────────────────
-  let messagesEl;
-  let inputEl;
-  let panelEl;
+  let messagesEl = $state(null);
+  let inputEl = $state(null);
+  let panelEl = $state(null);
 
   const SESSION_KEY = 'insureversia-chat-messages';
 
@@ -548,7 +548,7 @@
         <div class="ask-insureversia__history">
           <div class="ask-insureversia__history-header">
             <span class="ask-insureversia__history-title">{i18n.conversationsTitle}</span>
-            <button class="ask-insureversia__header-btn" onclick={() => showHistory = false} style="color: var(--text-primary, #1a1a1a)">
+            <button class="ask-insureversia__header-btn" onclick={() => showHistory = false} style="color: var(--text-primary, #1a1a1a)" aria-label="Close history">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
             </button>
           </div>

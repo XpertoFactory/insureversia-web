@@ -16,9 +16,9 @@ Insureversia helps insurance professionals — underwriters, claims adjusters, b
 | **Learn** | 7 | AI 101, What to Do, What Not to Do, Prompt Engineering, Learning Program, Curriculum, Case Studies |
 | **Practice** | 9 | Quick Wins, Applications, Prompt Library, Prompt Builder, AI Readiness, AI Help Calculator, AI Roadmap, Ethics Simulator, Local AI |
 | **Resources** | 6 | FAQ, Glossary, Success Stories, Tool Directory, Jurisdiction Guide, Newsletter |
-| **About** | 4 | Hub, What is Insureversia, Site Guide, Our Team (+ 3 Personas) |
+| **About** | 5 | Hub, What is Insureversia, Site Guide, Our Team (+ 3 Personas), Contact Us |
 
-**60 pages** total. Fully bilingual: English and Spanish.
+**62 pages** total. Fully bilingual: English and Spanish.
 
 ### Ask Insureversia (AI Chat Assistant)
 
@@ -57,9 +57,9 @@ src/
   content/        # Markdown collections — quick-wins, what-to-do, what-not-to-do, faq (EN + ES)
   i18n/           # Translation files (en.json, es.json) + routing
   layouts/        # BaseLayout.astro
-  lib/            # Shared utilities (firebase, auth, tiers, conversations, chat, chat-persona, chat-suggestions, newsletter)
-  pages/          # File-based routing (30 EN pages)
-    es/           # Spanish mirror pages (30 ES pages)
+  lib/            # Shared utilities (firebase, auth, tiers, conversations, chat, chat-persona, chat-suggestions, newsletter, submissions)
+  pages/          # File-based routing (31 EN pages)
+    es/           # Spanish mirror pages (31 ES pages)
   styles/         # Design system (10 CSS files)
 public/
   assets/         # Images, logos, fonts

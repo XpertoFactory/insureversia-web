@@ -2,6 +2,29 @@
 
 All notable changes to the Insureversia website will be documented in this file.
 
+## [0.6.11] - 2026-02-20
+
+### Added
+
+- **Contact Us page** — Dedicated page at `/about/contact/` (EN + ES) with informational cards for each contact type and CTA button that opens the existing contact modal
+- **Contact modal: 3 new types** — Learning Program, Consulting Services, and AI Products type buttons with matching SVG icons; all three show Name, Email, and Message fields
+- **Navigation**: Added "Contact Us" link to About dropdown (desktop + mobile)
+- **Site Guide**: Added "Contact Us" to About tour section and sitemap modal (EN + ES), updated About page count (4 → 5)
+- **i18n**: `nav.contactUs`, `contact.typeProgram/typeConsulting/typeProducts`, and `contactPage.*` keys (~16 new keys) in both `en.json` and `es.json`
+
+### Changed
+
+- **Contact modal**: Renamed "Request Content" → "Suggest Content" (EN) / "Sugerir Contenido" (ES)
+- **CLAUDE.md**: Updated page count (60 → 62), added `submissions.ts` to lib listing
+- **README.md**: Updated About section (4 → 5 pages), total page count (60 → 62)
+
+### Fixed
+
+- **submissions.ts**: Updated `SubmissionData` type union to include new types (`program`, `consulting`, `products`); fixed stale `practiceArea` field name → `insuranceSector`
+- **ChatWidget.svelte**: Added missing `aria-label` on history close button (a11y warning fix)
+
+---
+
 ## [0.6.10] - 2026-02-20
 
 ### Added

@@ -89,7 +89,7 @@ const p = (path: string) => getLocalePath(locale, path);
       <div class="tour-section tour-section--about">
         <div class="tour-section__header">
           <div class="tour-section__title"><Icon name="users" size={20} /> About</div>
-          <span class="tour-section__count">4 pages</span>
+          <span class="tour-section__count">5 pages</span>
         </div>
         <p class="tour-section__intro">Learn what Insureversia is, what drives this project, and how the site is organized.</p>
         <div class="tour-section__pages">
@@ -109,6 +109,10 @@ const p = (path: string) => getLocalePath(locale, path);
           <a href={p('/about/team/')} class="tour-page">
             <span class="tour-page__name">Our Team</span>
             <span class="tour-page__desc">CEMI.ai and the curator.</span>
+          </a>
+          <a href={p('/about/contact/')} class="tour-page">
+            <span class="tour-page__name">Contacto</span>
+            <span class="tour-page__desc">Comunícate con nosotros — consultas, programas, consultoría y más.</span>
           </a>
         </div>
       </div>
@@ -296,6 +300,7 @@ const p = (path: string) => getLocalePath(locale, path);
           <a href={p('/about/insureversia/')} class="sitemap-link">What is Insureversia?</a>
           <a href={p('/about/guide/')} class="sitemap-link sitemap-link--current">Site Guide</a>
           <a href={p('/about/team/')} class="sitemap-link">Our Team</a>
+          <a href={p('/about/contact/')} class="sitemap-link">Contacto</a>
 
           <h3 class="sitemap-section sitemap-section--explore">Explore</h3>
           <a href={p('/explore/new-frontiers/')} class="sitemap-link">New Frontiers</a>

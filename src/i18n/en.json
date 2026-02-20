@@ -44,7 +44,8 @@
     "learningProgram": "Learning Program",
     "caseStudies": "Case Studies",
     "newsletter": "Newsletter",
-    "curriculum": "Program Curriculum"
+    "curriculum": "Program Curriculum",
+    "contactUs": "Contact Us"
   },
   "hero": {
     "headline": "AI Is Transforming Insurance. Are You Ready?",
@@ -455,7 +456,10 @@
     "typeContact": "Contact",
     "typeCase": "Submit a Case",
     "typeIdea": "Share an Idea",
-    "typeRequest": "Request Content",
+    "typeRequest": "Suggest Content",
+    "typeProgram": "Learning Program",
+    "typeConsulting": "Consulting Services",
+    "typeProducts": "AI Products",
     "name": "Name",
     "namePlaceholder": "Your name",
     "email": "Email",
@@ -488,6 +492,28 @@
     "error": "Something went wrong. Please try again.",
     "validationRequired": "This field is required.",
     "validationEmail": "Please enter a valid email address."
+  },
+  "contactPage": {
+    "title": "Contact Us",
+    "description": "Get in touch with the Insureversia team — general inquiries, case submissions, program requests, consulting, and more.",
+    "subtitle": "We'd love to hear from you. Whether you have a question, want to share a case, or are interested in our programs and services — choose the option that fits best.",
+    "backToAbout": "Back to About",
+    "howCanWeHelp": "How Can We Help?",
+    "cardContact": "General Contact",
+    "cardContactDesc": "Questions, feedback, or just want to say hello.",
+    "cardCase": "Submit a Case",
+    "cardCaseDesc": "Share a real-world example of AI in insurance for our case library.",
+    "cardIdea": "Share an Idea",
+    "cardIdeaDesc": "Suggest a topic, feature, or collaboration opportunity.",
+    "cardProgram": "Learning Program",
+    "cardProgramDesc": "Inquire about our personalized AI learning programs for insurance teams.",
+    "cardConsulting": "Consulting Services",
+    "cardConsultingDesc": "Request AI strategy consulting for your insurance organization.",
+    "cardProducts": "AI Products",
+    "cardProductsDesc": "Learn about our AI tools and products for the insurance industry.",
+    "cardRequest": "Suggest Content",
+    "cardRequestDesc": "Recommend a Quick Win, article, prompt, or framework topic.",
+    "ctaButton": "Open Contact Form"
   },
   "aiRoadmap": {
     "title": "AI Adoption Roadmap Builder",

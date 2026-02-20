@@ -4,12 +4,12 @@
 import { getDb, getUid } from './firebase';
 
 export interface SubmissionData {
-  type: 'contact' | 'case' | 'idea' | 'request';
+  type: 'contact' | 'case' | 'idea' | 'request' | 'program' | 'consulting' | 'products';
   locale: 'en' | 'es';
   name: string;
   email: string;
   message?: string;
-  practiceArea?: string;
+  insuranceSector?: string;
   jurisdiction?: string;
   caseDescription?: string;
   topic?: string;

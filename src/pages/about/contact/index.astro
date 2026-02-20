@@ -1,0 +1,174 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { t, getLocalePath } from '../../../i18n';
+const locale = 'en';
+const p = (path: string) => getLocalePath(locale, path);
+---
+
+<BaseLayout
+  title={`${t(locale, 'contactPage.title')} — Insureversia`}
+  description={t(locale, 'contactPage.description')}
+  locale={locale}
+  keywords="contact Insureversia, AI insurance inquiry, learning program, consulting, AI products"
+>
+  <!-- Back link + Mini Hero -->
+  <section class="section" style="padding-bottom: 0;">
+    <div class="container">
+      <a href={p('/about/')} class="back-link">&larr; {t(locale, 'contactPage.backToAbout')}</a>
+      <div class="mini-hero">
+        <h1>{t(locale, 'contactPage.title')}</h1>
+        <p class="lead">{t(locale, 'contactPage.subtitle')}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- How Can We Help -->
+  <section class="section">
+    <div class="container">
+      <h2 class="contact-page__section-title">{t(locale, 'contactPage.howCanWeHelp')}</h2>
+      <div class="contact-page__grid">
+        <div class="contact-page__card">
+          <div class="contact-page__icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <h3>{t(locale, 'contactPage.cardContact')}</h3>
+          <p>{t(locale, 'contactPage.cardContactDesc')}</p>
+        </div>
+        <div class="contact-page__card">
+          <div class="contact-page__icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+          </div>
+          <h3>{t(locale, 'contactPage.cardCase')}</h3>
+          <p>{t(locale, 'contactPage.cardCaseDesc')}</p>
+        </div>
+        <div class="contact-page__card">
+          <div class="contact-page__icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/></svg>
+          </div>
+          <h3>{t(locale, 'contactPage.cardIdea')}</h3>
+          <p>{t(locale, 'contactPage.cardIdeaDesc')}</p>
+        </div>
+        <div class="contact-page__card">
+          <div class="contact-page__icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+          </div>
+          <h3>{t(locale, 'contactPage.cardProgram')}</h3>
+          <p>{t(locale, 'contactPage.cardProgramDesc')}</p>
+        </div>
+        <div class="contact-page__card">
+          <div class="contact-page__icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+          </div>
+          <h3>{t(locale, 'contactPage.cardConsulting')}</h3>
+          <p>{t(locale, 'contactPage.cardConsultingDesc')}</p>
+        </div>
+        <div class="contact-page__card">
+          <div class="contact-page__icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M15 2v2"/><path d="M15 20v2"/><path d="M2 15h2"/><path d="M2 9h2"/><path d="M20 15h2"/><path d="M20 9h2"/><path d="M9 2v2"/><path d="M9 20v2"/></svg>
+          </div>
+          <h3>{t(locale, 'contactPage.cardProducts')}</h3>
+          <p>{t(locale, 'contactPage.cardProductsDesc')}</p>
+        </div>
+        <div class="contact-page__card">
+          <div class="contact-page__icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="12" x2="12" y1="18" y2="12"/><line x1="9" x2="15" y1="15" y2="15"/></svg>
+          </div>
+          <h3>{t(locale, 'contactPage.cardRequest')}</h3>
+          <p>{t(locale, 'contactPage.cardRequestDesc')}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section">
+    <div class="container">
+      <div class="contact-page__cta">
+        <button class="btn btn--primary btn--lg contact-trigger">{t(locale, 'contactPage.ctaButton')}</button>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .back-link {
+    display: inline-block;
+    margin-bottom: var(--space-4);
+    color: var(--color-primary);
+    text-decoration: none;
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+  }
+  .back-link:hover { text-decoration: underline; }
+
+  .mini-hero {
+    max-width: 800px;
+    padding: var(--space-8) 0 var(--space-4);
+  }
+  .mini-hero h1 {
+    font-size: var(--text-4xl);
+    margin-bottom: var(--space-4);
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .mini-hero .lead {
+    color: var(--text-secondary);
+    font-size: var(--text-lg);
+  }
+
+  .contact-page__section-title {
+    text-align: center;
+    margin-bottom: var(--space-8);
+    font-size: var(--text-2xl);
+  }
+
+  .contact-page__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-6);
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  .contact-page__card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .contact-page__card:hover {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-md);
+  }
+
+  .contact-page__icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-primary-bg, rgba(15, 43, 70, 0.08));
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-4);
+    color: var(--color-primary);
+  }
+
+  .contact-page__card h3 {
+    font-size: var(--text-lg);
+    margin-bottom: var(--space-2);
+  }
+
+  .contact-page__card p {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  .contact-page__cta {
+    text-align: center;
+    padding: var(--space-8) 0;
+  }
+</style>

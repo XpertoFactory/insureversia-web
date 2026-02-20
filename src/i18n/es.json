@@ -44,7 +44,8 @@
     "learningProgram": "Programa de Aprendizaje",
     "caseStudies": "Casos de Estudio",
     "newsletter": "Boletín",
-    "curriculum": "Currículo del Programa"
+    "curriculum": "Currículo del Programa",
+    "contactUs": "Contacto"
   },
   "hero": {
     "headline": "La IA Está Transformando los Seguros. ¿Estás Listo?",
@@ -455,7 +456,10 @@
     "typeContact": "Contacto",
     "typeCase": "Enviar un Caso",
     "typeIdea": "Compartir una Idea",
-    "typeRequest": "Solicitar Contenido",
+    "typeRequest": "Sugerir Contenido",
+    "typeProgram": "Programa de Aprendizaje",
+    "typeConsulting": "Servicios de Consultoría",
+    "typeProducts": "Productos de IA",
     "name": "Nombre",
     "namePlaceholder": "Tu nombre",
     "email": "Correo",
@@ -488,6 +492,28 @@
     "error": "Algo salió mal. Por favor intenta de nuevo.",
     "validationRequired": "Este campo es obligatorio.",
     "validationEmail": "Por favor ingresa un correo electrónico válido."
+  },
+  "contactPage": {
+    "title": "Contacto",
+    "description": "Comunícate con el equipo de Insureversia — consultas generales, envío de casos, solicitudes de programas, consultoría y más.",
+    "subtitle": "Nos encantaría saber de ti. Ya sea que tengas una pregunta, quieras compartir un caso, o estés interesado en nuestros programas y servicios — elige la opción que mejor se ajuste.",
+    "backToAbout": "Volver a Acerca de",
+    "howCanWeHelp": "¿Cómo Podemos Ayudarte?",
+    "cardContact": "Contacto General",
+    "cardContactDesc": "Preguntas, comentarios o simplemente saludar.",
+    "cardCase": "Enviar un Caso",
+    "cardCaseDesc": "Comparte un ejemplo real de IA en seguros para nuestra biblioteca de casos.",
+    "cardIdea": "Compartir una Idea",
+    "cardIdeaDesc": "Sugiere un tema, funcionalidad u oportunidad de colaboración.",
+    "cardProgram": "Programa de Aprendizaje",
+    "cardProgramDesc": "Consulta sobre nuestros programas de aprendizaje de IA personalizados para equipos de seguros.",
+    "cardConsulting": "Servicios de Consultoría",
+    "cardConsultingDesc": "Solicita consultoría de estrategia de IA para tu organización de seguros.",
+    "cardProducts": "Productos de IA",
+    "cardProductsDesc": "Conoce nuestras herramientas y productos de IA para la industria de seguros.",
+    "cardRequest": "Sugerir Contenido",
+    "cardRequestDesc": "Recomienda un tema para una Victoria Rápida, artículo, prompt o marco de trabajo.",
+    "ctaButton": "Abrir Formulario de Contacto"
   },
   "aiRoadmap": {
     "title": "Constructor de Hoja de Ruta de Adopción de IA",
