@@ -1,0 +1,217 @@
+---
+import BaseLayout from '../../../../../layouts/BaseLayout.astro';
+import Icon from '../../../../../components/Icon.astro';
+import { t, getLocalePath } from '../../../../../i18n';
+
+const locale = 'es';
+const p = (path: string) => getLocalePath(locale, path);
+
+const coreModules = [
+  { num: '1', key: 'core1', icon: 'lightbulb', toolPath: '' },
+  { num: '2', key: 'core2', icon: 'target', toolPath: '/practice/ai-readiness/' },
+  { num: '3', key: 'core3', icon: 'pen-tool', toolPath: '/practice/prompt-builder/' },
+  { num: '4', key: 'core4', icon: 'layers', toolPath: '' },
+  { num: '5', key: 'core5', icon: 'shield-alert', toolPath: '/practice/ethics-simulator/' },
+  { num: '6', key: 'core6', icon: 'rocket', toolPath: '/practice/ai-roadmap/' },
+];
+
+const optionalModules = [
+  { num: '7', key: 'opt7', icon: 'file-text', toolPath: '' },
+  { num: '8', key: 'opt8', icon: 'shield', toolPath: '/practice/ai-help-calculator/' },
+  { num: '9', key: 'opt9', icon: 'users', toolPath: '' },
+  { num: '10', key: 'opt10', icon: 'hard-hat', toolPath: '' },
+];
+
+const tracks = [
+  { key: 'track1', icon: 'building', color: 'var(--color-secondary)' },
+  { key: 'track2', icon: 'calculator', color: 'var(--color-accent)' },
+  { key: 'track3', icon: 'users-group', color: 'var(--color-success)' },
+];
+
+const taskTypes = [
+  { key: 'taskExploration', icon: 'search' },
+  { key: 'taskInterpretation', icon: 'bar-chart' },
+  { key: 'taskCriticalAnalysis', icon: 'alert-triangle' },
+  { key: 'taskApplication', icon: 'zap' },
+  { key: 'taskEvaluation', icon: 'clipboard-list' },
+  { key: 'taskMetacognition', icon: 'sparkles' },
+];
+---
+
+<BaseLayout
+  title={t(locale, 'curriculum.title')}
+  description={t(locale, 'curriculum.description')}
+  locale={locale}
+>
+  <!-- Hero -->
+  <section class="hero" style="background: linear-gradient(135deg, rgba(15,43,70,0.88) 0%, rgba(45,55,72,0.78) 100%), url('/assets/images/hero-images/hero-image-learn.png') top/cover no-repeat;">
+    <div class="container" style="position: relative; z-index: 1;">
+      <div class="slide-up" style="max-width: 800px;">
+        <p class="text-sm font-semibold mb-4" style="color: var(--color-secondary); text-transform: uppercase; letter-spacing: 0.1em;">{t(locale, 'curriculum.heroLabel')}</p>
+        <h1 style="font-size: var(--text-5xl); margin-bottom: var(--space-6);">{t(locale, 'curriculum.title')}</h1>
+        <p class="lead" style="margin-bottom: var(--space-6);">
+          {t(locale, 'curriculum.subtitle')}
+        </p>
+        <a href={p('/learn/program/')} class="btn btn--secondary" style="border-color: rgba(255,255,255,0.4); color: var(--text-inverse);">
+          &larr; {t(locale, 'curriculum.backToProgram')}
+        </a>
+      </div>
+    </div>
+    <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 120px; background: linear-gradient(to top, var(--surface-page), transparent);"></div>
+  </section>
+
+  <!-- Core Modules -->
+  <section class="section">
+    <div class="container">
+      <h2 class="text-center" style="margin-bottom: var(--space-3);">{t(locale, 'curriculum.coreTitle')}</h2>
+      <p class="text-center" style="color: var(--text-secondary); font-size: var(--text-lg); margin-bottom: var(--space-10); max-width: 700px; margin-left: auto; margin-right: auto;">
+        {t(locale, 'curriculum.coreSubtitle')}
+      </p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: var(--space-6); max-width: 1080px; margin: 0 auto;" class="reveal-stagger">
+        {coreModules.map((mod) => (
+          <div class="card" style="padding: var(--space-6); position: relative; overflow: hidden;">
+            <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-4);">
+              <div class="number-badge" style="flex-shrink: 0;">{mod.num}</div>
+              <Icon name={mod.icon} size={28} style="color: var(--color-secondary);" />
+              <h3 style="font-size: var(--text-lg); margin: 0;">{t(locale, `curriculum.${mod.key}Title`)}</h3>
+            </div>
+            <p style="color: var(--text-secondary); font-size: var(--text-sm); line-height: 1.7; margin-bottom: var(--space-4);">
+              {t(locale, `curriculum.${mod.key}Desc`)}
+            </p>
+            <div class="flex gap-2 flex--wrap" style="margin-bottom: var(--space-3);">
+              {t(locale, `curriculum.${mod.key}Topics`).split(', ').map((topic: string) => (
+                <span class="filter-chip" style="font-size: var(--text-xs);">{topic}</span>
+              ))}
+            </div>
+            {mod.toolPath && (
+              <a href={p(mod.toolPath)} style="display: inline-flex; align-items: center; gap: var(--space-2); font-size: var(--text-sm); font-weight: var(--font-semibold); color: var(--color-secondary); text-decoration: none; margin-top: auto;">
+                <Icon name="zap" size={14} />
+                {t(locale, `curriculum.${mod.key}Tool`)}
+              </a>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Optional Modules -->
+  <section class="section section--parchment">
+    <div class="container">
+      <h2 class="text-center" style="margin-bottom: var(--space-3);">{t(locale, 'curriculum.optionalTitle')}</h2>
+      <p class="text-center" style="color: var(--text-secondary); font-size: var(--text-lg); margin-bottom: var(--space-10); max-width: 700px; margin-left: auto; margin-right: auto;">
+        {t(locale, 'curriculum.optionalSubtitle')}
+      </p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: var(--space-6); max-width: 1080px; margin: 0 auto;" class="reveal-stagger">
+        {optionalModules.map((mod) => (
+          <div class="card" style="padding: var(--space-6); position: relative; overflow: hidden;">
+            <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-4);">
+              <div style="display: flex; align-items: center; gap: var(--space-2);">
+                <div class="number-badge" style="flex-shrink: 0;">{mod.num}</div>
+                <span style="display: inline-block; padding: 2px 8px; border-radius: var(--radius-sm); font-size: var(--text-xs); font-weight: var(--font-bold); text-transform: uppercase; letter-spacing: 0.05em; background: var(--color-accent); color: white;">{t(locale, 'curriculum.optionalLabel')}</span>
+              </div>
+              <Icon name={mod.icon} size={24} style="color: var(--color-accent);" />
+            </div>
+            <h3 style="font-size: var(--text-lg); margin-bottom: var(--space-3);">{t(locale, `curriculum.${mod.key}Title`)}</h3>
+            <p style="color: var(--text-secondary); font-size: var(--text-sm); line-height: 1.7; margin-bottom: var(--space-4);">
+              {t(locale, `curriculum.${mod.key}Desc`)}
+            </p>
+            <div class="flex gap-2 flex--wrap" style="margin-bottom: var(--space-3);">
+              {t(locale, `curriculum.${mod.key}Topics`).split(', ').map((topic: string) => (
+                <span class="filter-chip" style="font-size: var(--text-xs);">{topic}</span>
+              ))}
+            </div>
+            {mod.toolPath && (
+              <a href={p(mod.toolPath)} style="display: inline-flex; align-items: center; gap: var(--space-2); font-size: var(--text-sm); font-weight: var(--font-semibold); color: var(--color-accent); text-decoration: none;">
+                <Icon name="zap" size={14} />
+                {t(locale, `curriculum.${mod.key}Tool`)}
+              </a>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Specialized Tracks -->
+  <section class="section">
+    <div class="container">
+      <h2 class="text-center" style="margin-bottom: var(--space-3);">{t(locale, 'curriculum.tracksTitle')}</h2>
+      <p class="text-center" style="color: var(--text-secondary); font-size: var(--text-lg); margin-bottom: var(--space-10); max-width: 700px; margin-left: auto; margin-right: auto;">
+        {t(locale, 'curriculum.tracksSubtitle')}
+      </p>
+      <div class="grid grid--3 reveal-stagger" style="max-width: 1080px; margin: 0 auto;">
+        {tracks.map((track) => (
+          <div class="card" style="padding: var(--space-6); border-top: 4px solid; border-color: currentColor; text-align: center;" >
+            <div style="margin-bottom: var(--space-4);">
+              <Icon name={track.icon} size={36} style={`color: ${track.color};`} />
+            </div>
+            <h3 style="margin-bottom: var(--space-2);">{t(locale, `curriculum.${track.key}Name`)}</h3>
+            <p style="font-size: var(--text-sm); color: var(--text-muted); margin-bottom: var(--space-4);">
+              {t(locale, `curriculum.${track.key}For`)}
+            </p>
+            <p style="font-size: var(--text-sm); color: var(--text-secondary); margin-bottom: var(--space-4);">
+              {t(locale, `curriculum.${track.key}Modules`)}
+            </p>
+            <span class="filter-chip" style="font-weight: var(--font-semibold);">
+              {t(locale, `curriculum.${track.key}Duration`)}
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- How You'll Learn -->
+  <section class="section section--parchment">
+    <div class="container">
+      <h2 class="text-center" style="margin-bottom: var(--space-3);">{t(locale, 'curriculum.activitiesTitle')}</h2>
+      <p class="text-center" style="color: var(--text-secondary); font-size: var(--text-lg); margin-bottom: var(--space-10); max-width: 700px; margin-left: auto; margin-right: auto;">
+        {t(locale, 'curriculum.activitiesSubtitle')}
+      </p>
+      <div class="grid grid--3 reveal-stagger" style="max-width: 1080px; margin: 0 auto;">
+        {taskTypes.map((task) => (
+          <div class="card" style="padding: var(--space-5); text-align: center;">
+            <div style="margin-bottom: var(--space-3);">
+              <Icon name={task.icon} size={28} style="color: var(--color-secondary);" />
+            </div>
+            <h4 style="margin-bottom: var(--space-2);">{t(locale, `curriculum.${task.key}`)}</h4>
+            <p style="font-size: var(--text-sm); color: var(--text-secondary); margin: 0;">
+              {t(locale, `curriculum.${task.key}Desc`)}
+            </p>
+          </div>
+        ))}
+      </div>
+
+      <!-- Sample Activities -->
+      <div class="reveal" style="max-width: 700px; margin: var(--space-10) auto 0;">
+        <div class="card card--accent" style="padding: var(--space-6);">
+          <h4 style="margin-bottom: var(--space-4);">{t(locale, 'curriculum.sampleActivitiesTitle')}</h4>
+          <ul style="margin: 0; padding-left: var(--space-5); color: var(--text-secondary);">
+            <li style="margin-bottom: var(--space-2);">{t(locale, 'curriculum.sample1')}</li>
+            <li style="margin-bottom: var(--space-2);">{t(locale, 'curriculum.sample2')}</li>
+            <li style="margin-bottom: var(--space-2);">{t(locale, 'curriculum.sample3')}</li>
+            <li style="margin-bottom: var(--space-2);">{t(locale, 'curriculum.sample4')}</li>
+            <li>{t(locale, 'curriculum.sample5')}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section section--primary" style="background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark, #0a1d33) 100%); color: var(--text-inverse);">
+    <div class="container text-center">
+      <div class="reveal" style="max-width: 600px; margin: 0 auto;">
+        <h2 style="color: var(--text-inverse); margin-bottom: var(--space-4);">{t(locale, 'curriculum.ctaTitle')}</h2>
+        <p style="font-size: var(--text-lg); opacity: 0.9; margin-bottom: var(--space-8);">
+          {t(locale, 'curriculum.ctaDesc')}
+        </p>
+        <div class="flex gap-4 flex--wrap" style="justify-content: center;">
+          <button class="btn btn--primary contact-trigger" style="background: var(--color-secondary); color: var(--color-primary);">{t(locale, 'learningProgram.ctaRequest')}</button>
+          <a href={p('/practice/ai-readiness/')} class="btn btn--secondary" style="border-color: rgba(255,255,255,0.4); color: var(--text-inverse);">{t(locale, 'learningProgram.ctaAssessment')}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -78,6 +78,40 @@ const p = (path: string) => getLocalePath(locale, path);
     </div>
   </section>
 
+  <!-- Section 3.5: What You'll Learn (Curriculum Summary) -->
+  <section class="section">
+    <div class="container">
+      <h2 class="text-center" style="margin-bottom: var(--space-3);">{t(locale, 'curriculum.summaryTitle')}</h2>
+      <p class="text-center" style="color: var(--text-secondary); font-size: var(--text-lg); margin-bottom: var(--space-10); max-width: 700px; margin-left: auto; margin-right: auto;">
+        {t(locale, 'curriculum.summarySubtitle')}
+      </p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-5); max-width: 960px; margin: 0 auto;" class="reveal-stagger">
+        {[
+          { num: '1', title: t(locale, 'curriculum.core1Title'), desc: t(locale, 'curriculum.core1Desc').split('.')[0] + '.', icon: 'lightbulb' },
+          { num: '2', title: t(locale, 'curriculum.core2Title'), desc: t(locale, 'curriculum.core2Desc').split('.')[0] + '.', icon: 'target' },
+          { num: '3', title: t(locale, 'curriculum.core3Title'), desc: t(locale, 'curriculum.core3Desc').split('.')[0] + '.', icon: 'pen-tool' },
+          { num: '4', title: t(locale, 'curriculum.core4Title'), desc: t(locale, 'curriculum.core4Desc').split('.')[0] + '.', icon: 'layers' },
+          { num: '5', title: t(locale, 'curriculum.core5Title'), desc: t(locale, 'curriculum.core5Desc').split('.')[0] + '.', icon: 'shield-alert' },
+          { num: '6', title: t(locale, 'curriculum.core6Title'), desc: t(locale, 'curriculum.core6Desc').split('.')[0] + '.', icon: 'rocket' },
+        ].map((mod) => (
+          <div class="card" style="padding: var(--space-5);">
+            <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-3);">
+              <div class="number-badge" style="flex-shrink: 0; width: 28px; height: 28px; font-size: var(--text-xs);">{mod.num}</div>
+              <Icon name={mod.icon} size={20} style="color: var(--color-secondary);" />
+              <h4 style="font-size: var(--text-sm); font-weight: var(--font-semibold); margin: 0;">{mod.title}</h4>
+            </div>
+            <p style="font-size: var(--text-sm); color: var(--text-secondary); margin: 0; line-height: 1.6;">{mod.desc}</p>
+          </div>
+        ))}
+      </div>
+      <div class="text-center" style="margin-top: var(--space-8);">
+        <a href={p('/learn/program/curriculum/')} class="btn btn--secondary">
+          {t(locale, 'curriculum.summaryLink')} &rarr;
+        </a>
+      </div>
+    </div>
+  </section>
+
   <!-- Section 4: Program Formats (Accordion) -->
   <section class="section">
     <div class="container">

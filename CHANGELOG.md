@@ -2,6 +2,28 @@
 
 All notable changes to the Insureversia website will be documented in this file.
 
+## [0.6.10] - 2026-02-20
+
+### Added
+
+- **Program Curriculum page** — Full curriculum structure for the Learning Program
+  - 6 core modules with titles, descriptions, topic chips, and integrated tool links (AI Readiness, Prompt Builder, Ethics Simulator, AI Roadmap Builder)
+  - 4 optional deep-dive modules (Claims, Underwriting, Customer Experience, Data Strategy)
+  - 3 specialized tracks (Executive, Technical, Frontline) with audience, module list, and duration
+  - "How You'll Learn" section with 6 Smoother Methodology task types and sample activities
+  - CTA section with contact trigger and AI Readiness link
+  - EN page: `/learn/program/curriculum/` + ES mirror: `/es/learn/program/curriculum/`
+- **Curriculum summary on Learning Program page** — "What You'll Learn" section with 6 compact core module cards and link to full curriculum, inserted between Pillars and Formats sections (EN + ES)
+- **i18n**: `nav.curriculum` key + `curriculum.*` block (~65 keys) in both `en.json` and `es.json`
+- **Site Guide**: Added "Program Curriculum" to Learn tour section and sitemap modal (EN + ES)
+
+### Changed
+
+- **CLAUDE.md**: Updated build expectation for page count
+- **README.md**: Updated Learn section (6 → 7 pages) to include Curriculum
+
+---
+
 ## [0.6.9] - 2026-02-20
 
 ### Added

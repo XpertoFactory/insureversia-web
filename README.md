@@ -13,12 +13,12 @@ Insureversia helps insurance professionals — underwriters, claims adjusters, b
 | Section | Pages | Description |
 |---------|-------|-------------|
 | **Explore** | 3 | New Frontiers, AI Impact Map, Challenges & Risks |
-| **Learn** | 6 | AI 101, What to Do, What Not to Do, Prompt Engineering, Learning Program, Case Studies |
+| **Learn** | 7 | AI 101, What to Do, What Not to Do, Prompt Engineering, Learning Program, Curriculum, Case Studies |
 | **Practice** | 9 | Quick Wins, Applications, Prompt Library, Prompt Builder, AI Readiness, AI Help Calculator, AI Roadmap, Ethics Simulator, Local AI |
 | **Resources** | 6 | FAQ, Glossary, Success Stories, Tool Directory, Jurisdiction Guide, Newsletter |
 | **About** | 4 | Hub, What is Insureversia, Site Guide, Our Team (+ 3 Personas) |
 
-**60 pages** total (30 EN + 30 ES). Fully bilingual: English and Spanish.
+**60 pages** total. Fully bilingual: English and Spanish.
 
 ### Ask Insureversia (AI Chat Assistant)
 
