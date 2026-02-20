@@ -4,6 +4,10 @@ All notable changes to the Insureversia website will be documented in this file.
 
 ## [0.6.7] - 2026-02-20
 
+### Changed
+
+- **AI plan document**: Comprehensive rewrite of `resources/interactive-ai-plan.md` — updated all references from Lawra to Insureversia, marked Phase 2 as complete, documented key implementation decisions and lessons learned, updated Firestore data model and security rules to match deployed state
+
 ### Added
 
 - **Newsletter subscription**: Footer "Subscribe" button now saves to Firestore `newsletters` collection
