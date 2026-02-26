@@ -1,7 +1,7 @@
 ---
 import DifficultyBadge from './DifficultyBadge.astro';
 import InsuranceSectorTag from './InsuranceSectorTag.astro';
-import LikeButton from './LikeButton.svelte';
+import ContentEngagement from './ContentEngagement.astro';
 import type { Locale } from '../i18n';
 
 interface Props {
@@ -44,12 +44,12 @@ const cautionsLabel = locale === 'es' ? 'Precauciones' : 'Cautions';
     <div style="display: flex; align-items: center; gap: var(--space-3);">
       <span class="text-xs text-muted">{aiTool}</span>
       {contentId && (
-        <LikeButton
-          client:visible
+        <ContentEngagement
           contentType="quick-win"
           contentId={contentId}
-          likeLabel={locale === 'es' ? 'Me gusta' : 'Like'}
-          likedLabel={locale === 'es' ? 'Te gustó' : 'Liked'}
+          shareTitle={title}
+          shareDescription={description}
+          locale={locale}
         />
       )}
     </div>

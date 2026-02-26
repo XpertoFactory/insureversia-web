@@ -105,6 +105,12 @@ const p = (path: string) => getLocalePath(locale, path);
       </div>
     </nav>
 
+    <!-- Admin Link (hidden by default, shown via client script for admins) -->
+    <a id="admin-nav-link" href="/admin/comments/" class="nav__link admin-nav-link" style="display:none;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      Admin
+    </a>
+
     <!-- Right Actions -->
     <div class="flex gap-2" style="align-items: center;">
       <!-- Search Button -->
@@ -123,6 +129,20 @@ const p = (path: string) => getLocalePath(locale, path);
       <button class="btn btn--icon share-trigger" aria-label={t(locale, 'share.trigger')} style="background:none;border:none;color:var(--color-primary);cursor:pointer;">
         <Icon name="share-2" size={20} />
       </button>
+
+      <!-- User Account Menu (hidden by default, shown via client script for registered users) -->
+      <div class="user-menu" id="user-menu-wrap" style="display:none;">
+        <button class="user-menu__btn" id="user-menu-btn" aria-label={t(locale, 'nav.account')} aria-expanded="false">
+          <svg class="user-menu__icon" id="user-menu-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" />
+          </svg>
+          <img class="user-menu__avatar" id="user-menu-avatar" alt="" style="display:none;" />
+        </button>
+        <div class="user-menu__dropdown" id="user-menu-dropdown">
+          <span class="user-menu__name" id="user-menu-name"></span>
+          <button class="user-menu__signout" id="user-menu-signout">{t(locale, 'nav.signOut')}</button>
+        </div>
+      </div>
 
       <LanguageSelector locale={locale} />
 
@@ -198,6 +218,23 @@ const p = (path: string) => getLocalePath(locale, path);
     <a href={p('/about/contact/')} class="mobile-nav__link">{t(locale, 'nav.contactUs')}</a>
   </div>
 
+  <!-- Admin Link (hidden by default, shown via client script for admins) -->
+  <a id="admin-mobile-link" href="/admin/comments/" class="mobile-nav__link admin-nav-link" style="display:none;">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+    Admin
+  </a>
+
+  <!-- User Account (hidden by default, shown via client script for registered users) -->
+  <div id="user-mobile-section" class="user-mobile" style="display:none;">
+    <div class="user-mobile__info">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;flex-shrink:0;">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" />
+      </svg>
+      <span id="user-mobile-name"></span>
+    </div>
+    <button id="user-mobile-signout" class="user-mobile__signout">{t(locale, 'nav.signOut')}</button>
+  </div>
+
   <div class="mobile-nav__link">{t(locale, 'nav.sisterSites')}</div>
   <div class="mobile-nav__sub">
     <a href="https://lawra.org" target="_blank" rel="noopener" class="mobile-nav__link">Lawra</a>
@@ -205,6 +242,132 @@ const p = (path: string) => getLocalePath(locale, path);
     <a href="https://ibizai.io" target="_blank" rel="noopener" class="mobile-nav__link">Ibizai</a>
   </div>
 </nav>
+
+<style>
+  .admin-nav-link {
+    color: var(--color-secondary, #C9A84C) !important;
+    font-weight: 600;
+    font-size: var(--text-sm, 0.875rem);
+    text-decoration: none;
+    gap: 0.3rem;
+    align-items: center;
+  }
+  .nav--desktop + .admin-nav-link { display: none; }
+  .admin-nav-link[style*="display: flex"],
+  .admin-nav-link[style*="display:flex"] { display: flex !important; }
+
+  /* User Account Menu — Desktop */
+  .user-menu {
+    position: relative;
+  }
+  .user-menu__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-full);
+    background: transparent;
+    cursor: pointer;
+    color: var(--color-primary);
+    transition: all 150ms ease;
+    overflow: hidden;
+  }
+  .user-menu__btn:hover {
+    border-color: var(--color-secondary);
+  }
+  .user-menu__avatar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: var(--radius-full);
+  }
+  .user-menu__dropdown {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    margin-top: 4px;
+    background: var(--surface-card);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    z-index: var(--z-dropdown);
+    min-width: 160px;
+    overflow: hidden;
+    padding: var(--space-2) 0;
+  }
+  .user-menu__dropdown.is-open {
+    display: block;
+  }
+  .user-menu__name {
+    display: block;
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+    border-bottom: 1px solid var(--border-light);
+    margin-bottom: var(--space-1);
+  }
+  .user-menu__signout {
+    display: block;
+    width: 100%;
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--text-sm);
+    font-family: var(--font-body);
+    font-weight: var(--font-semibold);
+    color: var(--text-primary);
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    transition: background 150ms ease;
+  }
+  .user-menu__signout:hover {
+    background: var(--surface-parchment);
+  }
+
+  /* User Account — Mobile */
+  .user-mobile {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-3) var(--space-4);
+    border-top: 1px solid var(--border-light);
+    margin-top: var(--space-2);
+  }
+  .user-mobile__info {
+    display: flex;
+    align-items: center;
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    min-width: 0;
+  }
+  .user-mobile__info span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .user-mobile__signout {
+    font-size: var(--text-sm);
+    font-family: var(--font-body);
+    font-weight: var(--font-semibold);
+    color: var(--color-secondary);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: var(--space-1) var(--space-2);
+    flex-shrink: 0;
+  }
+  .user-mobile__signout:hover {
+    text-decoration: underline;
+  }
+</style>
 
 <script>
   const mobileBtn = document.getElementById('mobile-menu-btn');
@@ -218,4 +381,90 @@ const p = (path: string) => getLocalePath(locale, path);
     document.getElementById('search-overlay')?.classList.add('is-open');
     (document.getElementById('search-input') as HTMLInputElement)?.focus();
   });
+
+  // User menu dropdown toggle
+  const userMenuBtn = document.getElementById('user-menu-btn');
+  const userMenuDropdown = document.getElementById('user-menu-dropdown');
+
+  userMenuBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isOpen = userMenuDropdown?.classList.contains('is-open');
+    userMenuDropdown?.classList.toggle('is-open');
+    userMenuBtn.setAttribute('aria-expanded', String(!isOpen));
+  });
+
+  document.addEventListener('click', () => {
+    userMenuDropdown?.classList.remove('is-open');
+    userMenuBtn?.setAttribute('aria-expanded', 'false');
+  });
+
+  // Auth state: admin link + user menu visibility
+  (async () => {
+    try {
+      const { onAuthChange, signOut } = await import('../lib/auth');
+
+      // User menu elements
+      const userMenuWrap = document.getElementById('user-menu-wrap');
+      const userMenuIcon = document.getElementById('user-menu-icon');
+      const userMenuAvatar = document.getElementById('user-menu-avatar') as HTMLImageElement | null;
+      const userMenuName = document.getElementById('user-menu-name');
+      const userMenuSignout = document.getElementById('user-menu-signout');
+      const userMobileSection = document.getElementById('user-mobile-section');
+      const userMobileName = document.getElementById('user-mobile-name');
+      const userMobileSignout = document.getElementById('user-mobile-signout');
+
+      // Sign out handlers
+      const handleSignOut = async () => {
+        await signOut();
+        userMenuDropdown?.classList.remove('is-open');
+      };
+      userMenuSignout?.addEventListener('click', handleSignOut);
+      userMobileSignout?.addEventListener('click', handleSignOut);
+
+      onAuthChange(async (user) => {
+        const desktopLink = document.getElementById('admin-nav-link');
+        const mobileLink = document.getElementById('admin-mobile-link');
+        const isRegistered = user && user.tier === 'registered';
+
+        // User menu visibility
+        if (userMenuWrap) userMenuWrap.style.display = isRegistered ? 'block' : 'none';
+        if (userMobileSection) userMobileSection.style.display = isRegistered ? 'flex' : 'none';
+
+        if (isRegistered) {
+          const displayLabel = user.displayName || user.email || 'User';
+          if (userMenuName) userMenuName.textContent = displayLabel;
+          if (userMobileName) userMobileName.textContent = displayLabel;
+
+          // Avatar: use photoURL if available, otherwise show icon
+          if (user.photoURL && userMenuAvatar && userMenuIcon) {
+            userMenuAvatar.src = user.photoURL;
+            userMenuAvatar.style.display = 'block';
+            userMenuIcon.style.display = 'none';
+          } else if (userMenuAvatar && userMenuIcon) {
+            userMenuAvatar.style.display = 'none';
+            userMenuIcon.style.display = 'block';
+          }
+        } else {
+          // Reset avatar state
+          if (userMenuAvatar) userMenuAvatar.style.display = 'none';
+          if (userMenuIcon) (userMenuIcon as HTMLElement).style.display = 'block';
+        }
+
+        // Admin link visibility
+        if (!user || user.tier === 'anonymous') {
+          if (desktopLink) desktopLink.style.display = 'none';
+          if (mobileLink) mobileLink.style.display = 'none';
+          return;
+        }
+
+        const { checkIsAdmin } = await import('../lib/admin');
+        const isAdmin = await checkIsAdmin(user.uid);
+
+        if (desktopLink) desktopLink.style.display = isAdmin ? 'flex' : 'none';
+        if (mobileLink) mobileLink.style.display = isAdmin ? 'flex' : 'none';
+      });
+    } catch {
+      // Auth not available — links stay hidden
+    }
+  })();
 </script>

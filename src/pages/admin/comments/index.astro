@@ -1,0 +1,77 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import AdminComments from '../../../components/AdminComments.svelte';
+import { t } from '../../../i18n';
+const locale = 'en';
+
+const labels = {
+  loading: t(locale, 'admin.comments.loading'),
+  accessDenied: t(locale, 'admin.comments.accessDenied'),
+  accessDeniedMessage: t(locale, 'admin.comments.accessDeniedMessage'),
+  signInRequired: t(locale, 'admin.comments.signInRequired'),
+  tabPending: t(locale, 'admin.comments.tabPending'),
+  tabApproved: t(locale, 'admin.comments.tabApproved'),
+  tabRejected: t(locale, 'admin.comments.tabRejected'),
+  approve: t(locale, 'admin.comments.approve'),
+  reject: t(locale, 'admin.comments.reject'),
+  delete: t(locale, 'admin.comments.delete'),
+  confirmDelete: t(locale, 'admin.comments.confirmDelete'),
+  noComments: t(locale, 'admin.comments.noComments'),
+  by: t(locale, 'admin.comments.by'),
+  on: t(locale, 'admin.comments.on'),
+  locale: t(locale, 'admin.comments.locale'),
+  content: t(locale, 'admin.comments.content'),
+};
+---
+
+<BaseLayout
+  title={t(locale, 'admin.comments.pageTitle')}
+  description={t(locale, 'admin.comments.pageDescription')}
+  locale={locale}
+  noindex={true}
+>
+  <section class="section">
+    <div class="container">
+      <div class="admin-hero">
+        <div class="admin-hero__icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <h1>{t(locale, 'admin.comments.pageTitle')}</h1>
+        <p class="lead">{t(locale, 'admin.comments.pageDescription')}</p>
+      </div>
+      <AdminComments client:load {labels} />
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .admin-hero {
+    text-align: center;
+    padding: var(--space-8) 0 var(--space-6);
+  }
+
+  .admin-hero__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    background: rgba(201, 168, 76, 0.12);
+    color: var(--color-secondary, #C9A84C);
+    border-radius: var(--radius-full, 9999px);
+    margin-bottom: var(--space-4);
+  }
+
+  .admin-hero h1 {
+    font-size: var(--text-3xl, 1.875rem);
+    margin-bottom: var(--space-2);
+  }
+
+  .admin-hero .lead {
+    color: var(--text-secondary, #555);
+    font-size: var(--text-lg, 1.125rem);
+    margin-bottom: 0;
+  }
+</style>

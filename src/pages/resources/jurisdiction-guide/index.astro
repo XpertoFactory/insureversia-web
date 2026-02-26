@@ -1,8 +1,10 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import ContentEngagement from '../../../components/ContentEngagement.astro';
 import { t, getLocalePath } from '../../../i18n';
 const locale = 'en';
 const p = (path: string) => getLocalePath(locale, path);
+function slug(s: string) { return s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''); }
 
 const regions = [
   { key: 'all', label: t(locale, 'jurisdictionGuide.regionAll') },
@@ -552,6 +554,14 @@ function getStatusBadgeStyle(status: string): string {
                 ) : (
                   <p class="text-sm text-muted" style="font-style: italic;">None yet</p>
                 )}
+              </div>
+              <div style="margin-top: var(--space-4); padding-top: var(--space-4); border-top: 1px solid var(--border-light);">
+                <ContentEngagement
+                  contentType="jurisdiction"
+                  contentId={`jurisdiction-${slug(j.name)}`}
+                  shareTitle={j.name}
+                  locale={locale}
+                />
               </div>
             </div>
           </article>

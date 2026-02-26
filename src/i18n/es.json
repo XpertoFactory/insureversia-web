@@ -45,7 +45,9 @@
     "caseStudies": "Casos de Estudio",
     "newsletter": "Boletín",
     "curriculum": "Currículo del Programa",
-    "contactUs": "Contacto"
+    "contactUs": "Contacto",
+    "account": "Cuenta",
+    "signOut": "Cerrar Sesión"
   },
   "hero": {
     "headline": "La IA Está Transformando los Seguros. ¿Estás Listo?",
@@ -1062,5 +1064,51 @@
     "summaryLink": "Ver Todos los Módulos y Tracks",
     "ctaTitle": "Solicita Tu Programa Personalizado",
     "ctaDesc": "Cuéntanos sobre tu rol, equipo y objetivos — diseñaremos un currículo adaptado a tus necesidades."
+  },
+  "engagement": {
+    "share": "Compartir",
+    "shareThis": "Compartir esto",
+    "likeThisPage": "Me gusta esta página",
+    "shareThisPage": "Compartir esta página"
+  },
+  "comments": {
+    "title": "Comentarios",
+    "placeholder": "Comparte tus ideas...",
+    "submit": "Publicar Comentario",
+    "submitting": "Publicando...",
+    "loginRequired": "Inicia sesión para unirte a la conversación",
+    "loginButton": "Iniciar Sesión para Comentar",
+    "pendingMessage": "En revisión",
+    "noComments": "Aún no hay comentarios. ¡Sé el primero en compartir tu opinión!",
+    "commentSubmitted": "Tu comentario ha sido enviado y está en revisión.",
+    "displayNameLabel": "Nombre a mostrar",
+    "characterCount": "caracteres restantes",
+    "commentsCount": "comentario",
+    "commentsCountPlural": "comentarios",
+    "loadingComments": "Cargando comentarios...",
+    "moderationNote": "Los comentarios son moderados para mantener una comunidad respetuosa."
+  },
+  "admin": {
+    "comments": {
+      "pageTitle": "Moderación de Comentarios",
+      "pageDescription": "Revisar, aprobar, rechazar y eliminar comentarios de usuarios.",
+      "loading": "Cargando...",
+      "accessDenied": "Acceso Denegado",
+      "accessDeniedMessage": "No tienes permiso para acceder a esta página.",
+      "signInRequired": "Inicia sesión para acceder a las funciones de administración.",
+      "tabPending": "Pendientes",
+      "tabApproved": "Aprobados",
+      "tabRejected": "Rechazados",
+      "approve": "Aprobar",
+      "reject": "Rechazar",
+      "delete": "Eliminar",
+      "confirmDelete": "¿Estás seguro de que deseas eliminar permanentemente este comentario?",
+      "noComments": "No hay comentarios en esta categoría.",
+      "by": "por",
+      "on": "el",
+      "locale": "Idioma",
+      "content": "Contenido",
+      "navLink": "Admin"
+    }
   }
 }

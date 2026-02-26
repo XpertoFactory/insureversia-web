@@ -1,8 +1,11 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import ContentEngagement from '../../../components/ContentEngagement.astro';
+import CommentSection from '../../../components/CommentSection.svelte';
 import { t, getLocalePath } from '../../../i18n';
 const locale = 'en';
 const p = (path: string) => getLocalePath(locale, path);
+function slug(s: string) { return s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''); }
 
 const ethicalChallenges = [
   {
@@ -112,7 +115,13 @@ const severityColors: Record<string, string> = {
               <h3 class="callout__title" style="margin-bottom: 0; font-size: var(--text-lg);">{challenge.title}</h3>
               <span class={`badge ${severityColors[challenge.severity]}`}>{challenge.severity}</span>
             </div>
-            <p style="color: var(--text-secondary); line-height: var(--leading-relaxed); margin-bottom: 0;">{challenge.description}</p>
+            <p style="color: var(--text-secondary); line-height: var(--leading-relaxed); margin-bottom: var(--space-4);">{challenge.description}</p>
+            <ContentEngagement
+              contentType="challenge"
+              contentId={`challenge-${slug(challenge.title)}`}
+              shareTitle={challenge.title}
+              locale={locale}
+            />
           </div>
         ))}
       </div>
@@ -134,7 +143,13 @@ const severityColors: Record<string, string> = {
               <h3 class="callout__title" style="margin-bottom: 0; font-size: var(--text-lg);">{challenge.title}</h3>
               <span class={`badge ${severityColors[challenge.severity]}`}>{challenge.severity}</span>
             </div>
-            <p style="color: var(--text-secondary); line-height: var(--leading-relaxed); margin-bottom: 0;">{challenge.description}</p>
+            <p style="color: var(--text-secondary); line-height: var(--leading-relaxed); margin-bottom: var(--space-4);">{challenge.description}</p>
+            <ContentEngagement
+              contentType="challenge"
+              contentId={`challenge-${slug(challenge.title)}`}
+              shareTitle={challenge.title}
+              locale={locale}
+            />
           </div>
         ))}
       </div>
@@ -177,5 +192,29 @@ const severityColors: Record<string, string> = {
         </div>
       </div>
     </div>
+  </section>
+
+  <section class="section" style="max-width: var(--max-width, 1200px); margin: 0 auto; padding: 0 var(--space-6);">
+    <CommentSection
+      client:visible
+      contentType="challenges"
+      contentId="challenges-page"
+      locale={locale}
+      labels={{
+        title: t(locale, 'comments.title'),
+        placeholder: t(locale, 'comments.placeholder'),
+        submit: t(locale, 'comments.submit'),
+        submitting: t(locale, 'comments.submitting'),
+        loginRequired: t(locale, 'comments.loginRequired'),
+        loginButton: t(locale, 'comments.loginButton'),
+        pendingMessage: t(locale, 'comments.pendingMessage'),
+        noComments: t(locale, 'comments.noComments'),
+        commentSubmitted: t(locale, 'comments.commentSubmitted'),
+        displayNameLabel: t(locale, 'comments.displayNameLabel'),
+        characterCount: t(locale, 'comments.characterCount'),
+        loadingComments: t(locale, 'comments.loadingComments'),
+        moderationNote: t(locale, 'comments.moderationNote'),
+      }}
+    />
   </section>
 </BaseLayout>

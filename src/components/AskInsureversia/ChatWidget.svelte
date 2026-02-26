@@ -201,11 +201,13 @@
     authError = '';
     try {
       const authMod = await import('../../lib/auth');
+      let profile;
       if (userProfile && tier === 'anonymous') {
-        await authMod.upgradeAnonymous('google');
+        profile = await authMod.upgradeAnonymous('google');
       } else {
-        await authMod.signInWithGoogle();
+        profile = await authMod.signInWithGoogle();
       }
+      userProfile = profile;
       showAuth = false;
       await updateUsage();
     } catch (err) {
@@ -222,15 +224,17 @@
     authError = '';
     try {
       const authMod = await import('../../lib/auth');
+      let profile;
       if (authMode === 'signup') {
         if (userProfile && tier === 'anonymous') {
-          await authMod.upgradeAnonymous('email', authEmail, authPassword, authName);
+          profile = await authMod.upgradeAnonymous('email', authEmail, authPassword, authName);
         } else {
-          await authMod.signUpWithEmail(authEmail, authPassword, authName);
+          profile = await authMod.signUpWithEmail(authEmail, authPassword, authName);
         }
       } else {
-        await authMod.signInWithEmail(authEmail, authPassword);
+        profile = await authMod.signInWithEmail(authEmail, authPassword);
       }
+      userProfile = profile;
       showAuth = false;
       authEmail = '';
       authPassword = '';

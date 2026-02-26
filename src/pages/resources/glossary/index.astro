@@ -1,8 +1,10 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import ContentEngagement from '../../../components/ContentEngagement.astro';
 import { t, getLocalePath } from '../../../i18n';
 const locale = 'en';
 const p = (path: string) => getLocalePath(locale, path);
+function slug(s: string) { return s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''); }
 
 const terms = [
   {
@@ -234,9 +236,15 @@ for (const letter of letters) {
                 <h3 style="font-size: var(--text-xl); color: var(--color-primary); margin-bottom: var(--space-3); font-family: var(--font-heading);">
                   {item.term}
                 </h3>
-                <p style="color: var(--text-secondary); line-height: var(--leading-relaxed); margin-bottom: 0;">
+                <p style="color: var(--text-secondary); line-height: var(--leading-relaxed); margin-bottom: var(--space-4);">
                   {item.definition}
                 </p>
+                <ContentEngagement
+                  contentType="glossary"
+                  contentId={`glossary-${slug(item.term)}`}
+                  shareTitle={item.term}
+                  locale={locale}
+                />
               </div>
             ))}
           </div>

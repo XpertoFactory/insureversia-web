@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
 import Icon from '../../../../components/Icon.astro';
-import LikeButton from '../../../../components/LikeButton.svelte';
+import ContentEngagement from '../../../../components/ContentEngagement.astro';
 import { t, getLocalePath } from '../../../../i18n';
 const locale = 'es';
 const p = (path: string) => getLocalePath(locale, path);
@@ -371,12 +371,11 @@ const categories = [
                       {p.prompt}
                     </div>
                     <div style="margin-top: var(--space-3); display: flex; justify-content: flex-end; align-items: center; gap: var(--space-3);">
-                      <LikeButton
-                        client:visible
+                      <ContentEngagement
                         contentType="prompt"
                         contentId={`prompt-${slug(cat.name)}-${slug(p.title)}`}
-                        likeLabel="Like"
-                        likedLabel="Liked"
+                        shareTitle={p.title}
+                        locale={locale}
                       />
                       <button class="btn btn--sm btn--ghost copy-btn" data-prompt={p.prompt} aria-label="Copy prompt to clipboard">
                         <Icon name="copy" size={16} />

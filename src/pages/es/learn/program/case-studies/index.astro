@@ -1,5 +1,7 @@
 ---
 import BaseLayout from '../../../../../layouts/BaseLayout.astro';
+import ContentEngagement from '../../../../../components/ContentEngagement.astro';
+import CommentSection from '../../../../../components/CommentSection.svelte';
 import { t, getLocalePath } from '../../../../../i18n';
 
 const locale = 'es';
@@ -92,6 +94,14 @@ const cases = [
                 Coming Soon
               </span>
             </div>
+            <div style="margin-top: var(--space-4); padding-top: var(--space-4); border-top: 1px solid var(--border-light);">
+              <ContentEngagement
+                contentType="case-study"
+                contentId={`case-study-${c.slug}`}
+                shareTitle={c.title}
+                locale={locale}
+              />
+            </div>
           </article>
         ))}
       </div>
@@ -112,5 +122,29 @@ const cases = [
         </div>
       </div>
     </div>
+  </section>
+
+  <section class="section" style="max-width: var(--max-width, 1200px); margin: 0 auto; padding: 0 var(--space-6);">
+    <CommentSection
+      client:visible
+      contentType="case-studies"
+      contentId="case-studies-page"
+      locale={locale}
+      labels={{
+        title: t(locale, 'comments.title'),
+        placeholder: t(locale, 'comments.placeholder'),
+        submit: t(locale, 'comments.submit'),
+        submitting: t(locale, 'comments.submitting'),
+        loginRequired: t(locale, 'comments.loginRequired'),
+        loginButton: t(locale, 'comments.loginButton'),
+        pendingMessage: t(locale, 'comments.pendingMessage'),
+        noComments: t(locale, 'comments.noComments'),
+        commentSubmitted: t(locale, 'comments.commentSubmitted'),
+        displayNameLabel: t(locale, 'comments.displayNameLabel'),
+        characterCount: t(locale, 'comments.characterCount'),
+        loadingComments: t(locale, 'comments.loadingComments'),
+        moderationNote: t(locale, 'comments.moderationNote'),
+      }}
+    />
   </section>
 </BaseLayout>

@@ -17,8 +17,9 @@ Insureversia helps insurance professionals — underwriters, claims adjusters, b
 | **Practice** | 9 | Quick Wins, Applications, Prompt Library, Prompt Builder, AI Readiness, AI Help Calculator, AI Roadmap, Ethics Simulator, Local AI |
 | **Resources** | 6 | FAQ, Glossary, Success Stories, Tool Directory, Jurisdiction Guide, Newsletter |
 | **About** | 5 | Hub, What is Insureversia, Site Guide, Our Team (+ 3 Personas), Contact Us |
+| **Admin** | 1 | Comment Moderation (admin-only, noindex) |
 
-**62 pages** total. Fully bilingual: English and Spanish.
+**63 pages** total (31 EN + 31 ES + 1 Admin). Fully bilingual: English and Spanish.
 
 ### Ask Insureversia (AI Chat Assistant)
 
@@ -29,7 +30,15 @@ An embedded AI chat widget powered by Gemini via Firebase AI SDK. Available on e
 - **Firebase Auth**: Google sign-in, Email/Password, anonymous upgrade
 - **Tier-based limits**: anonymous 5 msgs/day (localStorage), registered 25 msgs/day (Firestore)
 - **Conversation history** for registered users (Firestore)
+- **User account menu** in navigation header for signed-in users (avatar, sign out)
 - Dark mode, mobile full-screen, bilingual (EN + ES)
+
+### Engagement & Moderation
+
+- **Likes** on all content items (Quick Wins, Success Stories, Prompt Library, etc.) and every page
+- **Share buttons** on content items and pages via share modal
+- **Moderated comments** on selected pages (What to Do, What Not to Do, FAQ, Challenges, Success Stories, Case Studies)
+- **Admin panel** at `/admin/comments/` for reviewing, approving, and rejecting comments
 
 ## Tech Stack
 
@@ -57,8 +66,8 @@ src/
   content/        # Markdown collections — quick-wins, what-to-do, what-not-to-do, faq (EN + ES)
   i18n/           # Translation files (en.json, es.json) + routing
   layouts/        # BaseLayout.astro
-  lib/            # Shared utilities (firebase, auth, tiers, conversations, chat, chat-persona, chat-suggestions, newsletter, submissions)
-  pages/          # File-based routing (31 EN pages)
+  lib/            # Shared utilities (firebase, auth, tiers, conversations, chat, chat-persona, chat-suggestions, newsletter, submissions, comments, admin, likes)
+  pages/          # File-based routing (31 EN pages + 1 admin)
     es/           # Spanish mirror pages (31 ES pages)
   styles/         # Design system (10 CSS files)
 public/

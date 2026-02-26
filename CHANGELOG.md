@@ -2,6 +2,64 @@
 
 All notable changes to the Insureversia website will be documented in this file.
 
+## [0.7.2] - 2026-02-25
+
+### Added
+
+- **User Account Menu** — Circular user icon button in the header navigation (Right Actions area) for signed-in users, with dropdown showing display name and Sign Out button
+- **Mobile user section** — User info + Sign Out row at the bottom of the mobile navigation panel for signed-in users
+- **Avatar support** — Uses Google `photoURL` when available, falls back to person SVG icon
+- **i18n keys** — `nav.account` and `nav.signOut` in both `en.json` and `es.json`
+
+## [0.7.1] - 2026-02-25
+
+### Added
+
+- **Admin Comment Moderation** — In-site interface at `/admin/comments/` for reviewing, approving, rejecting, and deleting user comments
+- **admin.ts** — Admin service with `checkIsAdmin()`, `getAllComments()`, `updateCommentStatus()`, `deleteComment()`
+- **AdminComments.svelte** — Interactive moderation UI with tabs (Pending/Approved/Rejected), count badges, action buttons, and optimistic local updates
+- **Admin page** (`/admin/comments/`) — Wraps AdminComments with BaseLayout, `noindex=true`, EN only
+- **Admin nav link** — Hidden shield icon + "Admin" link in desktop and mobile nav, shown dynamically for admin users only
+- **Firestore `isAdmin()` helper** — Checks `role: 'admin'` on user's Firestore document for admin permission rules
+- **Firestore rules** — Admin read/update/delete permissions on comments collection
+- **Firestore index** — `status` + `createdAt` composite index for admin global comment queries
+- **i18n keys** — `admin.comments.*` (18 keys) in both `en.json` and `es.json`
+
+### Fixed
+
+- **ChatWidget.svelte** — Persona buttons (Vera, Bruno, Zaira) now unlock immediately after sign-in instead of requiring a page refresh; sign-in handlers now directly update `userProfile` from the returned profile rather than relying solely on the async `onAuthStateChanged` callback
+
+### Changed
+
+- **UserProfile** in `auth.ts` — Added optional `role?: string` field
+- **firestore.rules** — Replaced `allow update, delete: if false` on comments with admin-gated permissions
+
+---
+
+## [0.7.0] - 2026-02-25
+
+### Added
+
+- **ContentEngagement.astro** — Reusable like + share bar component combining LikeButton + share trigger button for content items
+- **PageEngagement.astro** — Page-level like + share bar (inline before footer in BaseLayout)
+- **CommentSection.svelte** — Moderated comment system with auth-gated submission, pending/approved display, and character counter
+- **comments.ts** — Firestore CRUD service for comments collection (getComments, getMyPendingComments, submitComment, getCommentCount)
+- **Like + Share buttons** on all content items: Quick Wins, Success Stories, Prompt Library, What to Do, What Not to Do, FAQ, Challenges, Glossary, Tool Directory, Jurisdiction Guide, Applications, Case Studies
+- **Page-level engagement** — Like + share bar appears on every page via BaseLayout
+- **Comment sections** on selected pages: What to Do, What Not to Do, FAQ, Challenges, Success Stories, Case Studies (EN + ES)
+- **Firestore rules** for comments collection: approved comments publicly readable, authors see own pending, authenticated create with `status='pending'`
+- **Firestore composite indexes** for comments (approved by content + user's pending by content)
+- **i18n keys** — `engagement.*` (4 keys) and `comments.*` (15 keys) in both `en.json` and `es.json`
+
+### Changed
+
+- **ShareModal.astro** — Switched from `querySelectorAll` binding to event delegation on `document` for dynamically rendered share triggers
+- **QuickWinCard.astro** — Replaced standalone LikeButton with ContentEngagement
+- **Success Stories** (EN + ES) — Replaced standalone LikeButton with ContentEngagement
+- **Prompt Library** (EN + ES) — Replaced standalone LikeButton with ContentEngagement
+
+---
+
 ## [0.6.11] - 2026-02-20
 
 ### Added

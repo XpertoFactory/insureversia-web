@@ -1,9 +1,11 @@
 ---
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
 import Icon from '../../../../components/Icon.astro';
+import ContentEngagement from '../../../../components/ContentEngagement.astro';
 import { t, getLocalePath } from '../../../../i18n';
 const locale = 'es';
 const p = (path: string) => getLocalePath(locale, path);
+function slug(s: string) { return s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''); }
 
 const categories = [
   {
@@ -145,6 +147,14 @@ const categories = [
                   <li class="text-sm" style="color: var(--text-secondary); margin-bottom: var(--space-1);">{ex}</li>
                 ))}
               </ul>
+            </div>
+            <div style="margin-top: var(--space-4); padding-top: var(--space-4); border-top: 1px solid var(--border-light);">
+              <ContentEngagement
+                contentType="application"
+                contentId={`application-${slug(cat.title)}`}
+                shareTitle={cat.title}
+                locale={locale}
+              />
             </div>
           </div>
         ))}

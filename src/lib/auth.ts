@@ -12,6 +12,7 @@ export interface UserProfile {
   displayName: string | null;
   tier: UserTier;
   photoURL: string | null;
+  role?: string;
 }
 
 // Module-level cache for sync access

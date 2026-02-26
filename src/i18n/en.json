@@ -45,7 +45,9 @@
     "caseStudies": "Case Studies",
     "newsletter": "Newsletter",
     "curriculum": "Program Curriculum",
-    "contactUs": "Contact Us"
+    "contactUs": "Contact Us",
+    "account": "Account",
+    "signOut": "Sign Out"
   },
   "hero": {
     "headline": "AI Is Transforming Insurance. Are You Ready?",
@@ -1062,5 +1064,51 @@
     "summaryLink": "See All Modules & Tracks",
     "ctaTitle": "Request Your Personalized Program",
     "ctaDesc": "Tell us about your role, team, and goals — we'll design a curriculum tailored to your needs."
+  },
+  "engagement": {
+    "share": "Share",
+    "shareThis": "Share this",
+    "likeThisPage": "Like this page",
+    "shareThisPage": "Share this page"
+  },
+  "comments": {
+    "title": "Comments",
+    "placeholder": "Share your thoughts...",
+    "submit": "Post Comment",
+    "submitting": "Posting...",
+    "loginRequired": "Sign in to join the conversation",
+    "loginButton": "Sign In to Comment",
+    "pendingMessage": "Awaiting review",
+    "noComments": "No comments yet. Be the first to share your thoughts!",
+    "commentSubmitted": "Your comment has been submitted and is awaiting review.",
+    "displayNameLabel": "Display name",
+    "characterCount": "characters remaining",
+    "commentsCount": "comment",
+    "commentsCountPlural": "comments",
+    "loadingComments": "Loading comments...",
+    "moderationNote": "Comments are moderated to maintain a respectful community."
+  },
+  "admin": {
+    "comments": {
+      "pageTitle": "Comment Moderation",
+      "pageDescription": "Review, approve, reject, and delete user comments.",
+      "loading": "Loading...",
+      "accessDenied": "Access Denied",
+      "accessDeniedMessage": "You do not have permission to access this page.",
+      "signInRequired": "Please sign in to access admin features.",
+      "tabPending": "Pending",
+      "tabApproved": "Approved",
+      "tabRejected": "Rejected",
+      "approve": "Approve",
+      "reject": "Reject",
+      "delete": "Delete",
+      "confirmDelete": "Are you sure you want to permanently delete this comment?",
+      "noComments": "No comments in this category.",
+      "by": "by",
+      "on": "on",
+      "locale": "Locale",
+      "content": "Content",
+      "navLink": "Admin"
+    }
   }
 }

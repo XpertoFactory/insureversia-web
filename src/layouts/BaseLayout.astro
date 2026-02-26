@@ -1,6 +1,7 @@
 ---
 import Navigation from '../components/Navigation.astro';
 import Footer from '../components/Footer.astro';
+import PageEngagement from '../components/PageEngagement.astro';
 import AskInsureversia from '../components/AskInsureversia/AskInsureversia.astro';
 import ShareModal from '../components/ShareModal.astro';
 import ContactModal from '../components/ContactModal.astro';
@@ -49,6 +50,7 @@ const ogImageUrl = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`
 const alternateLocales = getAlternateLocales(currentLocale);
 const ogLocaleMap: Record<string, string> = { en: 'en_US', es: 'es_ES' };
 const ogLocale = ogLocaleMap[currentLocale] || 'en_US';
+const pageId = currentPath.replace(/^\/es\//, '/').replace(/^\/|\/$/g, '').replace(/\//g, '-') || 'home';
 ---
 
 <!DOCTYPE html>
@@ -165,6 +167,8 @@ const ogLocale = ogLocaleMap[currentLocale] || 'en_US';
   <main data-pagefind-body>
     <slot />
   </main>
+
+  <PageEngagement locale={currentLocale} pageId={pageId} />
 
   <Footer locale={currentLocale} />
 

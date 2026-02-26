@@ -1,5 +1,7 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import ContentEngagement from '../../../components/ContentEngagement.astro';
+import CommentSection from '../../../components/CommentSection.svelte';
 import { getCollection } from 'astro:content';
 import { t, getLocalePath } from '../../../i18n';
 const locale = 'en';
@@ -84,6 +86,14 @@ const entries = (await getCollection('what-to-do'))
                   </div>
                 )}
               </div>
+              <div style="margin-top: var(--space-4); padding-top: var(--space-4); border-top: 1px solid var(--border-light);">
+                <ContentEngagement
+                  contentType="what-to-do"
+                  contentId={`what-to-do-${entry.data.number}`}
+                  shareTitle={entry.data.title}
+                  locale={locale}
+                />
+              </div>
             </div>
           </article>
         ))}
@@ -111,5 +121,29 @@ const entries = (await getCollection('what-to-do'))
         </p>
       </div>
     </div>
+  </section>
+
+  <section class="section" style="max-width: var(--max-width, 1200px); margin: 0 auto; padding: 0 var(--space-6);">
+    <CommentSection
+      client:visible
+      contentType="what-to-do"
+      contentId="what-to-do-page"
+      locale={locale}
+      labels={{
+        title: t(locale, 'comments.title'),
+        placeholder: t(locale, 'comments.placeholder'),
+        submit: t(locale, 'comments.submit'),
+        submitting: t(locale, 'comments.submitting'),
+        loginRequired: t(locale, 'comments.loginRequired'),
+        loginButton: t(locale, 'comments.loginButton'),
+        pendingMessage: t(locale, 'comments.pendingMessage'),
+        noComments: t(locale, 'comments.noComments'),
+        commentSubmitted: t(locale, 'comments.commentSubmitted'),
+        displayNameLabel: t(locale, 'comments.displayNameLabel'),
+        characterCount: t(locale, 'comments.characterCount'),
+        loadingComments: t(locale, 'comments.loadingComments'),
+        moderationNote: t(locale, 'comments.moderationNote'),
+      }}
+    />
   </section>
 </BaseLayout>

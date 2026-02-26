@@ -200,12 +200,13 @@ const { locale } = Astro.props;
       }
     }
 
-    // Event: share trigger buttons — always open modal with platform buttons
-    document.querySelectorAll('.share-trigger').forEach(trigger => {
-      trigger.addEventListener('click', (e) => {
+    // Event: share trigger buttons — event delegation for dynamic triggers
+    document.addEventListener('click', (e) => {
+      const trigger = e.target.closest('.share-trigger');
+      if (trigger) {
         e.preventDefault();
         openShareModal(trigger);
-      });
+      }
     });
 
     // Event: close
